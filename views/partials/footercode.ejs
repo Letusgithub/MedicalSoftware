@@ -1,0 +1,42 @@
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="/vendor/libs/jquery/jquery.js"></script>
+<script src="/vendor/libs/popper/popper.js"></script>
+<script src="/vendor/js/bootstrap.js"></script>
+<script src="/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="/js/dashboards-analytics.js"></script>
+
+
+
+<script>
+  // Get the sidebar element
+  var sidebarContainer = document.getElementById("sidebar");
+
+  // Get all buttons inside the sidebar
+  var btns = sidebarContainer.getElementsByClassName("menu-item");
+
+
+  // Loop through the buttons and add the active class to the current/clicked button
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+      console.log("ok");
+    });
+  }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,354 @@
+<%- include('../partials/headercode.ejs') %>
+
+    <body>
+
+        <!-- Layout wrapper -->
+        <div class="layout-wrapper layout-content-navbar  ">
+            <div class="layout-container">
+
+                <!-- sidebar imported -->
+                <%- include('../partials/sidebar.ejs') %>
+
+                    <!-- Layout container -->
+                    <div class="layout-page">
+
+                        <!-- navbar imported -->
+                        <%- include('../partials/navbar.ejs') %>
+
+                            <!-- Content wrapper -->
+                            <div class="content-wrapper">
+
+                                <!-- Content -->
+
+                                <div class="container-xxl flex-grow-1 container-p-y">
+
+
+                                    <div class="d-flex justify-content-between m-0 p-0">
+                                        <h4 class="fw-bold py-3 mb-1"> Add Product</h4>
+                                        <button type="button" class="btn btn-icon btn-danger my-2 mx-3"
+                                            onclick="history.back()">
+                                            <i class='bx bx-x bx-sm'></i>
+                                        </button>
+                                    </div>
+                                    <hr class="mb-4">
+
+                                    <div class="card mb-4 mx-auto col-md-8">
+                                        <form>
+                                            <div class="card-body ">
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-fullname">Product Name</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-fullname" placeholder=""
+                                                                aria-label="John Doe"
+                                                                aria-describedby="basic-icon-default-fullname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-fullname">Mfg/Mkt</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-fullname" placeholder=""
+                                                                aria-label="John Doe"
+                                                                aria-describedby="basic-icon-default-fullname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-fullname">Salt Comp.</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-fullname" placeholder=""
+                                                                aria-label="John Doe"
+                                                                aria-describedby="basic-icon-default-fullname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-gstin">HSN Code</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"></span>
+                                                            <input type="text" id="basic-icon-default-address"
+                                                                class="form-control" placeholder="" aria-label="gstin"
+                                                                aria-describedby="basic-icon-default-address2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-2">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-address">Unit</label>
+                                                    <div class="col-sm-4 me-0">
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
+                                                                aria-label=""
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                            <select class="form-select" id="exampleFormControlSelect1"
+                                                                aria-label="Default select example">
+                                                                <option selected>Primary</option>
+                                                                <option value="1">AMP (Ampoules)</option>
+                                                                <option value="1">Box</option>
+                                                                <option value="1">BTL (Bottle)</option>
+                                                                <option value="1">BALM</option>
+                                                                <option value="1">CAP (Capsule)</option>
+                                                                <option value="1">CREAM</option>
+                                                                <option value="1">DROP</option>
+                                                                <option value="1">DRSP (Dry Syrup)</option>
+                                                                <option value="1">E/D (Eye Drop)</option>
+                                                                <option value="1">EAR/D (Ear Drop)</option>
+                                                                <option value="1">FW (Face Wash)</option>
+                                                                <option value="1">GEL</option>
+                                                                <option value="1">GM</option>
+                                                                <option value="1">INJ (Injection)</option>
+                                                                <option value="1">INH (Inhaler)</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-sm-1 text-center mx-0 p-0">
+                                                        <p class="fs-4">=</p>
+                                                    </div>
+
+                                                    <div class="col-sm-4 ms-0">
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
+                                                                aria-label=""
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                            <select class="form-select" id="exampleFormControlSelect1"
+                                                                aria-label="Default select example">
+                                                                <option selected>Secondary</option>
+                                                                <option value="1">AMP (Ampoules)</option>
+                                                                <option value="1">Box</option>
+                                                                <option value="1">BTL (Bottle)</option>
+                                                                <option value="1">BALM</option>
+                                                                <option value="1">CAP (Capsule)</option>
+                                                                <option value="1">CREAM</option>
+                                                                <option value="1">DROP</option>
+                                                                <option value="1">DRSP (Dry Syrup)</option>
+                                                                <option value="1">E/D (Eye Drop)</option>
+                                                                <option value="1">EAR/D (Ear Drop)</option>
+                                                                <option value="1">FW (Face Wash)</option>
+                                                                <option value="1">GEL</option>
+                                                                <option value="1">GM</option>
+                                                                <option value="1">INJ (Injection)</option>
+                                                                <option value="1">INH (Inhaler)</option>
+                                                                <option value="1"></option>
+                                                                <option value="1"></option>
+
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-companyname">Quantity</label>
+                                                    <div class="row col-sm-10">
+                                                        <div class="col-sm-5">
+                                                            <div class="input-group input-group-merge">
+                                                                <span id="basic-icon-default-companyname2"
+                                                                    class="input-group-text"></span>
+                                                                <input type="text" class="form-control"
+                                                                    id="basic-icon-default-companyname" placeholder=""
+                                                                    aria-label="John Doe"
+                                                                    aria-describedby="basic-icon-default-companyname2">
+                                                                <select class="form-select" id="unit" name="unit"
+                                                                    aria-label="unit">
+                                                                    <option>TABS</option>
+                                                                    <option>STP</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5 px-3 text-center">
+                                                            <p>Current Stock:</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-companyname">MRP</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
+                                                                aria-label="John Doe"
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <div class="row col-sm-6">
+                                                        <label class="col-sm-4 col-form-label"
+                                                            for="basic-icon-default-address">Exp Date</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group input-group-merge">
+
+                                                                <input class="form-control" type="date"
+                                                                    id="html5-date-input" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row col-sm-6 text-center">
+                                                        <label class="col-sm-4 col-form-label"
+                                                            for="basic-icon-default-address">Mfg Date</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group input-group-merge">
+
+                                                                <input class="form-control" type="date"
+                                                                    id="html5-date-input" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-email">Shelf Label</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"></span>
+                                                            <input type="text" id="basic-icon-default-email"
+                                                                class="form-control" placeholder=""
+                                                                aria-label="john.doe"
+                                                                aria-describedby="basic-icon-default-email2">
+                                                            <span id="basic-icon-default-email2"
+                                                                class="input-group-text"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-address">Entry Date</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+
+                                                            <input class="form-control" type="date"
+                                                                id="html5-date-input" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-email">Vendor Name</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"></span>
+                                                            <input type="text" id="basic-icon-default-email"
+                                                                class="form-control" placeholder=""
+                                                                aria-label="john.doe"
+                                                                aria-describedby="basic-icon-default-email2">
+                                                            <span id="basic-icon-default-email2"
+                                                                class="input-group-text"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-email">Low Stock Qty</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"></span>
+                                                            <input type="text" id="basic-icon-default-email"
+                                                                class="form-control" placeholder=""
+                                                                aria-label="john.doe"
+                                                                aria-describedby="basic-icon-default-email2">
+                                                            <span id="basic-icon-default-email2"
+                                                                class="input-group-text"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-email">Barcode</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"></span>
+                                                            <input type="text" id="basic-icon-default-email"
+                                                                class="form-control" placeholder=""
+                                                                aria-label="john.doe"
+                                                                aria-describedby="basic-icon-default-email2">
+                                                            <span id="basic-icon-default-email2"
+                                                                class="input-group-text"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                                <div class="row justify-content-end">
+                                                    <div class="col-sm-10">
+                                                        <button type="submit" class="btn btn-primary">Add</button>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                                <!-- / Content -->
+
+                                <div class="content-backdrop fade"></div>
+                            </div>
+                            <!-- Content wrapper -->
+                    </div>
+                    <!-- / Layout page -->
+            </div>
+
+
+
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
+
+
+        </div>
+        <!-- / Layout wrapper -->
+
+        <%- include('../partials/footercode.ejs') %>
+
+    </body>
+
+
+    </html>

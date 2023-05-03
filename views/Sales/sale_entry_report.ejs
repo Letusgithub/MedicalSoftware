@@ -1,0 +1,204 @@
+<%- include('../partials/headercode.ejs') %>
+
+  <body>
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar  ">
+      <div class="layout-container">
+
+        <!-- sidebar imported -->
+        <%- include('../partials/sidebar.ejs') %>
+
+          <!-- Layout container -->
+          <div class="layout-page">
+
+            <!-- navbar imported -->
+            <%- include('../partials/navbar.ejs') %>
+
+              <!-- Content wrapper -->
+              <div class="content-wrapper">
+
+                <!-- Content -->
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                  <h4 class="fw-bold py-3 mb-1"> Sale Entry Report</h4>
+                  <hr class="mb-4">
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="card mb-4">
+                        <h5 class="card-header">Monthly</h5>
+                        <div class="card-body">
+                          <div class="col-md-10">
+                            <select class="form-select" id="exampleFormControlSelect1"
+                              aria-label="Default select example">
+                              <option selected>Please Select</option>
+                              <option value="1">January</option>
+                              <option value="1">February</option>
+
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="card mb-4">
+                        <h5 class="card-header">Quarterly</h5>
+                        <div class="card-body">
+                          <div>
+
+                            <div class="col-md-10">
+                              <select class="form-select" id="exampleFormControlSelect1"
+                                aria-label="Default select example">
+                                <option selected>Please Select</option>
+                                <option value="1"></option>
+                                <option value="1"></option>
+
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="card mb-4">
+                        <h5 class="card-header">Yearly</h5>
+                        <div class="card-body">
+                          <div class="col-md-10">
+                            <select class="form-select" id="exampleFormControlSelect1"
+                              aria-label="Default select example">
+                              <option selected>Please Select</option>
+                              <option value="1">2022</option>
+                              <option value="1">2023</option>
+
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <h4 class="fw-bold py-3 mb-4">Custom Dates </h4>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="card mb-4">
+                          <h5 class="card-header">From Date</h5>
+                          <div class="card-body">
+                            <div class="col-md-10">
+                              <input class="form-control" type="date" id="html5-date-input" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card mb-4">
+                          <h5 class="card-header">To Date</h5>
+                          <div class="card-body">
+                            <div>
+
+                              <div class="col-md-10">
+                                <input class="form-control" type="date" id="html5-date-input" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="text-center mb-4">
+                      <button type="button" class="btn btn-primary">Generate Report</button>
+                    </div>
+
+                    <!-- Report List -->
+
+                    <div class="card">
+                      <h5 class="card-header">Report</h5>
+                      <div class="card-body">
+                        <div class="table-responsive text-nowrap">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Invoice No.</th>
+                                <th>Customer Name</th>
+                                <th>Total Amount</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th class="col-1">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-8481388183</strong></td>
+                                <td>Jaikishan Shah</td>
+                                <td>₹1299</td>
+                                <td>10/02/2023</td>
+                                <td>12:50 PM</td>
+                                <td>
+                                  <div class="action-btns">
+                                    <button type="button" class="btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                  </div>
+                                  
+                                </td>
+                              </tr>
+  
+                              <tr>
+                                <td>2</td>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-8481399183</strong></td>
+                                <td>Jaikishan Shah</td>
+                                <td>₹153</td>
+                                <td>12/02/2023</td>
+                                <td>12:50 PM</td>
+                                <td>
+                                  <div class="action-btns">
+                                    <button type="button" class="btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                  </div>
+                                  
+                                </td>
+                              </tr>
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- / Report List -->
+
+
+                  </div>
+                </div>
+                <!-- / Content -->
+                
+                <div class="content-backdrop fade"></div>
+              </div>
+              <!-- Content wrapper -->
+          </div>
+          <!-- / Layout page -->
+      </div>
+
+
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+
+
+    </div>
+    <!-- / Layout wrapper -->
+
+    <%- include('../partials/footercode.ejs') %>
+
+  </body>
+
+
+  </html>
