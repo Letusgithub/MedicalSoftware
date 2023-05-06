@@ -49,16 +49,20 @@ router.get('/pharmacy_sale_report', (req, res) => {
 
 
 // Sales components
-router.get('/invoice_sale', (req, res) => {
-    res.render('Sales/invoice_sale')
+router.get('/sale_invoice', (req, res) => {
+    res.render('Sales/sale_invoice')
 });
 
 router.get('/sale_entry_report', (req, res) => {
     res.render('Sales/sale_entry_report')
 });
 
-router.get('/invoice_sale_return', (req, res) => {
-    res.render('Sales/invoice_sale_return')
+router.get('/sale_return_invoice', (req, res) => {
+    res.render('Sales/sale_return_invoice')
+});
+
+router.get('/return_items', (req, res) => {
+    res.render('Sales/return_items')
 });
 
 router.get('/sale_return_report', (req, res) => {
