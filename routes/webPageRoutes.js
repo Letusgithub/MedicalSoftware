@@ -47,6 +47,33 @@ router.get('/pharmacy_sale_report', (req, res) => {
 });
 
 
+// Owner Control components
+router.get('/employee_master', (req, res) => {
+    res.render('OwnerControls/employee_master')
+});
+
+router.get('/add_employee', (req, res) => {
+    res.render('OwnerControls/add_employee')
+});
+
+router.get('/customer_list', (req, res) => {
+    res.render('OwnerControls/customer_list')
+});
+
+router.get('/new_customer', (req, res) => {
+    res.render('OwnerControls/new_customer')
+});
+
+router.get('/vendor_list', (req, res) => {
+    res.render('OwnerControls/vendor_list')
+});
+
+router.get('/new_vendor', (req, res) => {
+    res.render('OwnerControls/new_vendor')
+});
+
+
+
 
 // Sales components
 router.get('/sale_invoice', (req, res) => {
@@ -73,14 +100,6 @@ router.get('/invoice_template', (req, res) => {
     res.render('Sales/invoice_template')
 });
 
-router.get('/customer_list', (req, res) => {
-    res.render('Sales/customer_list')
-});
-
-router.get('/new_customer', (req, res) => {
-    res.render('Sales/new_customer')
-});
-
 
 // Inventory Managment component
 router.get('/product_stock', (req, res) => {
@@ -91,16 +110,8 @@ router.get('/add_product', (req, res) => {
     res.render('Inventory/add_product')
 });
 
-router.get('/vendor_list', (req, res) => {
-    res.render('Inventory/vendor_list')
-});
-
 router.get('/purchase_order', (req, res) => {
     res.render('Inventory/purchase_order')
-});
-
-router.get('/new_vendor', (req, res) => {
-    res.render('Inventory/new_vendor')
 });
 
 router.get('/po_report', (req, res) => {

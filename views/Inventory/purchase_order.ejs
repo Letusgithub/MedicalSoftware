@@ -18,7 +18,7 @@
                     <div class="layout-page">
 
                         <!-- navbar imported -->
-                        <%- include('../partials/navbar.ejs') %>
+                        <btn%- include('../partials/navbar.ejs') %>
 
 
 
@@ -58,19 +58,19 @@
 
                                         <div class="col-md-6">
                                             <div class="card mb-4">
-                                                
+
                                                 <h6 class="card-header">Address:</h6>
                                                 <h6 class="card-header">Contact No:</h6>
 
                                             </div>
                                         </div>
 
-                                        
+
 
 
                                     </div>
                                     <div class="row">
-                                        
+
                                         <div class="col-md-6">
                                             <div class="card mb-4">
                                                 <h5 class="card-header">Expected Delivery Date</h5>
@@ -129,26 +129,28 @@
                                                                         id="basic-default-name" placeholder="" />
                                                                 </td>
                                                                 <td>
-                                                                    <select class="form-select" id="exampleFormControlSelect1"
-                                                                    aria-label="Default select example">
-                                                                    <option selected>Select Unit</option>
-                                                                    <option value="1">Box</option>
-                                                                    <option value="1">Packet</option>
-                                                                </select>
+                                                                    <select class="form-select"
+                                                                        id="exampleFormControlSelect1"
+                                                                        aria-label="Default select example">
+                                                                        <option selected>Select Unit</option>
+                                                                        <option value="1">Box</option>
+                                                                        <option value="1">Packet</option>
+                                                                    </select>
                                                                 </td>
-
+                                                            </tr>
 
                                                         </tbody>
 
                                                     </table>
                                                 </div>
                                             </div>
+                                            <div class="buttonBox text-center pb-3">
+                                                <btn class="btn btn-primary" style="color: white;">Add</btn>
+                                                <input type="reset" class="btn btn-primary" style="color: white;" value="Clear" />
+                                            </div>
                                         </form>
 
-                                        <div class="buttonBox text-center pb-3">
-                                            <a class="btn btn-primary add-more-btn" style="color: white;">Add</a>
-                                            <a class="btn btn-primary remove" style="color: white;">Clear</a>
-                                        </div>
+                                        
 
                                     </div>
                                     <!--/ Bordered Table -->
@@ -257,20 +259,6 @@
 
 
             <%- include('../partials/footercode.ejs') %>
-
-
-                <script>
-                    $('.add-more-btn').click(function () {
-                        var clone = $('.form-main:first').clone('');
-                        clone.find('input').val('');
-                        $(".buttonBox").before(clone);
-                    });
-
-                    $('.remove').click(function () {
-                        $('.form-main:last').remove();
-                    });
-                </script>
-
 
 
                 <script>
