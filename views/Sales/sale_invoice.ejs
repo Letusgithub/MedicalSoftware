@@ -63,7 +63,7 @@
                                 <div>
 
                                   <input type="text" class="form-control" id="phonenumber"
-                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number"/>
+                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
 
                                 </div>
                               </div>
@@ -84,44 +84,6 @@
                                 <div>
 
                                   <input class="form-control" type="date" id="date" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Reference</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input type="text" class="form-control" id="reference"
-                                    aria-describedby="defaultFormControlHelp" placeholder="Doctor/Hospital name (optional)"/>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                      </tr>
-                    </div>
-
-                    <div class="row">
-                      <tr>
-                        <th>
-
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Invoice Number</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input type="text" class="form-control" id="invoicenumber"
-                                    aria-describedby="defaultFormControlHelp" />
 
                                 </div>
                               </div>
@@ -153,7 +115,6 @@
 
                       </tr>
                     </div>
-
 
                   </form>
                 </div>
@@ -219,7 +180,7 @@
                                 <input class="form-control" type="date" id="expdate" />
                               </td>
 
-                              <td> 
+                              <td>
                                 <select class="form-select" id="unit" name="unit" aria-label="unit">
                                   <option>TABS</option>
                                   <option>STP</option>
@@ -238,7 +199,7 @@
                               <td>
                                 <input type="text" class="form-control" id="discount" placeholder="" />
                               </td>
-                              
+
                               <td>
                                 <input type="text" class="form-control" id="total" placeholder="" />
                               </td>
@@ -283,19 +244,20 @@
                         </thead>
                         <tbody id="cart">
                           <tr>
-                          <td>1</td>
-                          <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Calpol 1000mg Tablet</strong></td>
-                          <td>3</td>
-                          <td>35</td>
-                          <td>5</td>
-                          <td>115</td>
-                          <td>
-                            <div class="action-btns">
-                              <button type="button" class="btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
-                              <button type="button" class="btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
-                            </div>
-                          </td>
-                        </tr>
+                            <td>1</td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Calpol 1000mg
+                                Tablet</strong></td>
+                            <td>3</td>
+                            <td>35</td>
+                            <td>5</td>
+                            <td>115</td>
+                            <td>
+                              <div class="action-btns">
+                                <button type="button" class="btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                <button type="button" class="btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                              </div>
+                            </td>
+                          </tr>
 
 
                         </tbody>
@@ -310,7 +272,20 @@
               <hr>
 
               <div class="row mx-3">
-                <h4 class="fw-bold py-3 mb-4">Order Summary</h4>
+
+
+
+                <div class="d-flex row m-0 p-0">
+                  <h4 class="col-7 fw-bold py-3 mb-4">Order Summary</h4>
+                  <div class="col-5">
+                    <div class="mb-1 row">
+                      <label for="html5-text-input" class="col-2 col-form-label">Reference</label>
+                      <div class="col-10">
+                        <input class="form-control" type="text" placeholder="Doctor/Hospital" id="html5-text-input" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div class="col-md-3">
                   <div class="card mb-4">

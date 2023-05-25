@@ -1,14 +1,11 @@
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
 const webPages = require("./routes/webPageRoutes.js")
 const APIs = require("./routes/apiRoutes.js")
 
 const path = require("path"); 
-const fileURLToPath = require("url");
 
-//const __filename = fileURLToPath(import.meta.url);
-//const __dirname = path.dirname(__filename);
+
 
 // View engine setup
 app.set('view engine', 'ejs')
@@ -23,11 +20,8 @@ app.use('/', webPages )
 
 // load APIs
 app.use(express.json());
-app.use('/api', APIs)
+app.use('/api/v1', APIs)
 
-
-
-// DB Connection setup (*not yet done)
 
 
 
