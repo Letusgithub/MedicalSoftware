@@ -57,24 +57,4 @@ module.exports = {
         )
     },
 
-    // Get Organisation by Id
-    getById: (org_id, callBack) => {
-        getPool().query(
-            `select 
-             org_id,
-             owner_name,
-             owner_email
-             from owner where org_id`,
-            [org_id],
-            function (error, results) {
-                if(error){
-                 return callBack (error)
-                }; 
-                return callBack (null, results[0]);                   
-            }
-        )
-    },
-
-
-
 }

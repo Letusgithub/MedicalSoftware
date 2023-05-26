@@ -1,31 +1,28 @@
-const express = require("express");
-const path = require("path"); 
-
-const webPages = require("./src/routes/webPageRoutes")
-const APIs = require("./src/routes/apiRoutes.js")
-const {initialisePool} = require("./src/config/database.js");
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const { initialisePool } = require('./server/config/database');
 
 const app = express();
 
 // View engine setup
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
+app.use(express.static('public', { maxAge: 1000 * 60 * 60 * 24 * 365 }));
+app.set('views', './server/views');
+app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// API Routes
+require('./server/routes/api.org.routes')(app);
+require('./server/routes/api.emp.routes')(app);
+require('./server/routes/api.owner.routes')(app);
+require('./server/routes/api.ref.routes')(app);
 
-// Set the directory path for views
-app.set('views', path.join(__dirname, 'src/views'));
+// FRONT Routes
+require('./server/routes/front.routes')(app);
 
-app.use(express.static(path.join(__dirname, 'public')))
-
-// load frontend pages routes
-app.use('/', webPages )
-
-// load APIs
-app.use('/api/v1', APIs)
-
-
-initialisePool().then(()=>{
+initialisePool().then(() => {
   app.listen(process.env.PORT || 4800, () => {
-    console.log("Server is live!");
-  });  
-})
+    console.log('Server is live!');
+  });
+});
