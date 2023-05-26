@@ -4,6 +4,7 @@ const {createOwner, updateOwner, deleteOwner, getOwnerById} = require('../../con
 const { createEmp, updateEmp, deleteEmp, getEmpById, getAllEmpsById } = require('../../controllers/emp.controller');
 const {createRefer} = require('../../controllers/refer.controller');
 const {updateOrg, deleteOrg, getOrgById} = require('../../controllers/org.controller')
+const {getInventory,getInventorys,newInventory,updateInventory,deleteInventory} =require('../../controllers/inventory.controller'); 
 
 
 //Organisation routes
@@ -28,6 +29,14 @@ router.get('/all/:id', getAllEmpsById);
 
 // Reference routes
 router.post('/', createRefer);
+
+// Inventory routes
+
+router.get("/",getInventorys);
+router.get("/:id",getInventory);
+router.post("/",newInventory);
+router.patch("/:id",updateInventory);
+router.delete("/:id",deleteInventory);
 
 
 
