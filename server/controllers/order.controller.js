@@ -1,4 +1,4 @@
-const service = require('../services/vendor.service');
+const service = require('../services/order.service');
 
 exports.createOrder = (req, res) => {
   const data = req.body;
