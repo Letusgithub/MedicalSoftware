@@ -3,7 +3,6 @@
 
 const controller = require('../controllers/api.owner.controller');
 
-
 module.exports = (app) => {
   app.use((req, res, next) => {
     res.header(
