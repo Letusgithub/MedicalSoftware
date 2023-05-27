@@ -32,6 +32,22 @@
 
                       <tr>
                         <th>
+                          <div class="col-md-6">
+                            <div class="card mb-4">
+                              <h5 class="card-header">Customer Mobile</h5>
+                              <div class="card-body">
+                                <div>
+
+                                  <input type="text" class="form-control" id="phonenumber"
+                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </th>
+
+                        <th>
 
                           <div class="col-md-6">
 
@@ -39,7 +55,7 @@
                               <div class="d-flex justify-content-between m-0 p-0">
                                 <h5 class="card-header">Customer Name</h5>
                                 <div class=" text-center mt-3 ">
-                                  <a class="btn btn-primary mx-4" style="color: white;" href="/new_customer">Add New
+                                  <a class="btn btn-primary mx-4" style="color: white;" href="">Add
                                     Customer</a>
                                 </div>
                               </div>
@@ -55,67 +71,10 @@
                             </div>
                           </div>
                         </th>
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Mobile Number</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input type="text" class="form-control" id="phonenumber"
-                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
 
                       </tr>
                     </div>
-
-                    <div class="row">
-                      <tr>
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Date</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input class="form-control" type="date" id="date" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Mode of Payment</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <select class="form-select" id="mop" name="mop" aria-label="select mop">
-                                    <option selected disabled>Select Option</option>
-                                    <option value="cash">Cash</option>
-                                    <option value="upi">UPI</option>
-                                    <option value="debit-card">Debit card</option>
-                                    <option value="credit-card">Credit card</option>
-
-                                  </select>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                      </tr>
-                    </div>
-
+                
                   </form>
                 </div>
               </div>
@@ -304,7 +263,7 @@
 
                 <div class="col-md-3">
                   <div class="card mb-4">
-                    <h5 class="card-header">Add Discount (%)</h5>
+                    <h5 class="card-header">Additional Discount (₹)</h5>
                     <div class="card-body">
                       <div>
 
@@ -320,10 +279,7 @@
                   <div class="card mb-4">
                     <div class="d-flex justify-content-between m-0 p-0">
                       <h5 class="card-header">Final Amount</h5>
-                      <div class="text-center m-3">
-                        <a class="btn btn-primary btn-sm" style="color: white;">Round Off</a>
-                      </div>
-                    </div>
+                   </div>
 
                     <div class="card-body pt-0">
                       <div>
@@ -337,24 +293,22 @@
                 </div>
 
                 <div class="col-md-3">
-                  <div class="card mb-1">
-                    <h5 class="card-header">Paid Amount</h5>
+                  <div class="card mb-4">
+                    <h5 class="card-header">Mode of Payment</h5>
                     <div class="card-body">
                       <div>
-
-                        <input type="text" class="form-control" id="defaultFormControlInput"
-                          aria-describedby="defaultFormControlHelp" />
+                        <select class="form-select" id="mop" name="mop" aria-label="select mop">
+                          <option selected disabled>Select Option</option>
+                          <option value="cash">Cash</option>
+                          <option value="upi">UPI</option>
+                          <option value="debit-card">Debit card</option>
+                          <option value="credit-card">Credit card</option>
+                        </select>
 
                       </div>
                     </div>
                   </div>
-                  <p class="card-header py-2 px-3">Change: </p>
                 </div>
-
-
-
-
-
 
               </div>
               <!-- / Content -->
@@ -390,21 +344,21 @@
       <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
       <script>
         var customerData = [];
-        var customerName =[];
+        var customerName = [];
         var selectedCustomer;
         var selectedTelephone;
         $(document).ready(function () {
           $.get('/api/cust/', function (data, status) {
 
             for (let i in data.data) {
-              customerData.push({name: data.data[i].cust_name, phone: data.data[i].cust_telephone})
+              customerData.push({ name: data.data[i].cust_name, phone: data.data[i].cust_telephone })
               customerName.push(data.data[i].cust_name)
             }
             //console.log("array", customerName);
 
             $("#customername").autocomplete({
               source: customerName,
-              select: function(event, ui) {
+              select: function (event, ui) {
                 selectedCustomer = ui.item.value;
                 //console.log("selected", selectedCustomer);
                 selectedTelephone = customerData.find(c => c.name == selectedCustomer);
@@ -413,64 +367,64 @@
             })
           })
 
-          
-          
-          
-          var product;
-          var i=0;
-          
 
-          $("#medicinename").change(function(){
+
+
+          var product;
+          var i = 0;
+
+
+          $("#medicinename").change(function () {
             product = $("#medicinename").val();
-            $("#addtocart").click(function(){
+            $("#addtocart").click(function () {
               i++;
               var qty = 5;
-              var mrp =35;
-              var disc =20;
+              var mrp = 35;
+              var disc = 20;
               var total = 35;
 
 
               var newRow = $("<tr>");
 
-                var index = $("<td>").text(i);
-                var productName = $("<td>").text(product);
-                  var qtys = $("<td>").text(qty);
-                  var mrps = $("<td>").text(mrp);
-                  var discs = $("<td>").text(disc);
-                  var totals = $("<td>").text(total);
-                 
-               
-                  var actionButtons = $("<div>").addClass("action-btns");
-                  var editButton = $("<button>").addClass("btn p-0 mx-2").attr("type", "button").html("<i class='bx bxs-edit'></i>");
-                  var deleteButton = $("<button>").addClass("btn p-0 mx-2").attr("type", "button").html("<i class='bx bx-trash me-1'></i>");
-
-                  actionButtons.append(editButton, deleteButton);
-
-                newRow.append(index, productName, qtys,mrps, discs, totals, $("<td>").append(actionButtons));
-                $("#cart").append(newRow);
+              var index = $("<td>").text(i);
+              var productName = $("<td>").text(product);
+              var qtys = $("<td>").text(qty);
+              var mrps = $("<td>").text(mrp);
+              var discs = $("<td>").text(disc);
+              var totals = $("<td>").text(total);
 
 
+              var actionButtons = $("<div>").addClass("action-btns");
+              var editButton = $("<button>").addClass("btn p-0 mx-2").attr("type", "button").html("<i class='bx bxs-edit'></i>");
+              var deleteButton = $("<button>").addClass("btn p-0 mx-2").attr("type", "button").html("<i class='bx bx-trash me-1'></i>");
 
-//                <td>
-  //                <div class="action-btns">
-    //                <button type="button" class="btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
-      //              <button type="button" class="btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
-        //          </div>
-          //      </td>
-              
-              
-              
+              actionButtons.append(editButton, deleteButton);
+
+              newRow.append(index, productName, qtys, mrps, discs, totals, $("<td>").append(actionButtons));
+              $("#cart").append(newRow);
+
+
+
+              //                <td>
+              //                <div class="action-btns">
+              //                <button type="button" class="btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+              //              <button type="button" class="btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+              //          </div>
+              //      </td>
+
+
+
             })
-            
-          })
-          
 
-          
-          
-          
+          })
+
+
+
+
+
         })
-            
-            
+
+
 
 
 
@@ -532,76 +486,7 @@
       </script>
 
 
-
-
-
-
-
   </body>
 
 
-  </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- <script>
-        $('.add-more-btn').click(function () {
-          var clone = $('.form-main:first').clone('');
-          clone.find('input').val('');
-          $(".buttonBox").before(clone);
-        });
-
-        $('.remove').click(function () {
-          $('.form-main:last').remove();
-        });
-      </script>
-
-      <script>
-        $(function () {
-          var dtToday = new Date();
-
-          var month = dtToday.getMonth() + 1;
-          var day = dtToday.getDate();
-          var year = dtToday.getFullYear();
-          if (month < 10)
-            month = '0' + month.toString();
-          if (day < 10)
-            day = '0' + day.toString();
-
-          var maxDate = year + '-' + month + '-' + day;
-
-          // or instead:
-          // var maxDate = dtToday.toISOString().substr(0, 10);
-
-
-          $('#txtDate').attr('min', maxDate);
-        });
-      </script> -->
+</html>
