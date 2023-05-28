@@ -12,17 +12,13 @@ module.exports = {
                 vendor_address,
                 vendor_contact,
                 vendor_gstin,
-                updated_date,
-                created_date)
-                values(?,?,?,?,?,?)`,
+                values(?,?,?,?)`,
             [
                 data.org_id,
                 data.vendor_name,
                 data.vendor_address,
                 data.vendor_contact,
                 data.vendor_gstin,
-                `${date_time}`,
-                `${date_time}`, 
             ],
             function (error, results) {
                 if(error){
@@ -42,15 +38,13 @@ module.exports = {
             vendor_address= ?,
             vendor_contact = ?,
             vendor_gstin = ?,
-            updated_date = ?,
             where vendor_id = ?`
             [ 
                 data.org_id,
                 data.vendor_name,
                 data.vendor_address,
                 data.vendor_contact,
-                data.vendor_gstin,
-                `${date_time}`
+                data.vendor_gstin
             ],
             function (error, results) {
                 if(error){
