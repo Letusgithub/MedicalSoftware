@@ -11,7 +11,7 @@ module.exports = {
                 vendor_name,
                 vendor_address,
                 vendor_contact,
-                vendor_gstin,
+                vendor_gstin)
                 values(?,?,?,?)`,
             [
                 data.org_id,
@@ -44,7 +44,8 @@ module.exports = {
                 data.vendor_name,
                 data.vendor_address,
                 data.vendor_contact,
-                data.vendor_gstin
+                data.vendor_gstin,
+                data.vendor_id
             ],
             function (error, results) {
                 if(error){
