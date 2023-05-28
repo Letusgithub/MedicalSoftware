@@ -1,4 +1,4 @@
-const service = require('../services/vendor.service');
+  const service = require('../services/vendor.service');
 
 exports.createVendor = (req, res) => {
   const data = req.body;
