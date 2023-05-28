@@ -7,38 +7,30 @@ module.exports = {
     create: (data, callBack) => {
         getPool().query(
             `insert into product(
-                batch_id,
                 product_name,
                 mfg,
+                mkt,
                 salt,
                 hsn,
                 primary_unit,
                 secondary_unit,
-                qty_unit,
-                quantity,
-                current_stock,
+                conversion,
                 mrp,
-                shelf_label,
-                entry_date,
-                exp_date,
-                mfg_date,
-                emp_created,
-                emp_updated,
-                barcode,
-                threshold)
+                addedBy,
+                verified)
                 values(?,?,?,?,?,?)`,
             [
-                data.org_id,
-                data.exp_date,
-                data.mfg_date,
-                data.qty_unit,
-                data.batch_qty,
-                data.entry_date,
-                data.shelf_label,
-                `${date_time}`,
-                `${date_time}`,
-                data.product_id,
-                data.vendor_id
+                data.product_name,
+                data.mfg,
+                data.mkt,
+                data.salt,
+                data.hsn,
+                data.primary_unit,
+                data.secondary_unit,
+                data.conversion,
+                data.mrp,
+                data.addedBy,
+                data.verified
             ],
             function (error, results) {
                 if(error){
@@ -49,32 +41,35 @@ module.exports = {
         )
     },
 
-    // Update Inventory
+    // Update product
     update: (error, results) => {
         getPool().query(
             `update product set
-            org_id = ?,
-            exp_date = ?,
-            mfg_date = ?,
-            qty_unit= ?,
-            batch_qty = ?,
-            entry_date = ?,
-            shelf_label = ?,
-            updated_date = ?,
-            product_id = ?,
-            vendor_id = ?
+            product_name = ?,
+            mfg = ?,
+            mkt = ?,
+            salt = ?,
+            hsn = ?,
+            primary_unit = ?,
+            secondary_unit = ?,
+            conversion = ?,
+            mrp = ?,
+            addedBy = ?,
+            verified = ?
             where product_id = ?`
             [ 
-                data.org_id,
-                data.exp_date,
-                data.mfg_date,
-                data.qty_unit,
-                data.batch_qty,
-                data.entry_date,
-                data.shelf_label,
-                `${date_time}`,
-                data.product_id,
-                data.vendor_id
+                data.product_name,
+                data.mfg,
+                data.mkt,
+                data.salt,
+                data.hsn,
+                data.primary_unit,
+                data.secondary_unit,
+                data.conversion,
+                data.mrp,
+                data.addedBy,
+                data.verified,
+                data.product_id
             ],
             function (error, results) {
                 if(error){
@@ -99,11 +94,11 @@ module.exports = {
         )
     },
 
-    //Get All Products by batch ID
+    //Get All Products
     getAllById: (data, callBack) => {
         getPool().query(
-            `select * from product where batch_id = ?`,
-            [data.batch_id],
+            `select * from product`,
+            [data],
             function (error, results) {
                 if(error){
                  return callBack (error)

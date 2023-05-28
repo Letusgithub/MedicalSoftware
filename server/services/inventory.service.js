@@ -8,27 +8,25 @@ module.exports = {
         getPool().query(
             `insert into inventory(
                 org_id,
+                product_id,
                 vendor_id,
                 exp_date,
                 mfg_date,
                 qty_unit,
                 batch_qty,
                 entry_date,
-                shelf_label,
-                created_date,
-                updated_date)
-                values(?,?,?,?,?,?)`,
+                shelf_label)
+                values(?,?,?,?,?,?,?,?,?)`,
             [
                 data.org_id,
                 data.vendor_id,
+                data.product_id,
                 data.exp_date,
                 data.mfg_date,
                 data.qty_unit,
                 data.batch_qty,
                 data.entry_date,
                 data.shelf_label,
-                `${date_time}`,
-                `${date_time}`,
             ],
             function (error, results) {
                 if(error){
@@ -44,17 +42,18 @@ module.exports = {
         getPool().query(
             `update inventory set
             org_id = ?,
+            product_id = ?,
             vendor_id = ?,
             exp_date = ?,
             mfg_date = ?,
             qty_unit= ?,
             batch_qty = ?,
             entry_date = ?,
-            shelf_label = ?,
-            updated_date = ?,
+            shelf_label = ? 
             where batch_id = ?`
             [ 
                 data.org_id,
+                data.product_id,
                 data.vendor_id,
                 data.exp_date,
                 data.mfg_date,
@@ -62,7 +61,7 @@ module.exports = {
                 data.batch_qty,
                 data.entry_date,
                 data.shelf_label,
-                `${date_time}`
+                data.batch_id
             ],
             function (error, results) {
                 if(error){

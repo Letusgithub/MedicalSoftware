@@ -3,34 +3,24 @@ const {getPool} = require('../config/database.js');
 const date_time = new Date();
 module.exports = {
 
-    //Create Inventory
+    //Create PO
     create: (data, callBack) => {
         getPool().query(
             `insert into order(
-                org_id,
-                exp_date,
-                mfg_date,
-                qty_unit,
-                batch_qty,
-                entry_date,
-                shelf_label,
-                created_date,
-                updated_date,
+                vendor_id,
                 product_id,
-                vendor_id)
+                org_id,
+                quantity,
+                status,
+                exp_delivery_date)
                 values(?,?,?,?,?,?)`,
             [
-                data.org_id,
-                data.exp_date,
-                data.mfg_date,
-                data.qty_unit,
-                data.batch_qty,
-                data.entry_date,
-                data.shelf_label,
-                `${date_time}`,
-                `${date_time}`,
+                data.vendor_id,
                 data.product_id,
-                data.vendor_id
+                data.org_id,
+                data.quantity,
+                data.status,
+                data.exp_delivery_date
             ],
             function (error, results) {
                 if(error){
@@ -41,32 +31,25 @@ module.exports = {
         )
     },
 
-    // Update Inventory
+    // Update PO
     update: (error, results) => {
         getPool().query(
             `update order set
-            org_id = ?,
-            exp_date = ?,
-            mfg_date = ?,
-            qty_unit= ?,
-            batch_qty = ?,
-            entry_date = ?,
-            shelf_label = ?,
-            updated_date = ?,
+            vendor_id = ?,
             product_id = ?,
-            vendor_id = ?
-            where product_id = ?`
-            [ 
-                data.org_id,
-                data.exp_date,
-                data.mfg_date,
-                data.qty_unit,
-                data.batch_qty,
-                data.entry_date,
-                data.shelf_label,
-                `${date_time}`,
+            org_id = ?,
+            quantity = ?,
+            status= = ?,
+            exp_delivery_date = ?
+            where po_id = ?`
+            [
+                data.vendor_id,
                 data.product_id,
-                data.vendor_id
+                data.org_id,
+                data.quantity,
+                data.status,
+                data.exp_delivery_date,
+                data.po_id
             ],
             function (error, results) {
                 if(error){
