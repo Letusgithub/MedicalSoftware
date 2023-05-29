@@ -12,6 +12,7 @@ module.exports = {
                 mkt,
                 salt,
                 hsn,
+                category,
                 primary_unit,
                 secondary_unit,
                 conversion,
@@ -25,12 +26,13 @@ module.exports = {
                 data.mkt,
                 data.salt,
                 data.hsn,
+                data.category,
                 data.primary_unit,
                 data.secondary_unit,
                 data.conversion,
                 data.mrp,
                 data.addedBy,
-                data.verified
+                data.verified,
             ],
             function (error, results) {
                 if(error){
@@ -50,6 +52,7 @@ module.exports = {
             mkt = ?,
             salt = ?,
             hsn = ?,
+            category = ?,
             primary_unit = ?,
             secondary_unit = ?,
             conversion = ?,
@@ -63,6 +66,7 @@ module.exports = {
                 data.mkt,
                 data.salt,
                 data.hsn,
+                data.category,
                 data.primary_unit,
                 data.secondary_unit,
                 data.conversion,
