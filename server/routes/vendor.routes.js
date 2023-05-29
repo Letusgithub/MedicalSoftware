@@ -9,9 +9,9 @@ module.exports = (app) => {
     next();
   });
 
-  app.post('/vendor/', controller.createVendor);
-  app.patch('/vendor/', controller.updateVendor);
-  app.delete('/vendor/', controller.deleteVendor);
+  app.post('/vendor', controller.createVendor);
+  app.patch('/vendor', controller.updateVendor);
+  app.delete('/vendor/:id', controller.deleteVendor);
   app.get('/vendor/:id', controller.getVendorById);
   app.get('/vendor/:id', controller.getAllVendorsById);
 };
