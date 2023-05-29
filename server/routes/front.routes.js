@@ -69,11 +69,37 @@ module.exports = (app) => {
   });
 
   app.get('/customer_list', (req, res) => {
-    res.render('OwnerControls/customer_list');
+    getPool().query(
+      'select * from customer_data ',
+      [],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        // console.log(results)
+        res.render('OwnerControls/customer_list', { data: results });
+      },
+    );
+
+    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/new_customer', (req, res) => {
     res.render('OwnerControls/new_customer');
+  });
+
+  app.get('/update_customer/:id', (req, res) => {
+    getPool().query(
+      'select * from customer_data where customer_id =?',
+      [req.params.id],
+      (error, results) => {
+        if (error) {
+          throw error;
+        }
+        res.render('OwnerControls/update_customer', { customers: results });
+      },
+    );
   });
 
   app.get('/vendor_list', (req, res) => {

@@ -34,16 +34,16 @@
                   <div class="card mb-4 mx-auto col-md-10">
 
                     <div class="card-body ">
-                      <form>
+                      <form action="/api/cust/" method="POST">
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Customer Name</label>
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname" >Customer Name</label>
                           <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                               <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                   class="bx bx-user"></i></span>
                               <input type="text" class="form-control" id="basic-icon-default-fullname"
                                 placeholder="John Doe" aria-label="John Doe"
-                                aria-describedby="basic-icon-default-fullname2">
+                                aria-describedby="basic-icon-default-fullname2" name="cust_name">
                             </div>
                           </div>
                         </div>
@@ -56,7 +56,7 @@
                                   class="bx bx-phone"></i></span>
                               <input type="text" id="basic-icon-default-phone" class="form-control phone-mask"
                                 placeholder="658 799 8941" aria-label="658 799 8941"
-                                aria-describedby="basic-icon-default-phone2">
+                                aria-describedby="basic-icon-default-phone2" name="cust_telephone">
                             </div>
                           </div>
                         </div>
@@ -68,7 +68,7 @@
                               <span class="input-group-text"><i class="bx bx-building"></i></span>
                               <input type="text" id="basic-icon-default-address" class="form-control"
                                 placeholder="address" aria-label="address"
-                                aria-describedby="basic-icon-default-address2">
+                                aria-describedby="basic-icon-default-address2" name="cust_address">
 
                             </div>
 
@@ -83,7 +83,7 @@
                               <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                               <input type="text" id="basic-icon-default-email" class="form-control"
                                 placeholder="john.doe" aria-label="john.doe"
-                                aria-describedby="basic-icon-default-email2">
+                                aria-describedby="basic-icon-default-email2"  name="cust_email">
                               <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
                             </div>
 

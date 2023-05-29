@@ -20,8 +20,6 @@
               <div class="content-wrapper">
 
 
-
-
                 <!-- Content -->
 
                 <div class="container-xxl flex-grow-1 container-p-y">
@@ -32,6 +30,22 @@
 
                       <tr>
                         <th>
+                          <div class="col-md-6">
+                            <div class="card mb-4">
+                              <h5 class="card-header">Customer Mobile</h5>
+                              <div class="card-body">
+                                <div>
+
+                                  <input type="text" class="form-control" id="phonenumber"
+                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </th>
+
+                        <th>
 
                           <div class="col-md-6">
 
@@ -39,7 +53,66 @@
                               <div class="d-flex justify-content-between m-0 p-0">
                                 <h5 class="card-header">Customer Name</h5>
                                 <div class=" text-center mt-3 ">
-                                  <a class="btn btn-primary mx-4" style="color: white;" href="/new_customer">Add New
+                                  <a class="btn btn-primary mx-4" style="color: white;" id="addnewcustomer">Add Customer</a>
+                                </div>
+                              </div>
+                              <div class="card-body pt-0">
+                                <div>
+
+                                  <input type="text" class="form-control" id="customername"
+                                    aria-describedby="defaultFormControlHelp" placeholder="Customer name" />
+
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </th>
+
+                      </tr>
+                    </div>
+                
+                  </form>
+                </div>
+              </div>
+
+
+
+
+                <!-- Content
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+                  <h4 class="fw-bold py-3 mb-1"> Sale Invoice</h4>
+                  <hr class="mb-4">
+                  <form>
+                    <div class="row">
+
+                      <tr>
+                        <th>
+                          <div class="col-md-6">
+                            <div class="card mb-4">
+                              <h5 class="card-header">Customer Mobile</h5>
+                              <div class="card-body">
+                                <div>
+
+                                  <input type="text" class="form-control" id="phonenumber"
+                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </th>
+
+                        <th>
+
+                          <div class="col-md-6">
+
+                            <div class="card mb-4">
+                              <div class="d-flex justify-content-between m-0 p-0">
+                                <h5 class="card-header">Customer Name</h5>
+                                <div class=" text-center mt-3 ">
+                                  <a class="btn btn-primary mx-4" style="color: white;" href="">Add
                                     Customer</a>
                                 </div>
                               </div>
@@ -55,70 +128,13 @@
                             </div>
                           </div>
                         </th>
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Mobile Number</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input type="text" class="form-control" id="phonenumber"
-                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
 
                       </tr>
                     </div>
-
-                    <div class="row">
-                      <tr>
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Date</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input class="form-control" type="date" id="date" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Mode of Payment</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <select class="form-select" id="mop" name="mop" aria-label="select mop">
-                                    <option selected disabled>Select Option</option>
-                                    <option value="cash">Cash</option>
-                                    <option value="upi">UPI</option>
-                                    <option value="debit-card">Debit card</option>
-                                    <option value="credit-card">Credit card</option>
-
-                                  </select>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                      </tr>
-                    </div>
-
+                
                   </form>
                 </div>
-              </div>
+              </div> -->
 
 
               <div class="row mx-3">
@@ -214,7 +230,7 @@
                       </div>
                     </div>
                     <div class="buttonBox text-center pb-3">
-                      <btn class="btn btn-primary" style="color: white;">Add to
+                      <btn class="btn btn-primary" style="color: white;" id="addtocart">Add to
                         Cart</btn>
                       <input type="reset" class="btn btn-primary" style="color: white;" value="Clear" />
                     </div>
@@ -243,7 +259,7 @@
                           </tr>
                         </thead>
                         <tbody id="cart">
-                          <tr>
+                          <!-- <tr>
                             <td>1</td>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Calpol 1000mg
                                 Tablet</strong></td>
@@ -257,7 +273,7 @@
                                 <button type="button" class="btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
                               </div>
                             </td>
-                          </tr>
+                          </tr> -->
 
 
                         </tbody>
@@ -304,7 +320,7 @@
 
                 <div class="col-md-3">
                   <div class="card mb-4">
-                    <h5 class="card-header">Add Discount (%)</h5>
+                    <h5 class="card-header">Additional Discount (₹)</h5>
                     <div class="card-body">
                       <div>
 
@@ -320,10 +336,7 @@
                   <div class="card mb-4">
                     <div class="d-flex justify-content-between m-0 p-0">
                       <h5 class="card-header">Final Amount</h5>
-                      <div class="text-center m-3">
-                        <a class="btn btn-primary btn-sm" style="color: white;">Round Off</a>
-                      </div>
-                    </div>
+                   </div>
 
                     <div class="card-body pt-0">
                       <div>
@@ -337,24 +350,22 @@
                 </div>
 
                 <div class="col-md-3">
-                  <div class="card mb-1">
-                    <h5 class="card-header">Paid Amount</h5>
+                  <div class="card mb-4">
+                    <h5 class="card-header">Mode of Payment</h5>
                     <div class="card-body">
                       <div>
-
-                        <input type="text" class="form-control" id="defaultFormControlInput"
-                          aria-describedby="defaultFormControlHelp" />
+                        <select class="form-select" id="mop" name="mop" aria-label="select mop">
+                          <option selected disabled>Select Option</option>
+                          <option value="cash">Cash</option>
+                          <option value="upi">UPI</option>
+                          <option value="debit-card">Debit card</option>
+                          <option value="credit-card">Credit card</option>
+                        </select>
 
                       </div>
                     </div>
                   </div>
-                  <p class="card-header py-2 px-3">Change: </p>
                 </div>
-
-
-
-
-
 
               </div>
               <!-- / Content -->
@@ -387,9 +398,350 @@
     <!-- / Layout wrapper -->
 
     <%- include('../partials/footercode.ejs') %>
+      <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+      <script>
+        
+        var customerPhones =[];
+        var customerData = [];
+
+        var customerName =[];
+        var cartarray =[];
+
+        var selectedCustomer;
+        var selectedTelephone;
+
+        $(document).ready(function () {
+
+// get customer data and show it in the autocomplete function
+          $.get('/api/cust/', function (data, status) {
+
+            for (let i in data.data) {
+
+             
+              customerData.push({phone: JSON.stringify(data.data[i].cust_telephone), name: data.data[i].cust_name});
+
+            //if want customer phone to autopopulate->
+            // var options = `${data.data[i].cust_name} (${data.data[i].cust_telephone})`;
+            // customerName.push(options)
+
+            }
 
 
-      <!-- Add item to cart table function -->
+            $("#phonenumber").autocomplete({
+              //source: customerData.map(function(customer) {
+              //        return customer.name + ' (' + customer.phone + ')';
+              //        }),
+              source: customerData.map(function(customer){
+                return customer.phone;
+              }),
+              select: function(event, ui) {
+                selectedCustomerNumber = JSON.parse(ui.item.value);
+                selectedCustomerName = customerData.find(c => c.phone == selectedCustomerNumber);
+                $("#customername").val(selectedCustomerName.name);
+                
+//if wanted to populate customer number through name->
+                //var name = selectedCustomer.split(' ')[0];
+                //var number = selectedCustomer.match(/\(([^)]+)\)/)[1];
+
+                //console.log("selected", selectedCustomer);
+
+               // $("#customername").val(selectedCustomer.split(' ')[0]);
+               // $("#phonenumber").val(number);
+              
+              }
+            })
+            $("#phonenumber").change(function(){
+              
+              var phone = $(this).val();
+              
+              if(customerData.find(c => c.phone != phone)){
+                
+                var newCustomerName;
+                
+                $("#customername").keyup(function(){
+                  newCustomerName = $(this).val();
+                  console.log(newCustomerName);
+                })
+                
+
+               
+
+                $("#addnewcustomer").click(function(){
+                  var addCustomerData ={
+                    cust_name: newCustomerName,
+                    cust_telephone :phone
+                  }
+                  console.log(addCustomerData);
+
+                  $.ajax({
+                    url: '/api/cust/',
+                    type:'POST',
+                    data: JSON.stringify(addCustomerData),
+                    contentType: 'application/json',
+                    success: function(response){
+                      location.reload();
+                    },
+                    error: function(error){
+                      alert("not Created", error )
+                    }
+                  })
+
+                  
+                })
+
+              }
+
+            })
+          })
+      //end of autocomplete function
+
+
+      //start of product cart 
+          var product=[];
+          var i=0;
+          $.get('/api/cust/', function (data, status) {
+
+            for(let i in data.data){
+              product.push(data.data[i].cust_name);
+            }
+
+            $("#medicinename").autocomplete({
+              source: product
+            })
+          })
+
+          //var productname = $("medicinename").val();
+          var quantityInput = $("#qty");
+          var priceInput = $("#price");
+          var discInput = $("#discount");
+          var totalInput = $("#total");
+
+          quantityInput.on("input", calculateTotal);
+          priceInput.on("input", calculateTotal);
+          discInput.on("input", calculateTotal);
+
+
+          function calculateTotal() {
+            var quantity = parseInt(quantityInput.val()) || 0;
+            var price = parseFloat(priceInput.val()) || 0;
+            var discount = parseFloat(discInput.val()) || 0;
+            discount = discount/100;
+            var total = quantity * price - (quantity * price* discount) ;
+
+        
+            totalInput.val(total.toFixed(2));
+          }
+
+          //getting data when referesh
+          var cartItems = JSON.parse(localStorage.getItem('cartitems')) || [];
+          renderRefreshCart(cartItems);
+
+          function renderRefreshCart(items) {
+            $('#cart').empty();
+            for (var i = 0; i < items.length; i++) {
+              cartarray.push(items[i]);
+
+              htmlData = `
+                        <tr>
+                          <td class="card_id">${i+1}</td>
+                          <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                          <td>${items[i].qty}</td>
+                          <td>${items[i].mrp}</td>
+                          <td>${items[i].disc}</td>
+                          <td>${items[i].total}</td>
+                          <td>
+                            <div class="action-btns">
+                              <button type="button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                              <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                            </div>
+                          </td>
+                        </tr>
+                        `
+              $('#cart').append(htmlData);
+            }
+          }
+          //end of logic for referesh data
+
+            
+            var setLocalData;
+            var getLocalData;
+            var htmlData;
+            $("#addtocart").click(function(){
+                      var products = $("#medicinename").val();  
+                      var qty = quantityInput.val();
+                      var mrp =priceInput.val();
+                      var disc =discInput.val();
+                      var total = totalInput.val();
+
+                cartarray.push({productname: products, qty: qty, mrp: mrp, disc: disc, total:total, timestamp: new Date().getTime()})
+                      console.log("object", cartarray);
+                      setLocalData = JSON.stringify(cartarray);
+                      
+                      localStorage.setItem("cartitems", setLocalData);
+
+                      $("#medicinename").val("");
+                      $("#qty").val("");
+                      $("#price").val("");
+                      $("#discount").val("");
+                      $("#total").val("");
+             
+                    })
+     
+                  
+
+          // logic for redering cart data on addtocart click 
+            $("#addtocart").on('click', function(event) {              
+              cartItems = JSON.parse(localStorage.getItem('cartitems')) || [];
+              renderCart(cartItems);
+            });
+
+//deletefunctionality
+            $("#cart").on("click", ".delete-button", function() {
+              var item = $(this).closest("tr");
+              var item_id =item.find(".card_id").text().trim();
+              var cartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
+              cartItemsinStorage.splice(item_id - 1,1);
+            //  console.log("objectclicked", cartItemsinStorage);
+              cartarray = cartItemsinStorage;
+            // console.log("cartarray", cartarray);
+              localStorage.setItem('cartitems', JSON.stringify(cartItemsinStorage));
+              renderCart(cartItemsinStorage);
+            });
+//endofdeletefunctionality
+
+
+//edit functionalituy  
+            $("#cart").on("click", ".edit-button", function(){
+              var item = $(this).closest("tr");
+              var item_id =item.find(".card_id").text().trim();
+              var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
+              var selectedItem = UpdatecartItemsinStorage[item_id-1];
+    
+                $("#medicinename").val(selectedItem.productname);
+                $("#qty").val(selectedItem.qty);
+                $("#price").val(selectedItem.mrp);
+                $("#discount").val(selectedItem.disc);
+                $("#total").val(selectedItem.total);
+
+                UpdatecartItemsinStorage.splice(item_id - 1,1);
+                cartarray = UpdatecartItemsinStorage;
+                localStorage.setItem('cartitems', JSON.stringify(UpdatecartItemsinStorage));
+                renderCart(UpdatecartItemsinStorage);
+
+
+            })
+//end of edit functionality
+
+
+
+            function renderCart(items) {
+              $('#cart').empty();
+
+              for (var i = 0; i < items.length; i++) {
+                console.log(items[i]);
+                htmlData = `
+                          <tr>
+                            <td class="card_id">${i+1}</td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                            <td>${items[i].qty}</td>
+                            <td>${items[i].mrp}</td>
+                            <td>${items[i].disc}</td>
+                            <td>${items[i].total}</td>
+                            <td>
+                              <div class="action-btns">
+                                <button type="button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          `
+                $('#cart').append(htmlData);
+              }
+            }
+            //end of rendereing data logic
+         
+
+//implementing time after which cart clears itself
+            function checkExpiration() {
+              var data = JSON.parse(localStorage.getItem('cartitems'));
+              var currentTime = new Date().getTime();
+              if (data && (currentTime - data[data.length-1].timestamp) >= ( 60 * 60 * 1000)) {
+                console.log("expired");
+                localStorage.removeItem('cartitems');
+              }
+            }
+
+            setTimeout(function() {
+              console.log("checking");
+              checkExpiration();
+            }, 3600000);
+
+//end of this function
+/*
+              var newRow = $("<tr>");
+              newRow.addClass("cart-item");
+
+                var index = $("<td>").addClass("index").text(i);
+                var productName = $("<td>").addClass("updateproduct").text(products);
+                  var qtys = $("<td>").addClass("updateqty").text(qty);
+                  var mrps = $("<td>").addClass("updateprice").text(mrp);
+                  var discs = $("<td>").addClass("updatedisc").text(disc);
+                  var totals = $("<td>").addClass("updatetotal").text(total);
+                 
+               
+                  var actionButtons = $("<div>").addClass("action-btns");
+                  var editButton = $("<button>").addClass("edit-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bxs-edit'></i>");
+                  var deleteButton = $("<button>").addClass("delete-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bx-trash me-1'></i>");
+
+                  actionButtons.append(editButton, deleteButton);
+
+                newRow.append(index, productName, qtys,mrps, discs, totals, $("<script>").append(actionButtons));
+                $("#cart").append(newRow);
+*/ 
+
+
+ 
+
+                //deleting an item
+              
+                
+                  //item.remove();
+/*
+                $("#cart").on("click", ".edit-button", function(){
+                    var updateElement = $(this).closest("tr")
+                    var productName = updateElement.find(".updateproduct").text().trim();
+                    var qtyUpdate = updateElement.find(".updateqty").text().trim();
+                    var priceUpdate = updateElement.find(".updateprice").text().trim();
+                    var discUpdate = updateElement.find(".updatedisc").text().trim();
+                    var totalUpdate = updateElement.find(".updatetotal").text().trim();
+                    
+                $("#medicinename").val(productName);
+                $("#qty").val(qtyUpdate);
+                $("#price").val(priceUpdate);
+                $("#discount").val(discUpdate);
+                $("#total").val(totalUpdate);
+                
+                
+                updateElement.remove();
+              }) 
+              */
+              
+              
+              
+        
+        
+              
+              
+              
+              
+              
+              
+              
+              
+            })
+
+          </script>
+
       <script>
         var addToCart = document.getElementById("addtocart")
         addToCart.addEventListener("click", displayItems)
@@ -443,11 +795,6 @@
       </script>
 
 
-
-
-
-
-
   </body>
 
 
@@ -475,44 +822,3 @@
 
 
 
-
-
-
-
-
-
-
-
-  <!-- <script>
-        $('.add-more-btn').click(function () {
-          var clone = $('.form-main:first').clone('');
-          clone.find('input').val('');
-          $(".buttonBox").before(clone);
-        });
-
-        $('.remove').click(function () {
-          $('.form-main:last').remove();
-        });
-      </script>
-
-      <script>
-        $(function () {
-          var dtToday = new Date();
-
-          var month = dtToday.getMonth() + 1;
-          var day = dtToday.getDate();
-          var year = dtToday.getFullYear();
-          if (month < 10)
-            month = '0' + month.toString();
-          if (day < 10)
-            day = '0' + day.toString();
-
-          var maxDate = year + '-' + month + '-' + day;
-
-          // or instead:
-          // var maxDate = dtToday.toISOString().substr(0, 10);
-
-
-          $('#txtDate').attr('min', maxDate);
-        });
-      </script> -->
