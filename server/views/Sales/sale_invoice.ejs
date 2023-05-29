@@ -89,6 +89,22 @@
 
                       <tr>
                         <th>
+                          <div class="col-md-6">
+                            <div class="card mb-4">
+                              <h5 class="card-header">Customer Mobile</h5>
+                              <div class="card-body">
+                                <div>
+
+                                  <input type="text" class="form-control" id="phonenumber"
+                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </th>
+
+                        <th>
 
                           <div class="col-md-6">
 
@@ -96,7 +112,7 @@
                               <div class="d-flex justify-content-between m-0 p-0">
                                 <h5 class="card-header">Customer Name</h5>
                                 <div class=" text-center mt-3 ">
-                                  <a class="btn btn-primary mx-4" style="color: white;" href="/new_customer">Add New
+                                  <a class="btn btn-primary mx-4" style="color: white;" href="">Add
                                     Customer</a>
                                 </div>
                               </div>
@@ -112,67 +128,10 @@
                             </div>
                           </div>
                         </th>
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Mobile Number</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input type="text" class="form-control" id="phonenumber"
-                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
 
                       </tr>
                     </div>
-
-                    <div class="row">
-                      <tr>
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Date</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input class="form-control" type="date" id="date" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Mode of Payment</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <select class="form-select" id="mop" name="mop" aria-label="select mop">
-                                    <option selected disabled>Select Option</option>
-                                    <option value="cash">Cash</option>
-                                    <option value="upi">UPI</option>
-                                    <option value="debit-card">Debit card</option>
-                                    <option value="credit-card">Credit card</option>
-
-                                  </select>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                      </tr>
-                    </div>
-
+                
                   </form>
                 </div>
               </div> -->
@@ -361,7 +320,7 @@
 
                 <div class="col-md-3">
                   <div class="card mb-4">
-                    <h5 class="card-header">Add Discount (%)</h5>
+                    <h5 class="card-header">Additional Discount (₹)</h5>
                     <div class="card-body">
                       <div>
 
@@ -377,10 +336,7 @@
                   <div class="card mb-4">
                     <div class="d-flex justify-content-between m-0 p-0">
                       <h5 class="card-header">Final Amount</h5>
-                      <div class="text-center m-3">
-                        <a class="btn btn-primary btn-sm" style="color: white;">Round Off</a>
-                      </div>
-                    </div>
+                   </div>
 
                     <div class="card-body pt-0">
                       <div>
@@ -394,24 +350,22 @@
                 </div>
 
                 <div class="col-md-3">
-                  <div class="card mb-1">
-                    <h5 class="card-header">Paid Amount</h5>
+                  <div class="card mb-4">
+                    <h5 class="card-header">Mode of Payment</h5>
                     <div class="card-body">
                       <div>
-
-                        <input type="text" class="form-control" id="defaultFormControlInput"
-                          aria-describedby="defaultFormControlHelp" />
+                        <select class="form-select" id="mop" name="mop" aria-label="select mop">
+                          <option selected disabled>Select Option</option>
+                          <option value="cash">Cash</option>
+                          <option value="upi">UPI</option>
+                          <option value="debit-card">Debit card</option>
+                          <option value="credit-card">Credit card</option>
+                        </select>
 
                       </div>
                     </div>
                   </div>
-                  <p class="card-header py-2 px-3">Change: </p>
                 </div>
-
-
-
-
-
 
               </div>
               <!-- / Content -->
@@ -449,8 +403,10 @@
         
         var customerPhones =[];
         var customerData = [];
+
         var customerName =[];
         var cartarray =[];
+
         var selectedCustomer;
         var selectedTelephone;
 
@@ -460,13 +416,16 @@
           $.get('/api/cust/', function (data, status) {
 
             for (let i in data.data) {
+
              
               customerData.push({phone: JSON.stringify(data.data[i].cust_telephone), name: data.data[i].cust_name});
 
             //if want customer phone to autopopulate->
             // var options = `${data.data[i].cust_name} (${data.data[i].cust_telephone})`;
             // customerName.push(options)
+
             }
+
 
             $("#phonenumber").autocomplete({
               //source: customerData.map(function(customer) {
@@ -483,6 +442,7 @@
 //if wanted to populate customer number through name->
                 //var name = selectedCustomer.split(' ')[0];
                 //var number = selectedCustomer.match(/\(([^)]+)\)/)[1];
+
                 //console.log("selected", selectedCustomer);
 
                // $("#customername").val(selectedCustomer.split(' ')[0]);
@@ -534,6 +494,7 @@
             })
           })
       //end of autocomplete function
+
 
       //start of product cart 
           var product=[];
@@ -667,8 +628,10 @@
                 localStorage.setItem('cartitems', JSON.stringify(UpdatecartItemsinStorage));
                 renderCart(UpdatecartItemsinStorage);
 
+
             })
 //end of edit functionality
+
 
 
             function renderCart(items) {
@@ -778,6 +741,7 @@
             })
 
           </script>
+
       <script>
         var addToCart = document.getElementById("addtocart")
         addToCart.addEventListener("click", displayItems)
@@ -829,11 +793,6 @@
         };
 
       </script>
-
-
-
-
-
 
 
   </body>
