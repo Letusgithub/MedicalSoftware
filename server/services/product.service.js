@@ -1,12 +1,14 @@
-const {getPool} = require('../config/database.js');
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
+const { getPool } = require('../config/database');
 
 const date_time = new Date();
 module.exports = {
 
-    //Create product
-    create: (data, callBack) => {
-        getPool().query(
-            `insert into product(
+  // Create product
+  create: (data, callBack) => {
+    getPool().query(
+      `insert into product(
                 product_name,
                 mfg,
                 mkt,
@@ -20,33 +22,33 @@ module.exports = {
                 addedBy,
                 verified)
                 values(?,?,?,?,?,?)`,
-            [
-                data.product_name,
-                data.mfg,
-                data.mkt,
-                data.salt,
-                data.hsn,
-                data.category,
-                data.primary_unit,
-                data.secondary_unit,
-                data.conversion,
-                data.mrp,
-                data.addedBy,
-                data.verified,
-            ],
-            function (error, results) {
-                if(error){
-                 return callBack (error)
-                }; 
-                return callBack (null, results);                   
-            }
-        )
-    },
+      [
+        data.product_name,
+        data.mfg,
+        data.mkt,
+        data.salt,
+        data.hsn,
+        data.category,
+        data.primary_unit,
+        data.secondary_unit,
+        data.conversion,
+        data.mrp,
+        data.addedBy,
+        data.verified,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
 
-    // Update product
-    update: (error, results) => {
-        getPool().query(
-            `update product set
+  // Update product
+  update: (error, results) => {
+    getPool().query(
+      `update product set
             product_name = ?,
             mfg = ?,
             mkt = ?,
@@ -60,71 +62,71 @@ module.exports = {
             addedBy = ?,
             verified = ?
             where product_id = ?`
-            [ 
-                data.product_name,
-                data.mfg,
-                data.mkt,
-                data.salt,
-                data.hsn,
-                data.category,
-                data.primary_unit,
-                data.secondary_unit,
-                data.conversion,
-                data.mrp,
-                data.addedBy,
-                data.verified,
-                data.product_id
-            ],
-            function (error, results) {
-                if(error){
-                 return callBack (error)
-                }; 
-                return callBack (null, results[0]);                   
-            }
-        )
-    },
+        [
+          data.product_name,
+          data.mfg,
+          data.mkt,
+          data.salt,
+          data.hsn,
+          data.category,
+          data.primary_unit,
+          data.secondary_unit,
+          data.conversion,
+          data.mrp,
+          data.addedBy,
+          data.verified,
+          data.product_id
+        ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      },
+    );
+  },
 
-    // Delete product
-    delete: (data, callBack) => {
-        getPool().query(
-            `delete from product where product_id = ?`,
-            [data.product_id],
-            function (error, results) {
-                if(error){
-                 return callBack (error)
-                }; 
-                return callBack (null, results);                   
-            }
-        )
-    },
+  // Delete product
+  delete: (data, callBack) => {
+    getPool().query(
+      'delete from product where product_id = ?',
+      [data.product_id],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
 
-    //Get All Products
-    getAllById: (data, callBack) => {
-        getPool().query(
-            `select * from product`,
-            [data],
-            function (error, results) {
-                if(error){
-                 return callBack (error)
-                }; 
-                return callBack (null, results);                   
-            }
+  // Get All Products
+  getAllById: (data, callBack) => {
+    getPool().query(
+      'select * from product',
+      [data],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
 
-        );
-    },
+    );
+  },
 
-    // Get product by product ID
-    getById: (product_id, callBack) => {
-        getPool().query(
-            `select * from product where product_id = ?`,
-            [data.product_id],
-            function (error, results) {
-                if(error){
-                 return callBack (error)
-                }; 
-                return callBack (null, results[0]);                   
-            }
+  // Get product by product ID
+  getById: (product_id, callBack) => {
+    getPool().query(
+      'select * from product where product_id = ?',
+      [data.product_id],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      },
 
-        )
-    },
-}
+    );
+  },
+};

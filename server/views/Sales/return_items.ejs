@@ -30,11 +30,11 @@
                       <div class=" row">
 
                         <div class="col-md-6">
-                          <div class="mb-4">
+                          <div class="mb-4" id="custcart">
 
                             <h5 class="card-header pb-3">Customer Details</h5>
-                            <h6 class="card-header py-2">Customer Name:</h6>
-                            <h6 class="card-header py-2">Contact No:</h6>
+                            <h6 class="card-header py-2" id="customername"></h6>
+                            <h6 class="card-header py-2" id="customernumber"></h6>
 
                           </div>
                         </div>
@@ -43,9 +43,9 @@
                           <div class="mb-4">
 
                             <h5 class="card-header pb-3">Order Details</h5>
-                            <h6 class="card-header py-2">Sale Invoice No:</h6>
-                            <h6 class="card-header py-2">Date:</h6>
-                            <h6 class="card-header py-2">Time:</h6>
+                            <h6 class="card-header py-2" id="saleinvoiceid"></h6>
+                            <h6 class="card-header py-2" id="date"></h6>
+                            <h6 class="card-header py-2" id="time"></h6>
 
                           </div>
                         </div>
@@ -331,6 +331,77 @@
     <!-- / Layout wrapper -->
 
     <%- include('../partials/footercode.ejs') %>
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+      $(document).ready(function(){
+
+        var returnItem = JSON.parse(localStorage.getItem("selectedreturnitem"));
+
+//getting all details of customer
+        $.get(`/api/invoice?id=${returnItem.id}`, function(data, status){
+          console.log(data.result);
+          var customerId = data.result[0].customer_id;
+          console.log(customerId);
+
+          $.get(`/api/custdetails/${customerId}`, function(data, status){
+            var customer = data.data;
+
+            var customerName = customer.cust_name;
+            var customerNumber = customer.cust_telephone;
+            var salesId = `SE-${returnItem.id}`
+            var date = returnItem.date;
+            var time =returnItem.time;
+            
+
+            $("#customername").text(`Customer Name: ${customerName}`);
+            $("#customernumber").text(`Customer No: ${customerNumber}`);
+            $("#saleinvoiceid").text(`Sale Invoice No: ${salesId}`);
+            $("#date").text(`Date: ${date}`);
+            $("#time").text(`Time: ${time}`);
+
+          })
+        })
+//end of the details logic
+
+//rendering return cart logic
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      })
+
+
+    </script>
 
 
 
