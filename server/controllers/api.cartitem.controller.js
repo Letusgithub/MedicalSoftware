@@ -1,4 +1,4 @@
-const { create } = require('../services/cartitem.service');
+const { create, getOrdersById } = require('../services/cartitem.service');
 
 module.exports = {
   create: (req, res) => {
@@ -13,6 +13,19 @@ module.exports = {
       }
       console.log('new data', data);
       res.send({ results });
+    });
+  },
+  getOrdersById: (req, res) => {
+    const id = req.params.id;
+    getOrdersById(id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.status(200).json({
+        success: 'gotorders',
+        data: results,
+      });
     });
   },
 };

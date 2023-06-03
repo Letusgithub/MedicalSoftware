@@ -17,18 +17,32 @@ module.exports = {
     const updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
     getPool().query(
 
-      `insert into cart_item(product_name, quantity, unit_discount, created_date)
-        values(?,?,?,?)`,
+      `insert into cart_item(product_name, sales_invoice_id, quantity, unit_discount, created_date, cust_id, mrp)
+        values(?,?,?,?,?,?,?)`,
       [
         data.product_name,
+        data.sales_invoice_id,
         data.quantity,
-        data.unit_discount,
+        data.unit_discount === '' ? 0 : data.unit_discount,
         created_date,
+        data.cust_id,
+        data.mrp,
       ],
       (error, results, fields) => {
         if (error) {
           return callback(error);
         }
+        return callback(null, results);
+      },
+    );
+  },
+
+  getOrdersById: (id, callback) => {
+    getPool().query(
+      'select * from cart_item where sales_invoice_id =?',
+      [id],
+      (error, results) => {
+        if (error) return callback(error);
         return callback(null, results);
       },
     );

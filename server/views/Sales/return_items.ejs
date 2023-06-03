@@ -337,7 +337,6 @@
       $(document).ready(function(){
 
         var returnItem = JSON.parse(localStorage.getItem("selectedreturnitem"));
-
 //getting all details of customer
         $.get(`/api/invoice?id=${returnItem.id}`, function(data, status){
           console.log(data.result);
@@ -365,6 +364,33 @@
 //end of the details logic
 
 //rendering return cart logic
+
+          var product=[];
+          $.get(`/api/cartitems/${returnItem.id}`, function (data, status) {
+            
+            var items =data.data;
+            
+            for(let i in items){
+              product.push({
+                productName: items[i].product_name,
+                mrp: items[i].mrp,
+                qty: items[i].quantity,
+                disc: items[i].unit_discount,
+              });
+            }
+            console.log("products",product);
+
+            $("#medicinename").autocomplete({
+              source: product.map(function(data){
+                return data.productName;
+              }),
+              select: function(event, ui){
+                var selectedItem = ui.item.value;
+                
+              }
+            })
+          })
+
         
 
 

@@ -739,17 +739,7 @@
 // post the data to the sales api
             var orderDetails;
             $("#submitorder").click(function(){
-              var orderDetails = localStorage.getItem("cartitems");
-              
 
-
-
-
-
-
-
-
-/*
               var subtotal = $("#subtotal").val();
               var total_dist = $("#additionaldiscount").val() || 0;
               var grand_total = $("#finalamount").val();
@@ -768,9 +758,10 @@
                 contentType: 'application/json',
                 success: function(response){
 
-                  var id = response.id;
+                  var customerId = response.id;
+
                   orderDetails ={
-                    customer_id: id,
+                    customer_id: customerId,
                     subtotal: subtotal,
                     total_dist: total_dist,
                     grand_total: grand_total ,
@@ -783,9 +774,39 @@
                     data: JSON.stringify(orderDetails),
                     contentType: 'application/json',
                     success: function(response){
+
+                      var salesId = response.result.insertId;
+                      var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
+
+                      for(let i in orderDetails){
+
+                        var cartDetails = ({
+                          product_name: orderDetails[i].productname,
+                          quantity: orderDetails[i].qty,
+                          mrp: orderDetails[i].mrp,
+                          unit_discount: orderDetails[i].disc,
+                          cust_id: customerId,
+                          sales_invoice_id: salesId
+                        })
+
+                        $.ajax({
+                          url: `/api/cartitems/`,
+                          type: 'POST',
+                          data: JSON.stringify(cartDetails),
+                          contentType: 'application/json',
+                          success: function(response){
+                            console.log(response);                   
+                          },
+                          error: function(error){
+                            console.log(error);
+                          }
+                        })
+                      }
+                      
                       localStorage.removeItem("cartitems");
                       localStorage.removeItem("custdata");
-                      location.reload();
+                      window.location.href = `/invoice_template/${salesId}`
+                      //location.reload();
                     },
                     error: function(error){
                       alert("not Created", error )
@@ -797,7 +818,7 @@
                   console.log("error", error);
                 }
                 
-              })*/
+              })
 
             })
 

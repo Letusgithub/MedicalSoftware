@@ -131,8 +131,9 @@ module.exports = (app) => {
     res.render('Sales/sale_return_report');
   });
 
-  app.get('/invoice_template', (req, res) => {
-    res.render('Sales/invoice_template');
+  app.get('/invoice_template/:id', (req, res) => {
+    console.log('got the id', req.params.id);
+    res.render('Sales/invoice_template', { id: req.params.id });
   });
 
   // Inventory Managment component
