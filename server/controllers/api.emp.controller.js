@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const service = require('../services/emp.service');
 
 exports.createEmp = (req, res) => {
@@ -10,8 +11,9 @@ exports.createEmp = (req, res) => {
         message: 'Database connection error',
       });
     }
+    console.log('new data', data);
 
-    return res.status(200).json({
+    return res.redirect('/employee_master').status(200).json({
       success: 1,
       data: results,
     });
@@ -19,8 +21,9 @@ exports.createEmp = (req, res) => {
 };
 
 exports.updateEmp = (req, res) => {
+  const id = req.params.id;
   const data = req.body;
-  service.update(data, (err, results) => {
+  service.update(id, data, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -40,8 +43,8 @@ exports.updateEmp = (req, res) => {
 };
 
 exports.deleteEmp = (req, res) => {
-  const data = req.body;
-  service.delete(data, (err, results) => {
+  const id = req.params.id;
+  service.delete(id, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -52,8 +55,7 @@ exports.deleteEmp = (req, res) => {
         message: 'Record Not Found',
       });
     }
-
-    return res.status(200).json({
+    return res.redirect('/employee_master').status(200).json({
       success: 1,
       message: 'Deleted successfully',
     });
@@ -81,7 +83,7 @@ exports.getEmpById = (req, res) => {
   });
 };
 
-exports.getAllEmpsById = (req, res) => {
+exports.getAllEmpsByOrgId = (req, res) => {
   const org_id = req.params.id;
   service.getAllById(org_id, (err, results) => {
     if (err) {

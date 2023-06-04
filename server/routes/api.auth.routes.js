@@ -10,5 +10,8 @@ module.exports = (app) => {
     );
     next();
   });
+
+  app.post('/api/auth/verifyOTP', controller.verifyOtp);
   app.post('/api/auth/register', controller.registerOrg);
+  app.post('/api/auth/login', controller.loginOrg);
 };
