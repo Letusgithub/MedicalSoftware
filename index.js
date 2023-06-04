@@ -17,8 +17,14 @@ require('./server/routes/api.org.routes')(app);
 require('./server/routes/api.emp.routes')(app);
 require('./server/routes/api.owner.routes')(app);
 require('./server/routes/api.ref.routes')(app);
+require('./server/routes/inventory.routes')(app);
+require('./server/routes/product.routes')(app);
+require('./server/routes/vendor.routes')(app);
+require('./server/routes/order.routes')(app);
 require('./server/routes/api.customer.routes')(app);
 require('./server/routes/api.auth.routes')(app);
+require('./server/routes/api.salesdetail.routes')(app);
+require('./server/routes/api.cartitem.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);

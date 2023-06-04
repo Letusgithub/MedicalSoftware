@@ -1,5 +1,5 @@
 const { getPool } = require('../config/database');
-const {checkAuth} = require('../middlewares/checkAuth');
+const { checkAuth } = require('../middlewares/checkAuth');
 // const controller = require('../controllers/front.controller');
 
 module.exports = (app) => {
@@ -27,7 +27,7 @@ module.exports = (app) => {
   });
 
   // Home Page
-  app.get('/', checkAuth, (req, res) => {
+  app.get('/', (req, res) => {
     res.render('home');
   });
 
@@ -146,8 +146,9 @@ module.exports = (app) => {
     res.render('Sales/sale_return_report');
   });
 
-  app.get('/invoice_template', (req, res) => {
-    res.render('Sales/invoice_template');
+  app.get('/invoice_template/:id', (req, res) => {
+    console.log('got the id', req.params.id);
+    res.render('Sales/invoice_template', { id: req.params.id });
   });
 
   // Inventory Managment component

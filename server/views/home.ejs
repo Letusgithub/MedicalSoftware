@@ -68,8 +68,8 @@
                                   </div>
                                 </div>
                               </div>
-                              <span class="fw-semibold d-block mb-1">Profit</span>
-                              <h3 class="card-title mb-2">$12,628</h3>
+                              <span class="fw-semibold d-block mb-1">Total Revenue</span>
+                              <h3 class="card-title mb-2" id="totalrevenue"></h3>
                               <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
                             </div>
                           </div>
@@ -93,8 +93,8 @@
                                   </div>
                                 </div>
                               </div>
-                              <span>Sales</span>
-                              <h3 class="card-title text-nowrap mb-1">$4,679</h3>
+                              <span>Total Orders</span>
+                              <h3 class="card-title text-nowrap mb-1" id="totalorders"></h3>
                               <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
                             </div>
                           </div>
@@ -519,6 +519,31 @@
     <!-- / Layout wrapper -->
 
     <%- include('./partials/footercode.ejs') %>
+
+    <script>
+      $(document).ready(function(){
+        $.get('/api/orderdetails/', function(data, status){
+          var items =data.data;
+          var revenue=0;
+          for(let i in items){
+            revenue += items[i].grand_total;
+          }
+          revenue = Math.round(revenue);
+          var formatedRevenue = (revenue.toLocaleString());
+          console.log(formatedRevenue);
+          $("#totalrevenue").text(formatedRevenue);
+
+          var totalOrders = data.data.length;
+          var formatedOrders = (totalOrders.toLocaleString());
+          $("#totalorders").text(formatedOrders);
+
+        })
+
+
+
+      })
+
+    </script>
 
   </body>
 

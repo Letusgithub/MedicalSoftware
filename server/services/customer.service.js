@@ -1,20 +1,21 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 const { getPool } = require('../config/database');
 
-const date_time = new Date();
-const date = (`0${date_time.getDate()}`).slice(-2);
-const month = (`0${date_time.getMonth() + 1}`).slice(-2);
-const year = date_time.getFullYear();
-
-const hours = date_time.getHours();
-const minutes = date_time.getMinutes();
-const seconds = date_time.getSeconds();
-
-const cust_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-
 module.exports = {
   create: (data, callback) => {
+    const date_time = new Date();
+    const date = (`0${date_time.getDate()}`).slice(-2);
+    const month = (`0${date_time.getMonth() + 1}`).slice(-2);
+    const year = date_time.getFullYear();
+
+    const hours = date_time.getHours();
+    const minutes = date_time.getMinutes();
+    const seconds = date_time.getSeconds();
+
+    const cust_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+    const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
     getPool().query(
       `insert into customer_data(cust_name, cust_telephone, cust_address, cust_email, created_date)
                     values(?,?,?,?,?)`,
@@ -29,6 +30,17 @@ module.exports = {
         if (error) {
           return callback(error);
         }
+        return callback(null, results);
+      },
+    );
+  },
+
+  getUserByNumber: (number, callback) => {
+    getPool().query(
+      'select * from customer_data where cust_telephone =?',
+      [number],
+      (error, results) => {
+        if (error) return callback(error);
         return callback(null, results);
       },
     );
@@ -61,6 +73,18 @@ module.exports = {
   },
 
   updateUser: (id, data, callback) => {
+    const date_time = new Date();
+    const date = (`0${date_time.getDate()}`).slice(-2);
+    const month = (`0${date_time.getMonth() + 1}`).slice(-2);
+    const year = date_time.getFullYear();
+
+    const hours = date_time.getHours();
+    const minutes = date_time.getMinutes();
+    const seconds = date_time.getSeconds();
+
+    const cust_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+    const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
     getPool().query(
       'update customer_data set cust_name=?, cust_telephone=?, cust_address=?, cust_email=?, updated_date=? where customer_id =?',
       [
@@ -80,7 +104,7 @@ module.exports = {
     );
   },
 
-  deleteUser: (id, callback) => {
+  deleteUser: (id, data, callback) => {
     getPool().query(
       'delete from customer_data where customer_id =?',
       [id],
@@ -88,6 +112,17 @@ module.exports = {
         if (error) {
           return callback(error);
         }
+        return callback(null, results);
+      },
+    );
+  },
+
+  getIdByNumber: (query, callback) => {
+    getPool().query(
+      'select * from custtomer_data where cust_telephone = ?',
+      [query],
+      (error, results) => {
+        if (error) return callback(error);
         return callback(null, results);
       },
     );
