@@ -30,20 +30,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-4 input-group input-group-merge my-2">
-                                            <span class="input-group-text" id="basic-addon-search31"><i
-                                                    class="bx bx-search"></i></span>
-                                            <input type="text" class="form-control" placeholder="Search Vendor..."
-                                                aria-label="Search..." aria-describedby="basic-addon-search31">
-                                        </div>
+                                    <div class="input-group input-group-merge my-2">
+                                        <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                                        <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                                          aria-describedby="basic-addon-search31" onkeyup="var value = $(this).val().toLowerCase();$('#VendorData tbody tr').filter(function() {$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});">
                                     </div>
+
 
                                     <hr class="mb-4">
 
-                                    <div class="card">
+                                    <div class="card" id="VendorData">
                                         <div class="table-responsive text-nowrap">
-                                            <table class="table table-hover">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Vendor Name</th>
@@ -55,122 +53,48 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="table-border-bottom-0">
-                                                    <tr>
-                                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>John Doe</strong></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>9856247350</td>
-                                                        <td>john@example.com</td>
-                                                        <td>IIT Bombay, near Hiranandani, Powai, Mumbai</td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <button type="button"
-                                                                    class="btn p-0 dropdown-toggle hide-arrow"
-                                                                    data-bs-toggle="dropdown"><i
-                                                                        class="bx bx-dots-vertical-rounded"></i></button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class='bx bx-history'></i> Order history</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>John Doe</strong></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>9856247350</td>
-                                                        <td>john@example.com</td>
-                                                        <td>IIT Bombay, near Hiranandani, Powai, Mumbai</td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <button type="button"
-                                                                    class="btn p-0 dropdown-toggle hide-arrow"
-                                                                    data-bs-toggle="dropdown"><i
-                                                                        class="bx bx-dots-vertical-rounded"></i></button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class='bx bx-history'></i> Order history</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>John Doe</strong></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>9856247350</td>
-                                                        <td>john@example.com</td>
-                                                        <td>IIT Bombay, near Hiranandani, Powai, Mumbai</td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <button type="button"
-                                                                    class="btn p-0 dropdown-toggle hide-arrow"
-                                                                    data-bs-toggle="dropdown"><i
-                                                                        class="bx bx-dots-vertical-rounded"></i></button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class='bx bx-history'></i> Order history</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>John Doe</strong></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>9856247350</td>
-                                                        <td>john@example.com</td>
-                                                        <td>IIT Bombay, near Hiranandani, Powai, Mumbai</td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <button type="button"
-                                                                    class="btn p-0 dropdown-toggle hide-arrow"
-                                                                    data-bs-toggle="dropdown"><i
-                                                                        class="bx bx-dots-vertical-rounded"></i></button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class='bx bx-history'></i> Order history</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                                    <a class="dropdown-item"
-                                                                        href="javascript:void(0);"><i
-                                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                                <tbody>
+                                                
+                                                <% for(let i in data){ %>
 
-                                </div>
+                                                <tr>
+                                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= data[i].vendor_name %></strong>
+                                                    </td>
+                                                    <td><%= data[i].vendor_gstin %></td>
+                                                    <td>
+                                                      <%= data[i].company %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data[i].vendor_contact %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data[i].email %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data[i].vendor_address %>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                            data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                              class="bx bx-dots-vertical-rounded"></i></button>
+                                                          <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="javascript:void(0);"><i
+                                                                class="bx bx-history me-1"></i> History</a>
+                                                            <a class="dropdown-item" href="/update_vendor/<%= data[i].vendor_id %>"><i
+                                                                class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                            <a class="dropdown-item" href="/vendor/<%= data[i].vendor_id %>"><i class="bx bx-trash me-1"></i>
+                                                              Delete</a>
+                        
+                                                          </div>
+                                                        </div>
+                                                      </td>
+                                                </tr>
+                                                <% } %>
+                                                    
+                                                
+
+    
                                 <!-- / Content -->
 
 

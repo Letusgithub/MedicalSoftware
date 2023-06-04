@@ -10,8 +10,7 @@ module.exports = (app) => {
   });
 
   app.post('/vendor', controller.createVendor);
-  app.patch('/vendor', controller.updateVendor);
-  app.delete('/vendor/:id', controller.deleteVendor);
-  app.get('/vendor/:id', controller.getVendorById);
-  app.get('/vendor/:id', controller.getAllVendorsById);
+  app.post('/vendor/:id', controller.updateVendor);
+  app.get('/vendor/:id', controller.deleteVendor);
+  app.get('/vendor', controller.getAllVendorsById);
 };
