@@ -12,8 +12,8 @@ module.exports = (app) => {
   });
 
   app.post('/api/emp/', controller.createEmp);
-  app.patch('/api/emp/', controller.updateEmp);
-  app.delete('/api/emp/', controller.deleteEmp);
+  app.post('/api/emp/:id/update', controller.updateEmp);
+  app.get('/api/emp/:id', controller.deleteEmp);
   app.get('/api/emp/:id', controller.getEmpById);
-  app.get('/api/emp/all/:id', controller.getAllEmpsById);
+  app.get('/api/emp/:id/all-emp', controller.getAllEmpsByOrgId);
 };

@@ -1,5 +1,5 @@
 const { getPool } = require('../config/database');
-// const {authMiddleware} = require('../middlewares');
+const {checkAuth} = require('../middlewares/checkAuth');
 // const controller = require('../controllers/front.controller');
 
 module.exports = (app) => {
@@ -21,8 +21,13 @@ module.exports = (app) => {
     res.render('Auth/register');
   });
 
+  // OTP Verification
+  app.get('/verify_otp', (req, res) => {
+    res.render('Auth/otp_verification');
+  });
+
   // Home Page
-  app.get('/', (req, res) => {
+  app.get('/', checkAuth, (req, res) => {
     res.render('home');
   });
 
@@ -68,11 +73,23 @@ module.exports = (app) => {
     res.render('OwnerControls/add_employee');
   });
 
+  app.get('/update_employee/:id', (req, res) => {
+    getPool().query(
+      'select * from employee where emp_id =?',
+      [req.params.id],
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('OwnerControls/update_employee', { data: results });
+      },
+    );
+  });
+
   app.get('/customer_list', (req, res) => {
     getPool().query(
       'select * from customer_data ',
       [],
-
       (error, results) => {
         if (error) {
           return res.send({ status: 'error', error });
@@ -81,8 +98,6 @@ module.exports = (app) => {
         res.render('OwnerControls/customer_list', { data: results });
       },
     );
-
-    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/new_customer', (req, res) => {

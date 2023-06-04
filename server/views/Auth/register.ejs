@@ -16,7 +16,7 @@
                                 <a href="" class="app-brand-link gap-2">
                                     <span class="app-brand-logo demo">
 
-                                        
+
 
                                     </span>
                                     <span class="app-brand-text demo text-body fw-bolder">Dawa.ai</span>
@@ -26,36 +26,34 @@
                             <h4 class="mb-2">Welcome to Dawa.ai! 👋</h4>
                             <p class="mb-4">Make your app management easy and fun!</p>
 
-                            <form id="formAuthentication" class="mb-3"
-                                action=""
-                                method="POST">
+                            <form id="registerForm" class="mb-3" method="POST" action="/api/auth/register">
 
                                 <div class="mb-3">
-                                    <label for="mobilenumber" class="form-label">Mobile No.</label>
-                                    <input type="number" class="form-control" id="mobilenumber" name="mobilenumber"
+                                    <label for="org_telephone" class="form-label">Mobile No.</label>
+                                    <input type="number" class="form-control" id="org_telephone" name="org_telephone"
                                         placeholder="Enter 10-digit mobile no.">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="ownername" class="form-label">Owner Name</label>
-                                    <input type="text" class="form-control" id="ownername" name="ownername"
+                                    <label for="owner_name" class="form-label">Owner Name</label>
+                                    <input type="text" class="form-control" id="owner_name" name="owner_name"
                                         placeholder="Enter owner name" autofocus="">
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="Enter your email address" autofocus="">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="gstin" class="form-label">GSTIN</label>
-                                    <input type="gstin" class="form-control" id="gstin" name="gstin"
+                                    <label for="org_name" class="form-label">Pharmacy Name</label>
+                                    <input type="text" class="form-control" id="org_name" name="org_name"
+                                        placeholder="Enter your pharmacy name" autofocus="">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="org_gstin" class="form-label">GSTIN</label>
+                                    <input type="text" class="form-control" id="org_gstin" name="org_gstin"
                                         placeholder="Enter GSTIN" autofocus="">
                                 </div>
 
 
-                               
+
                                 <div class="mb-3">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="terms-conditions"
@@ -66,7 +64,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary d-grid w-100">
+                                <button class="btn btn-primary d-grid w-100" type="submit">
                                     Get OTP
                                 </button>
                             </form>
