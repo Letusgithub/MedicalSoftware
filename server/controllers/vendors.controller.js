@@ -1,4 +1,4 @@
-  const service = require('../services/vendor.service');
+const service = require('../services/vendor.service');
 
 exports.createVendor = (req, res) => {
   const data = req.body;
@@ -40,7 +40,7 @@ exports.updateVendor = (req, res) => {
 };
 
 exports.deleteVendor = (req, res) => {
-  const data = req.body;
+  const data = req.params.id;
   service.delete(data, (err, results) => {
     if (err) {
       console.log(err);
@@ -48,20 +48,21 @@ exports.deleteVendor = (req, res) => {
     }
     if (!results) {
       return res.json({
-        ssuccess: 0,
+        success: 0,
         message: 'Record Not Found',
       });
     }
 
-    return res.status(200).json({
-      success: 1,
-      message: 'Deleted successfully',
-    });
+    res.redirect('/vendor_list');
+    // return res.status(200).json({
+    //   success: 1,
+    //   message: 'Deleted successfully',
+    // });
   });
 };
 
 exports.getVendorById = (req, res) => {
-  const vendor_id = req.params.id;
+  const data = req.params.id;
   service.getById(vendor_id, (err, results) => {
     if (err) {
       console.log(err);

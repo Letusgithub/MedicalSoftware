@@ -103,7 +103,20 @@ module.exports = (app) => {
   });
 
   app.get('/vendor_list', (req, res) => {
-    res.render('OwnerControls/vendor_list');
+    getPool().query(
+      'select * from vendor ',
+      [],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        console.log(results);
+        res.render('OwnerControls/vendor_list', { data: results });
+      },
+    );
+
+    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/new_vendor', (req, res) => {
