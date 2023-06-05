@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const { getPool } = require('../config/database');
 const { checkAuth } = require('../middlewares/checkAuth');
+const { fetchOrgId } = require('../middlewares/fetchOrgId');
 
 module.exports = (app) => {
   app.use((req, res, next) => {
@@ -29,7 +30,7 @@ module.exports = (app) => {
   });
 
   // Home Page
-  app.get('/', checkAuth, (req, res) => {
+  app.get('/', checkAuth, fetchOrgId, (req, res) => {
     // console.log('response of home', req.org_telephone);
     res.render('home');
   });

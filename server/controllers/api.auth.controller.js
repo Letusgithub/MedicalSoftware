@@ -74,8 +74,7 @@ exports.registerOrg = (req, res) => {
             error: 'Error in sending otp',
           });
         });
-      }
-      if (results) {
+      } else if (results) {
         console.log('results', results);
         if (results[0].is_verified) {
           console.log('telephone number exists');
