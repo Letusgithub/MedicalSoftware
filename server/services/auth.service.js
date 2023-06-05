@@ -36,12 +36,12 @@ module.exports = {
         OTPtoken,
       ],
       (error, results) => {
-        console.log('results of verification', results);
+        // console.log('results of verification', results);
         if (results.length == 0) {
           console.log('object in service', error);
           return callBack(error);
         }
-        // Change is_verified status to true
+        // Change is_verified status to true //
         getPool().query(
           'update organisation set is_verified = true where org_telephone = ?',
           [org_telephone],

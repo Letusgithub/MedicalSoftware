@@ -12,9 +12,9 @@ exports.verifyOtp = async (req, res) => {
   const otp_value = req.body.otp_value;
   const OTPtoken = req.body.OTPtoken;
   const org_telephone = req.body.phoneNumber;
-  console.log('otp_value', otp_value);
-  console.log('otptoken', OTPtoken);
-  console.log('otptelephone', org_telephone);
+  // console.log('otp_value', otp_value);
+  // console.log('otptoken', OTPtoken);
+  // console.log('otptelephone', org_telephone);
 
   try {
     verify(OTPtoken, otp_value, org_telephone, (otpErr, otpResult) => {
@@ -26,10 +26,10 @@ exports.verifyOtp = async (req, res) => {
       }
       if (otpResult) {
         // console.log('SUCCESS', otpResult);
-        // Generate JWT token after successful otp verification
+        // Generate JWT token after successful otp verification //
         const token = createJwtToken(org_telephone);
 
-        // Set the JWT token as a cookie
+        // Set the JWT token as a cookie //
         res.cookie('token', token, { httpOnly: true });
         // console.log("cookie", token);
 
@@ -45,7 +45,7 @@ exports.verifyOtp = async (req, res) => {
 exports.registerOrg = (req, res) => {
   const data = req.body;
   try {
-    // Check if telephone exists
+    // Check if telephone exists //
     getByTel(data, async (err, results) => {
       if (err) {
         console.log(err);
@@ -54,17 +54,38 @@ exports.registerOrg = (req, res) => {
           error: 'Internal server error',
         });
       }
+      if (results.length === 0) {
+        // Registration process //
+        register(data, async (regErr) => {
+          if (regErr) {
+            console.log(regErr);
+            return res.status(500).json({
+              status: 'error',
+              error: 'Internal server error',
+            });
+          }
+          // call otp gen action >> send otp and gen otp-token //
+          const otpStatus = await generateOtp(data.org_telephone);
+          if (otpStatus.status === 'success') {
+            return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
+          }
+          return res.status(500).json({
+            status: 'error',
+            error: 'Error in sending otp',
+          });
+        });
+      }
       if (results) {
         console.log('results', results);
-        if (results.is_verified) {
+        if (results[0].is_verified) {
           console.log('telephone number exists');
           return res.status(500).json({
             status: 'error',
             error: 'User already registered',
           });
         }
-        if (!results.is_verified) {
-          // call otp gen action >> send otp and gen otp-token
+        if (!results[0].is_verified) {
+          // call otp gen action >> send otp and gen otp-token //
           const otpStatus = await generateOtp(data.org_telephone);
           if (otpStatus.status === 'success') {
             return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
@@ -75,25 +96,6 @@ exports.registerOrg = (req, res) => {
           });
         }
       }
-      // Registration process
-      register(data, async (regErr) => {
-        if (regErr) {
-          console.log(regErr);
-          return res.status(500).json({
-            status: 'error',
-            error: 'Internal server error',
-          });
-        }
-        // call otp gen action >> send otp and gen otp-token
-        const otpStatus = await generateOtp(data.org_telephone);
-        if (otpStatus.status === 'success') {
-          return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
-        }
-        res.status(500).json({
-          status: 'error',
-          error: 'Error in sending otp',
-        });
-      });
     });
   } catch (error) {
     console.error(error);
@@ -105,7 +107,7 @@ exports.loginOrg = (req, res) => {
   const data = req.body;
   // console.log('number', req.body.org_telephone);
   try {
-    // Check if telephone exists
+    // Check if telephone exists //
     getByTel(data, async (err, results) => {
       if (err) {
         // console.log(err);
@@ -132,7 +134,7 @@ exports.loginOrg = (req, res) => {
           // });
         }
         if (results[0].is_verified) {
-          // call otp gen action >> send otp and gen otp-token
+          // call otp gen action >> send otp and gen otp-token //
           const otpStatus = await generateOtp(data.org_telephone);
           if (otpStatus.status === 'success') {
             return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
