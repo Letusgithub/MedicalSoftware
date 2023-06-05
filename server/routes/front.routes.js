@@ -122,7 +122,32 @@ module.exports = (app) => {
   });
 
   app.get('/vendor_list', (req, res) => {
-    res.render('OwnerControls/vendor_list');
+    getPool().query(
+      'select * from vendor ',
+      [],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('OwnerControls/vendor_list', { data: results });
+      },
+    );
+
+    // res.render('OwnerControls/customer_list');
+  });
+
+  app.get('/update_vendor/:id', (req, res) => {
+    getPool().query(
+      'select * from vendor where vendor_id =?',
+      [req.params.id],
+      (error, results) => {
+        if (error) {
+          throw error;
+        }
+        res.render('OwnerControls/update_vendor', { vendor: results });
+      },
+    );
   });
 
   app.get('/new_vendor', (req, res) => {
@@ -157,8 +182,37 @@ module.exports = (app) => {
   });
 
   // Inventory Managment component
+
   app.get('/product_stock', (req, res) => {
-    res.render('Inventory/product_stock');
+    getPool().query(
+      'select * from product ',
+      [],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Inventory/product_stock', { data: results });
+      },
+    );
+
+    // res.render('OwnerControls/customer_list');
+  });
+
+  app.get('/update_product/:id', (req, res) => {
+    getPool().query(
+      'select * from product where product_id= ?',
+      [req.params.id],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Inventory/update_product', { data: results });
+      },
+    );
+
+    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/add_product', (req, res) => {

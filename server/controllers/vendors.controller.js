@@ -1,4 +1,4 @@
-  const service = require('../services/vendor.service');
+const service = require('../services/vendor.service');
 
 exports.createVendor = (req, res) => {
   const data = req.body;
@@ -11,16 +11,29 @@ exports.createVendor = (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      success: 1,
-      data: results,
-    });
+    res.redirect('/vendor_list');
+    // return res.status(200).json({
+    //   success: 1,
+    //   data: results,
+    // });
   });
 };
 
 exports.updateVendor = (req, res) => {
   const data = req.body;
-  service.update(data, (err, results) => {
+  const id = req.params.id;
+  service.update(id, data, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.redirect('/vendor_list');
+  });
+};
+
+exports.deleteVendor = (req, res) => {
+  const data = req.params.id;
+  service.delete(data, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -32,41 +45,24 @@ exports.updateVendor = (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      success: 1,
-      message: 'Updated successfully',
-    });
-  });
-};
-
-exports.deleteVendor = (req, res) => {
-  const data = req.body;
-  service.delete(data, (err, results) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    if (!results) {
-      return res.json({
-        ssuccess: 0,
-        message: 'Record Not Found',
-      });
-    }
-
-    return res.status(200).json({
-      success: 1,
-      message: 'Deleted successfully',
-    });
+    res.redirect('/vendor_list');
+    // return res.status(200).json({
+    //   success: 1,
+    //   message: 'Deleted successfully',
+    // });
   });
 };
 
 exports.getVendorById = (req, res) => {
+
   const vendorId = req.params.id;
   service.getById(vendorId, (err, results) => {
+
     if (err) {
       console.log(err);
       return;
     }
+
     return res.status(200).json({
       success: 1,
       data: results,
@@ -83,7 +79,7 @@ exports.getAllVendorsById = (req, res) => {
     }
     if (!results) {
       return res.json({
-        ssuccess: 0,
+        success: 0,
         message: 'Records Not Found',
       });
     }

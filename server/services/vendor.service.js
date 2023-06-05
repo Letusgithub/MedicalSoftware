@@ -1,24 +1,30 @@
-const { getPool } = require('../config/database.js');
 
-const date_time = new Date();
+const { getPool } = require('../config/database');
+
+
 module.exports = {
 
   // Create vendor
   create: (data, callBack) => {
     getPool().query(
       `insert into vendor(
-                org_id,
+
+                company,
                 vendor_name,
                 vendor_address,
                 vendor_contact,
-                vendor_gstin)
-                values(?,?,?,?)`,
+                vendor_gstin,
+                email)
+                values(?,?,?,?,?,?)`,
       [
-        data.org_id,
+        data.company,
+
         data.vendor_name,
         data.vendor_address,
         data.vendor_contact,
         data.vendor_gstin,
+
+        data.email,
       ],
       (error, results) => {
         if (error) {
@@ -30,23 +36,29 @@ module.exports = {
   },
 
   // Update vendor
-  update: (error, results) => {
+
+  update: (id, data, callBack) => {
     getPool().query(
       `update vendor set
-            org_id = ?,
+            company = ?,
+
             vendor_name= ?,
             vendor_address= ?,
             vendor_contact = ?,
             vendor_gstin = ?,
-            where vendor_id = ?`
-        [
-          data.org_id,
-          data.vendor_name,
-          data.vendor_address,
-          data.vendor_contact,
-          data.vendor_gstin,
-          data.vendor_id
-        ],
+
+            email = ? 
+            where vendor_id = ?`,
+      [
+        data.company,
+        data.vendor_name,
+        data.vendor_address,
+        data.vendor_contact,
+        data.vendor_gstin,
+        data.email,
+        id,
+      ],
+
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -60,7 +72,9 @@ module.exports = {
   delete: (data, callBack) => {
     getPool().query(
       'delete from vendor where vendor_id = ?',
-      [data.vendor_id],
+
+      [data],
+
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -90,6 +104,7 @@ module.exports = {
     getPool().query(
       'select * from vendor where vendor_id = ?',
       [vendorId],
+
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -112,4 +127,5 @@ module.exports = {
       },
     );
   },
+
 };
