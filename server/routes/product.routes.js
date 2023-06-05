@@ -10,8 +10,7 @@ module.exports = (app) => {
   });
 
   app.post('/product', controller.createProduct);
-  app.patch('/product/:id', controller.updateProduct);
-  app.delete('/product/:id', controller.deleteProduct);
-  app.get('/product', controller.getProductById);
-  app.get('/product/:id', controller.getAllProductsById);
+  app.post('/product/:id', controller.updateProduct);
+  app.get('/product/:id', controller.deleteProduct);
+  app.get('/product/', controller.getAllProductsById);
 };

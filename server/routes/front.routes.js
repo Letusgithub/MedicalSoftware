@@ -30,7 +30,8 @@ module.exports = (app) => {
   });
 
   // Home Page
-  app.get('/', (req, res) => {
+  app.get('/', checkAuth, (req, res) => {
+    console.log('response of home', req.org_telephone);
     res.render('home');
   });
 
@@ -129,12 +130,24 @@ module.exports = (app) => {
         if (error) {
           return res.send({ status: 'error', error });
         }
-        console.log(results);
         res.render('OwnerControls/vendor_list', { data: results });
       },
     );
 
     // res.render('OwnerControls/customer_list');
+  });
+
+  app.get('/update_vendor/:id', (req, res) => {
+    getPool().query(
+      'select * from vendor where vendor_id =?',
+      [req.params.id],
+      (error, results) => {
+        if (error) {
+          throw error;
+        }
+        res.render('OwnerControls/update_vendor', { vendor: results });
+      },
+    );
   });
 
   app.get('/new_vendor', (req, res) => {
@@ -143,6 +156,7 @@ module.exports = (app) => {
 
   // Sales components
   app.get('/sale_invoice', (req, res) => {
+    console.log('response of sales', req.org_telephone);
     res.render('Sales/sale_invoice');
   });
 
@@ -168,8 +182,37 @@ module.exports = (app) => {
   });
 
   // Inventory Managment component
+
   app.get('/product_stock', (req, res) => {
-    res.render('Inventory/product_stock');
+    getPool().query(
+      'select * from product ',
+      [],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Inventory/product_stock', { data: results });
+      },
+    );
+
+    // res.render('OwnerControls/customer_list');
+  });
+
+  app.get('/update_product/:id', (req, res) => {
+    getPool().query(
+      'select * from product where product_id= ?',
+      [req.params.id],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Inventory/update_product', { data: results });
+      },
+    );
+
+    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/add_product', (req, res) => {
@@ -177,7 +220,17 @@ module.exports = (app) => {
   });
 
   app.get('/purchase_order', (req, res) => {
-    res.render('Inventory/purchase_order');
+    getPool().query(
+      'select * from vendor',
+      [],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        }
+
+        res.render('Inventory/purchase_order', { vendors: results });
+      },
+    );
   });
 
   app.get('/po_report', (req, res) => {
