@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 const {
   getByTel, register, verify,
@@ -8,25 +10,33 @@ const { generateOtp } = require('../actions/generateOtp.action');
 exports.verifyOtp = async (req, res) => {
   const otp_value = req.body.otp_value;
   //   const OTPtoken = req.body.OTPtoken;
-  const OTPtoken = await req.query.OTPtoken;
-  const org_telephone = req.query.phoneNumber;
+  const OTPtoken = req.body.OTPtoken;
+  const org_telephone = req.body.phoneNumber;
+  console.log('otp_value', otp_value);
+  console.log('otptoken', OTPtoken);
+  console.log('otptelephone', org_telephone);
+
   try {
     verify(OTPtoken, otp_value, org_telephone, (otpErr, otpResult) => {
-      if (otpErr) {
+      console.log('object result', otpResult);
+      console.log('object error', otpErr);
+      if (otpErr == null) {
         console.error('Failed to verify OTP:', otpErr);
         return res.status(500).json({ error: 'Failed to register' });
       }
-      if (otpResult.fieldCount === 0) {
-        console.log(otpResult);
-        return res.status(401).json({ error: 'Invalid OTP' });
+      if (otpResult) {
+        console.log('SUCCESS', otpResult);
+        const token = createJwtToken(org_telephone);
+        res.cookie('token', token, { httpOnly: true });
+
+        console.log("cookie", token);
+        res.send({ status: 'success' });
+        // return res.status(401).json({ status: 'SUCCESS' });
       }
       // Generate JWT token after successful otp verification
-      const token = createJwtToken(org_telephone);
 
       // Set the JWT token as a cookie
-      res.cookie('token', token, { httpOnly: true });
 
-      return res.redirect('/');
       // res.status(200).json({
       //   status: 'success',
       //   message: 'User verified sucessfully',
@@ -51,7 +61,9 @@ exports.registerOrg = (req, res) => {
         });
       }
       if (results) {
+        console.log('results', results);
         if (results.is_verified) {
+          console.log('telephone number exists');
           return res.status(500).json({
             status: 'error',
             error: 'User already registered',
@@ -113,6 +125,7 @@ exports.registerOrg = (req, res) => {
 
 exports.loginOrg = (req, res) => {
   const data = req.body;
+  console.log('number', req.body.org_telephone);
   try {
     // Check if telephone exists
     getByTel(data, async (err, results) => {
@@ -136,6 +149,7 @@ exports.loginOrg = (req, res) => {
         // res.cookie('OTPtoken', otpStatus.token, { httpOnly: true });
 
         return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
+
         // return res.json({
         //   status: 'success',
         //   body: { token: otpStatus.token },
