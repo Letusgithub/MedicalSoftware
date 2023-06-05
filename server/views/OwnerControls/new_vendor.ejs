@@ -34,6 +34,23 @@
                                     <div class="card mb-4 mx-auto col-md-10">
                                             <div class="card-body ">
                                                 <form action="/vendor" method="POST">
+
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-fullname">Company Name</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <span id="basic-icon-default-fullname2"
+                                                                    class="input-group-text"><i
+                                                                        class="bx bx-user"></i></span>
+                                                                <input type="text" class="form-control"
+                                                                    id="basic-icon-default-fullname" placeholder="John Doe"
+                                                                    aria-label="John Doe"
+                                                                    aria-describedby="basic-icon-default-fullname2" name="company">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="row mb-3">
                                                         <label class="col-sm-2 col-form-label"
                                                             for="basic-icon-default-fullname">Vendor Name</label>
@@ -45,7 +62,7 @@
                                                                 <input type="text" class="form-control"
                                                                     id="basic-icon-default-fullname" placeholder="John Doe"
                                                                     aria-label="John Doe"
-                                                                    aria-describedby="basic-icon-default-fullname2">
+                                                                    aria-describedby="basic-icon-default-fullname2" name="vendor_name">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -60,7 +77,7 @@
                                                                 <input type="text" id="basic-icon-default-address"
                                                                     class="form-control" placeholder="GSTIN"
                                                                     aria-label="gstin"
-                                                                    aria-describedby="basic-icon-default-address2">
+                                                                    aria-describedby="basic-icon-default-address2" name="vendor_address">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -75,7 +92,7 @@
                                                                 <input type="text" class="form-control"
                                                                     id="basic-icon-default-companyname" placeholder=""
                                                                     aria-label="John Doe"
-                                                                    aria-describedby="basic-icon-default-companyname2">
+                                                                    aria-describedby="basic-icon-default-companyname2" name="vendor_contact">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,7 +108,23 @@
                                                                 <input type="text" id="basic-icon-default-phone"
                                                                     class="form-control phone-mask"
                                                                     placeholder="658 799 8941" aria-label="658 799 8941"
-                                                                    aria-describedby="basic-icon-default-phone2">
+                                                                    aria-describedby="basic-icon-default-phone2" name="vendor_gstin">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 form-label"
+                                                            for="basic-icon-default-phone">EMAIL</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <span id="basic-icon-default-phone2"
+                                                                    class="input-group-text"><i
+                                                                        class="bx bx-phone"></i></span>
+                                                                <input type="text" id="basic-icon-default-phone"
+                                                                    class="form-control phone-mask"
+                                                                    placeholder="658 799 8941" aria-label="658 799 8941"
+                                                                    aria-describedby="basic-icon-default-phone2" name="email">
                                                             </div>
                                                         </div>
                                                     </div>
