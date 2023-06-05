@@ -122,9 +122,7 @@
                     
                     <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
 
-                    <form id="otpVerificationForm"
-                        action="/api/auth/verifyOTP"
-                        method="POST">
+                    <!-- <form id="otpVerificationForm"> -->
 
                         <div class="mb-3">
                             <label for="otp_value" class="form-label">Enter OTP</label>
@@ -157,7 +155,7 @@
                             Create a hidden field which is combined by 3 fields above
                             <input type="hidden" name="otp_value" />
                         </div> -->
-                        <button class="btn btn-primary d-grid w-100 mb-3">
+                        <button class="btn btn-primary d-grid w-100 mb-3" id="confirm">
                             Confirm
                         </button>
                         <!-- <div class="text-center">Didn't get the code?
@@ -165,7 +163,7 @@
                                 Resend
                             </a>
                         </div> -->
-                    </form>
+                    <!-- </form> -->
                 </div>
             </div>
             <!-- / Two Steps Verification -->
@@ -173,6 +171,40 @@
     </div>
 
     <!-- / Content -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var numbers = '<%= number %>';
+            var token = '<%= token %>';
+
+            $("#confirm").click(function(){
+                var otp = $("#otp_value").val();
+                
+                var details = {
+                    phoneNumber: numbers,
+                    OTPtoken:token,
+                    otp_value: otp
+                };
+                
+                $.ajax({
+                    url: `/api/auth/verifyOTP`,
+                    type: 'POST',
+                    data: JSON.stringify(details),
+                    contentType: 'application/json',
+                    success: function(response){
+                        window.location.href = "/";                   
+                    },
+                    error: function(error){
+                        console.log('error in ejs file', error);
+                    }
+                })
+            })
+        
+        
+        
+        })
+
+    </script>
 
 
     <!-- Core JS -->

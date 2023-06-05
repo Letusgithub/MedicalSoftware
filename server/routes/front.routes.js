@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { getPool } = require('../config/database');
 const { checkAuth } = require('../middlewares/checkAuth');
 // const controller = require('../controllers/front.controller');
@@ -23,7 +24,9 @@ module.exports = (app) => {
 
   // OTP Verification
   app.get('/verify_otp', (req, res) => {
-    res.render('Auth/otp_verification');
+    const number = req.query.phoneNumber;
+    const token = req.query.OTPtoken;
+    res.render('Auth/otp_verification', { number, token });
   });
 
   // Home Page
