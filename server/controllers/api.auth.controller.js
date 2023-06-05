@@ -9,7 +9,6 @@ const { generateOtp } = require('../actions/generateOtp.action');
 
 exports.verifyOtp = async (req, res) => {
   const otp_value = req.body.otp_value;
-  //   const OTPtoken = req.body.OTPtoken;
   const OTPtoken = req.body.OTPtoken;
   const org_telephone = req.body.phoneNumber;
   console.log('otp_value', otp_value);

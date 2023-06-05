@@ -1,4 +1,6 @@
+
 const { getPool } = require('../config/database');
+
 
 module.exports = {
 
@@ -6,6 +8,7 @@ module.exports = {
   create: (data, callBack) => {
     getPool().query(
       `insert into vendor(
+
                 company,
                 vendor_name,
                 vendor_address,
@@ -15,10 +18,12 @@ module.exports = {
                 values(?,?,?,?,?,?)`,
       [
         data.company,
+
         data.vendor_name,
         data.vendor_address,
         data.vendor_contact,
         data.vendor_gstin,
+
         data.email,
       ],
       (error, results) => {
@@ -31,14 +36,17 @@ module.exports = {
   },
 
   // Update vendor
+
   update: (id, data, callBack) => {
     getPool().query(
       `update vendor set
             company = ?,
+
             vendor_name= ?,
             vendor_address= ?,
             vendor_contact = ?,
             vendor_gstin = ?,
+
             email = ? 
             where vendor_id = ?`,
       [
@@ -50,6 +58,7 @@ module.exports = {
         data.email,
         id,
       ],
+
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -63,7 +72,9 @@ module.exports = {
   delete: (data, callBack) => {
     getPool().query(
       'delete from vendor where vendor_id = ?',
+
       [data],
+
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -89,10 +100,11 @@ module.exports = {
   },
 
   // Get Vendor by vendor ID
-  getById: (data, callBack) => {
+  getById: (vendorId, callBack) => {
     getPool().query(
       'select * from vendor where vendor_id = ?',
-      [data.vendor_id],
+      [vendorId],
+
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -102,4 +114,18 @@ module.exports = {
 
     );
   },
+
+  getAllVendors: (callback) => {
+    getPool().query(
+      'select * from vendor',
+      [],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
 };

@@ -12,7 +12,8 @@ exports.checkAuth = async (req, res, next) => {
 
   try {
     // Verify the token
-    const { org_telephone } = await verifyJwtToken(token);
+
+    const org_telephone = verifyJwtToken(token);
 
     // Attach the org_telephone request for future use
     req.org_telephone = org_telephone;
