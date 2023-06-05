@@ -113,7 +113,7 @@ module.exports = {
   },
 
   // Get product by product ID
-  getById: (product_id, callBack) => {
+  getById: (data, callBack) => {
     getPool().query(
       'select * from product where product_id = ?',
       [data.product_id],

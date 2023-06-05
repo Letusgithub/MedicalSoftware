@@ -23,7 +23,7 @@
                                 <div class="container-xxl flex-grow-1 container-p-y">
 
                                     <div class="d-flex justify-content-between m-0 p-0">
-                                        <h4 class="fw-bold py-3 mb-1"> Add Employee</h4>
+                                        <h4 class="fw-bold py-3 mb-1"> Update Employee</h4>
                                         <button type="button" class="btn btn-icon btn-danger my-2 mx-3"
                                             onclick="history.back()">
                                             <i class='bx bx-x bx-sm'></i>
@@ -35,66 +35,68 @@
                                     <div class="card mb-4 mx-auto col-md-10">
 
                                         <div class="pt-4 text-center">
-                                            <h4 class="mb-0">Employee Details</h4>
+                                            <h4 class="mb-0">Edit Employee Details</h4>
                                         </div>
 
                                         <hr>
                                         <div class="card-body">
-                                            <form action="/api/emp/" method="POST">
+                                            <form action="/api/emp/<%= data[0].emp_id %>/update" method="POST">
+
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="basic-icon-default-fullname">Employee
+                                                    <label class="form-label" for="emp_name">Employee
                                                         Name</label>
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-fullname2"
                                                             class="input-group-text"><i class="bx bx-user"></i></span>
                                                         <input type="text" class="form-control"
-                                                            id="basic-icon-default-fullname" placeholder="" name="emp_name">
+                                                            id="emp_name" placeholder="" name="emp_name" value=<%= data[0].emp_name %>>
                                                     </div>
                                                 </div>
 
-
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="basic-icon-default-phone">Contact
+                                                    <label class="form-label" for="emp_mobile">Contact
                                                         No</label>
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bx-phone"></i></span>
-                                                        <input type="text" id="basic-icon-default-phone"
-                                                            class="form-control phone-mask" placeholder="" name="emp_mobile">
+                                                        <input type="text" id="emp_mobile"
+                                                            class="form-control phone-mask" placeholder="" name="emp_mobile" value=<%= data[0].emp_mobile %>>
                                                     </div>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="basic-icon-default-phone"> Alternet
+                                                    <label class="form-label" for="emp_alt_mobile"> Alternet
                                                         Contact
                                                         No</label>
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bx-phone"></i></span>
-                                                        <input type="text" id="basic-icon-default-phone"
-                                                            class="form-control phone-mask" placeholder="" name="emp_alt_mobile">
+                                                        <input type="text" id="emp_alt_mobile"
+                                                            class="form-control phone-mask" placeholder="" name="emp_alt_mobile" value=<%= data[0].emp_alt_mobile %> >
                                                     </div>
                                                 </div>
+
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                        for="basic-icon-default-email">Email</label>
+                                                        for="emp_email">Email</label>
                                                     <div class="input-group input-group-merge">
                                                         <span class="input-group-text"><i
                                                                 class="bx bx-envelope"></i></span>
-                                                        <input type="text" id="basic-icon-default-email"
-                                                            class="form-control" placeholder="" name="emp_email">
+                                                        <input type="text" id="emp_email"
+                                                            class="form-control" placeholder="" name="emp_email" value=<%= data[0].emp_email %>>
 
                                                     </div>
                                                 </div>
+
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                        for="basic-icon-default-message">Address</label>
+                                                        for="emp_address">Address</label>
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-message2"
                                                             class="input-group-text"><i
                                                                 class="bx bx-address"></i></span>
-                                                        <textarea id="basic-icon-default-message" class="form-control"
-                                                            placeholder="" name="emp_address"></textarea>
+                                                        <textarea id="emp_address" class="form-control"
+                                                            placeholder="" name="emp_address" value=<%= data[0].emp_address %>></textarea>
                                                     </div>
                                                 </div>
                                                 

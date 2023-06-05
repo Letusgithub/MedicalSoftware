@@ -7,6 +7,7 @@ module.exports = {
         getPool().query(
             `update organisation set 
             org_name = ?,
+            owner_name = ?,
             org_gstin = ?,
             org_telephone = ?,
             org_alt_telephone = ?,
@@ -20,6 +21,7 @@ module.exports = {
             where org_id = ?`,
             [
                 data.org_name,
+                data.owner_name,
                 data.org_gstin,
                 data.org_telephone,
                 data.org_alt_telephone,

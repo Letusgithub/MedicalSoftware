@@ -1,5 +1,5 @@
 const {
-  createUser, updateUser, deleteUser, getUsers,
+  createUser, updateUser, deleteUser, getUsers, getUserByNumber, getUsersById,
 } = require('../controllers/api.customer.controller');
 
 module.exports = (app) => {
@@ -15,4 +15,6 @@ module.exports = (app) => {
   app.post('/api/cust/:id', updateUser);
   app.get('/api/cust/:id', deleteUser);
   app.get('/api/cust/', getUsers);
+  app.post('/api/custnumber/', getUserByNumber);
+  app.get('/api/custdetails/:id', getUsersById);
 };
