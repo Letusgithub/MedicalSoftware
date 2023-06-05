@@ -45,12 +45,15 @@
                                                             href="/new_vendor">Add New Vendor</a>
                                                     </div>
                                                 </div> -->
-                                                <div class="card-body">
+                                                <div class="card-body" id="vendorname">
                                                     <select class="form-select" id="exampleFormControlSelect1"
                                                         aria-label="Default select example">
                                                         <option selected>Select Vendor</option>
-                                                        <option value="1">Ramesh Kumar</option>
-                                                        <option value="1">Uday Singh</option>
+                                                        <% vendors.forEach(function(vendor) { %>
+                                                            <option value="<%= vendor.vendor_id %>"><%= vendor.vendor_name %></option>
+                                                        <% }); %>
+                                                        <!-- <option value="1">Ramesh Kumar</option> -->
+                                                        <!-- <option value="1">Uday Singh</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -59,8 +62,8 @@
                                         <div class="col-md-6">
                                             <div class="card mb-4">
 
-                                                <h6 class="card-header">Address:</h6>
-                                                <h6 class="card-header">Contact No:</h6>
+                                                <h6 class="card-header" id="address"></h6>
+                                                <h6 class="card-header" id="contact"></h6>
 
                                             </div>
                                         </div>
@@ -259,6 +262,80 @@
 
 
             <%- include('../partials/footercode.ejs') %>
+            <script>
+                $(document).ready(function(){
+                    $("#address").text("Address:");
+                    $("#contact").text("Contact No:");
+                    
+                    $('#exampleFormControlSelect1').change(function() {
+                        var selectedVendorId = $(this).val();
+                        
+                        $.get(`/getvendor/${selectedVendorId}`, function(data, status){
+                            var vendorDetails = data.data;
+                            var address = `Address: ${vendorDetails.vendor_address}`
+                            var number = `Contact: ${vendorDetails.vendor_contact}`
+                            $("#address").text(address);
+                            $("#contact").text(number);
+
+                        })
+                    })
+                    
+                    
+                    /*
+                    var vendorName = [];
+                    
+                    $.ajax({
+                        url: '/allvendors/',
+                        method: 'GET',
+                        success: function(response) {
+                            // Parse the response data as JSON
+                            //var vendors = JSON.parse(response);
+                            console.log(response.data);
+                            for(let i in response.data){
+                                vendorName.push({id: response.data[i].vendor_id,  name: response.data[i].vendor_name});
+                            }
+                            console.log(vendorName);
+                            // Render the vendors data using the EJS template
+                        
+                            
+                            $('#vendorname').append(renderedHtml);
+                        },
+                        error: function(error) {
+                            console.log('Error:', error);
+                        }
+                    });
+
+                */
+                })
+            </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 <script>

@@ -61,19 +61,12 @@ exports.deleteVendor = (req, res) => {
 };
 
 exports.getVendorById = (req, res) => {
-  const vendor_id = req.params.id;
-  service.getById(vendor_id, (err, results) => {
+  const vendorId = req.params.id;
+  service.getById(vendorId, (err, results) => {
     if (err) {
       console.log(err);
       return;
     }
-    if (!results) {
-      return res.json({
-        ssuccess: 0,
-        message: 'Record Not Found',
-      });
-    }
-
     return res.status(200).json({
       success: 1,
       data: results,
@@ -95,6 +88,20 @@ exports.getAllVendorsById = (req, res) => {
       });
     }
 
+    return res.status(200).json({
+      success: 1,
+      data: results,
+    });
+  });
+};
+
+
+exports.getAllVendors = (req, res) => {
+  service.getAllVendors((err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
     return res.status(200).json({
       success: 1,
       data: results,
