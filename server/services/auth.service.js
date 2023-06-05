@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 /* eslint-disable linebreak-style */
 /* eslint-disable camelcase */
 const { getPool } = require('../config/database');
@@ -28,6 +27,8 @@ module.exports = {
         OTPtoken,
       ],
       (error, results) => {
+        if (results.length === 0) {
+      (error, results) => {
         console.log('results of verification', results);
         if (results.length == 0) {
           console.log('object in service', error);
@@ -41,7 +42,7 @@ module.exports = {
             if (statusError) {
               return callBack(statusError);
             }
-            return callBack('noerror', statusResult);
+            return callBack('no error'statusResult);
           },
         );
       },

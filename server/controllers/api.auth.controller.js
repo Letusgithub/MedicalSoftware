@@ -22,7 +22,7 @@ exports.verifyOtp = async (req, res) => {
       console.log('object error', otpErr);
       if (otpErr == null) {
         console.error('Failed to verify OTP:', otpErr);
-        return res.status(500).json({ error: 'Failed to register' });
+        return res.status(500).json({ error: 'Invalid OTP' });
       }
       if (otpResult) {
         console.log('SUCCESS', otpResult);
@@ -36,7 +36,9 @@ exports.verifyOtp = async (req, res) => {
       // Generate JWT token after successful otp verification
 
       // Set the JWT token as a cookie
+      res.cookie('token', token, { httpOnly: true });
 
+      return res.redirect('/');
       // res.status(200).json({
       //   status: 'success',
       //   message: 'User verified sucessfully',
@@ -75,8 +77,10 @@ exports.registerOrg = (req, res) => {
           if (otpStatus.status === 'success') {
             // save OTPtoken in cookie
             // res.cookie('OTPtoken', otpStatus.token, { httpOnly: true });
+            req.query.OTPtoken = otpStatus.token;
+            req.query.org_telephone = data.org_telephone;
 
-            return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
+            return res.redirect('/verify_otp');
 
             // return res.status(200).json({
             //   status: 'success',

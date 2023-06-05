@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const { getPool } = require('../config/database');
 const { checkAuth } = require('../middlewares/checkAuth');
+// const { checkAuth } = require('../middlewares/checkAuth');
 // const controller = require('../controllers/front.controller');
 
 module.exports = (app) => {
