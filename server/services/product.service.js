@@ -1,8 +1,5 @@
-/* eslint-disable camelcase */
-/* eslint-disable no-unused-vars */
 const { getPool } = require('../config/database');
 
-const date_time = new Date();
 module.exports = {
 
   // Create product
@@ -21,7 +18,7 @@ module.exports = {
                 mrp,
                 addedBy,
                 verified)
-                values(?,?,?,?,?,?)`,
+                values(?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.product_name,
         data.mfg,
@@ -46,7 +43,7 @@ module.exports = {
   },
 
   // Update product
-  update: (error, results) => {
+  update: (id, data, callBack) => {
     getPool().query(
       `update product set
             product_name = ?,
@@ -61,22 +58,22 @@ module.exports = {
             mrp = ?,
             addedBy = ?,
             verified = ?
-            where product_id = ?`
-        [
-          data.product_name,
-          data.mfg,
-          data.mkt,
-          data.salt,
-          data.hsn,
-          data.category,
-          data.primary_unit,
-          data.secondary_unit,
-          data.conversion,
-          data.mrp,
-          data.addedBy,
-          data.verified,
-          data.product_id
-        ],
+            where product_id = ?`,
+      [
+        data.product_name,
+        data.mfg,
+        data.mkt,
+        data.salt,
+        data.hsn,
+        data.category,
+        data.primary_unit,
+        data.secondary_unit,
+        data.conversion,
+        data.mrp,
+        data.addedBy,
+        data.verified,
+        id,
+      ],
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -90,7 +87,7 @@ module.exports = {
   delete: (data, callBack) => {
     getPool().query(
       'delete from product where product_id = ?',
-      [data.product_id],
+      [data],
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -116,7 +113,7 @@ module.exports = {
   },
 
   // Get product by product ID
-  getById: (product_id, callBack) => {
+  getById: (data, callBack) => {
     getPool().query(
       'select * from product where product_id = ?',
       [data.product_id],

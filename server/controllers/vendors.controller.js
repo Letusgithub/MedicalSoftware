@@ -11,31 +11,23 @@ exports.createVendor = (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      success: 1,
-      data: results,
-    });
+    res.redirect('/vendor_list');
+    // return res.status(200).json({
+    //   success: 1,
+    //   data: results,
+    // });
   });
 };
 
 exports.updateVendor = (req, res) => {
   const data = req.body;
-  service.update(data, (err, results) => {
+  const id = req.params.id;
+  service.update(id, data, (err, results) => {
     if (err) {
       console.log(err);
       return;
     }
-    if (!results) {
-      return res.json({
-        success: 0,
-        message: 'Record Not Found',
-      });
-    }
-
-    return res.status(200).json({
-      success: 1,
-      message: 'Updated successfully',
-    });
+    res.redirect('/vendor_list');
   });
 };
 
@@ -70,7 +62,7 @@ exports.getVendorById = (req, res) => {
     }
     if (!results) {
       return res.json({
-        ssuccess: 0,
+        success: 0,
         message: 'Record Not Found',
       });
     }
@@ -91,7 +83,7 @@ exports.getAllVendorsById = (req, res) => {
     }
     if (!results) {
       return res.json({
-        ssuccess: 0,
+        success: 0,
         message: 'Records Not Found',
       });
     }
