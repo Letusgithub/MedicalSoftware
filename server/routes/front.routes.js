@@ -4,7 +4,7 @@ const { checkAuth } = require('../middlewares/checkAuth');
 // const controller = require('../controllers/front.controller');
 
 module.exports = (app) => {
-  app.use(checkAuth, (req, res, next) => {
+  app.use((req, res, next) => {
     res.header(
       'Access-Control-Allow-Headers',
       'x-access-token, Origin, Content-Type, Accept',
@@ -30,7 +30,7 @@ module.exports = (app) => {
   });
 
   // Home Page
-  app.get('/', (req, res) => {
+  app.get('/', checkAuth, (req, res) => {
     console.log('response of home', req.org_telephone);
     res.render('home');
   });
