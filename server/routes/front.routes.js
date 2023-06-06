@@ -30,8 +30,10 @@ module.exports = (app) => {
   });
 
   // Home Page
+
   app.get('/', checkAuth, fetchOrgId, (req, res) => {
     // console.log('response of home', req.org_telephone);
+
     res.render('home');
   });
 
@@ -156,7 +158,6 @@ module.exports = (app) => {
 
   // Sales components
   app.get('/sale_invoice', (req, res) => {
-    console.log('response of sales', req.org_telephone);
     res.render('Sales/sale_invoice');
   });
 
