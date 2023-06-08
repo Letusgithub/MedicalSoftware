@@ -33,7 +33,7 @@
 
                                     <div class="card mb-4 mx-auto col-md-10">
                                             <div class="card-body ">
-                                                <form action="/vendor" method="POST">
+                                                <form>
 
                                                     <div class="row mb-3">
                                                         <label class="col-sm-2 col-form-label"
@@ -114,7 +114,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="row mb-3">
+                                                    <!-- <div class="row mb-3">
                                                         <label class="col-sm-2 form-label"
                                                             for="basic-icon-default-phone">EMAIL</label>
                                                         <div class="col-sm-10">
@@ -128,11 +128,11 @@
                                                                     aria-describedby="basic-icon-default-phone2" name="email">
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
 
                                                     <div class="row justify-content-end">
                                                         <div class="col-sm-10">
-                                                            <button type="submit" class="btn btn-primary">Add</button>
+                                                            <button type="submit" class="btn btn-primary" id="submitvendor">Add</button>
                                                         </div>
                                                     </div>
 
@@ -161,6 +161,42 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
+        <script>
+            $(document).ready(function(){
+                $("#submitvendor").click(function(){
+                    var companyName = $("input[name='company']").val();
+                    var vendorName = $("input[name='vendor_name']").val();
+                    var vendorAdd = $("input[name='vendor_address']").val();
+                    var vendorContact = $("input[name='vendor_contact']").val();
+                    var vendorGST = $("input[name='vendor_gstin']").val();
+                    var orgId = "<%= orgId %>";
+
+                    var vendorDetails = {
+                        company: companyName,
+                        vendor_name: vendorName,
+                        vendor_address: vendorAdd,
+                        vendor_contact: vendorContact,
+                        vendor_gstin: vendorGST,
+                        org_id: orgId
+                    }
+                    console.log('vendor', vendorDetails);
+
+                    $.ajax({
+                        url: `/vendor/`,
+                        type: 'POST',
+                        data: JSON.stringify(vendorDetails),
+                        contentType: 'application/json',
+                        success: function(response){
+                            console.log(response);
+                          window.location.href ='/vendor_list'                   
+                        },
+                        error: function(error){
+                        console.log(error);
+                        }
+                    })
+                })
+            })
+        </script>
 
     </body>
 

@@ -42,15 +42,12 @@
     			<div class="col-4">
     				<address>
     				<strong>Pharmacy Details:</strong><br>
-    					Pharmacy Name<br>
-    					1234 Main<br>
-    					Apt. 4B<br>
-    					Springfield, ST 54321
+    					<div id="pharmacyname"></div>
     				</address>
 
                     <address>
                         <strong>GST No.</strong><br>
-                        xxxxxxxxx<br>
+                        <div id="gst"></div>
                     </address>
 
                     <address>
@@ -59,7 +56,7 @@
                     </address>
                     <address>
                         <strong>Contact No.</strong><br>
-                        xxxxxxxxx<br>
+                        <div id="contact"></div>
                     </address>
     			</div>
                 <div class="col-4 text-center" id="customerdetails">
@@ -111,7 +108,7 @@
                    <h4>Order No. #2323</h4>
     				<address>
     					<strong>Order Date:</strong><br>
-    					March 7, 2014<br><br>
+    					<div id="orderdate"></div>
     				</address>
     			</div>
     		</div>
@@ -231,12 +228,19 @@
     var id = '<%= id %>';
     $(document).ready(function(){
 
-        $.get(`/api/invoice?id=${id}`, function(data, status){
-            var customerId = data.result[0].customer_id;
-            console.log(customerId);
-            
-            $.get(`/api/custdetails/${customerId}`, function(data, status){
-                var customer = data.data;
+        var todayDate = new Date();
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        var formattedDate = todayDate.toLocaleDateString('en-US', options);
+        $("#orderdate").text(formattedDate)
+
+        var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
+        $("#pharmacyname").text(pharmacyDetails.pharmacyName);
+        $("#gst").text(pharmacyDetails.gst);
+        $("#contact").text(pharmacyDetails.number);
+
+        $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function(data, status){
+                var customer = data.result[0];
+                console.log(customer);
                 
                 var customerName = customer.cust_name;
                 var customerNumber = customer.cust_telephone;
@@ -247,8 +251,9 @@
                 $("#shippedcustomerdetails .shippedcustomerfields").html(`${customerName} <br> `);
                 $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
                 $("#shippedcustomerdetails .invoicenumber").html(`SE-${id} <br> `);
+
+
                 
-            })
         })
 
         var product=[];

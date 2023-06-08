@@ -2,6 +2,7 @@
 const {
   create,
   getUsers,
+  getUsersOfOrg,
   getUserByNumber,
   getUsersById,
   updateUser,
@@ -9,8 +10,11 @@ const {
   getIdByNumber,
 } = require('../services/customer.service');
 
+const { checkAuth } = require('../middlewares/checkAuth');
+const { fetchOrgId } = require('../middlewares/fetchOrgId');
+
 module.exports = {
-  createUser: (req, res) => {
+  createUser: ((req, res) => {
     const body = req.body;
     create(body, (err, results) => {
       if (err) {
@@ -22,15 +26,15 @@ module.exports = {
       }
 
       console.log('new data', body);
-      res.redirect('/customer_list');
+      // res.redirect('/customer_list');
 
-      // return res.status(200).json({
-      //   success: 1,
-      //   data: results,
+      return res.status(200).json({
+        success: 1,
+        data: results,
 
-      // });
+      });
     });
-  },
+  }),
   // if (error) {
   //   return res.status(500).json({
   //     success: 0,
@@ -41,7 +45,7 @@ module.exports = {
   getUserByNumber: (req, res) => {
     const data = req.body;
     console.log('data', data);
-    getUserByNumber(req.body.cust_telephone, (error, results) => {
+    getUserByNumber(req.body.cust_telephone, req.body.org_id, (error, results) => {
       if (results.length === 0) {
         create(data, (createError, createResult) => {
           if (createError) {
@@ -85,6 +89,21 @@ module.exports = {
 
   getUsers: (req, res) => {
     getUsers((err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      return res.status(200).json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+
+  getUsersOfOrg: (req, res) => {
+    const orgId = req.params.orgid;
+    getUsersOfOrg(orgId, (err, results) => {
       if (err) {
         console.log(err);
         return;

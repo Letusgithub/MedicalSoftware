@@ -518,18 +518,25 @@
 
     <%- include('./partials/footercode.ejs') %>
 
-      <script>
-        $(document).ready(function () {
-          $.get('/api/orderdetails/', function (data, status) {
-            var items = data.data;
-            var revenue = 0;
-            for (let i in items) {
-              revenue += items[i].grand_total;
-            }
-            revenue = Math.round(revenue);
-            var formatedRevenue = (revenue.toLocaleString());
-            console.log(formatedRevenue);
-            $("#totalrevenue").text(formatedRevenue);
+    <script>
+      $(document).ready(function(){
+        localStorage.setItem("name", JSON.stringify({
+          pharmacyName: "<%= name %>",
+          ownerName: "<%= owner %>",
+          number: "<%= number %>",
+          gst: "<%= gst %>"
+        })
+        );
+        $.get('/api/orderdetails/', function(data, status){
+          var items =data.data;
+          var revenue=0;
+          for(let i in items){
+            revenue += items[i].grand_total;
+          }
+          revenue = Math.round(revenue);
+          var formatedRevenue = (revenue.toLocaleString());
+          console.log(formatedRevenue);
+          $("#totalrevenue").text(formatedRevenue);
 
             var totalOrders = data.data.length;
             var formatedOrders = (totalOrders.toLocaleString());

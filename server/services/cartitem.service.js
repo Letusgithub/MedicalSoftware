@@ -17,15 +17,15 @@ module.exports = {
     const updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
     getPool().query(
 
-      `insert into cart_item(product_name, sales_invoice_id, quantity, unit_discount, created_date, cust_id, mrp)
+      `insert into cart_item(product_id, product_name, sales_invoice_id, quantity, unit_discount, created_date, mrp)
         values(?,?,?,?,?,?,?)`,
       [
+        data.product_id,
         data.product_name,
         data.sales_invoice_id,
         data.quantity,
         data.unit_discount === '' ? 0 : data.unit_discount,
         created_date,
-        data.cust_id,
         data.mrp,
       ],
       (error, results, fields) => {

@@ -162,7 +162,7 @@
                                 <input type="text" class="form-control" id="medicinename" placeholder="Medicine Name" />
                               </td>
                               <td>
-                                <input type="text" class="form-control" id="mfg/mkt" placeholder="Brand Name" />
+                                <input type="text" class="form-control" id="brand" placeholder="Brand Name" />
                               </td>
                               <td>
                                 <input type="text" class="form-control" id="shelflabel" placeholder="" />
@@ -401,23 +401,22 @@
       <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
       <script>
         
-       // var customerPhones =[];
-        var customerData = [];
+        var customerData = [];// to push all the details of customer data in this array
 
-        var customerName =[];
-        var cartarray =[];
+        var cartarray =[];// push all the items of a particular customer
 
-        var autoCompleteDataNumber =[];;
-        var autoCompleteDataName=[];
-
-        var selectedCustomer;
-        var selectedTelephone;
+        var autoCompleteDataNumber =[];;// used for autocomplete number field
+        var autoCompleteDataName=[];// used for autocomplete name field
 
         $(document).ready(function () {
 
+//gettin the current org id
+
+          var org = "<%= orgId %>";
+
 // get customer data and show it in the autocomplete function
 
-          $.get('/api/cust/', function (data, status) {
+          $.get(`/api/custorg/${org}`, function (data, status) {
 
             for (let i in data.data) {
               customerData.push({
@@ -436,15 +435,10 @@
                 value : data.data[i].cust_name
               });
             }
+
 // if phonenumber is typed
             if( $("#phonenumber").focus() ){
-/*
-              $("#phonenumber").keyup(function(){
-                if($("#phonenumber").val() == ''){
-                  $("#customername").val('');
-                }
-              })
-*/
+
               $("#phonenumber").autocomplete({
                 source: autoCompleteDataNumber,
                 select: function(event, ui) {
@@ -460,13 +454,7 @@
 
 //if name is typed
           if( $("#customername").focus() ){
-/*
-            $("#customername").keyup(function(){
-              if($("#customername").val() == ''){
-                $("#phonenumber").val('');
-              }
-            })
-*/
+
             $("#customername").autocomplete({
               source: autoCompleteDataName,
               select: function(event, ui) {
@@ -485,27 +473,45 @@
 
 //start of product cart 
           var product=[];
-         // var i=0;
-          $.get('/api/cust/', function (data, status) {
+          var productId = -1;
+
+          $.get('/product/', function (data, status) {
 
             for(let i in data.data){
-              product.push(data.data[i].cust_name);
+              product.push({
+                label: `${data.data[i].product_id}. ${data.data[i].product_name}`,
+                value : data.data[i].product_name
+              })
             }
 
+
             $("#medicinename").autocomplete({
-              source: product
-            })
+              source: product,
+              select: function(event, ui) {
+
+                selectedProductName = (ui.item.label);
+                const regex = /^(\d+)\./;
+                const match = selectedProductName.match(regex)
+                productId = match[1];
+
+                $.get(`/api/product/${productId}`, function(data, status){
+                  var selectedProduct = data.data;
+                  $("#brand").val(selectedProduct.mfg);
+                  $("#price").val(selectedProduct.mrp);
+                  $("#discount").val(0);
+                })
+              }
+            }) 
           })
 
-          //var productname = $("medicinename").val();
           var quantityInput = $("#qty");
           var priceInput = $("#price");
           var discInput = $("#discount");
           var totalInput = $("#total");
 
           quantityInput.on("input", calculateTotal);
-          priceInput.on("input", calculateTotal);
           discInput.on("input", calculateTotal);
+          //priceInput.on("input", calculateTotal);
 
 
           function calculateTotal() {
@@ -515,7 +521,6 @@
             discount = discount/100;
             var total = quantity * price - (quantity * price* discount) ;
 
-        
             totalInput.val(total.toFixed(2));
           }
 
@@ -523,7 +528,6 @@
           var cartItems = JSON.parse(localStorage.getItem('cartitems')) || [];
           var custDataLocal = JSON.parse(localStorage.getItem('custdata')) || [];
           
-         // console.log("cartItems",cartItems);
           if(cartItems.length != 0){
             $("#customername").val((custDataLocal.name));
             $("#phonenumber").val((custDataLocal.phone));  
@@ -533,7 +537,6 @@
             $("#additionaldiscount").val(0);
             $("#finalamount").val(0);
           }
-          
           
           renderRefreshCart(cartItems);
 
@@ -562,7 +565,7 @@
               $('#cart').append(htmlData);
             }
           }
-//end of logic for referesh data
+//end of logic for refresh data
 
             
             var setLocalData;
@@ -570,22 +573,37 @@
             var htmlData;
             $("#addtocart").click(function(){
                       var products = $("#medicinename").val();  
+                      var brand = $("#brand").val();  
                       var qty = quantityInput.val();
                       var mrp =priceInput.val();
                       var disc =discInput.val();
                       var total = totalInput.val();
 
-                cartarray.push({productname: products, qty: qty, mrp: mrp, disc: disc, total:total, timestamp: new Date().getTime()})
+                      cartarray.push({
+                        productId: productId,
+                        productname: products, 
+                        brand: brand,
+                        qty: qty, 
+                        mrp: mrp, 
+                        disc: disc, 
+                        total:total, 
+                        timestamp: new Date().getTime()
+                      })
                   
                       setLocalData = JSON.stringify(cartarray);
                       
                       localStorage.setItem("cartitems", setLocalData);
 
-                      //also add the customer data to local storage
-                      var storeCustomerData = {name:  $("#customername").val() , phone: $("#phonenumber").val()};
+                    //also add the customer data to local storage
+                      var storeCustomerData = {
+                        name:  $("#customername").val() , 
+                        phone: $("#phonenumber").val()
+                      };
+
                       localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
 
                       $("#medicinename").val("");
+                      $("#brand").val("");
                       $("#qty").val("");
                       $("#price").val("");
                       $("#discount").val("");
@@ -608,9 +626,7 @@
               var item_id =item.find(".card_id").text().trim();
               var cartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
               cartItemsinStorage.splice(item_id - 1,1);
-            //  console.log("objectclicked", cartItemsinStorage);
               cartarray = cartItemsinStorage;
-            // console.log("cartarray", cartarray);
               localStorage.setItem('cartitems', JSON.stringify(cartItemsinStorage));
               renderCart(cartItemsinStorage);
             });
@@ -625,6 +641,7 @@
               var selectedItem = UpdatecartItemsinStorage[item_id-1];
     
                 $("#medicinename").val(selectedItem.productname);
+                $("#brand").val(selectedItem.brand);
                 $("#qty").val(selectedItem.qty);
                 $("#price").val(selectedItem.mrp);
                 $("#discount").val(selectedItem.disc);
@@ -697,17 +714,11 @@
             $("#cart").on("click", ".delete-button, .edit-button", function(){
               getSubTotal();
             })
-/*
-            $("#addtocart").click(function(){
-              getSubTotal();
-            })
-*/
             
             function getSubTotal(){
 
               var subtotal=0;
               getAllData = JSON.parse(localStorage.getItem("cartitems")) || [];
-              //console.log("getALldate", getAllData);
               
               if(getAllData.length != 0){
   
@@ -716,7 +727,7 @@
                 }
 
                 $("#subtotal").val(subtotal.toFixed(2));
-                $("#finalamount").val(subtotal.toFixed(2));
+                $("#finalamount").val(subtotal.toFixed(0));
               }
               else if(getAllData.length == 0){
                // console.log("none");
@@ -753,6 +764,7 @@
                 type: 'POST',
                 data: JSON.stringify({
                   cust_name: customerName,
+                  org_id: org,
                   cust_telephone: customerNumber
                 }),
                 contentType: 'application/json',
@@ -781,11 +793,11 @@
                       for(let i in orderDetails){
 
                         var cartDetails = ({
+                          product_id:orderDetails[i].productId,
                           product_name: orderDetails[i].productname,
                           quantity: orderDetails[i].qty,
                           mrp: orderDetails[i].mrp,
                           unit_discount: orderDetails[i].disc,
-                          cust_id: customerId,
                           sales_invoice_id: salesId
                         })
 

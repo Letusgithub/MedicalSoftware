@@ -28,11 +28,9 @@ exports.verifyOtp = async (req, res) => {
         // console.log('SUCCESS', otpResult);
         // Generate JWT token after successful otp verification //
         const token = createJwtToken(org_telephone);
-
         // Set the JWT token as a cookie //
         res.cookie('token', token, { httpOnly: true });
         // console.log("cookie", token);
-
         res.redirect('/');
       }
     });
@@ -149,4 +147,9 @@ exports.loginOrg = (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Failed to login user' });
   }
+};
+
+exports.logoutOrg = (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/login');
 };

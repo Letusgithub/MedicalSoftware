@@ -47,8 +47,8 @@ exports.deleteProduct = (req, res) => {
 };
 
 exports.getProductById = (req, res) => {
-  const product_id = req.params.id;
-  service.getById(product_id, (err, results) => {
+  const productId = req.params.id;
+  service.getById(productId, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -67,9 +67,8 @@ exports.getProductById = (req, res) => {
   });
 };
 
-exports.getAllProductsById = (req, res) => {
-  const product_id = req.params.id;
-  service.getAllById(product_id, (err, results) => {
+exports.getAllProducts = (req, res) => {
+  service.getAll((err, results) => {
     if (err) {
       console.log(err);
       return;

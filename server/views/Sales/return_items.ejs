@@ -338,7 +338,7 @@
 
         var returnItem = JSON.parse(localStorage.getItem("selectedreturnitem"));
 //getting all details of customer
-        $.get(`/api/invoice?id=${returnItem.id}`, function(data, status){
+        $.get(`/api/invoice?invoiceid=${returnItem.id}&org=<%= orgId %>`, function(data, status){
           console.log(data.result);
           var customerId = data.result[0].customer_id;
           console.log(customerId);

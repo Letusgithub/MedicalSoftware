@@ -13,8 +13,8 @@
   <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
     <ul class="navbar-nav flex-row align-items-center ms-auto">
 
-      <li class="nav-item lh-1 me-3">
-        Shree Pharamcy
+      <li class="nav-item lh-1 me-3" id="pharmacyname">
+        
       </li>
 
       <!-- User -->
@@ -34,7 +34,7 @@
                   </div>
                 </div>
                 <div class="flex-grow-1">
-                  <span class="fw-semibold d-block">John Doe</span>
+                  <span class="fw-semibold d-block" id="ownername"></span>
                   <small class="text-muted">Admin</small>
                 </div>
               </div>
@@ -68,7 +68,7 @@
             <div class="dropdown-divider"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="">
+            <a class="dropdown-item" href="/api/logout/">
               <i class="bx bx-power-off me-2"></i>
               <span class="align-middle">Log Out</span>
             </a>
@@ -82,3 +82,12 @@
 </nav>
 
 <!-- / Navbar -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    const name =JSON.parse( localStorage.getItem("name") );
+    $("#pharmacyname").text(`${name.pharmacyName}`);
+    $("#ownername").text(name.ownerName);
+    
+  })
+</script>

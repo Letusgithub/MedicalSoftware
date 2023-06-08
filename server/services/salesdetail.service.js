@@ -50,10 +50,14 @@ module.exports = {
     );
   },
 
-  getInvoiceOrder: (id, callback) => {
+  getInvoiceOrder: (salesId, orgId, callback) => {
     getPool().query(
-      'select * from order_details where si_invoice_id =?',
-      [id],
+      `select * from order_details od 
+        join customer_data cd 
+        on od.customer_id = cd.customer_id
+        where od.si_invoice_id=? and cd.org_id = ?`,
+      [salesId,
+        orgId],
       (error, results) => {
         if (error) return callback(error);
 

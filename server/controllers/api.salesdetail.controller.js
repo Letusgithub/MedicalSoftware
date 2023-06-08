@@ -40,8 +40,9 @@ module.exports = {
   },
 
   getInvoiceOrder: (req, res) => {
-    const id = req.query.id;
-    getInvoiceOrder(id, (error, results) => {
+    const salesId = req.query.invoiceid;
+    const orgId = req.query.org;
+    getInvoiceOrder(salesId, orgId, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({

@@ -1,10 +1,29 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
+const jwt = require('jsonwebtoken');
 const { getPool } = require('../config/database');
 const { checkAuth } = require('../middlewares/checkAuth');
 const { fetchOrgId } = require('../middlewares/fetchOrgId');
 
 module.exports = (app) => {
   app.use((req, res, next) => {
+    if (!req.app.locals.cookieRetrieved && req.cookies.token != null) {
+      const token = req.cookies.token;
+      const { payload } = jwt.decode(token);
+
+      getPool().query(
+        'select * from organisation where org_telephone =?',
+        [payload],
+        (error, results) => {
+          req.app.locals.token = results[0].org_name;
+          req.app.locals.name = results[0].owner_name;
+          req.app.locals.number = results[0].org_telephone;
+          req.app.locals.GST = results[0].org_gstin;
+          req.app.locals.cookieRetrieved = true;
+        },
+      );
+    }
+
     res.header(
       'Access-Control-Allow-Headers',
       'x-access-token, Origin, Content-Type, Accept',
@@ -12,6 +31,11 @@ module.exports = (app) => {
     next();
   });
 
+  app.get('/getphonenumber/', checkAuth, fetchOrgId, (req, res) => {
+    console.log('org', req.org_id);
+    const id = req.org_id;
+    res.send({ id });
+  });
   // Login Page
   app.get('/login', (req, res) => {
     res.render('Auth/login');
@@ -30,9 +54,11 @@ module.exports = (app) => {
   });
 
   // Home Page
+
   app.get('/', checkAuth, fetchOrgId, (req, res) => {
-    // console.log('response of home', req.org_telephone);
-    res.render('home');
+    res.render('home', {
+      name: req.app.locals.token, owner: req.app.locals.name, number: req.app.locals.number, gst: req.app.locals.GST,
+    });
   });
 
   // Admin Components
@@ -91,10 +117,10 @@ module.exports = (app) => {
     );
   });
 
-  app.get('/customer_list', (req, res) => {
+  app.get('/customer_list', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
-      'select * from customer_data ',
-      [],
+      'select * from customer_data where org_id =? ',
+      [req.org_id],
       (error, results) => {
         if (error) {
           return res.send({ status: 'error', error });
@@ -105,8 +131,8 @@ module.exports = (app) => {
     );
   });
 
-  app.get('/new_customer', (req, res) => {
-    res.render('OwnerControls/new_customer');
+  app.get('/new_customer', checkAuth, fetchOrgId, (req, res) => {
+    res.render('OwnerControls/new_customer', { orgId: req.org_id });
   });
 
   app.get('/update_customer/:id', (req, res) => {
@@ -151,35 +177,36 @@ module.exports = (app) => {
     );
   });
 
-  app.get('/new_vendor', (req, res) => {
-    res.render('OwnerControls/new_vendor');
+  app.get('/new_vendor', checkAuth, fetchOrgId, (req, res) => {
+    res.render('OwnerControls/new_vendor', { orgId: req.org_id });
   });
 
   // Sales components
-  app.get('/sale_invoice', (req, res) => {
-    console.log('response of sales', req.org_telephone);
-    res.render('Sales/sale_invoice');
+  app.get('/sale_invoice', checkAuth, fetchOrgId, (req, res) => {
+    // console.log('sales ke andar', req.org_id);
+    res.render('Sales/sale_invoice', { orgId: req.org_id });
   });
 
   app.get('/sale_entry_report', (req, res) => {
     res.render('Sales/sale_entry_report');
   });
 
-  app.get('/sale_return_invoice', (req, res) => {
-    res.render('Sales/sale_return_invoice');
+  app.get('/sale_return_invoice', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Sales/sale_return_invoice', { orgId: req.org_id });
   });
 
-  app.get('/return_items', (req, res) => {
-    res.render('Sales/return_items');
+  app.get('/return_items', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Sales/return_items', { orgId: req.org_id });
   });
 
   app.get('/sale_return_report', (req, res) => {
     res.render('Sales/sale_return_report');
   });
 
-  app.get('/invoice_template/:id', (req, res) => {
+  app.get('/invoice_template/:id', checkAuth, fetchOrgId, (req, res) => {
     console.log('got the id', req.params.id);
-    res.render('Sales/invoice_template', { id: req.params.id });
+    console.log(req.org_id);
+    res.render('Sales/invoice_template', { id: req.params.id, orgId: req.org_id });
   });
 
   // Inventory Managment component
@@ -220,10 +247,10 @@ module.exports = (app) => {
     res.render('Inventory/add_product');
   });
 
-  app.get('/purchase_order', (req, res) => {
+  app.get('/purchase_order', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
-      'select * from vendor',
-      [],
+      'select * from vendor where org_id = ?',
+      [req.org_id],
       (error, results) => {
         if (error) {
           console.log(error);

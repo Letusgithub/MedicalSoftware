@@ -13,6 +13,7 @@ module.exports = (app) => {
   });
 
   // Organisation routes
+  app.get('/api/org/:id', controller.getOrgById);
   app.patch('/api/org/', controller.updateOrg);
   app.delete('/api/org/', controller.deleteOrg);
 };
