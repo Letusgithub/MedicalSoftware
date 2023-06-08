@@ -13,7 +13,7 @@ exports.createEmp = (req, res) => {
     }
     console.log('new data', data);
 
-    return res.redirect('/employee_master').status(200).json({
+    return res.status(200).json({
       success: 1,
       data: results,
     });

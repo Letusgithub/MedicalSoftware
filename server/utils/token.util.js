@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 exports.createJwtToken = (payload) => {
-  const token = jwt.sign({ payload }, process.env.JWT_SEC, { expiresIn: '7d' });
+  const token = jwt.sign({ payload }, process.env.JWT_SEC, { expiresIn: '1d' });
   return token;
 };
 

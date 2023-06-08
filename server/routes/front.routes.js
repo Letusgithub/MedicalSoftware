@@ -61,9 +61,10 @@ module.exports = (app) => {
   });
 
   // Owner Control components
-  app.get('/employee_master', (req, res) => {
+  app.get('/employee_master', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
-      'select * from employee limit 100',
+      'select * from employee where org_id = ?',
+      [req.org_id],
       (error, results) => {
         if (error) {
           return res.send({ status: 'error', error });
@@ -73,8 +74,8 @@ module.exports = (app) => {
     );
   });
 
-  app.get('/add_employee', (req, res) => {
-    res.render('OwnerControls/add_employee');
+  app.get('/add_employee', checkAuth, fetchOrgId, (req, res) => {
+    res.render('OwnerControls/add_employee', { org_id: req.org_id });
   });
 
   app.get('/update_employee/:id', (req, res) => {
