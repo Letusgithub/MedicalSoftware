@@ -522,6 +522,13 @@
 
     <script>
       $(document).ready(function(){
+        localStorage.setItem("name", JSON.stringify({
+          pharmacyName: "<%= name %>",
+          ownerName: "<%= owner %>",
+          number: "<%= number %>",
+          gst: "<%= gst %>"
+        })
+        );
         $.get('/api/orderdetails/', function(data, status){
           var items =data.data;
           var revenue=0;

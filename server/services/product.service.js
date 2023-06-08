@@ -98,10 +98,10 @@ module.exports = {
   },
 
   // Get All Products
-  getAllById: (data, callBack) => {
+  getAll: (callBack) => {
     getPool().query(
       'select * from product',
-      [data],
+      [],
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -113,10 +113,10 @@ module.exports = {
   },
 
   // Get product by product ID
-  getById: (data, callBack) => {
+  getById: (id, callBack) => {
     getPool().query(
       'select * from product where product_id = ?',
-      [data.product_id],
+      [id],
       (error, results) => {
         if (error) {
           return callBack(error);

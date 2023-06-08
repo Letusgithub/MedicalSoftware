@@ -1,6 +1,4 @@
-
 const { getPool } = require('../config/database');
-
 
 module.exports = {
 
@@ -8,23 +6,21 @@ module.exports = {
   create: (data, callBack) => {
     getPool().query(
       `insert into vendor(
-
+                org_id,
                 company,
                 vendor_name,
                 vendor_address,
                 vendor_contact,
-                vendor_gstin,
-                email)
+                vendor_gstin
+                )
                 values(?,?,?,?,?,?)`,
       [
+        data.org_id,
         data.company,
-
         data.vendor_name,
         data.vendor_address,
         data.vendor_contact,
         data.vendor_gstin,
-
-        data.email,
       ],
       (error, results) => {
         if (error) {
@@ -41,13 +37,10 @@ module.exports = {
     getPool().query(
       `update vendor set
             company = ?,
-
             vendor_name= ?,
             vendor_address= ?,
             vendor_contact = ?,
-            vendor_gstin = ?,
-
-            email = ? 
+            vendor_gstin = ?
             where vendor_id = ?`,
       [
         data.company,
@@ -55,7 +48,6 @@ module.exports = {
         data.vendor_address,
         data.vendor_contact,
         data.vendor_gstin,
-        data.email,
         id,
       ],
 
@@ -63,6 +55,7 @@ module.exports = {
         if (error) {
           return callBack(error);
         }
+        console.log(results);
         return callBack(null, results[0]);
       },
     );

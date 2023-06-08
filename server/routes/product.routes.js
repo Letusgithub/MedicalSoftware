@@ -12,5 +12,6 @@ module.exports = (app) => {
   app.post('/product', controller.createProduct);
   app.post('/product/:id', controller.updateProduct);
   app.get('/product/:id', controller.deleteProduct);
-  app.get('/product/', controller.getAllProductsById);
+  app.get('/product/', controller.getAllProducts);
+  app.get('/api/product/:id', controller.getProductById);
 };

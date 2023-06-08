@@ -138,7 +138,7 @@
 
         $(document).ready(function(){
 //using customer number to see the sales
-          $.get('/api/cust/', function (data, status) {
+          $.get('/api/custorg/<%= orgId %>', function (data, status) {
 
             for (let i in data.data) {
               customerData.push({
@@ -171,8 +171,7 @@
             var invoiceId = $("#invoicenumber").val();
 
             if(invoiceId != ''){
-              
-              $.get(`/api/invoice?id=${invoiceId}`, function(data, status){
+              $.get(`/api/invoice?invoiceid=${invoiceId}&org=<%= orgId %>`, function(data, status){
                 $("#cart").empty();
                 
                 if(data.result.length != 0){
