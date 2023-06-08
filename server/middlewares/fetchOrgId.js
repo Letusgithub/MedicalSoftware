@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 const { getPool } = require('../config/database');
 
@@ -20,6 +21,9 @@ exports.fetchOrgId = async (req, res, next) => {
       }
       // Store the user ID in the request object //
       req.org_id = results[0].org_id;
+
+      // return results[0].org_id;
+
       // console.log(results[0].org_id);
 
       // Proceed to the next middleware or route handler //

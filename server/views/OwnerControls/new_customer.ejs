@@ -34,7 +34,7 @@
                   <div class="card mb-4 mx-auto col-md-10">
 
                     <div class="card-body ">
-                      <form action="/api/cust/" method="POST">
+                      <form>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname" >Customer Name</label>
                           <div class="col-sm-10">
@@ -93,7 +93,7 @@
 
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="submit" class="btn btn-primary" id="submitbtn">Add</button>
                           </div>
                         </div>
                       </form>
@@ -121,6 +121,40 @@
     <!-- / Layout wrapper -->
 
     <%- include('../partials/footercode.ejs') %>
+
+    <script>
+      $(document).ready(function(){
+        $("#submitbtn").click(function(){
+
+          var customerName = $("input[name='cust_name']").val();
+          var customerNumber = $("input[name='cust_telephone']").val();
+          var customerAdd = $("input[name='cust_address']").val();
+          var customerEmail = $("input[name='cust_email']").val();
+          var orgId = "<%= orgId %>";
+
+          var custDetails = {
+            cust_name: customerName,
+            org_id: orgId,
+            cust_telephone: customerNumber,
+            cust_address: customerAdd,
+            cust_email: customerEmail
+          }
+
+          $.ajax({
+            url: `/api/cust/`,
+            type: 'POST',
+            data: JSON.stringify(custDetails),
+            contentType: 'application/json',
+            success: function(response){
+              window.location.href ='/customer_list'                   
+            },
+            error: function(error){
+              console.log(error);
+            }
+          })
+        })
+      })
+    </script>
 
   </body>
 

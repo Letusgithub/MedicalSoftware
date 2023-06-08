@@ -10,23 +10,32 @@ exports.createVendor = (req, res) => {
         message: 'Database connection error',
       });
     }
-
-    res.redirect('/vendor_list');
-    // return res.status(200).json({
-    //   success: 1,
-    //   data: results,
-    // });
+    return res.status(200).json({
+      success: 1,
+      data: results,
+    });
+    // res.redirect('/vendor_list');
   });
 };
 
 exports.updateVendor = (req, res) => {
   const data = req.body;
   const id = req.params.id;
+  console.log('data', req.body);
+  console.log('dataid', req.params.id);
+
   service.update(id, data, (err, results) => {
     if (err) {
       console.log(err);
-      return;
+      return res.status(500).json({
+        success: 0,
+        message: 'Database connection error',
+      });
     }
+    // return res.status(200).json({
+    //   success: 1,
+    //   data: results,
+    // });
     res.redirect('/vendor_list');
   });
 };

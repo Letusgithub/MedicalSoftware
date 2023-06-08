@@ -17,10 +17,11 @@ module.exports = {
     const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
 
     getPool().query(
-      `insert into customer_data(cust_name, cust_telephone, cust_address, cust_email, created_date)
-                    values(?,?,?,?,?)`,
+      `insert into customer_data(cust_name, org_id, cust_telephone, cust_address, cust_email, created_date)
+                    values(?,?,?,?,?,?)`,
       [
         data.cust_name,
+        data.org_id,
         data.cust_telephone,
         data.cust_address,
         data.cust_email,
@@ -35,10 +36,12 @@ module.exports = {
     );
   },
 
-  getUserByNumber: (number, callback) => {
+  getUserByNumber: (number, orgId, callback) => {
     getPool().query(
-      'select * from customer_data where cust_telephone =?',
-      [number],
+      'select * from customer_data where cust_telephone =? and org_id=?',
+      [number,
+        orgId,
+      ],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -50,6 +53,19 @@ module.exports = {
     getPool().query(
       'select * from customer_data',
       [],
+      (error, results, fields) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
+  getUsersOfOrg: (orgId, callback) => {
+    getPool().query(
+      'select * from customer_data where org_id=?',
+      [orgId],
       (error, results, fields) => {
         if (error) {
           return callback(error);
