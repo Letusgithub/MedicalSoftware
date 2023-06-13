@@ -1,5 +1,5 @@
 const {
-  createOrder, getAllOrders, getInvoiceOrder, getRevenue,
+  createOrder, getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, allSamples,
 } = require('../controllers/api.salesdetail.controller');
 
 module.exports = (app) => {
@@ -15,4 +15,7 @@ module.exports = (app) => {
   app.get('/api/salesdetail/:id', getAllOrders);
   app.get('/api/invoice', getInvoiceOrder);
   app.get('/api/orderdetails/', getRevenue);
+  app.get('/api/searchdates/', searchDates);
+  app.get('/api/sampledetails', autoComplete);
+  app.get('/api/allsample', allSamples);
 };

@@ -27,8 +27,8 @@
                       <div class="d-flex align-items-end row">
                         <div class="col-sm-7">
                           <div class="card-body">
-                            <h5 class="card-title text-primary">
-                              Congratulations Rajesh Kumar! 🎉
+                            <h5 class="card-title text-primary" id="congratsowner">
+                              
                             </h5>
                             <p class="mb-4">
                               You have done <span class="fw-bold">72%</span> more
@@ -520,11 +520,13 @@
 
     <script>
       $(document).ready(function(){
+        $("#congratsowner").text(`Congratulations <%= owner %>! 🎉`)
         localStorage.setItem("name", JSON.stringify({
           pharmacyName: "<%= name %>",
           ownerName: "<%= owner %>",
           number: "<%= number %>",
-          gst: "<%= gst %>"
+          gst: "<%= gst %>",
+          pharmaId: "<%= pharmacyId %>"
         })
         );
         $.get('/api/orderdetails/', function(data, status){

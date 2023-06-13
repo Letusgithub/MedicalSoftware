@@ -240,7 +240,7 @@
 
         $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function(data, status){
                 var customer = data.result[0];
-                console.log(customer);
+                console.log('inside the invoice template', customer);
                 
                 var customerName = customer.cust_name;
                 var customerNumber = customer.cust_telephone;
@@ -250,7 +250,7 @@
                 
                 $("#shippedcustomerdetails .shippedcustomerfields").html(`${customerName} <br> `);
                 $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
-                $("#shippedcustomerdetails .invoicenumber").html(`SE-${id} <br> `);
+                $("#shippedcustomerdetails .invoicenumber").text(`${customer.invoice_id_main}`);
 
 
                 
