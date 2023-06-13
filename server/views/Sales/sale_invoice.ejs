@@ -71,7 +71,7 @@
 
                       </tr>
                     </div>
-                
+
                   </form>
                 </div>
               </div>
@@ -79,7 +79,7 @@
 
 
 
-                <!-- Content
+              <!-- Content
 
                 <div class="container-xxl flex-grow-1 container-p-y">
                   <h4 class="fw-bold py-3 mb-1"> Sale Invoice</h4>
@@ -336,7 +336,7 @@
                   <div class="card mb-4">
                     <div class="d-flex justify-content-between m-0 p-0">
                       <h5 class="card-header">Final Amount</h5>
-                   </div>
+                    </div>
 
                     <div class="card-body pt-0">
                       <div>
@@ -373,7 +373,7 @@
 
               <!-- //invoice_template -->
               <div class="text-center mb-4">
-                <a > 
+                <a>
                   <div class="btn btn-primary px-5" id="submitorder">Submit</div>
                 </a>
               </div>
@@ -400,108 +400,108 @@
     <%- include('../partials/footercode.ejs') %>
       <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
       <script>
-        
+
         var customerData = [];// to push all the details of customer data in this array
 
-        var cartarray =[];// push all the items of a particular customer
+        var cartarray = [];// push all the items of a particular customer
 
-        var autoCompleteDataNumber =[];;// used for autocomplete number field
-        var autoCompleteDataName=[];// used for autocomplete name field
+        var autoCompleteDataNumber = [];;// used for autocomplete number field
+        var autoCompleteDataName = [];// used for autocomplete name field
 
         $(document).ready(function () {
 
-//gettin the current org id
+          //gettin the current org id
 
           var org = "<%= orgId %>";
 
-// get customer data and show it in the autocomplete function
+          // get customer data and show it in the autocomplete function
 
           $.get(`/api/custorg/${org}`, function (data, status) {
 
             for (let i in data.data) {
               customerData.push({
-                phone: JSON.stringify(data.data[i].cust_telephone), 
-                name: data.data[i].cust_name, 
+                phone: JSON.stringify(data.data[i].cust_telephone),
+                name: data.data[i].cust_name,
                 id: data.data[i].customer_id
               });
-              
+
               autoCompleteDataNumber.push({
-                label: JSON.stringify(data.data[i].cust_telephone) + '(' + data.data[i].cust_name + ')' ,
-                value : JSON.stringify(data.data[i].cust_telephone)
+                label: JSON.stringify(data.data[i].cust_telephone) + '(' + data.data[i].cust_name + ')',
+                value: JSON.stringify(data.data[i].cust_telephone)
               });
 
               autoCompleteDataName.push({
-                label: data.data[i].cust_name  + '(' + JSON.stringify(data.data[i].cust_telephone) + ')' ,
-                value : data.data[i].cust_name
+                label: data.data[i].cust_name + '(' + JSON.stringify(data.data[i].cust_telephone) + ')',
+                value: data.data[i].cust_name
               });
             }
 
-// if phonenumber is typed
-            if( $("#phonenumber").focus() ){
+            // if phonenumber is typed
+            if ($("#phonenumber").focus()) {
 
               $("#phonenumber").autocomplete({
                 source: autoCompleteDataNumber,
-                select: function(event, ui) {
+                select: function (event, ui) {
 
                   selectedCustomerNumber = (ui.item.label);
                   var autopopulatedName = selectedCustomerNumber.match(/\(([^)]+)\)/)[1];
 
                   $("#customername").val(autopopulatedName);
                 }
-            })
-          }
-// end of number logic
+              })
+            }
+            // end of number logic
 
-//if name is typed
-          if( $("#customername").focus() ){
+            //if name is typed
+            if ($("#customername").focus()) {
 
-            $("#customername").autocomplete({
-              source: autoCompleteDataName,
-              select: function(event, ui) {
+              $("#customername").autocomplete({
+                source: autoCompleteDataName,
+                select: function (event, ui) {
 
-                selectedCustomerName = (ui.item.label);
-                var autopopulatedNumber = selectedCustomerName.match(/\(([^)]+)\)/)[1];
+                  selectedCustomerName = (ui.item.label);
+                  var autopopulatedNumber = selectedCustomerName.match(/\(([^)]+)\)/)[1];
 
-                $("#phonenumber").val(autopopulatedNumber);
-              }
+                  $("#phonenumber").val(autopopulatedNumber);
+                }
+              })
+            }
+            //end of name logic
+
           })
-        }
-//end of name logic
+          //end of autocomplete function
 
-      })
-//end of autocomplete function
-
-//start of product cart 
-          var product=[];
+          //start of product cart 
+          var product = [];
           var productId = -1;
 
           $.get('/product/', function (data, status) {
 
-            for(let i in data.data){
+            for (let i in data.data) {
               product.push({
                 label: `${data.data[i].product_id}. ${data.data[i].product_name}`,
-                value : data.data[i].product_name
+                value: data.data[i].product_name
               })
             }
 
 
             $("#medicinename").autocomplete({
               source: product,
-              select: function(event, ui) {
+              select: function (event, ui) {
 
                 selectedProductName = (ui.item.label);
                 const regex = /^(\d+)\./;
                 const match = selectedProductName.match(regex)
                 productId = match[1];
 
-                $.get(`/api/product/${productId}`, function(data, status){
+                $.get(`/api/product/${productId}`, function (data, status) {
                   var selectedProduct = data.data;
                   $("#brand").val(selectedProduct.mfg);
                   $("#price").val(selectedProduct.mrp);
                   $("#discount").val(0);
                 })
               }
-            }) 
+            })
           })
 
           var quantityInput = $("#qty");
@@ -518,26 +518,26 @@
             var quantity = parseInt(quantityInput.val()) || 0;
             var price = parseFloat(priceInput.val()) || 0;
             var discount = parseFloat(discInput.val()) || 0;
-            discount = discount/100;
-            var total = quantity * price - (quantity * price* discount) ;
+            discount = discount / 100;
+            var total = quantity * price - (quantity * price * discount);
 
             totalInput.val(total.toFixed(2));
           }
 
-//getting data when refresh
+          //getting data when refresh
           var cartItems = JSON.parse(localStorage.getItem('cartitems')) || [];
           var custDataLocal = JSON.parse(localStorage.getItem('custdata')) || [];
-          
-          if(cartItems.length != 0){
+
+          if (cartItems.length != 0) {
             $("#customername").val((custDataLocal.name));
-            $("#phonenumber").val((custDataLocal.phone));  
+            $("#phonenumber").val((custDataLocal.phone));
           }
-          else{
+          else {
             $("#subtotal").val(0);
             $("#additionaldiscount").val(0);
             $("#finalamount").val(0);
           }
-          
+
           renderRefreshCart(cartItems);
 
           function renderRefreshCart(items) {
@@ -548,7 +548,7 @@
 
               htmlData = `
                         <tr>
-                          <td class="card_id">${i+1}</td>
+                          <td class="card_id">${i + 1}</td>
                           <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
                           <td>${items[i].qty}</td>
                           <td>${items[i].mrp}</td>
@@ -565,105 +565,105 @@
               $('#cart').append(htmlData);
             }
           }
-//end of logic for refresh data
+          //end of logic for refresh data
 
-            
-            var setLocalData;
-            var getLocalData;
-            var htmlData;
-            $("#addtocart").click(function(){
-                      var products = $("#medicinename").val();  
-                      var brand = $("#brand").val();  
-                      var qty = quantityInput.val();
-                      var mrp =priceInput.val();
-                      var disc =discInput.val();
-                      var total = totalInput.val();
 
-                      cartarray.push({
-                        productId: productId,
-                        productname: products, 
-                        brand: brand,
-                        qty: qty, 
-                        mrp: mrp, 
-                        disc: disc, 
-                        total:total, 
-                        timestamp: new Date().getTime()
-                      })
-                  
-                      setLocalData = JSON.stringify(cartarray);
-                      
-                      localStorage.setItem("cartitems", setLocalData);
+          var setLocalData;
+          var getLocalData;
+          var htmlData;
+          $("#addtocart").click(function () {
+            var products = $("#medicinename").val();
+            var brand = $("#brand").val();
+            var qty = quantityInput.val();
+            var mrp = priceInput.val();
+            var disc = discInput.val();
+            var total = totalInput.val();
 
-                    //also add the customer data to local storage
-                      var storeCustomerData = {
-                        name:  $("#customername").val() , 
-                        phone: $("#phonenumber").val()
-                      };
-
-                      localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
-
-                      $("#medicinename").val("");
-                      $("#brand").val("");
-                      $("#qty").val("");
-                      $("#price").val("");
-                      $("#discount").val("");
-                      $("#total").val("");
-             
+            cartarray.push({
+              productId: productId,
+              productname: products,
+              brand: brand,
+              qty: qty,
+              mrp: mrp,
+              disc: disc,
+              total: total,
+              timestamp: new Date().getTime()
             })
-     
-                  
 
-// logic for redering cart data on addtocart click 
-            $("#addtocart").on('click', function() {              
-              cartItems = JSON.parse(localStorage.getItem('cartitems')) || [];
-              renderCart(cartItems);
-              getSubTotal();
-            });
+            setLocalData = JSON.stringify(cartarray);
 
-//deletefunctionality
-            $("#cart").on("click", ".delete-button", function() {
-              var item = $(this).closest("tr");
-              var item_id =item.find(".card_id").text().trim();
-              var cartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
-              cartItemsinStorage.splice(item_id - 1,1);
-              cartarray = cartItemsinStorage;
-              localStorage.setItem('cartitems', JSON.stringify(cartItemsinStorage));
-              renderCart(cartItemsinStorage);
-            });
-//endofdeletefunctionality
+            localStorage.setItem("cartitems", setLocalData);
 
+            //also add the customer data to local storage
+            var storeCustomerData = {
+              name: $("#customername").val(),
+              phone: $("#phonenumber").val()
+            };
 
-//edit functionality  
-            $("#cart").on("click", ".edit-button", function(){
-              var item = $(this).closest("tr");
-              var item_id =item.find(".card_id").text().trim();
-              var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
-              var selectedItem = UpdatecartItemsinStorage[item_id-1];
-    
-                $("#medicinename").val(selectedItem.productname);
-                $("#brand").val(selectedItem.brand);
-                $("#qty").val(selectedItem.qty);
-                $("#price").val(selectedItem.mrp);
-                $("#discount").val(selectedItem.disc);
-                $("#total").val(selectedItem.total);
+            localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
 
-                UpdatecartItemsinStorage.splice(item_id - 1,1);
-                cartarray = UpdatecartItemsinStorage;
-                localStorage.setItem('cartitems', JSON.stringify(UpdatecartItemsinStorage));
-                renderCart(UpdatecartItemsinStorage);
+            $("#medicinename").val("");
+            $("#brand").val("");
+            $("#qty").val("");
+            $("#price").val("");
+            $("#discount").val("");
+            $("#total").val("");
+
+          })
 
 
-            })
-//end of edit functionality
 
-//rendercart functionality
-            function renderCart(items) {
-              $('#cart').empty();
+          // logic for redering cart data on addtocart click 
+          $("#addtocart").on('click', function () {
+            cartItems = JSON.parse(localStorage.getItem('cartitems')) || [];
+            renderCart(cartItems);
+            getSubTotal();
+          });
 
-              for (var i = 0; i < items.length; i++) {
-                htmlData = `
+          //deletefunctionality
+          $("#cart").on("click", ".delete-button", function () {
+            var item = $(this).closest("tr");
+            var item_id = item.find(".card_id").text().trim();
+            var cartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
+            cartItemsinStorage.splice(item_id - 1, 1);
+            cartarray = cartItemsinStorage;
+            localStorage.setItem('cartitems', JSON.stringify(cartItemsinStorage));
+            renderCart(cartItemsinStorage);
+          });
+          //endofdeletefunctionality
+
+
+          //edit functionality  
+          $("#cart").on("click", ".edit-button", function () {
+            var item = $(this).closest("tr");
+            var item_id = item.find(".card_id").text().trim();
+            var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
+            var selectedItem = UpdatecartItemsinStorage[item_id - 1];
+
+            $("#medicinename").val(selectedItem.productname);
+            $("#brand").val(selectedItem.brand);
+            $("#qty").val(selectedItem.qty);
+            $("#price").val(selectedItem.mrp);
+            $("#discount").val(selectedItem.disc);
+            $("#total").val(selectedItem.total);
+
+            UpdatecartItemsinStorage.splice(item_id - 1, 1);
+            cartarray = UpdatecartItemsinStorage;
+            localStorage.setItem('cartitems', JSON.stringify(UpdatecartItemsinStorage));
+            renderCart(UpdatecartItemsinStorage);
+
+
+          })
+          //end of edit functionality
+
+          //rendercart functionality
+          function renderCart(items) {
+            $('#cart').empty();
+
+            for (var i = 0; i < items.length; i++) {
+              htmlData = `
                           <tr>
-                            <td class="card_id">${i+1}</td>
+                            <td class="card_id">${i + 1}</td>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
                             <td>${items[i].qty}</td>
                             <td>${items[i].mrp}</td>
@@ -677,228 +677,228 @@
                             </td>
                           </tr>
                           `
-                $('#cart').append(htmlData);
+              $('#cart').append(htmlData);
+            }
+          }
+          //end of rendereing data logic
+
+
+          //implementing time after which cart clears itself
+          function checkExpiration() {
+            var data = JSON.parse(localStorage.getItem('cartitems')) || [];
+
+            if (data.length != 0) {
+              var currentTime = new Date().getTime();
+              var last = data[data.length - 1].timestamp;
+              if (data && (currentTime - last) >= (60 * 60 * 1000)) {
+                console.log("expired");
+                localStorage.removeItem('cartitems');
+                localStorage.removeItem('custdata');
               }
             }
-//end of rendereing data logic
-         
-
-//implementing time after which cart clears itself
-            function checkExpiration() {
-              var data = JSON.parse(localStorage.getItem('cartitems')) || [];
-
-              if(data.length!=0){
-                var currentTime = new Date().getTime();
-                var last = data[data.length-1].timestamp ;
-                if (data && (currentTime -  last) >= ( 60 * 60 * 1000)) {
-                  console.log("expired");
-                  localStorage.removeItem('cartitems');
-                  localStorage.removeItem('custdata');
-                }
-              }
-            }
+          }
 
           checkExpiration();
-/*
-            setTimeout(function() {
-              console.log("checking");
-              checkExpiration();
-            }, 3600000);
-*/
-//end of this function
+          /*
+                      setTimeout(function() {
+                        console.log("checking");
+                        checkExpiration();
+                      }, 3600000);
+          */
+          //end of this function
 
 
-//getting the subtotal when theres change in local storage
-            var getAllData = JSON.parse(localStorage.getItem("cartitems")) || [];
+          //getting the subtotal when theres change in local storage
+          var getAllData = JSON.parse(localStorage.getItem("cartitems")) || [];
+          getSubTotal();
+          $("#cart").on("click", ".delete-button, .edit-button", function () {
             getSubTotal();
-            $("#cart").on("click", ".delete-button, .edit-button", function(){
-              getSubTotal();
-            })
-            
-            function getSubTotal(){
+          })
 
-              var subtotal=0;
-              getAllData = JSON.parse(localStorage.getItem("cartitems")) || [];
-              
-              if(getAllData.length != 0){
-  
-                for(let i=0;i<getAllData.length;i++){
-                    subtotal = subtotal + parseFloat(getAllData[i].total);
+          function getSubTotal() {
+
+            var subtotal = 0;
+            getAllData = JSON.parse(localStorage.getItem("cartitems")) || [];
+
+            if (getAllData.length != 0) {
+
+              for (let i = 0; i < getAllData.length; i++) {
+                subtotal = subtotal + parseFloat(getAllData[i].total);
+              }
+
+              $("#subtotal").val(subtotal.toFixed(2));
+              $("#finalamount").val(subtotal.toFixed(0));
+            }
+            else if (getAllData.length == 0) {
+              // console.log("none");
+              $("#subtotal").val(0);
+              $("#finalamount").val(0);
+            }
+          }
+
+
+          $('#additionaldiscount').on("input", function () {
+
+            var getSubTotalValue = $("#subtotal").val()
+            var discountInput = $(this).val();
+            var discountprice = getSubTotalValue - discountInput;
+            $("#finalamount").val(discountprice.toFixed(0));
+
+          })
+          //allchanges done for footer total;
+
+          // post the data to the sales api
+          var orderDetails;
+          $("#submitorder").click(function () {
+
+            var subtotal = $("#subtotal").val();
+            var total_dist = $("#additionaldiscount").val() || 0;
+            var grand_total = $("#finalamount").val();
+            var mop = $("#mop").val();
+
+            var customerNumber = $("#phonenumber").val();
+            var customerName = $("#customername").val();
+
+            $.ajax({
+              url: `/api/custnumber/`,
+              type: 'POST',
+              data: JSON.stringify({
+                cust_name: customerName,
+                org_id: org,
+                cust_telephone: customerNumber
+              }),
+              contentType: 'application/json',
+              success: function (response) {
+
+                var customerId = response.id;
+
+                orderDetails = {
+                  customer_id: customerId,
+                  subtotal: subtotal,
+                  total_dist: total_dist,
+                  grand_total: grand_total,
+                  mop: mop
                 }
 
-                $("#subtotal").val(subtotal.toFixed(2));
-                $("#finalamount").val(subtotal.toFixed(0));
-              }
-              else if(getAllData.length == 0){
-               // console.log("none");
-                $("#subtotal").val(0);
-                $("#finalamount").val(0);
-              }
-            }
-            
+                $.ajax({
+                  url: '/api/salesdetail/',
+                  type: 'POST',
+                  data: JSON.stringify(orderDetails),
+                  contentType: 'application/json',
+                  success: function (response) {
 
-            $('#additionaldiscount').on("input", function(){
+                    var salesId = response.result.insertId;
+                    var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
 
-              var getSubTotalValue = $("#subtotal").val() 
-                var discountInput = $(this).val();
-                var discountprice = getSubTotalValue - discountInput; 
-                $("#finalamount").val(discountprice.toFixed(0));
-              
-            })
-//allchanges done for footer total;
+                    for (let i in orderDetails) {
 
-// post the data to the sales api
-            var orderDetails;
-            $("#submitorder").click(function(){
+                      var cartDetails = ({
+                        product_id: orderDetails[i].productId,
+                        product_name: orderDetails[i].productname,
+                        quantity: orderDetails[i].qty,
+                        mrp: orderDetails[i].mrp,
+                        unit_discount: orderDetails[i].disc,
+                        sales_invoice_id: salesId
+                      })
 
-              var subtotal = $("#subtotal").val();
-              var total_dist = $("#additionaldiscount").val() || 0;
-              var grand_total = $("#finalamount").val();
-              var mop = $("#mop").val();
-
-              var customerNumber = $("#phonenumber").val();
-              var customerName = $("#customername").val();
-          
-              $.ajax({
-                url: `/api/custnumber/`,
-                type: 'POST',
-                data: JSON.stringify({
-                  cust_name: customerName,
-                  org_id: org,
-                  cust_telephone: customerNumber
-                }),
-                contentType: 'application/json',
-                success: function(response){
-
-                  var customerId = response.id;
-
-                  orderDetails ={
-                    customer_id: customerId,
-                    subtotal: subtotal,
-                    total_dist: total_dist,
-                    grand_total: grand_total ,
-                    mop: mop
-                  }
-
-                  $.ajax({
-                    url: '/api/salesdetail/',
-                    type:'POST',
-                    data: JSON.stringify(orderDetails),
-                    contentType: 'application/json',
-                    success: function(response){
-
-                      var salesId = response.result.insertId;
-                      var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
-
-                      for(let i in orderDetails){
-
-                        var cartDetails = ({
-                          product_id:orderDetails[i].productId,
-                          product_name: orderDetails[i].productname,
-                          quantity: orderDetails[i].qty,
-                          mrp: orderDetails[i].mrp,
-                          unit_discount: orderDetails[i].disc,
-                          sales_invoice_id: salesId
-                        })
-
-                        $.ajax({
-                          url: `/api/cartitems/`,
-                          type: 'POST',
-                          data: JSON.stringify(cartDetails),
-                          contentType: 'application/json',
-                          success: function(response){
-                            console.log(response);                   
-                          },
-                          error: function(error){
-                            console.log(error);
-                          }
-                        })
-                      }
-                      
-                      localStorage.removeItem("cartitems");
-                      localStorage.removeItem("custdata");
-                      window.location.href = `/invoice_template/${salesId}`
-                      //location.reload();
-                    },
-                    error: function(error){
-                      alert("not Created", error )
+                      $.ajax({
+                        url: `/api/cartitems/`,
+                        type: 'POST',
+                        data: JSON.stringify(cartDetails),
+                        contentType: 'application/json',
+                        success: function (response) {
+                          console.log(response);
+                        },
+                        error: function (error) {
+                          console.log(error);
+                        }
+                      })
                     }
 
-                  })
-                },
-                error: function(error){
-                  console.log("error", error);
-                }
-                
-              })
+                    localStorage.removeItem("cartitems");
+                    localStorage.removeItem("custdata");
+                    window.location.href = `/invoice_template/${salesId}`
+                    //location.reload();
+                  },
+                  error: function (error) {
+                    alert("not Created", error)
+                  }
+
+                })
+              },
+              error: function (error) {
+                console.log("error", error);
+              }
 
             })
 
-// if wanted without using local storage edit and delete button
-/*
-              var newRow = $("<tr>");
-              newRow.addClass("cart-item");
+          })
 
-                var index = $("<td>").addClass("index").text(i);
-                var productName = $("<td>").addClass("updateproduct").text(products);
-                  var qtys = $("<td>").addClass("updateqty").text(qty);
-                  var mrps = $("<td>").addClass("updateprice").text(mrp);
-                  var discs = $("<td>").addClass("updatedisc").text(disc);
-                  var totals = $("<td>").addClass("updatetotal").text(total);
-                 
-               
-                  var actionButtons = $("<div>").addClass("action-btns");
-                  var editButton = $("<button>").addClass("edit-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bxs-edit'></i>");
-                  var deleteButton = $("<button>").addClass("delete-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bx-trash me-1'></i>");
+          // if wanted without using local storage edit and delete button
+          /*
+                        var newRow = $("<tr>");
+                        newRow.addClass("cart-item");
+          
+                          var index = $("<td>").addClass("index").text(i);
+                          var productName = $("<td>").addClass("updateproduct").text(products);
+                            var qtys = $("<td>").addClass("updateqty").text(qty);
+                            var mrps = $("<td>").addClass("updateprice").text(mrp);
+                            var discs = $("<td>").addClass("updatedisc").text(disc);
+                            var totals = $("<td>").addClass("updatetotal").text(total);
+                           
+                         
+                            var actionButtons = $("<div>").addClass("action-btns");
+                            var editButton = $("<button>").addClass("edit-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bxs-edit'></i>");
+                            var deleteButton = $("<button>").addClass("delete-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bx-trash me-1'></i>");
+          
+                            actionButtons.append(editButton, deleteButton);
+          
+                          newRow.append(index, productName, qtys,mrps, discs, totals, $("<script>").append(actionButtons));
+                          $("#cart").append(newRow);
+          */
 
-                  actionButtons.append(editButton, deleteButton);
-
-                newRow.append(index, productName, qtys,mrps, discs, totals, $("<script>").append(actionButtons));
-                $("#cart").append(newRow);
-*/ 
 
 
- 
 
-                //deleting an item
-              
-                
-                  //item.remove();
-/*
-                $("#cart").on("click", ".edit-button", function(){
-                    var updateElement = $(this).closest("tr")
-                    var productName = updateElement.find(".updateproduct").text().trim();
-                    var qtyUpdate = updateElement.find(".updateqty").text().trim();
-                    var priceUpdate = updateElement.find(".updateprice").text().trim();
-                    var discUpdate = updateElement.find(".updatedisc").text().trim();
-                    var totalUpdate = updateElement.find(".updatetotal").text().trim();
-                    
-                $("#medicinename").val(productName);
-                $("#qty").val(qtyUpdate);
-                $("#price").val(priceUpdate);
-                $("#discount").val(discUpdate);
-                $("#total").val(totalUpdate);
-                
-                
-                updateElement.remove();
-              }) 
-              */
-              
-              
-              
-        
-        
-              
-              
-              
-              
-              
-              
-              
-              
-            })
+          //deleting an item
 
-          </script>
+
+          //item.remove();
+          /*
+                          $("#cart").on("click", ".edit-button", function(){
+                              var updateElement = $(this).closest("tr")
+                              var productName = updateElement.find(".updateproduct").text().trim();
+                              var qtyUpdate = updateElement.find(".updateqty").text().trim();
+                              var priceUpdate = updateElement.find(".updateprice").text().trim();
+                              var discUpdate = updateElement.find(".updatedisc").text().trim();
+                              var totalUpdate = updateElement.find(".updatetotal").text().trim();
+                              
+                          $("#medicinename").val(productName);
+                          $("#qty").val(qtyUpdate);
+                          $("#price").val(priceUpdate);
+                          $("#discount").val(discUpdate);
+                          $("#total").val(totalUpdate);
+                          
+                          
+                          updateElement.remove();
+                        }) 
+                        */
+
+
+
+
+
+
+
+
+
+
+
+
+
+        })
+
+      </script>
 
       <script>
         var addToCart = document.getElementById("addtocart")
@@ -957,26 +957,3 @@
 
 
   </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

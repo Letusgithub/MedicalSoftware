@@ -5,6 +5,18 @@ module.exports = {
 
   // Create Employee
   create: (data, callBack) => {
+    const date_time = new Date();
+    const date = (`0${date_time.getDate()}`).slice(-2);
+    const month = (`0${date_time.getMonth() + 1}`).slice(-2);
+    const year = date_time.getFullYear();
+
+    const hours = date_time.getHours();
+    const minutes = date_time.getMinutes();
+    const seconds = date_time.getSeconds();
+
+    const emp_created = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+    const emp_updated = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
     getPool().query(
       `insert into employee(
                 org_id,
@@ -12,8 +24,10 @@ module.exports = {
                 emp_mobile,
                 emp_alt_mobile,
                 emp_email,
-                emp_address)
-                value(?,?,?,?,?,?)`,
+                emp_address,
+                emp_created,
+                emp_updated)
+                value(?,?,?,?,?,?,?,?)`,
       [
         data.org_id,
         data.emp_name,
@@ -21,6 +35,8 @@ module.exports = {
         data.emp_alt_mobile,
         data.emp_email,
         data.emp_address,
+        emp_created,
+        emp_updated,
       ],
       (error, results) => {
         if (error) {
@@ -33,6 +49,17 @@ module.exports = {
 
   // Update Employee
   update: (emp_id, data, callBack) => {
+    const date_time = new Date();
+    const date = (`0${date_time.getDate()}`).slice(-2);
+    const month = (`0${date_time.getMonth() + 1}`).slice(-2);
+    const year = date_time.getFullYear();
+
+    const hours = date_time.getHours();
+    const minutes = date_time.getMinutes();
+    const seconds = date_time.getSeconds();
+
+    const emp_updated = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
     getPool().query(
       `update employee set
                 emp_name = ?,
@@ -40,7 +67,8 @@ module.exports = {
                 emp_alt_mobile = ?,
                 emp_email = ?,
                 emp_address = ?,
-                emp_access = ?
+                emp_access = ?,
+                emp_updated = ?,
                 where emp_id = ?`,
       [
         data.emp_name,
@@ -49,6 +77,7 @@ module.exports = {
         data.emp_email,
         data.emp_address,
         data.emp_access,
+        emp_updated,
         emp_id,
       ],
       (error, results) => {
