@@ -91,7 +91,7 @@
                           <h5 class="card-header">From Date</h5>
                           <div class="card-body">
                             <div class="col-md-10">
-                              <input class="form-control" type="date" id="html5-date-input" />
+                              <input class="form-control" type="date" id="html5-date-input" name="fromdate"/>
                             </div>
                           </div>
                         </div>
@@ -103,7 +103,7 @@
                             <div>
 
                               <div class="col-md-10">
-                                <input class="form-control" type="date" id="html5-date-input" />
+                                <input class="form-control" type="date" id="html5-date-input" name="todate"/>
                               </div>
                             </div>
                           </div>
@@ -115,7 +115,7 @@
 
 
                     <div class="text-center mb-4">
-                      <button type="button" class="btn btn-primary">Generate Report</button>
+                      <button type="button" class="btn btn-primary" id="generatereport">Generate Report</button>
                     </div>
 
                     <!-- Report List -->
@@ -133,26 +133,13 @@
                                 <th>Total Amount</th>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th class="col-1">Actions</th>
+                                <!-- <th class="col-1">Actions</th> -->
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-8481388183</strong></td>
-                                <td>Jaikishan Shah</td>
-                                <td>₹1299</td>
-                                <td>10/02/2023</td>
-                                <td>12:50 PM</td>
-                                <td>
-                                  <div class="action-btns">
-                                    <button type="button" class="btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
-                                  </div>
-                                  
-                                </td>
-                              </tr>
+                            <tbody id="reportcart">
+                              
   
-                              <tr>
+                              <!-- <tr>
                                 <td>2</td>
                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-8481399183</strong></td>
                                 <td>Jaikishan Shah</td>
@@ -166,7 +153,7 @@
                                   
                                 </td>
                               </tr>
-                              
+                               -->
                             </tbody>
                           </table>
                         </div>
@@ -197,6 +184,65 @@
     <!-- / Layout wrapper -->
 
     <%- include('../partials/footercode.ejs') %>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script>
+      var fromDate;
+      var toDate;
+
+      $(document).ready(function(){
+        /*$("input[name='fromdate']").change(function(){
+          fromDate = $(this).val();
+          console.log('fromdate', fromDate);
+        })
+
+        $("input[name='todate']").change(function(){
+          toDate = $(this).val();
+          console.log('todate', toDate);
+        })*/
+
+        $("#generatereport").click(function(){
+          var fromDate = $("input[name='fromdate']").val();
+          var toDate = $("input[name='todate']").val();
+          
+          $.get(`/api/searchdates?org=<%=orgId%>&from=${fromDate}&to=${toDate}`, function(data, status){
+            $("#reportcart").empty();
+            var items = data.data;
+            console.log(items);
+            for(let i=0;i<items.length;i++){
+
+                var datetime = items[i].sales_created_date; 
+                var date = moment(datetime).format('DD MMMM YYYY');
+                var time = moment(datetime).utcOffset('+05:30');
+                var localTime = time.format('hh:mm A');
+              var htmlData = `
+              <tr>
+                <td>${i+1}</td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-${items[i].si_invoice_id}</strong></td>
+                <td>${items[i].cust_name}</td>
+                <td>${items[i].grand_total}</td>
+                <td>${date}</td>
+                <td>${localTime}</td>
+              </tr>
+              `
+              $("#reportcart").append(htmlData);
+              
+            }
+          })
+        })
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      })
+    </script>
 
   </body>
 
