@@ -86,3 +86,15 @@ exports.getAllProducts = (req, res) => {
     });
   });
 };
+
+exports.getSampleProducts = (req, res) => {
+  service.getSampleProducts((error, results) => {
+    if (error) {
+      console.log('error in sample', error);
+    }
+    return res.status(200).json({
+      status: 'success',
+      data: results,
+    });
+  });
+};

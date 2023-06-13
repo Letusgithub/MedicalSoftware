@@ -64,12 +64,14 @@ exports.registerOrg = (req, res) => {
           }
           // call otp gen action >> send otp and gen otp-token //
           const otpStatus = await generateOtp(data.org_telephone);
+          console.log('inside results', otpStatus);
           if (otpStatus.status === 'success') {
             return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
           }
           return res.status(500).json({
             status: 'error',
             error: 'Error in sending otp',
+
           });
         });
       } else if (results) {
@@ -133,6 +135,7 @@ exports.loginOrg = (req, res) => {
         if (results[0].is_verified) {
           // call otp gen action >> send otp and gen otp-token //
           const otpStatus = await generateOtp(data.org_telephone);
+          console.log('inside login', otpStatus);
           if (otpStatus.status === 'success') {
             return res.redirect(`/verify_otp?phoneNumber=${data.org_telephone}&OTPtoken=${otpStatus.token}`);
           }

@@ -1,5 +1,6 @@
 const { getPool } = require('../config/database');
 
+
 module.exports = {
 
   // Create product
@@ -127,3 +128,9 @@ module.exports = {
     );
   },
 };
+
+  getSampleProducts: (callback)=>{
+    getPool().query(
+      `select * from `
+    )
+  }

@@ -19,6 +19,26 @@ module.exports = (app) => {
           req.app.locals.name = results[0].owner_name;
           req.app.locals.number = results[0].org_telephone;
           req.app.locals.GST = results[0].org_gstin;
+
+          if (results[0].org_id_main === '') {
+            const id = `${results[0].org_pincode}${results[0].org_id}`;
+            console.log('id in midd', id);
+            getPool().query(
+              'update organisation set org_id_main=? where org_id=?',
+              [id, results[0].org_id],
+              (idError, idResult) => {
+                if (idError) {
+                  console.log('id ka error', idError);
+                }
+                console.log('id ka result', idResult);
+                req.app.locals.pharmaId = id;
+              },
+
+            );
+          } else {
+            console.log('here');
+            req.app.locals.pharmaId = results[0].org_id_main;
+          }
           req.app.locals.cookieRetrieved = true;
         },
       );
@@ -57,7 +77,11 @@ module.exports = (app) => {
 
   app.get('/', checkAuth, fetchOrgId, (req, res) => {
     res.render('home', {
-      name: req.app.locals.token, owner: req.app.locals.name, number: req.app.locals.number, gst: req.app.locals.GST,
+      name: req.app.locals.token,
+      owner: req.app.locals.name,
+      number: req.app.locals.number,
+      gst: req.app.locals.GST,
+      pharmacyId: req.app.locals.pharmaId,
     });
   });
 
@@ -187,8 +211,8 @@ module.exports = (app) => {
     res.render('Sales/sale_invoice', { orgId: req.org_id });
   });
 
-  app.get('/sale_entry_report', (req, res) => {
-    res.render('Sales/sale_entry_report');
+  app.get('/sale_entry_report', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Sales/sale_entry_report', { orgId: req.org_id });
   });
 
   app.get('/sale_return_invoice', checkAuth, fetchOrgId, (req, res) => {

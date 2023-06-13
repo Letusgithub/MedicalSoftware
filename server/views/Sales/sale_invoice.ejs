@@ -196,12 +196,12 @@
                                 <input class="form-control" type="date" id="expdate" />
                               </td>
 
-                              <td>
+                              <td id="pack">
                                 <select class="form-select" id="unit" name="unit" aria-label="unit">
                                   <option>TABS</option>
                                   <option>STP</option>
                                 </select>
-                                <p class="unit">1 strip = 20 tabs </p>
+                                <p class="unit"></p>
                               </td>
 
                               <td>
@@ -408,7 +408,23 @@
         var autoCompleteDataNumber =[];;// used for autocomplete number field
         var autoCompleteDataName=[];// used for autocomplete name field
 
+
         $(document).ready(function () {
+
+          if ('caches' in window) {
+            caches.keys().then(name=>{
+              if(name.length == 0){
+                console.log('do something');
+                caches.open('productCache').then((cache) => {
+                  cache.add('/api/allsample');
+                })
+              }
+              else{
+                console.log('do nothing');
+              } 
+            })    
+          }
+          
 
 //gettin the current org id
 
@@ -474,7 +490,7 @@
 //start of product cart 
           var product=[];
           var productId = -1;
-
+/*
           $.get('/product/', function (data, status) {
 
             for(let i in data.data){
@@ -503,6 +519,62 @@
               }
             }) 
           })
+*/
+
+         /* $('#medicinename').autocomplete({
+            minLength: 3,
+            source: function(request, response) {
+              $.get(`/api/sampledetails?med=${request.term}`, function(data) {
+                response(data.data);
+              });
+            },
+            select: function(event, ui) {
+              setTimeout(function(){
+                console.log(ui.item);
+                $("#medicinename").val(ui.item.med_name);
+                $('#price').val(ui.item.mrp);
+                $('#brand').val(ui.item["mfd/mkt"]);
+                $("#pack .unit").text(ui.item.pack_size);
+              },0)
+            }
+          }).data('ui-autocomplete')._renderItem = function(ul, item) {
+            return $('<li>')
+              .append('<div>' + item.med_name + '</div>')
+              .appendTo(ul);
+          };*/
+
+          $('#medicinename').autocomplete({
+            minLength: 3,
+            source: function(request, response) {
+              if('caches' in  window){
+                caches.match(`/api/allsample`).then(res=>{
+                  if(res){
+                    res.json().then(data=>{
+                      let searchTerm = request.term;
+                      let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
+                      response(results);
+                    })
+                  }
+                });
+              }
+              
+            },
+            select: function(event, ui) {
+              setTimeout(function(){
+                console.log(ui.item);
+                $("#medicinename").val(ui.item.med_name);
+                $('#price').val(ui.item.mrp);
+                $('#brand').val(ui.item["mfd/mkt"]);
+                $("#pack .unit").text(ui.item.pack_size);
+              },0)
+            }
+          }).data('ui-autocomplete')._renderItem = function(ul, item) {
+            return $('<li>')
+              .append('<div>' + item.med_name + '</div>')
+              .appendTo(ul);
+          };
+        //});
+
 
           var quantityInput = $("#qty");
           var priceInput = $("#price");
@@ -769,6 +841,7 @@
                 }),
                 contentType: 'application/json',
                 success: function(response){
+                  var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
 
                   var customerId = response.id;
 
@@ -777,7 +850,8 @@
                     subtotal: subtotal,
                     total_dist: total_dist,
                     grand_total: grand_total ,
-                    mop: mop
+                    mop: mop,
+                    pharmacyId: pharmacyDetails.pharmaId
                   }
 
                   $.ajax({

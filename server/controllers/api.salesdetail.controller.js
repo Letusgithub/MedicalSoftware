@@ -1,22 +1,56 @@
+/* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue,
+  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples,
 } = require('../services/salesdetail.service');
 
 module.exports = {
   createOrder: (req, res) => {
     const body = req.body;
-    create(body, (error, results) => {
-      if (error) {
-        console.log(error);
-        return res.status(500).json({
-          success: 0,
-          message: 'Db error',
+    console.log('body insales', body);
+
+    const now = new Date();
+    const monthName = now.toLocaleString('default', { month: 'long' });
+    const currentYear = (now.getFullYear()) % 100;
+    const monthNumber = now.getMonth() + 1;
+
+    let monthNumberString = '';
+    if (monthNumber < 10) {
+      monthNumberString = `0${monthNumber.toString()}`;
+    } else {
+      monthNumberString = monthNumber.toString();
+    }
+
+    let getCount;
+    getMonthCount(monthName, currentYear, (getError, getResults) => {
+      if (getError) console.log('error in get', getError);
+      console.log('getResults', getResults);
+      if (getResults.length === 0) {
+        createNewMonth(monthName, currentYear, 0, (createError, createResults) => {
+          if (createError) console.log('error', createError);
+          console.log(createResults);
         });
+        getCount = 0;
+      } else {
+        getCount = getResults[0].count;
       }
-      // console.log(results);
-      res.status(200).json({
-        success: 1,
-        result: results,
+
+      const invoiceId = `${req.body.pharmacyId}01${monthNumberString}${currentYear}${getCount + 1}`;
+      console.log('invoiceId', invoiceId);
+
+      create(body, invoiceId, (error, results) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).json({
+            success: 0,
+            message: 'Db error',
+          });
+        }
+
+        updateMonthCount(monthName, currentYear, getCount + 1);
+        res.status(200).json({
+          success: 1,
+          result: results,
+        });
       });
     });
   },
@@ -34,6 +68,23 @@ module.exports = {
       // console.log(results);
       res.status(200).json({
         success: 'nice',
+        result: results,
+      });
+    });
+  },
+
+  allSamples: (req, res) => {
+    const id = req.params.id;
+    allSamples((error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'No Orders Found',
+        });
+      }
+      // console.log(results);
+      res.status(200).json({
         result: results,
       });
     });
@@ -66,6 +117,39 @@ module.exports = {
       }
       return res.status(200).json({
         success: 1,
+        data: results,
+      });
+    });
+  },
+
+  searchDates: (req, res) => {
+    const orgId = req.query.org;
+    const from = req.query.from;
+    const to = req.query.to;
+    searchDates(orgId, from, to, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          message: 'some error',
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        data: results,
+      });
+    });
+  },
+
+  autoComplete: (req, res) => {
+    const input = req.query.med;
+    autoComplete(input, (error, results) => {
+      if (error) {
+        return res.status(500).json({
+          status: 'error',
+          message: error,
+        });
+      }
+      return res.status(200).json({
         data: results,
       });
     });
