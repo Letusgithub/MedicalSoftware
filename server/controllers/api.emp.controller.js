@@ -3,7 +3,7 @@ const service = require('../services/emp.service');
 
 exports.createEmp = (req, res) => {
   const data = req.body;
-  service.create(data, (err, results) => {
+  service.create(data, (err) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -13,10 +13,11 @@ exports.createEmp = (req, res) => {
     }
     console.log('new data', data);
 
-    return res.status(200).json({
-      success: 1,
-      data: results,
-    });
+    return res.redirect('/employee_master');
+    // return res.status(200).json({
+    //   success: 1,
+    //   data: results,
+    // });
   });
 };
 
@@ -35,10 +36,11 @@ exports.updateEmp = (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      success: 1,
-      message: 'Updated successfully',
-    });
+    return res.redirect('/employee_master');
+    // return res.status(200).json({
+    //   success: 1,
+    //   message: 'Updated successfully',
+    // });
   });
 };
 
@@ -55,10 +57,11 @@ exports.deleteEmp = (req, res) => {
         message: 'Record Not Found',
       });
     }
-    return res.redirect('/employee_master').status(200).json({
-      success: 1,
-      message: 'Deleted successfully',
-    });
+    return res.redirect('/employee_master');
+    // return.status(200).json({
+    //   success: 1,
+    //   message: 'Deleted successfully',
+    // });
   });
 };
 

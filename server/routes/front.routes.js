@@ -126,7 +126,7 @@ module.exports = (app) => {
   });
 
   app.get('/add_employee', checkAuth, fetchOrgId, (req, res) => {
-    res.render('OwnerControls/add_employee', { org_id: req.org_id });
+    res.render('OwnerControls/add_employee', { orgId: req.org_id });
   });
 
   app.get('/update_employee/:id', (req, res) => {
