@@ -39,6 +39,19 @@ module.exports = {
       },
     );
   },
+  searchTotalSales: (month, year, callback) => {
+    getPool().query(
+      `SELECT COUNT(*) as total_rows FROM order_details WHERE SUBSTRING(invoice_id_main, 20, 4) = ${month}${year}`,
+      [],
+      (error, results) => {
+        if (error) return callback(error);
+
+        const totalCount = JSON.parse(results[0].total_rows);
+        console.log(results);
+        return callback(null, totalCount);
+      },
+    );
+  },
 
   createNewMonth: (month, year, count, callback) => {
     getPool().query(
@@ -105,6 +118,18 @@ module.exports = {
       },
     );
   },
+  mainId: (id, callback) => {
+    getPool().query(
+      'select invoice_id_main from order_details where si_invoice_id = ?',
+      [id],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
 
   allSamples: (callback) => {
     getPool().query(
@@ -125,6 +150,21 @@ module.exports = {
         join customer_data cd 
         on od.customer_id = cd.customer_id
         where od.si_invoice_id=? and cd.org_id = ?`,
+      [salesId,
+        orgId],
+      (error, results) => {
+        if (error) return callback(error);
+
+        return callback(null, results);
+      },
+    );
+  },
+  invoiceSales: (salesId, orgId, callback) => {
+    getPool().query(
+      `select * from order_details od 
+        join customer_data cd 
+        on od.customer_id = cd.customer_id
+        where od.invoice_id_main=? and cd.org_id = ?`,
       [salesId,
         orgId],
       (error, results) => {

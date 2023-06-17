@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 const {
-  createOrder, getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, allSamples,
+  createOrder, getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, allSamples, invoiceSales, mainId, createSalesOrder
 } = require('../controllers/api.salesdetail.controller');
 
 module.exports = (app) => {
@@ -11,9 +12,12 @@ module.exports = (app) => {
     next();
   });
 
-  app.post('/api/salesdetail/', createOrder);
+  // app.post('/api/salesdetail/', createOrder);
+  app.post('/api/salesdetail/', createSalesOrder);
+  app.get('/api/getmainid/:id', mainId);
   app.get('/api/salesdetail/:id', getAllOrders);
   app.get('/api/invoice', getInvoiceOrder);
+  app.get('/api/searchinvoice', invoiceSales);
   app.get('/api/orderdetails/', getRevenue);
   app.get('/api/searchdates/', searchDates);
   app.get('/api/sampledetails', autoComplete);

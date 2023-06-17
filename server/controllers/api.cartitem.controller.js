@@ -1,8 +1,11 @@
-const { create, getOrdersById } = require('../services/cartitem.service');
+const {
+  create, getOrdersById, getOrders, updateOrders,
+} = require('../services/cartitem.service');
 
 module.exports = {
   create: (req, res) => {
     const data = req.body;
+    console.log('in cart items', data);
     create(data, (error, results) => {
       if (error) {
         console.log(error);
@@ -25,6 +28,33 @@ module.exports = {
       return res.status(200).json({
         success: 'gotorders',
         data: results,
+      });
+    });
+  },
+  getOrders: (req, res) => {
+    const id = req.params.id;
+    getOrders(id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.status(200).json({
+        success: 'gotorders',
+        data: results,
+      });
+    });
+  },
+  updateOrders: (req, res) => {
+    const salesInvoiceId = req.query.sales_invoice_id;
+    const productId = req.query.product_id;
+    updateOrders(req.body, salesInvoiceId, productId, (updateError, updateResults) => {
+      if (updateError) {
+        console.log(updateError);
+        return;
+      }
+      return res.status(200).json({
+        success: 'Updated',
+        data: updateResults,
       });
     });
   },
