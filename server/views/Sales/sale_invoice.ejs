@@ -562,6 +562,7 @@
             select: function(event, ui) {
               setTimeout(function(){
                 console.log(ui.item);
+                productId=ui.item.sample_id;
                 $("#medicinename").val(ui.item.med_name);
                 $('#price').val(ui.item.mrp);
                 $('#brand').val(ui.item["mfd/mkt"]);
@@ -854,39 +855,57 @@
                     pharmacyId: pharmacyDetails.pharmaId
                   }
 
-                $.ajax({
-                  url: '/api/salesdetail/',
-                  type: 'POST',
-                  data: JSON.stringify(orderDetails),
-                  contentType: 'application/json',
-                  success: function (response) {
 
-                    var salesId = response.result.insertId;
-                    var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
+                  $.ajax({
+                    url: '/api/salesdetail/',
+                    type:'POST',
+                    data: JSON.stringify(orderDetails),
+                    contentType: 'application/json',
+                    success: function(response){
 
-                    for (let i in orderDetails) {
+                      var salesId = response.result.insertId;
+                      var mainInvoiceId;
+                      $.get(`/api/getmainid/${salesId}`, function(data, status){
+                        mainInvoiceId = data.result[0].invoice_id_main;
+                        console.log('mainID', mainInvoiceId);
+                        var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
+                        
+                        for(let i in orderDetails){
 
-                      var cartDetails = ({
-                        product_id: orderDetails[i].productId,
-                        product_name: orderDetails[i].productname,
-                        quantity: orderDetails[i].qty,
-                        mrp: orderDetails[i].mrp,
-                        unit_discount: orderDetails[i].disc,
-                        sales_invoice_id: salesId
-                      })
+                        var cartDetails = ({
+                          product_id:orderDetails[i].productId,
+                          product_name: orderDetails[i].productname,
+                          quantity: orderDetails[i].qty,
+                          mrp: orderDetails[i].mrp,
+                          unit_discount: orderDetails[i].disc,
+                          sales_invoice_id: salesId,
+                          main_invoice_id: (mainInvoiceId)
+                        })
+                        console.log('in submit button', cartDetails);
 
-                      $.ajax({
-                        url: `/api/cartitems/`,
-                        type: 'POST',
-                        data: JSON.stringify(cartDetails),
-                        contentType: 'application/json',
-                        success: function (response) {
-                          console.log(response);
-                        },
-                        error: function (error) {
-                          console.log(error);
-                        }
-                      })
+                        $.ajax({
+                          url: `/api/cartitems/`,
+                          type: 'POST',
+                          data: JSON.stringify(cartDetails),
+                          contentType: 'application/json',
+                          success: function(response){
+                            console.log(response);                   
+                          },
+                          error: function(error){
+                            console.log(error);
+                          }
+                        })
+                      }
+                      
+                      localStorage.removeItem("cartitems");
+                      localStorage.removeItem("custdata");
+                      window.location.href = `/invoice_template/${salesId}`
+                      //location.reload();
+                    })
+                    },
+                    error: function(error){
+                      alert("not Created", error )
+
                     }
 
                     localStorage.removeItem("cartitems");

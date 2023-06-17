@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples,
+  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
         getCount = getResults[0].count;
       }
 
-      const invoiceId = `${req.body.pharmacyId}01${monthNumberString}${currentYear}${getCount + 1}`;
+      const invoiceId = `${req.body.pharmacyId}S${monthNumberString}${currentYear}${getCount + 1}`;
       console.log('invoiceId', invoiceId);
 
       create(body, invoiceId, (error, results) => {
@@ -55,9 +55,56 @@ module.exports = {
     });
   },
 
+  createSalesOrder: (req, res) => {
+    const body = req.body;
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear().toString().slice(-2);
+
+    const returnDate = day + month + year;
+    searchTotalSales(month, year, (totalError, totalResults) => {
+      if (totalError) console.log(totalError);
+      const total = totalResults;
+      const invoiceId = `${req.body.pharmacyId}SA${returnDate}${total + 1}`;
+      console.log('invoice', invoiceId);
+      create(body, invoiceId, (error, results) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).json({
+            success: 0,
+            message: 'Db error',
+          });
+        }
+        res.status(200).json({
+          success: 1,
+          result: results,
+        });
+      });
+    });
+  },
+
   getAllOrders: (req, res) => {
     const id = req.params.id;
     getAllOrders(id, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'No Orders Found',
+        });
+      }
+      // console.log(results);
+      res.status(200).json({
+        success: 'nice',
+        result: results,
+      });
+    });
+  },
+
+  mainId: (req, res) => {
+    const id = req.params.id;
+    mainId(id, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
@@ -94,6 +141,24 @@ module.exports = {
     const salesId = req.query.invoiceid;
     const orgId = req.query.org;
     getInvoiceOrder(salesId, orgId, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'No Orders Found',
+        });
+      }
+      // console.log(results);
+      res.status(200).json({
+        success: 'here',
+        result: results,
+      });
+    });
+  },
+  invoiceSales: (req, res) => {
+    const salesId = req.query.invoiceid;
+    const orgId = req.query.org;
+    invoiceSales(salesId, orgId, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({

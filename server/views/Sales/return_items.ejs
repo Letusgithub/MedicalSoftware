@@ -75,7 +75,7 @@
                           <div class="card-body">
                             <div>
 
-                              <input type="text" class="form-control" id="invoicenumber"
+                              <input type="text" class="form-control" id="returnreason"
                                 aria-describedby="defaultFormControlHelp" />
 
                             </div>
@@ -98,7 +98,7 @@
                   <!-- Bordered Table -->
                   <div class="bordered-table card mb-4 mx-0">
 
-                    <form class="form-main">
+                    <!-- <form class="form-main"> -->
                       <div class="card-body form-block">
                         <div class="table-responsive text-nowrap ">
 
@@ -186,11 +186,11 @@
                         </div>
                       </div>
                       <div class="buttonBox text-center pb-3">
-                        <button id="addtocart" class="btn btn-primary add-more-btn" style="color: white;">Add to
+                        <button id="addtoreturncart" class="btn btn-primary add-more-btn" style="color: white;">Add to
                           Return Cart</button>
                         <input type="reset" class="btn btn-primary" style="color: white;" value="Clear" />
                       </div>
-                    </form>
+                    <!-- </form> -->
 
                   </div>
 
@@ -216,7 +216,7 @@
                             </tr>
                           </thead>
                           <tbody id="cart">
-                            <tr>
+                            <!-- <tr>
                               <td>1</td>
                               <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Calpol 1000mg
                                   Tablet</strong></td>
@@ -230,7 +230,7 @@
                                   <button type="button" class="btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
                                 </div>
                               </td>
-                            </tr>
+                            </tr> -->
 
 
                           </tbody>
@@ -257,7 +257,7 @@
                         <div class="card-body">
                           <div>
 
-                            <input type="text" class="form-control" id="defaultFormControlInput"
+                            <input type="text" class="form-control" id="returnsubtotal"
                               aria-describedby="defaultFormControlHelp" />
 
                           </div>
@@ -287,7 +287,7 @@
                         <div class="card-body">
                           <div>
 
-                            <input type="text" class="form-control" id="defaultFormControlInput"
+                            <input type="text" class="form-control" id="returnamount"
                               aria-describedby="defaultFormControlHelp" />
 
                           </div>
@@ -306,9 +306,9 @@
 
 
                 <div class="text-center mb-4">
-                  <a href="/invoice_template">
-                    <div class="btn btn-primary px-5">Submit</div>
-                  </a>
+                  <!-- <a href="/invoice_template"> -->
+                    <div class="btn btn-primary px-5" id="submitreturn">Submit</div>
+                  <!-- </a> -->
                 </div>
 
 
@@ -335,10 +335,11 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
       $(document).ready(function(){
+        var cartarray=[];
 
         var returnItem = JSON.parse(localStorage.getItem("selectedreturnitem"));
 //getting all details of customer
-        $.get(`/api/invoice?invoiceid=${returnItem.id}&org=<%= orgId %>`, function(data, status){
+        $.get(`/api/searchinvoice?invoiceid=${returnItem.id}&org=<%= orgId %>`, function(data, status){
           console.log(data.result);
           var customerId = data.result[0].customer_id;
           console.log(customerId);
@@ -348,7 +349,7 @@
 
             var customerName = customer.cust_name;
             var customerNumber = customer.cust_telephone;
-            var salesId = `SE-${returnItem.id}`
+            var salesId = `${returnItem.id}`
             var date = returnItem.date;
             var time =returnItem.time;
             
@@ -366,12 +367,17 @@
 //rendering return cart logic
 
           var product=[];
-          $.get(`/api/cartitems/${returnItem.id}`, function (data, status) {
+          var productId =-1;
+          console.log('main invoice id',returnItem.id);
+          $.get(`/api/cartmainid/${returnItem.id}`, function (data, status) {
+
             
             var items =data.data;
+            console.log('in items',items);
             
             for(let i in items){
               product.push({
+                productId: items[i].product_id,
                 productName: items[i].product_name,
                 mrp: items[i].mrp,
                 qty: items[i].quantity,
@@ -385,11 +391,215 @@
                 return data.productName;
               }),
               select: function(event, ui){
-                var selectedItem = ui.item.value;
+                var selectedItem = product.find(p => p.productName == ui.item.value);
+                productId=selectedItem.productId;
+                $("#price").val(selectedItem.mrp);
+                $("#qty").val(selectedItem.qty);
+                $("#discount").val(selectedItem.disc);
+
+                discount = selectedItem.disc/100;
+                var total = selectedItem.qty * selectedItem.mrp - (selectedItem.qty*selectedItem.mrp* discount) ;
+
+                $("#total").val(total.toFixed(2));
+                
+    
                 
               }
             })
           })
+
+
+            var setLocalData;
+            var getLocalData;
+            var htmlData;
+            $("#addtoreturncart").click(function(){
+                      var products = $("#medicinename").val();  
+                      //var brand = $("#brand").val();  
+                      var qty = $("#qty").val();
+                      var mrp =$("#price").val();
+                      var disc =$("#discount").val();
+                      var total = $("#total").val();
+
+                      cartarray.push({
+                        productId: productId,
+                        productname: products, 
+                        //brand: brand,
+                        qty: qty, 
+                        mrp: mrp, 
+                        disc: disc, 
+                        total: total, 
+                        timestamp: new Date().getTime()
+                      })
+                  
+                      setLocalData = JSON.stringify(cartarray);
+                      
+                      localStorage.setItem("returncartitems", setLocalData);
+                      $("#medicinename").val("");
+                      //$("#brand").val("");
+                      $("#qty").val("");
+                      $("#price").val("");
+                      $("#discount").val("");
+                      $("#total").val("");
+                    });
+                       
+// logic for redering cart data on addtocart click 
+            $("#addtoreturncart").on('click', function() {              
+              cartItems = JSON.parse(localStorage.getItem('returncartitems')) || [];
+              renderCart(cartItems);
+              getSubTotal();
+            });
+
+//deletefunctionality
+            $("#cart").on("click", ".delete-button", function() {
+              var item = $(this).closest("tr");
+              var item_id =item.find(".card_id").text().trim();
+              var cartItemsinStorage = JSON.parse(localStorage.getItem('returncartitems')) || [];
+              cartItemsinStorage.splice(item_id - 1,1);
+              cartarray = cartItemsinStorage;
+              localStorage.setItem('returncartitems', JSON.stringify(cartItemsinStorage));
+              renderCart(cartItemsinStorage);
+            });
+//endofdeletefunctionality
+
+
+//edit functionality  
+            $("#cart").on("click", ".edit-button", function(){
+              var item = $(this).closest("tr");
+              var item_id =item.find(".card_id").text().trim();
+              var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('returncartitems')) || [];
+              var selectedItem = UpdatecartItemsinStorage[item_id-1];
+    
+                $("#medicinename").val(selectedItem.productname);
+                $("#brand").val(selectedItem.brand);
+                $("#qty").val(selectedItem.qty);
+                $("#price").val(selectedItem.mrp);
+                $("#discount").val(selectedItem.disc);
+                $("#total").val(selectedItem.total);
+
+                UpdatecartItemsinStorage.splice(item_id - 1,1);
+                cartarray = UpdatecartItemsinStorage;
+                localStorage.setItem('returncartitems', JSON.stringify(UpdatecartItemsinStorage));
+                renderCart(UpdatecartItemsinStorage);
+
+
+            })
+//end of edit functionality
+/*
+*/
+
+//rendercart functionality
+            function renderCart(items) {
+              $('#cart').empty();
+
+              for (var i = 0; i < items.length; i++) {
+                htmlData = `
+                          <tr>
+                            <td class="card_id">${i+1}</td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                            <td>${items[i].qty}</td>
+                            <td>${items[i].mrp}</td>
+                            <td>${items[i].disc}</td>
+                            <td>-${items[i].total}</td>
+                            <td>
+                              <div class="action-btns">
+                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          `
+                $('#cart').append(htmlData);
+              }
+            }
+//end of rendereing data logic
+
+//getting the subtotal when theres change in local storage
+        //var getAllData = JSON.parse(localStorage.getItem("returncartitems")) || [];
+        //getSubTotal();
+        $("#cart").on("click", ".delete-button, .edit-button", function(){
+          getSubTotal();
+        })
+
+        function getSubTotal(){
+
+          var subtotal=0;
+          getAllData = JSON.parse(localStorage.getItem("returncartitems")) || [];
+          
+          if(getAllData.length != 0){
+
+            for(let i=0;i<getAllData.length;i++){
+                subtotal = subtotal + parseFloat(getAllData[i].total);
+            }
+
+            $("#returnsubtotal").val(`-${subtotal.toFixed(2)}`);
+            $("#returnamount").val(subtotal.toFixed(0));
+          }
+          else if(getAllData.length == 0){
+          // console.log("none");
+            $("#returnsubtotal").val(0);
+            $("#returnamount").val(0);
+          }
+        }
+
+
+        $('#additionaldiscount').on("input", function(){
+
+          var getSubTotalValue = $("#subtotal").val() 
+            var discountInput = $(this).val();
+            var discountprice = getSubTotalValue - discountInput; 
+            $("#finalamount").val(discountprice.toFixed(0));
+          
+        })
+//allchanges done for footer total;
+
+        $("#submitreturn").click(function(){
+          var returnReason = $("#returnreason").val();
+
+          var returnDetails ={
+            sales_invoice_id: returnItem.id,
+            return_subtotal: $("#returnsubtotal").val(),
+            //new_return_discount = $("#")
+            return_amount: $("#returnamount").val(),
+            reason: returnReason
+          }
+          $.ajax({
+            url: `/api/return/`,
+            type: 'POST',
+            data: JSON.stringify(returnDetails),
+            contentType: 'application/json',
+            success: function(response){
+              var returnInvoiceId = response.return_invoice_id;
+              var localCartStored= JSON.parse(localStorage.getItem('returncartitems'));
+
+              for(let i=0;i<localCartStored.length;i++){
+                var updateCartdetails = {
+                  return_invoice_id: returnInvoiceId,
+                  return_qty: localCartStored[i].qty,
+                  return_dis: localCartStored[i].disc,
+                  return_mrp: localCartStored[i].mrp,
+                }
+                
+                $.ajax({
+                  url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}`,
+                  type: 'POST',
+                  data: JSON.stringify(updateCartdetails),
+                  contentType: 'application/json',
+                  success: function(response){
+                    localStorage.removeItem('returncartitems');
+                    window.location.href = '/sale_invoice';
+                  },
+                  error: function(error){
+                    console.log(error);
+                  }
+                })                   
+              }
+            },
+            error: function(error){
+              console.log(error);
+            }
+          })
+        })
+        
 
         
 

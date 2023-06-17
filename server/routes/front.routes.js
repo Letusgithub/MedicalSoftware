@@ -21,7 +21,8 @@ module.exports = (app) => {
           req.app.locals.GST = results[0].org_gstin;
 
           if (results[0].org_id_main === '') {
-            const id = `${results[0].org_pincode}${results[0].org_id}`;
+            const orgID = results[0].org_id.toString().padStart(7, '0');
+            const id = `AA${results[0].org_pincode}${orgID}`;
             console.log('id in midd', id);
             getPool().query(
               'update organisation set org_id_main=? where org_id=?',
