@@ -1,4 +1,6 @@
-const { create, getOrdersById } = require('../controllers/api.cartitem.controller');
+const {
+  create, getOrdersById, getOrders, updateOrders,
+} = require('../controllers/api.cartitem.controller');
 
 module.exports = (app) => {
   app.use((req, res, next) => {
@@ -11,4 +13,6 @@ module.exports = (app) => {
 
   app.post('/api/cartitems/', create);
   app.get('/api/cartitems/:id', getOrdersById);
+  app.get('/api/cartmainid/:id', getOrders);
+  app.post('/api/updatecartitems', updateOrders);
 };
