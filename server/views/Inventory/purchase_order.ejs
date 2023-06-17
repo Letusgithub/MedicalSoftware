@@ -18,7 +18,7 @@
                     <div class="layout-page">
 
                         <!-- navbar imported -->
-                        <btn%- include('../partials/navbar.ejs') %>
+                        <%- include('../partials/navbar.ejs') %>
 
 
 
@@ -49,11 +49,9 @@
                                                     <select class="form-select" id="exampleFormControlSelect1"
                                                         aria-label="Default select example">
                                                         <option selected>Select Vendor</option>
-                                                        <% vendors.forEach(function(vendor) { %>
+                                                        <%vendors.forEach(function(vendor) {%>
                                                             <option value="<%= vendor.vendor_id %>"><%= vendor.vendor_name %></option>
-                                                        <% }); %>
-                                                        <!-- <option value="1">Ramesh Kumar</option> -->
-                                                        <!-- <option value="1">Uday Singh</option> -->
+                                                        <%});%>
                                                     </select>
                                                 </div>
                                             </div>
@@ -223,18 +221,7 @@
                                     <!-- / PO Cart -->
 
 
-
-
-
-
-
-
-
-
-
-
                                     <!-- / Content -->
-
 
 
                                     <div class="text-center mt-3">
@@ -308,59 +295,6 @@
                 */
                 })
             </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <script>
-                    $(function () {
-                        var dtToday = new Date();
-
-                        var month = dtToday.getMonth() + 1;
-                        var day = dtToday.getDate();
-                        var year = dtToday.getFullYear();
-                        if (month < 10)
-                            month = '0' + month.toString();
-                        if (day < 10)
-                            day = '0' + day.toString();
-
-                        var maxDate = year + '-' + month + '-' + day;
-
-                        // or instead:
-                        // var maxDate = dtToday.toISOString().substr(0, 10);
-
-
-                        $('#txtDate').attr('min', maxDate);
-                    });
-                </script>
-
-
 
 
 

@@ -74,7 +74,6 @@ module.exports = (app) => {
   });
 
   // Home Page
-
   app.get('/', checkAuth, fetchOrgId, (req, res) => {
     res.render('home', {
       name: req.app.locals.token,
@@ -83,6 +82,11 @@ module.exports = (app) => {
       gst: req.app.locals.GST,
       pharmacyId: req.app.locals.pharmaId,
     });
+  });
+
+  // Profile Page
+  app.get('/profile', (req, res) => {
+    res.render('profile');
   });
 
   // Admin Components
@@ -174,9 +178,8 @@ module.exports = (app) => {
 
   app.get('/vendor_list', (req, res) => {
     getPool().query(
-      'select * from vendor ',
-      [],
-
+      'select * from vendor where org_id = ? ',
+      [req.org_id],
       (error, results) => {
         if (error) {
           return res.send({ status: 'error', error });
@@ -184,8 +187,6 @@ module.exports = (app) => {
         res.render('OwnerControls/vendor_list', { data: results });
       },
     );
-
-    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/update_vendor/:id', (req, res) => {
@@ -206,8 +207,8 @@ module.exports = (app) => {
   });
 
   // Sales components
+
   app.get('/sale_invoice', checkAuth, fetchOrgId, (req, res) => {
-    // console.log('sales ke andar', req.org_id);
     res.render('Sales/sale_invoice', { orgId: req.org_id });
   });
 
@@ -247,8 +248,6 @@ module.exports = (app) => {
         res.render('Inventory/product_stock', { data: results });
       },
     );
-
-    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/update_product/:id', (req, res) => {
@@ -263,12 +262,18 @@ module.exports = (app) => {
         res.render('Inventory/update_product', { data: results });
       },
     );
-
-    // res.render('OwnerControls/customer_list');
   });
 
   app.get('/add_product', (req, res) => {
     res.render('Inventory/add_product');
+  });
+
+  app.get('/product_batch', (req, res) => {
+    res.render('Inventory/product_batch');
+  });
+
+  app.get('/add_batch', (req, res) => {
+    res.render('Inventory/add_batch');
   });
 
   app.get('/purchase_order', checkAuth, fetchOrgId, (req, res) => {
