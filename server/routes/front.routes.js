@@ -237,18 +237,8 @@ module.exports = (app) => {
 
   // Inventory Managment component
 
-  app.get('/product_stock', (req, res) => {
-    getPool().query(
-      'select * from product ',
-      [],
-
-      (error, results) => {
-        if (error) {
-          return res.send({ status: 'error', error });
-        }
-        res.render('Inventory/product_stock', { data: results });
-      },
-    );
+  app.get('/product_stock', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/product_stock', { orgId: req.org_id });
   });
 
   app.get('/update_product/:id', (req, res) => {
@@ -265,8 +255,8 @@ module.exports = (app) => {
     );
   });
 
-  app.get('/add_product', (req, res) => {
-    res.render('Inventory/add_product');
+  app.get('/add_product', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/add_product', { orgId: req.org_id });
   });
 
   app.get('/product_batch', (req, res) => {

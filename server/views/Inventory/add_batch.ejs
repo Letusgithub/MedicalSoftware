@@ -14,7 +14,7 @@
                     <div class="layout-page">
 
                         <!-- navbar imported -->
-                        <p%- include('../partials/navbar.ejs') %>
+                        <%- include('../partials/navbar.ejs') %>
 
                             <!-- Content wrapper -->
                             <div class="content-wrapper">
@@ -43,20 +43,20 @@
                                                         <div>
                                                             <label class="col-form-label"
                                                             for="basic-icon-default-companyname">Product name</label>
-                                                            <p class="fw-bold pb-0">Calpol 500mg Tablet</p>
+                                                            <p class="fw-bold pb-0" id="productname"></p>
                                                         </div>
 
                                                         <div>
                                                             <label class="col-form-label"
                                                             for="basic-icon-default-companyname">Mfg/Mkt</label>
-                                                            <p class="fw-bold pb-0">Unimarck Pharma India Ltd
+                                                            <p class="fw-bold pb-0" id="brand">
                                                             </p>
                                                         </div>
 
                                                         <div>
                                                             <label class="col-form-label"
                                                             for="basic-icon-default-companyname">Salt</label>
-                                                            <p class="fw-bold pb-0">Alprazolam (0.25mg) + Propranolol (10mg)
+                                                            <p class="fw-bold pb-0" id="salt">
                                                             </p>
                                                         </div>
                                                         
@@ -65,20 +65,20 @@
                                                         <div>
                                                             <label class="col-form-label"
                                                             for="basic-icon-default-companyname">HSN Code</label>
-                                                            <p class="fw-bold pb-0">485263</p>
+                                                            <p class="fw-bold pb-0" id="hsncode"></p>
                                                         </div>
 
                                                         <div>
                                                             <label class="col-form-label"
                                                             for="basic-icon-default-companyname">GST</label>
-                                                            <p class="fw-bold pb-0">12 %</p>
+                                                            <p class="fw-bold pb-0" id="gst"></p>
                                                         </div>
 
-                                                        <div>
+                                                        <!-- <div>
                                                             <label class="col-form-label"
                                                             for="basic-icon-default-companyname">Shelf Label</label>
-                                                            <p class="fw-bold pb-0">B-562</p>
-                                                        </div>
+                                                            <p class="fw-bold pb-0" id=""></p>
+                                                        </div> -->
                                                     </div>
                                                     <div class="col-md-4">
                                                         <img class="w-100"alt="Calpol 500mg Tablet" src="https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/dpsh8z3rldqlg33kavbh.jpg" title="Calpol 500mg Tablet">
@@ -89,7 +89,7 @@
                                     </div>
 
                                     <div class="card mb-4 mx-auto col-md-8">
-                                        <form>
+                                 
                                             <div class="card-body ">
                                                 <h4 class="fs-5">Batch Details</h4>
                                                 <hr>
@@ -104,12 +104,10 @@
                                                                     class="input-group-text"></span>
                                                                 <input type="text" class="form-control"
                                                                     id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe"
+                                                                    aria-label="John Doe" name="addqty"
                                                                     aria-describedby="basic-icon-default-companyname2">
                                                                 <select class="form-select" id="unit" name="unit"
                                                                     aria-label="unit">
-                                                                    <option>TABS</option>
-                                                                    <option>STP</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -120,7 +118,7 @@
                                                             for="basic-icon-default-companyname">Conversion</label>
                                                         <div class="col-sm-8 ">
                                                             <div class="align-middle">
-                                                                <p class="">1 STP = 10 TABS</p> 
+                                                                <p class="" id="conversion">S</p> 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,7 +134,7 @@
                                                                     class="input-group-text"></span>
                                                                 <input type="text" class="form-control"
                                                                     id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe"
+                                                                    aria-label="John Doe" name="addmrp"
                                                                     aria-describedby="basic-icon-default-companyname2">
                                                             </div>
                                                         </div>
@@ -151,7 +149,7 @@
                                                                     class="input-group-text"></span>
                                                                 <input type="text" class="form-control"
                                                                     id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe"
+                                                                    aria-label="John Doe" name="addpur"
                                                                     aria-describedby="basic-icon-default-companyname2">
                                                             </div>
                                                         </div>
@@ -199,7 +197,7 @@
                                                             <div class="input-group input-group-merge">
 
                                                                 <input class="form-control" type="date"
-                                                                    id="html5-date-input" />
+                                                                    id="html5-date-input" name="addexp"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -211,7 +209,7 @@
                                                             <div class="input-group input-group-merge">
                                                                 <span class="input-group-text"></span>
                                                                 <input type="text" id="basic-icon-default-email"
-                                                                    class="form-control" placeholder=""
+                                                                    class="form-control" placeholder="" name="addshelf"
                                                                     aria-label="john.doe"
                                                                     aria-describedby="basic-icon-default-email2">
                                                                 <span id="basic-icon-default-email2"
@@ -228,13 +226,13 @@
 
                                                 <div class="row justify-content-end">
                                                     <div class="col-sm-10">
-                                                        <button type="submit" class="btn btn-primary">Add</button>
+                                                        <button type="submit" class="btn btn-primary" id="submitbatch">Add</button>
                                                     </div>
                                                 </div>
 
 
                                             </div>
-                                        </form>
+                                    
                                     </div>
 
 
@@ -258,6 +256,62 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
+        <script>
+            $(document).ready(function(){
+                var productId=JSON.parse(localStorage.getItem('addbatchid'));
+
+                $.get(`/api/getinventory/${productId}`, function(data, status){
+                    var items = data.data[0];
+                    console.log(items);
+                    $("#productname").text(items.med_name);
+                    $("#hsncode").text(items.hsn);
+                    $("#brand").text(items['mfd/mkt']);
+                    $("#salt").text(items.salt_composition);
+                    $("#gst").text(items.gst+'%');
+
+
+
+
+
+
+                    $("#conversion").text(`1 ${items.primary_unit} = ${items.conversion} ${items.secondary_unit}`)
+                    $("#unit").append(`<option> ${items.primary_unit} </option>`);
+                    $("#unit").append(`<option> ${items.secondary_unit} </option>`);
+
+                })
+
+
+
+                $("#submitbatch").click(function(){
+                    var batchDetails = {
+                       product_id: productId,
+                       exp_date: $("input[name='addexp']").val(),
+                       qty_unit: $("#unit").val(),
+                       batch_qty: $("input[name='addqty']").val(),
+                       purchase_rate: $("input[name='addpur']").val(),
+                       mrp: $("input[name='addmrp']").val(),
+                       shelf_label: $("input[name='addshelf']").val()
+                    }
+                    console.log(batchDetails);
+                    
+                    $.ajax({
+                        url: `/api/addbatch/`,
+                        type: 'POST',
+                        data: JSON.stringify(batchDetails),
+                        contentType: 'application/json',
+                        success: function(response){
+                            window.location.href='/product_stock'                  
+                        },
+                        error: function(error){
+                            console.log(error);
+                        }
+                    })
+
+                })
+
+
+            })
+        </script>
 
     </body>
 

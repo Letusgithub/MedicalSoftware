@@ -79,6 +79,7 @@ module.exports = {
         res.status(200).json({
           success: 1,
           result: results,
+          invoiceId,
         });
       });
     });

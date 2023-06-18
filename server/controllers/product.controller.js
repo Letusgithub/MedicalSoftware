@@ -11,7 +11,9 @@ exports.createProduct = (req, res) => {
       });
     }
 
-    res.redirect('/product_stock');
+    return res.status(200).json({
+      status: 'success',
+    });
   });
 };
 
