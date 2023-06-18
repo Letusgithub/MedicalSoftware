@@ -2,6 +2,7 @@ const service = require('../services/inventory.service');
 
 exports.createInventory = (req, res) => {
   const data = req.body;
+  console.log(data);
   service.create(data, (err, results) => {
     if (err) {
       console.log(err);
@@ -61,8 +62,8 @@ exports.deleteInventory = (req, res) => {
 };
 
 exports.getInventoryById = (req, res) => {
-  const vendor_id = req.params.id;
-  service.getById(vendor_id, (err, results) => {
+  const productId = req.params.id;
+  service.getById(productId, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -98,6 +99,20 @@ exports.getAllInventorysById = (req, res) => {
     return res.status(200).json({
       success: 1,
       data: results,
+    });
+  });
+};
+
+exports.getAllInventory = (req, res) => {
+  const orgID = req.query.orgID;
+  console.log("orgID", orgID);
+  service.getAllInventory(orgID, (allError, allResult) => {
+    if (allError) {
+      console.log(allError);
+    }
+    return res.status(200).json({
+      status: 'success',
+      data: allResult,
     });
   });
 };

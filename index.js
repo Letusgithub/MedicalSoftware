@@ -26,6 +26,7 @@ require('./server/routes/api.auth.routes')(app);
 require('./server/routes/api.salesdetail.routes')(app);
 require('./server/routes/api.cartitem.routes')(app);
 require('./server/routes/api.returndetails.routes')(app);
+require('./server/routes/api.batch.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);

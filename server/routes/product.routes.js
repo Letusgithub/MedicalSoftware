@@ -9,7 +9,7 @@ module.exports = (app) => {
     next();
   });
 
-  app.post('/product', controller.createProduct);
+  app.post('/api/createproduct', controller.createProduct);
   app.post('/product/:id', controller.updateProduct);
   app.get('/product/:id', controller.deleteProduct);
   app.get('/product/', controller.getAllProducts);

@@ -99,8 +99,7 @@
     			<div class="col-6">
                     <address>
     					<strong>Payment Method:</strong><br>
-    					Visa ending **** 4242<br>
-    					jsmith@email.com
+    					<div id="paymentmethod"></div>
     				</address>
                     
     			</div>
@@ -241,6 +240,7 @@
         $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function(data, status){
                 var customer = data.result[0];
                 console.log('inside the invoice template', customer);
+                $("#paymentmethod").text(customer.mop.toUpperCase());
                 
                 var customerName = customer.cust_name;
                 var customerNumber = customer.cust_telephone;
@@ -260,7 +260,7 @@
         $.get(`/api/cartitems/${id}`, function (data, status) {
           
           var items =data.data;
-          console.log(items);
+          console.log("items in data",items);
           
           for(var i =0;i<items.length;i++){
             
@@ -273,8 +273,8 @@
                             <td class="text-center">Nov 22</td>
                             <td class="text-center">${items[i].quantity}</td>
                             <td class="text-center">734952</td>
-                            <td class="text-center">$ ${items[i].mrp}</td>
-                            <td class="text-center">$10.99</td>
+                            <td class="text-center">₹ ${items[i].mrp}</td>
+                            <td class="text-center">₹ 10.99</td>
                             <td class="text-center">${items[i].unit_discount}</td>
                             <td class="text-right">${total}</td>
                         </tr>
