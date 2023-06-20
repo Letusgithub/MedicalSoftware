@@ -9,9 +9,10 @@ module.exports = (app) => {
     next();
   });
 
-  app.post('/inventory/', controller.createInventory);
+  app.post('/api/createinventory/', controller.createInventory);
+  app.get('/api/getallinventory', controller.getAllInventory);
   app.patch('/inventory/', controller.updateInventory);
   app.delete('/inventory/', controller.deleteInventory);
-  app.get('/inventory/:id', controller.getInventoryById);
+  app.get('/api/getinventory/:id', controller.getInventoryById);
   app.get('/inventory/:id', controller.getAllInventorysById);
 };

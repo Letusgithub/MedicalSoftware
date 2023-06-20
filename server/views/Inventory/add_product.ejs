@@ -34,7 +34,7 @@
                                     <hr class="mb-4">
 
                                     <div class="card mb-4 mx-auto col-md-8">
-                                        <form>
+                                        <!-- <form> -->
                                             <div class="card-body ">
 
                                                 <div class="row mb-3">
@@ -47,7 +47,9 @@
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-fullname" placeholder=""
                                                                 aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2">
+                                                                aria-describedby="basic-icon-default-fullname2"
+                                                                name="productname"
+                                                                >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -62,7 +64,8 @@
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-fullname" placeholder=""
                                                                 aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2">
+                                                                aria-describedby="basic-icon-default-fullname2"
+                                                                name="brand">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -77,7 +80,8 @@
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-fullname" placeholder=""
                                                                 aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2">
+                                                                aria-describedby="basic-icon-default-fullname2"
+                                                                name="salt">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -93,7 +97,8 @@
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-companyname" placeholder=""
                                                                 aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2">
+                                                                aria-describedby="basic-icon-default-companyname2"
+                                                                name="gst">
                                                         </div>
                                                     </div>
 
@@ -108,7 +113,8 @@
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-companyname" placeholder=""
                                                                 aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2">
+                                                                aria-describedby="basic-icon-default-companyname2"
+                                                                name="hsn">
                                                         </div>
                                                     </div>
 
@@ -121,9 +127,10 @@
                                                         for="basic-icon-default-address">Unit</label>
                                                     <div class="col-sm-4 me-0">
                                                         <div class="input-group input-group-merge">
-                                                            <select class="form-select" id="exampleFormControlSelect1"
+                                                            <select class="form-select" id="exampleFormControlSelect1" name="primary"
                                                                 aria-label="Default select example">
                                                                 <option selected>Primary</option>
+                                                                <option value="1">Stp</option>
                                                                 <option value="1">AMP (Ampoules)</option>
                                                                 <option value="1">Box</option>
                                                                 <option value="1">BTL (Bottle)</option>
@@ -150,9 +157,10 @@
 
                                                     <div class="col-sm-4 ms-0">
                                                         <div class="input-group input-group-merge">
-                                                            <select class="form-select" id="exampleFormControlSelect1"
+                                                            <select class="form-select" id="exampleFormControlSelect1" name="secondary"
                                                                 aria-label="Default select example">
                                                                 <option selected>Secondary</option>
+                                                                <option value="1">Tbl</option>
                                                                 <option value="1">AMP (Ampoules)</option>
                                                                 <option value="1">Box</option>
                                                                 <option value="1">BTL (Bottle)</option>
@@ -184,11 +192,11 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="input-group input-group-merge">
-                                                            <span class="input-group-text">1 STP</span>
+                                                            <span class="input-group-text" id="primarypopulate"></span>
                                                             <span class="input-group-text">=</span>
                                                             <input type="number" class="form-control" placeholder=""
-                                                                aria-label="" />
-                                                            <span class="input-group-text">TABS</span>
+                                                                aria-label="" name="conversion"/>
+                                                            <span class="input-group-text" id="secondarypopulate"></span>
                                                         </div>
                                                     </div>
 
@@ -196,7 +204,7 @@
 
                                                 <div class="row mb-3">
 
-                                                    <label class="col-sm-2 col-form-label"
+                                                    <!-- <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">Shelf Label</label>
 
                                                     <div class="col-sm-4">
@@ -206,9 +214,10 @@
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-companyname" placeholder=""
                                                                 aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2">
+                                                                aria-describedby="basic-icon-default-companyname2"
+                                                                name="shelflabel">
                                                         </div>
-                                                    </div>
+                                                    </div> -->
 
                                                     <label class="col-sm-2 col-form-label ps-4"
                                                         for="basic-icon-default-companyname">Threshold</label>
@@ -220,18 +229,19 @@
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-companyname" placeholder=""
                                                                 aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2">
+                                                                aria-describedby="basic-icon-default-companyname2"
+                                                                name="threshold">
                                                         </div>
                                                     </div>
 
                                                     
                                                 </div>
                                                 <div class="text-center mx-auto">
-                                                    <button type="submit" class="btn btn-primary">Add</button>
+                                                    <button type="submit" class="btn btn-primary" id="submitproduct">Add</button>
                                                 </div>
                                             </div>
 
-                                        </form>
+                                        <!-- </form> -->
                                     </div>
 
 
@@ -255,6 +265,136 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script>
+            var productId;
+            var orgID= '<%= orgId %>';
+            $(document).ready(function(){
+                if ('caches' in window) {
+                    caches.keys().then(name=>{
+                      if(name.length == 0){
+                        console.log('do something');
+                        caches.open('productCache').then((cache) => {
+                          cache.add('/api/allsample');
+                        })
+                      }
+                      else{
+                        console.log('do nothing');
+                      } 
+                    })    
+                }
+// autopopulate product
+                    $("input[name='productname']").autocomplete({
+                        minLength: 3,
+                        source: function(request, response) {
+                            if('caches' in  window){
+                                caches.match(`/api/allsample`).then(res=>{
+                                    if(res){
+                                        res.json().then(data=>{
+                                            let searchTerm = request.term;
+                                            let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
+                                            response(results);
+                                        })
+                                    }
+                                });
+                            }
+                        },
+                        select: function(event, ui) {
+                            setTimeout(function(){
+                                console.log(ui.item);
+                                productId=ui.item.sample_id;
+                                $("input[name='productname']").val(ui.item.med_name);
+                                $("input[name='brand']").val(ui.item["mfd/mkt"]);
+                                $("input[name='salt']").val(ui.item.salt_composition);
+                            },0)
+                        }
+                    }).data('ui-autocomplete')._renderItem = function(ul, item) {
+                        return $('<li>')
+                        .append('<div>' + item.med_name + '</div>')
+                        .appendTo(ul);
+                    };
+//changes in stp and tabs
+                    $("select[name='primary'], select[name='secondary']").on("change", function(){
+                        var primaryUnit = $("select[name='primary']").find('option:selected').text();
+                        var secondaryUnit = $("select[name='secondary']").find('option:selected').text();
+
+                        $("#primarypopulate").text(`1 ${primaryUnit}`);
+                        $("#secondarypopulate").text(`${secondaryUnit}`);
+                    })
+
+
+                $("#submitproduct").click(function(){
+                    var productDetails ={
+                         product_id: productId,
+                         org_id: orgID,
+                         gst : $("input[name='gst']").val(),
+                         hsn : $("input[name='hsn']").val(),
+                         primary_unit : $("select[name='primary']").find('option:selected').text(),
+                         secondary_unit : $("select[name='secondary']").find('option:selected').text(),
+                         conversion : $("input[name='conversion']").val(),
+                         threshold: $("input[name='threshold']").val()
+                    }
+                    console.log(productDetails);
+                    $.ajax({
+                        url: `/api/createinventory/`,
+                        type: 'POST',
+                        data: JSON.stringify(productDetails),
+                        contentType: 'application/json',
+                        success: function(response){
+                            window.location.href='/product_stock'                  
+                        },
+                        error: function(error){
+                            console.log(error);
+                        }
+                    })
+                })
+                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            })
+        </script>
 
     </body>
 

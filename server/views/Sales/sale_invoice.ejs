@@ -139,6 +139,8 @@
 
               <div class="row mx-3">
                 <h4 class="fw-bold mb-4">Add Items</h4>
+                <h5 id="message" style="color:red"></h5>
+
 
                 <!-- Bordered Table -->
                 <div class="bordered-table card mb-4 mx-0">
@@ -150,7 +152,7 @@
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th class="col-6">Product Name</th>
+                              <th class="col-6">Product Name*</th>
                               <th class="col-5">Mfg / Mkt</th>
                               <th class="col-1">Shelf Label</th>
                             </tr>
@@ -176,8 +178,8 @@
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th>Batch</th>
-                              <th>Exp Date</th>
+                              <th>Batch*</th>
+                              <th>Exp Date*</th>
                               <th>Unit</th>
                               <th>MRP</th>
                               <th>QTY</th>
@@ -198,8 +200,6 @@
 
                               <td id="pack">
                                 <select class="form-select" id="unit" name="unit" aria-label="unit">
-                                  <option>TABS</option>
-                                  <option>STP</option>
                                 </select>
                                 <p class="unit"></p>
                               </td>
@@ -295,9 +295,9 @@
                   <h4 class="col-7 fw-bold py-3 mb-4">Order Summary</h4>
                   <div class="col-5">
                     <div class="mb-1 row">
-                      <label for="html5-text-input" class="col-2 col-form-label">Reference</label>
+                      <label for="html5-text-input" class="col-2 col-form-label">Reference*</label>
                       <div class="col-10">
-                        <input class="form-control" type="text" placeholder="Doctor/Hospital" id="html5-text-input" />
+                        <input class="form-control" type="text" placeholder="Doctor/Hospital" id="" required />
                       </div>
                     </div>
                   </div>
@@ -370,6 +370,22 @@
               </div>
               <!-- / Content -->
 
+              <div class="mb-4">
+
+
+                <div class="form-check mt-3">
+                  <div>
+                    <input class="form-check-input mx-auto" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label mx-1" for="defaultCheck1">
+                      Disclaimer : Hereby I asure that product details given here is
+                      validated by this pharmacy .
+                    </label>
+                  </div>
+                  
+                </div>
+
+
+              </div>
 
               <!-- //invoice_template -->
               <div class="text-center mb-4">
@@ -412,19 +428,19 @@
         $(document).ready(function () {
 
           if ('caches' in window) {
-            caches.keys().then(name=>{
-              if(name.length == 0){
+            caches.keys().then(name => {
+              if (name.length == 0) {
                 console.log('do something');
                 caches.open('productCache').then((cache) => {
                   cache.add('/api/allsample');
                 })
               }
-              else{
+              else {
                 console.log('do nothing');
-              } 
-            })    
+              }
+            })
           }
-          
+
 
           //gettin the current org id
 
@@ -490,92 +506,131 @@
           //start of product cart 
           var product = [];
           var productId = -1;
-/*
-          $.get('/product/', function (data, status) {
+          /*
+                    $.get('/product/', function (data, status) {
+          
+                      for (let i in data.data) {
+                        product.push({
+                          label: `${data.data[i].product_id}. ${data.data[i].product_name}`,
+                          value: data.data[i].product_name
+                        })
+                      }
+          
+          
+                      $("#medicinename").autocomplete({
+                        source: product,
+                        select: function (event, ui) {
+          
+                          selectedProductName = (ui.item.label);
+                          const regex = /^(\d+)\./;
+                          const match = selectedProductName.match(regex)
+                          productId = match[1];
+          
+                          $.get(`/api/product/${productId}`, function (data, status) {
+                            var selectedProduct = data.data;
+                            $("#brand").val(selectedProduct.mfg);
+                            $("#price").val(selectedProduct.mrp);
+                            $("#discount").val(0);
+                          })
+                        }
+                      })
+                    })
+          */
 
-            for (let i in data.data) {
-              product.push({
-                label: `${data.data[i].product_id}. ${data.data[i].product_name}`,
-                value: data.data[i].product_name
-              })
-            }
+          /* $('#medicinename').autocomplete({
+             minLength: 3,
+             source: function(request, response) {
+               $.get(`/api/sampledetails?med=${request.term}`, function(data) {
+                 response(data.data);
+               });
+             },
+             select: function(event, ui) {
+               setTimeout(function(){
+                 console.log(ui.item);
+                 $("#medicinename").val(ui.item.med_name);
+                 $('#price').val(ui.item.mrp);
+                 $('#brand').val(ui.item["mfd/mkt"]);
+                 $("#pack .unit").text(ui.item.pack_size);
+               },0)
+             }
+           }).data('ui-autocomplete')._renderItem = function(ul, item) {
+             return $('<li>')
+               .append('<div>' + item.med_name + '</div>')
+               .appendTo(ul);
+           };*/
 
-
-            $("#medicinename").autocomplete({
-              source: product,
-              select: function (event, ui) {
-
-                selectedProductName = (ui.item.label);
-                const regex = /^(\d+)\./;
-                const match = selectedProductName.match(regex)
-                productId = match[1];
-
-                $.get(`/api/product/${productId}`, function (data, status) {
-                  var selectedProduct = data.data;
-                  $("#brand").val(selectedProduct.mfg);
-                  $("#price").val(selectedProduct.mrp);
-                  $("#discount").val(0);
-                })
-              }
-            })
-          })
-*/
-
-         /* $('#medicinename').autocomplete({
-            minLength: 3,
-            source: function(request, response) {
-              $.get(`/api/sampledetails?med=${request.term}`, function(data) {
-                response(data.data);
-              });
-            },
-            select: function(event, ui) {
-              setTimeout(function(){
-                console.log(ui.item);
-                $("#medicinename").val(ui.item.med_name);
-                $('#price').val(ui.item.mrp);
-                $('#brand').val(ui.item["mfd/mkt"]);
-                $("#pack .unit").text(ui.item.pack_size);
-              },0)
-            }
-          }).data('ui-autocomplete')._renderItem = function(ul, item) {
-            return $('<li>')
-              .append('<div>' + item.med_name + '</div>')
-              .appendTo(ul);
-          };*/
-
+          var priceMed = -1;
+          var primaryUnit;
+          var secondaryUnit;
+          var conversion;
           $('#medicinename').autocomplete({
             minLength: 3,
-            source: function(request, response) {
-              if('caches' in  window){
-                caches.match(`/api/allsample`).then(res=>{
-                  if(res){
-                    res.json().then(data=>{
+            source: function (request, response) {
+              if ('caches' in window) {
+                caches.match(`/api/allsample`).then(res => {
+                  if (res) {
+                    res.json().then(data => {
                       let searchTerm = request.term;
-                      let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
+                      let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
                       response(results);
                     })
                   }
                 });
               }
-              
+
             },
-            select: function(event, ui) {
-              setTimeout(function(){
+            select: function (event, ui) {
+              setTimeout(function () {
                 console.log(ui.item);
-                productId=ui.item.sample_id;
+                productId = ui.item.sample_id;
+
+                $.get(`/api/getbatch/${productId}`, function (data, status) {
+
+                  console.log('appp', data.data);
+                  if (data.data.length == 0) {
+                    $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+                  }
+                  primaryUnit = data.data[0].primary_unit;
+                  secondaryUnit = data.data[0].secondary_unit;
+                  conversion = data.data[0].conversion;
+
+                  $("#unit").append("<option>" + data.data[0].primary_unit + "</option>");
+                  $("#unit").append("<option>" + data.data[0].secondary_unit + "</option>");
+                  $("#pack .unit")
+                    .text(`1 ${data.data[0].primary_unit} of ${data.data[0].conversion} ${data.data[0].secondary_unit}`);
+
+                  var date = new Date(data.data[0].exp_date);
+                  $("#expdate").val(date.toISOString().split('T')[0]);
+                  $("#shelflabel").val(data.data[0].shelf_label);
+                  $("#batch").val(data.data[0].batch_id);
+                  priceMed = data.data[0].mrp;
+                  $("#price").val(priceMed);
+
+                })
+
                 $("#medicinename").val(ui.item.med_name);
-                $('#price').val(ui.item.mrp);
+                //$('#price').val(ui.item.mrp);
                 $('#brand').val(ui.item["mfd/mkt"]);
-                $("#pack .unit").text(ui.item.pack_size);
-              },0)
+              }, 0)
             }
-          }).data('ui-autocomplete')._renderItem = function(ul, item) {
+          }).data('ui-autocomplete')._renderItem = function (ul, item) {
             return $('<li>')
-              .append('<div>' + item.med_name + '</div>')
+              .append('<div>' + item.med_name + '(' + item.salt_composition + ')' + '</div>')
               .appendTo(ul);
           };
-        //});
+          //});
 
+          $("#unit").change(function () {
+            var getUnit = $(this).val();
+            if (getUnit === primaryUnit) {
+              $("#price").val(priceMed);
+              calculateTotal();
+            }
+            else {
+              $("#price").val(priceMed / conversion);
+              calculateTotal();
+            }
+          })
 
           var quantityInput = $("#qty");
           var priceInput = $("#price");
@@ -645,17 +700,42 @@
           var getLocalData;
           var htmlData;
           $("#addtocart").click(function () {
+
+            if ($("#customername").val() == '') {
+              return alert('PLEASE ADD CUSTOMER FIRST');
+            }
+
+            if ($("#medicinename").val() == '') {
+              return alert('PLEASE ADD MEDICINE FIRST');
+            }
+
+            if ($("#qty").val() == '') {
+              return alert('PLEASE ADD QUANTITY FIRST');
+            }
+
             var products = $("#medicinename").val();
             var brand = $("#brand").val();
             var qty = quantityInput.val();
             var mrp = priceInput.val();
             var disc = discInput.val();
             var total = totalInput.val();
+            var shelflabel = $("#shelflabel").val();
+            var batch = $("#batch").val();
+            var exp = $("#expdate").val();
+            var selectedUnit = $("#unit").val();
+
 
             cartarray.push({
               productId: productId,
               productname: products,
               brand: brand,
+              shelflabel: shelflabel,
+              batch: batch,
+              expdate: exp,
+              primaryUnit: primaryUnit,
+              secondaryUnit: secondaryUnit,
+              conversion: conversion,
+              selectedUnit: selectedUnit,
               qty: qty,
               mrp: mrp,
               disc: disc,
@@ -681,6 +761,12 @@
             $("#price").val("");
             $("#discount").val("");
             $("#total").val("");
+            $("#shelflabel").val("");
+            $("#batch").val("");
+            $("#expdate").val("");
+            $("#unit").empty();
+            $("#pack .unit").empty();
+            $("#message").empty();
 
           })
 
@@ -712,13 +798,29 @@
             var item_id = item.find(".card_id").text().trim();
             var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('cartitems')) || [];
             var selectedItem = UpdatecartItemsinStorage[item_id - 1];
-
+            productId = selectedItem.productId;
             $("#medicinename").val(selectedItem.productname);
             $("#brand").val(selectedItem.brand);
             $("#qty").val(selectedItem.qty);
             $("#price").val(selectedItem.mrp);
             $("#discount").val(selectedItem.disc);
             $("#total").val(selectedItem.total);
+            $("#batch").val(selectedItem.batch);
+            $("#shelflabel").val(selectedItem.shelflabel);
+            $("#expdate").val(selectedItem.expdate);
+            if (selectedItem.selectedUnit) {
+
+              $("#unit").append("<option>" + selectedItem.selectedUnit + "</option>");
+              if (selectedItem.primaryUnit === selectedItem.selectedUnit) {
+                $("#unit").append("<option>" + selectedItem.secondaryUnit + "</option>");
+              }
+              else {
+                $("#unit").append("<option>" + selectedItem.primaryUnit + "</option>");
+              }
+
+              $("#pack .unit")
+                .text(`1 ${selectedItem.primaryUnit} of ${selectedItem.conversion} ${selectedItem.secondaryUnit}`);
+            }
 
             UpdatecartItemsinStorage.splice(item_id - 1, 1);
             cartarray = UpdatecartItemsinStorage;
@@ -824,106 +926,102 @@
           var orderDetails;
           $("#submitorder").click(function () {
 
+            if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
+              return alert("PLEASE ADD SOME ITEMS FIRST");
+            }
+
             var subtotal = $("#subtotal").val();
             var total_dist = $("#additionaldiscount").val() || 0;
             var grand_total = $("#finalamount").val();
             var mop = $("#mop").val();
 
-              var customerNumber = $("#phonenumber").val();
-              var customerName = $("#customername").val();
-          
-              $.ajax({
-                url: `/api/custnumber/`,
-                type: 'POST',
-                data: JSON.stringify({
-                  cust_name: customerName,
-                  org_id: org,
-                  cust_telephone: customerNumber
-                }),
-                contentType: 'application/json',
-                success: function(response){
-                  var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+            var customerNumber = $("#phonenumber").val();
+            var customerName = $("#customername").val();
+
+            $.ajax({
+              url: `/api/custnumber/`,
+              type: 'POST',
+              data: JSON.stringify({
+                cust_name: customerName,
+                org_id: org,
+                cust_telephone: customerNumber
+              }),
+              contentType: 'application/json',
+              success: function (response) {
+                var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
 
                 var customerId = response.id;
 
-                  orderDetails ={
-                    customer_id: customerId,
-                    subtotal: subtotal,
-                    total_dist: total_dist,
-                    grand_total: grand_total ,
-                    mop: mop,
-                    pharmacyId: pharmacyDetails.pharmaId
-                  }
+                orderDetails = {
+                  customer_id: customerId,
+                  subtotal: subtotal,
+                  total_dist: total_dist,
+                  grand_total: grand_total,
+                  mop: mop,
+                  pharmacyId: pharmacyDetails.pharmaId
+                }
 
 
-                  $.ajax({
-                    url: '/api/salesdetail/',
-                    type:'POST',
-                    data: JSON.stringify(orderDetails),
-                    contentType: 'application/json',
-                    success: function(response){
+                $.ajax({
+                  url: '/api/salesdetail/',
+                  type: 'POST',
+                  data: JSON.stringify(orderDetails),
+                  contentType: 'application/json',
+                  success: function (response) {
+                    console.log('inside the submit function', response);
+                    var salesId = response.result.insertId;
+                    var mainInvoiceId = response.invoiceId;
+                    // $.get(`/api/getmainid/${salesId}`, function(data, status){
+                    // mainInvoiceId = data.result[0].invoice_id_main;
+                    //console.log('mainID', mainInvoiceId);
+                    var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
 
-                      var salesId = response.result.insertId;
-                      var mainInvoiceId;
-                      $.get(`/api/getmainid/${salesId}`, function(data, status){
-                        mainInvoiceId = data.result[0].invoice_id_main;
-                        console.log('mainID', mainInvoiceId);
-                        var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
-                        
-                        for(let i in orderDetails){
+                    for (let i in orderDetails) {
+                      var cartDetails = ({
+                        product_id: orderDetails[i].productId,
+                        product_name: orderDetails[i].productname,
+                        quantity: orderDetails[i].qty,
+                        mrp: orderDetails[i].mrp,
+                        unit_discount: orderDetails[i].disc,
+                        sales_invoice_id: salesId,
+                        main_invoice_id: (mainInvoiceId)
+                      })
+                      console.log('in submit button', cartDetails);
 
-                        var cartDetails = ({
-                          product_id:orderDetails[i].productId,
-                          product_name: orderDetails[i].productname,
-                          quantity: orderDetails[i].qty,
-                          mrp: orderDetails[i].mrp,
-                          unit_discount: orderDetails[i].disc,
-                          sales_invoice_id: salesId,
-                          main_invoice_id: (mainInvoiceId)
-                        })
-                        console.log('in submit button', cartDetails);
-
-                        $.ajax({
-                          url: `/api/cartitems/`,
-                          type: 'POST',
-                          data: JSON.stringify(cartDetails),
-                          contentType: 'application/json',
-                          success: function(response){
-                            console.log(response);                   
-                          },
-                          error: function(error){
-                            console.log(error);
-                          }
-                        })
-                      }
-                      
-                      localStorage.removeItem("cartitems");
-                      localStorage.removeItem("custdata");
-                      window.location.href = `/invoice_template/${salesId}`
-                      //location.reload();
-                    })
-                    },
-                    error: function(error){
-                      alert("not Created", error )
-
+                      $.ajax({
+                        url: `/api/cartitems/`,
+                        type: 'POST',
+                        data: JSON.stringify(cartDetails),
+                        contentType: 'application/json',
+                        success: function (response) {
+                          console.log(response);
+                        },
+                        error: function (error) {
+                          console.log(error);
+                        }
+                      })
                     }
 
                     localStorage.removeItem("cartitems");
                     localStorage.removeItem("custdata");
                     window.location.href = `/invoice_template/${salesId}`
-                    //location.reload();
+
+                    //})
                   },
                   error: function (error) {
                     alert("not Created", error)
                   }
-
                 })
               },
               error: function (error) {
-                console.log("error", error);
+                alert("not Created", error)
               }
 
+
             })
+
+
+
 
           })
 

@@ -67,8 +67,7 @@ module.exports = {
                 emp_alt_mobile = ?,
                 emp_email = ?,
                 emp_address = ?,
-                emp_access = ?,
-                emp_updated = ?,
+                emp_updated = ?
                 where emp_id = ?`,
       [
         data.emp_name,
@@ -76,7 +75,6 @@ module.exports = {
         data.emp_alt_mobile,
         data.emp_email,
         data.emp_address,
-        data.emp_access,
         emp_updated,
         emp_id,
       ],
