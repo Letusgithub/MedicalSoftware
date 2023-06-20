@@ -36,51 +36,51 @@
                                                 <div class="col-md-5">
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Product name</label>
-                                                        <p class="fw-bold pb-0">Calpol 500mg Tablet</p>
+                                                        for="basic-icon-default-companyname">Product name</label>
+                                                        <p class="fw-bold pb-0" id="productname"></p>
                                                     </div>
 
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Mfg/Mkt</label>
-                                                        <p class="fw-bold pb-0">Unimarck Pharma India Ltd
+                                                        for="basic-icon-default-companyname">Mfg/Mkt</label>
+                                                        <p class="fw-bold pb-0" id="brand">
                                                         </p>
                                                     </div>
 
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Salt</label>
-                                                        <p class="fw-bold pb-0">Alprazolam (0.25mg) + Propranolol (10mg)
+                                                        for="basic-icon-default-companyname">Salt</label>
+                                                        <p class="fw-bold pb-0" id="salt">
                                                         </p>
                                                     </div>
-
+                                                    
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">HSN Code</label>
-                                                        <p class="fw-bold pb-0">485263</p>
+                                                        for="basic-icon-default-companyname">HSN Code</label>
+                                                        <p class="fw-bold pb-0" id="hsncode"></p>
                                                     </div>
 
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">GST</label>
-                                                        <p class="fw-bold pb-0">12 %</p>
+                                                        for="basic-icon-default-companyname">GST</label>
+                                                        <p class="fw-bold pb-0" id="gst"></p>
                                                     </div>
 
-                                                    <div>
+                                                    <!-- <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Shelf Label</label>
-                                                        <p class="fw-bold pb-0">B-562</p>
-                                                    </div>
+                                                        for="basic-icon-default-companyname">Shelf Label</label>
+                                                        <p class="fw-bold pb-0" id=""></p>
+                                                    </div> -->
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <img class="w-100" alt="Calpol 500mg Tablet"
-                                                        src="https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/dpsh8z3rldqlg33kavbh.jpg"
-                                                        title="Calpol 500mg Tablet">
+                                                    <img class="w-100"alt="Calpol 500mg Tablet" src="https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/dpsh8z3rldqlg33kavbh.jpg" title="Calpol 500mg Tablet">
                                                 </div>
                                             </div>
                                         </div>
+                                    
+                                </div>
 
                                     </div>
 
@@ -131,25 +131,8 @@
                                                             <th>Actions</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="table-border-bottom-0">
-                                                        <tr>
-                                                            <td><i
-                                                                    class="fab fa-angular fa-lg text-danger me-3"></i><strong>MB-3562</strong>
-                                                            </td>
-                                                            <td>03/04/23</td>
-                                                            <td>₹40</td>
-                                                            <td>₹54</td>
-                                                            <td>100</td>
-                                                            <td>₹5400</td>
-                                                            <td>
-                                                                <div class="action-btns">
-                                                                    <button type="button" class="btn p-0 mx-2"><i
-                                                                            class='bx bxs-edit'></i></button>
-                                                                    <button type="button" class="btn p-0 mx-2"><i
-                                                                            class="bx bx-trash me-1"></i></button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                    <tbody class="table-border-bottom-0" id="batchcart">
+                                                        
 
                                                     </tbody>
                                                 </table>
@@ -181,6 +164,57 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
+        <script>
+            $(document).ready(function(){
+                var productId=JSON.parse(localStorage.getItem('addbatchid'));
+
+                $.get(`/api/getinventory/${productId}`, function(data, status){
+                    var items = data.data[0];
+                    console.log(items);
+                    $("#productname").text(items.med_name);
+                    $("#hsncode").text(items.hsn);
+                    $("#brand").text(items['mfd/mkt']);
+                    $("#salt").text(items.salt_composition);
+                    $("#gst").text(items.gst+'%');
+
+                })
+
+                $.get(`/api/getbatchforproductbatch?id=${productId}&org=<%=orgId%>`, function(data, status){
+                    var batch = data.data;
+                    for(let i=0;i<batch.length;i++){
+                        var date = new Date(batch[i].exp_date);
+                        var expdate = date.toISOString().split('T')[0];
+                        var totalCost = batch[i].purchase_rate*batch[i].batch_qty;
+                        
+                        var htmlData = `
+                                    <tr>
+                                        <td><i
+                                                class="fab fa-angular fa-lg text-danger me-3"></i><strong>${batch[i].batch_id}</strong>
+                                        </td>
+                                        <td>${expdate}</td>
+                                        <td>₹${batch[i].purchase_rate}</td>
+                                        <td>₹${batch[i].mrp}</td>
+                                        <td>${batch[i].batch_qty}</td>
+                                        <td>₹${totalCost}</td>
+                                        <td>
+                                            <div class="action-btns">
+                                                <button type="button" class="btn p-0 mx-2"><i
+                                                    class='bx bxs-edit'></i></button>
+                                                    <button type="button" class="btn p-0 mx-2"><i
+                                                        class="bx bx-trash me-1"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            `
+                        
+                        $("#batchcart").append(htmlData);
+                                            
+                    }
+
+                })
+
+            })
+        </script>
 
     </body>
 

@@ -77,10 +77,10 @@
                                                             <div>In Stock</div>
 
                                                         </th>
-                                                        <th>
+                                                        <!-- <th>
                                                             <div>Total Cost</div>
 
-                                                        </th>
+                                                        </th> -->
                                                         <th>
                                                             <div>Status</div>
 
@@ -200,6 +200,9 @@
                 console.log(orgId);
 
 
+                //for later use
+                //
+
                 $.get(`/api/getallinventory?orgID=${orgId}`, function(data, status){
                     var lowHtml = `<td><span class="badge bg-label-danger me-1">LOW</span></td>`;
                     var okHtml = `<td><span class="badge bg-label-success me-1">OK</span></td>`;
@@ -207,7 +210,7 @@
                     console.log(items);
                     
                     for(let i=0;i<items.length;i++){
-                        var inStock = items[i].batch_qty?items[i].batch_qty:"ADD BATCH";
+                        var inStock = items[i].batch_qty!=0?items[i].batch_qty:"ADD BATCH";
                         var totalCost = items[i].purchase_rate*items[i].batch_qty?'₹'+items[i].purchase_rate*items[i].batch_qty:"ADD BATCH";
                         var status = items[i].batch_qty >= items[i].threshold?okHtml:lowHtml;
 
@@ -218,7 +221,7 @@
                                     <td>1 ${items[i].primary_unit} of ${items[i].conversion} ${items[i].secondary_unit}</td>
                                     <td>${items[i].hsn}</td>
                                     <td>${inStock}</td>
-                                    <td>${totalCost}</td>
+                                    
                                     ${status}
                                     <td>
                                         <div class="dropdown">
@@ -232,14 +235,12 @@
                                                         class='bx bx-customize me-1'></i>Add
                                                     Batch</a>
                                                 <a class="dropdown-item"
-                                                    href="/product_batch"><i
+                                                    href="/product_batch" id="viewbatches"><i
                                                         class="bx bx-show me-1"></i> View</a>
-                                                <a class="dropdown-item"
-                                                    href="javascript:void(0);"><i
-                                                        class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item"
-                                                    href="javascript:void(0);"><i
-                                                        class="bx bx-trash me-1"></i> Delete</a>
+                                                <button class="dropdown-item" id="editproduct" ><i
+                                                        class="bx bx-edit-alt me-1"></i> Edit Product</button>
+                                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                                                
                                             </div>
                                         </div>
                                     </td>
@@ -250,7 +251,8 @@
                     }
                 })
 
-                $("#additems").on('click', "#addbatch", function(){
+                
+                $("#additems").on('click', "#addbatch, #viewbatches", function(){
                     var item = $(this).closest("tr");
                     var  productName= item.find("#selectedproduct strong").text();
                     var productId;
@@ -268,10 +270,31 @@
                         });
                     }
 
-
-                       
                 })
 
+                $("#additems").on('click', "#editproduct",function(){
+                    var item = $(this).closest("tr");
+                    var  productName= item.find("#selectedproduct strong").text();
+                    console.log(productName);
+                    var productId;
+
+                    if('caches' in  window){
+                        caches.match(`/api/allsample`).then(res=>{
+                            if(res){
+                                res.json().then(data=>{
+                                    let searchTerm = productName;
+                                    let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
+                                    productId = results[0].sample_id;
+                                    window.location.href = `/update_addproduct/${productId}`;
+                                })
+                            }
+                        });
+                    }
+                })
+
+                
+
+               
                 
             })
         </script>

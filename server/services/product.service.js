@@ -52,7 +52,6 @@ module.exports = {
             mkt = ?,
             salt = ?,
             hsn = ?,
-            category = ?,
             primary_unit = ?,
             secondary_unit = ?,
             conversion = ?,
@@ -129,8 +128,3 @@ module.exports = {
   },
 };
 
-  getSampleProducts: (callback)=>{
-    getPool().query(
-      `select * from `
-    )
-  }

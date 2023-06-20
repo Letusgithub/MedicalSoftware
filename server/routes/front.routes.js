@@ -239,16 +239,34 @@ module.exports = (app) => {
     res.render('Inventory/product_stock', { orgId: req.org_id });
   });
 
-  app.get('/update_product/:id', (req, res) => {
+  // app.get('/update_product/:id', checkAuth, fetchOrgId, (req, res) => {
+  //   console.log('herr', JSON.stringify(req.params.id));
+  //   getPool().query(
+  //     `select * from inventory where product_id= ? and org_id = ${req.org_id}`,
+  //     [req.params.id],
+
+  //     (error, results) => {
+  //       if (error) {
+  //         return res.send({ status: 'error', error });
+  //       }
+  //       res.render('Inventory/update_product', { data: results });
+  //     },
+  //   );
+  // });
+  app.get('/update_addproduct/:id', checkAuth, fetchOrgId, (req, res) => {
+    console.log('herr', JSON.stringify(req.params.id));
     getPool().query(
-      'select * from product where product_id= ?',
+      `select * from inventory inv
+      JOIN sample spl 
+      on spl.sample_id = inv.product_id
+      where product_id= ? and org_id = ${req.org_id}`,
       [req.params.id],
 
       (error, results) => {
         if (error) {
           return res.send({ status: 'error', error });
         }
-        res.render('Inventory/update_product', { data: results });
+        res.render('Inventory/update_addproduct', { data: results, orgId: req.org_id });
       },
     );
   });
@@ -257,12 +275,12 @@ module.exports = (app) => {
     res.render('Inventory/add_product', { orgId: req.org_id });
   });
 
-  app.get('/product_batch', (req, res) => {
-    res.render('Inventory/product_batch');
+  app.get('/product_batch', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/product_batch', { orgId: req.org_id });
   });
 
-  app.get('/add_batch', (req, res) => {
-    res.render('Inventory/add_batch');
+  app.get('/add_batch', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/add_batch', { orgId: req.org_id });
   });
 
   app.get('/purchase_order', checkAuth, fetchOrgId, (req, res) => {

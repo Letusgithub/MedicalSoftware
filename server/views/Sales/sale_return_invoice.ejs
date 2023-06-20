@@ -171,13 +171,14 @@
             var invoiceId = $("#invoicenumber").val();
 
             if(invoiceId != ''){
-              $.get(`/api/invoice?invoiceid=${invoiceId}&org=<%= orgId %>`, function(data, status){
+              $.get(`/api/searchinvoice?invoiceid=${invoiceId}&org=<%= orgId %>`, function(data, status){
+                console.log(data);
                 $("#cart").empty();
                 
                 if(data.result.length != 0){
                 var item = data.result[0];
                 
-                var datetime = item.created_date; 
+                var datetime = item.sales_created_date; 
                 var date = moment(datetime).format('DD MMMM YYYY');
                 var time = moment(datetime).utcOffset('+05:30');
                 var localTime = time.format('hh:mm A'); 
@@ -185,7 +186,7 @@
                 htmlData = `
                           <tr>
                             <td>1</td>
-                            <td id="selectedinvoiceid"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-${item.si_invoice_id}</strong></td>
+                            <td id="selectedinvoiceid"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${item.invoice_id_main}</strong></td>
                             <td>${item.grand_total}</td>
                             <td id="date">${date}</td>
                             <td id="localtime">${localTime}</td>
@@ -216,7 +217,7 @@
                   date: data.result[i].sales_created_date
                 });
               }
-              
+              console.log('orders in return', allOrders);
               renderCart(allOrders);
               localStorage.setItem("orderdetails",  JSON.stringify(allOrders));
             })
