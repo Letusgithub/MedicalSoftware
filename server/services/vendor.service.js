@@ -107,18 +107,4 @@ module.exports = {
 
     );
   },
-
-  getAllVendors: (callback) => {
-    getPool().query(
-      'select * from vendor',
-      [],
-      (error, results) => {
-        if (error) {
-          return callback(error);
-        }
-        return callback(null, results);
-      },
-    );
-  },
-
 };

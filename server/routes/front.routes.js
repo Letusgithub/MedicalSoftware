@@ -86,33 +86,30 @@ module.exports = (app) => {
   });
 
   // Profile Page
-  app.get('/profile', (req, res) => {
-    res.render('profile');
+  app.get('/profile', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      'select * from organisation where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Profile/profile', { data: results });
+      },
+    );
   });
 
-  // Admin Components
-  app.get('/pharmacy_master', (req, res) => {
-    res.render('Admin/pharmacy_master');
-  });
-
-  app.get('/register_pharmacy', (req, res) => {
-    res.render('Admin/register_pharmacy');
-  });
-
-  app.get('/salesman_master', (req, res) => {
-    res.render('Admin/salesman_master');
-  });
-
-  app.get('/access_managment', (req, res) => {
-    res.render('Admin/access_managment');
-  });
-
-  app.get('/user_role_managment', (req, res) => {
-    res.render('Admin/user_role_managment');
-  });
-
-  app.get('/pharmacy_sale_report', (req, res) => {
-    res.render('Admin/pharmacy_sale_report');
+  app.get('/update_profile', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      'select * from organisation where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Profile/update_profile', { data: results, orgId: req.org_id });
+      },
+    );
   });
 
   // Owner Control components
@@ -177,7 +174,7 @@ module.exports = (app) => {
     );
   });
 
-  app.get('/vendor_list', (req, res) => {
+  app.get('/vendor_list', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
       'select * from vendor where org_id = ? ',
       [req.org_id],
@@ -185,6 +182,7 @@ module.exports = (app) => {
         if (error) {
           return res.send({ status: 'error', error });
         }
+        // console.log(results);
         res.render('OwnerControls/vendor_list', { data: results });
       },
     );
