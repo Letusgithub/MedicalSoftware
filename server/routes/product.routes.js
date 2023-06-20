@@ -10,7 +10,7 @@ module.exports = (app) => {
   });
 
   app.post('/api/createproduct', controller.createProduct);
-  app.post('/product/:id', controller.updateProduct);
+  app.post('/api/updateproduct/:id', controller.updateProduct);
   app.get('/product/:id', controller.deleteProduct);
   app.get('/product/', controller.getAllProducts);
   app.get('/api/product/:id', controller.getProductById);

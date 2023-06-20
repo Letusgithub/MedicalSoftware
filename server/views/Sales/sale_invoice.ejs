@@ -32,7 +32,7 @@
                         <th>
                           <div class="col-md-6">
                             <div class="card mb-4">
-                              <h5 class="card-header">Customer Mobile</h5>
+                              <h5 class="card-header">Customer Mobile<span style="font-size: 20px; color: red">*</span></h5>
                               <div class="card-body">
                                 <div>
 
@@ -51,7 +51,8 @@
 
                             <div class="card mb-4">
                               <div class="d-flex justify-content-between m-0 p-0">
-                                <h5 class="card-header">Customer Name</h5>
+                                <h5 class="card-header">Customer Name <span style="font-size: 20px; color: red">*</span>
+                                </h5>
                                 <!-- <div class=" text-center mt-3 ">
                                   <a class="btn btn-primary mx-4" style="color: white;" id="addnewcustomer">Add Customer</a>
                                 </div> -->
@@ -154,7 +155,7 @@
                             <tr>
                               <th class="col-6">Product Name</th>
                               <th class="col-5">Mfg / Mkt</th>
-                              <th class="col-1">Shelf Label</th>
+                              <th class="col-1">Shelf Label<span style="font-size: 20px; color: red">*</span></th>
                             </tr>
 
                           </thead>
@@ -178,8 +179,8 @@
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th>Batch</th>
-                              <th>Exp Date</th>
+                              <th>Batch <span style="font-size: 20px; color: red">*</span></th>
+                              <th>Exp Date <span style="font-size: 20px; color: red">*</span></th>
                               <th>Unit</th>
                               <th>MRP</th>
                               <th>QTY</th>
@@ -190,9 +191,10 @@
                           <tbody>
                             <tr>
 
-                              <td>
-                                <input type="text" class="form-control" id="batch" placeholder="" />
+                              <td id="batchdroporinput">
+                                
                               </td>
+                              
 
                               <td>
                                 <input class="form-control" type="date" id="expdate" />
@@ -295,9 +297,9 @@
                   <h4 class="col-7 fw-bold py-3 mb-4">Order Summary</h4>
                   <div class="col-5">
                     <div class="mb-1 row">
-                      <label for="html5-text-input" class="col-2 col-form-label">Reference</label>
+                      <label for="html5-text-input" class="col-5 col-form-label"><span style="font-size: 20px; color: red">*</span>Reference</label>
                       <div class="col-10">
-                        <input class="form-control" type="text" placeholder="Doctor/Hospital" id="html5-text-input" />
+                        <input class="form-control" type="text" placeholder="Doctor/Hospital" id="reference" />
                       </div>
                     </div>
                   </div>
@@ -573,10 +575,35 @@
                   console.log('appp', data.data);
                   if(data.data.length==0){
                     $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+                    $("#batchdroporinput").append(
+                      `<input type="text" class="form-control" id="batch" placeholder="" />`
+                    )
+                  } else{
+                    //batch dropdown
+                    $("#batchdroporinput").append(
+                      `
+                      <select class="form-select" id="batchnumber" aria-label="unit">
+                      </select>
+                      <p class="unit" id="batchstock"></p>
+                        
+                        `
+                      )
+
+                      data.data.map(function(value, key){
+                        $("#batchdroporinput #batchnumber").append(
+                          `<option value=${key}> ${value.batch_id} </option>`
+                          )
+                        })
                   }
+
+                    
+                  
                   primaryUnit=data.data[0].primary_unit;
                   secondaryUnit=data.data[0].secondary_unit;
                   conversion=data.data[0].conversion;
+
+                  
+
 
                   $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
                   $("#unit").append("<option>"+data.data[0].secondary_unit + "</option>");
@@ -586,14 +613,24 @@
                   var date= new Date(data.data[0].exp_date);
                   $("#expdate").val(date.toISOString().split('T')[0]);
                   $("#shelflabel").val(data.data[0].shelf_label);
+                  
                   $("#batch").val(data.data[0].batch_id);
                   priceMed = data.data[0].mrp;
                   $("#price").val(priceMed);
+                  var batchId = $("#batchdroporinput #batchnumber").val();
+                  $("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
+
+                  $("#batchdroporinput").on("change", "#batchnumber", function(){
+                    var batchId = $("#batchdroporinput #batchnumber").val();
+                    $("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`);
+                    $("#shelflabel").val(data.data[batchId].shelf_label);
+                    var date= new Date(data.data[batchId].exp_date);
+                    $("#expdate").val(date.toISOString().split('T')[0]);
+                  })
 
                 })
 
                 $("#medicinename").val(ui.item.med_name);
-                //$('#price').val(ui.item.mrp);
                 $('#brand').val(ui.item["mfd/mkt"]);
               },0)
             }
@@ -603,6 +640,8 @@
               .appendTo(ul);
           };
         //});
+
+          
 
         $("#unit").change(function(){
           var getUnit = $(this).val();
@@ -697,6 +736,17 @@
               return alert('PLEASE ADD QUANTITY FIRST');
             }
 
+            if($("#shelflabel").val()==''){
+              return alert('PLEASE ADD SHELFLABEL FIRST');
+            }
+
+            if($("#batch").val()==''){
+              return alert('PLEASE ADD BATCH FIRST');
+            }
+
+            if($("#expdate").val() < new Date().toJSON().slice(0, 10)){
+              return alert('PLEASE ADD CORRECT EXPDate FIRST');
+            }
             var products = $("#medicinename").val();
             var brand = $("#brand").val();
             var qty = quantityInput.val();
@@ -910,9 +960,13 @@
           var orderDetails;
           $("#submitorder").click(function () {
 
+            if($("#reference").val()==""){
+              return alert("NO DOCTOR REF");
+            }
             if($("#subtotal").val() == 0 || $("#subtotal").val() == ''){
               return alert("PLEASE ADD SOME ITEMS FIRST");
             }
+
 
             var subtotal = $("#subtotal").val();
             var total_dist = $("#additionaldiscount").val() || 0;

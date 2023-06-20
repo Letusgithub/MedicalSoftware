@@ -50,7 +50,10 @@ module.exports = {
   },
   getOrders: (id, callback) => {
     getPool().query(
-      'select * from cart_item where main_invoice_id =?',
+      `select * from cart_item cart
+      JOIN sample spl
+      on cart.product_id = spl.sample_id
+       where main_invoice_id =?`,
       [id],
       (error, results) => {
         if (error) return callback(error);

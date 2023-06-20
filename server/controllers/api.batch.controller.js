@@ -1,5 +1,5 @@
 const {
-  create, getBatch,
+  create, getBatch, getAllBatchesById,
 } = require('../services/batch.service');
 
 module.exports = {
@@ -34,5 +34,20 @@ module.exports = {
     });
   },
 
+  getAllBatchesById: (req, res) => {
+    const id = req.query.id;
+    const orgId = req.query.org;
+
+    getAllBatchesById(orgId, id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.status(200).json({
+        success: 'gotorders',
+        data: results,
+      });
+    });
+  },
 
 };
