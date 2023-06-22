@@ -3,7 +3,6 @@ const service = require('../services/org.service');
 exports.updateOrg = (req, res) => {
   const data = req.body;
   const orgId = req.query.orgId;
-  console.log(orgId);
   service.update(orgId, data, (err, results) => {
     if (err) {
       console.log(err);
@@ -16,12 +15,10 @@ exports.updateOrg = (req, res) => {
         message: 'Record Not Found',
       });
     }
-
-    return res.redirect('/profile');
-    // return res.status(200).json({
-    //   success: 1,
-    //   message: 'Updated successfully',
-    // });
+    return res.status(200).json({
+      success: 1,
+      message: 'Updated successfully',
+    });
   });
 };
 

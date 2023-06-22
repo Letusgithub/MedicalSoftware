@@ -71,247 +71,233 @@
                                     </div>
                                     <!--/ Header -->
 
-                                    <form action="/api/org/update/?orgId=<%=orgId%>" method="POST">
-                                        <!-- User Profile Content -->
-                                        <div class="row d-flex justify-content-around mt-3">
-                                            <div class="col-xl-6 col-lg-6 col-md-6  ">
+                                    <!-- User Profile Content -->
+                                    <div class="row d-flex justify-content-around mt-3">
+                                        <div class="col-xl-6 col-lg-6 col-md-6  ">
 
-                                                <div class="card mb-4">
-                                                    <div class="card-body">
-                                                        <h6 class="mb-0">About</h6>
-                                                        <hr>
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                    <h6 class="mb-0">About</h6>
+                                                    <hr>
 
 
-                                                        <div class="mb-2">
-                                                            <label class="form-label" for="org_name">Pharmacy
-                                                                Name</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-user"></i></span>
-                                                                <input type="text" class="form-control" id="org_name"
-                                                                    placeholder="" name="org_name"
-                                                                    >
-                                                            </div>
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="org_name">Pharmacy
+                                                            Name</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"><i
+                                                                    class="bx bx-user"></i></span>
+                                                            <input type="text" class="form-control" id="org_name"
+                                                                placeholder="" value="<%=data[0].org_name%>">
                                                         </div>
-
-                                                        <div class="mb-2">
-                                                            <label class="form-label" for="owner_name">Owner
-                                                                Name</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-user"></i></span>
-                                                                <input type="text" class="form-control" id="owner_name"
-                                                                    placeholder="" name="owner_name"
-                                                                    value=<%=data[0].owner_name%>>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-2">
-                                                            <label class="form-label" for="org_gstin">GSTIN</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class='bx bxs-bank'></i></span>
-                                                                <input type="text" class="form-control" id="org_gstin"
-                                                                    placeholder="" name="org_gstin"
-                                                                    value=<%=data[0].org_gstin%>>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-4">
-
-                                                    <div class="card-body">
-                                                        <h6 class="mb-0">Contact</h6>
-                                                        <hr>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="org_telephone">Contact
-                                                                No</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-phone2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-phone"></i></span>
-                                                                <input type="text" id="org_telephone"
-                                                                    class="form-control px-2" name="org_telephone"
-                                                                    readonly value=<%=data[0].org_telephone%>>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="org_alt_telephone">Alternate
-                                                                Contact
-                                                                No</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-phone2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-phone"></i></span>
-                                                                <input type="text" id="org_alt_telephone"
-                                                                    class="form-control px-2" placeholder=""
-                                                                    name="org_alt_telephone"
-                                                                    value=<%=data[0].org_alt_telephone%>>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="org_email">Email</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span class="input-group-text"><i
-                                                                        class="bx bx-envelope"></i></span>
-                                                                <input type="text" id="org_email" class="form-control"
-                                                                    placeholder="" name="org_email"
-                                                                    value=<%=data[0].org_email%>>
-
-                                                            </div>
-                                                        </div>
-
                                                     </div>
 
-                                                </div>
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="owner_name">Owner
+                                                            Name</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"><i
+                                                                    class="bx bx-user"></i></span>
+                                                            <input type="text" class="form-control" id="owner_name"
+                                                                placeholder="" value="<%=data[0].owner_name%>">
+                                                        </div>
+                                                    </div>
 
-                                                <div class=" mb-4">
-
-                                                    <div class="card-body">
-                                                        <div class="form-check mt-3">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="defaultCheck1" />
-                                                            <label class="form-check-label" for="defaultCheck1">
-                                                                Disclaimer : Hereby I asure that data given here is
-                                                                validated by me and is genuine to my consiousness.
-                                                            </label>
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="org_gstin">GSTIN</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"><i
+                                                                    class='bx bxs-bank'></i></span>
+                                                            <input type="text" class="form-control" id="org_gstin"
+                                                                placeholder="" value="<%=data[0].org_gstin%>">
                                                         </div>
                                                     </div>
 
                                                 </div>
+                                            </div>
 
+                                            <div class="card mb-4">
+
+                                                <div class="card-body">
+                                                    <h6 class="mb-0">Contact</h6>
+                                                    <hr>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="org_telephone">Contact
+                                                            No</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-phone2"
+                                                                class="input-group-text"><i
+                                                                    class="bx bx-phone"></i></span>
+                                                            <input type="text" id="org_telephone"
+                                                                class="form-control px-2" readonly
+                                                                value="<%=data[0].org_telephone%>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="org_alt_telephone">Alternate
+                                                            Contact
+                                                            No</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-phone2"
+                                                                class="input-group-text"><i
+                                                                    class="bx bx-phone"></i></span>
+                                                            <input type="text" id="org_alt_telephone"
+                                                                class="form-control px-2" placeholder=""
+                                                                value="<%=data[0].org_alt_telephone%>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="org_email">Email</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"><i
+                                                                    class="bx bx-envelope"></i></span>
+                                                            <input type="text" id="org_email" class="form-control"
+                                                                placeholder="" value="<%=data[0].org_email%>">
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
 
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6">
-                                                <div class="card mb-4">
-                                                    <div class="card-body">
-                                                        <h6 class="mb-0">License</h6>
-                                                        <hr>
 
-                                                        <div class="mb-2">
-                                                            <label class="form-label" for="dl_no_1">DL No 1</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class='bx bx-detail'></i></span>
-                                                                <input type="text" class="form-control" id="dl_no_1"
-                                                                    placeholder="" name="dl_no_1"
-                                                                    value=<%=data[0].org_dl_no_1%>>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="form-label" for="dl_no_2">DL No 2</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class='bx bx-detail'></i></span>
-                                                                <input type="text" class="form-control" id="dl_no_2"
-                                                                    placeholder="" name="dl_no_2"
-                                                                    value=<%=data[0].org_dl_no_2%>>
-                                                            </div>
-                                                        </div>
+                                            <div class=" mb-4">
 
-                                                        <div class="mb-2">
-                                                            <label class="form-label" for="fssai_no">FSSAI No</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class='bx bx-badge-check'></i></span>
-                                                                <input type="text" class="form-control" id="fssai_no"
-                                                                    placeholder="" name="fssai_no"
-                                                                    value=<%=data[0].org_fssai_no%>>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-2">
-                                                            <label class="form-label" for="shop_lic">Shop
-                                                                license</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class='bx bx-store-alt'></i></span>
-                                                                <input type="text" class="form-control" id="shop_lic"
-                                                                    placeholder="" name="shop_lic"
-                                                                    value=<%=data[0].org_shop_lic%>>
-                                                            </div>
-                                                        </div>
-
-
-
+                                                <div class="card-body">
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="defaultCheck1" />
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Disclaimer : Hereby I asure that data given here is
+                                                            validated by me and is genuine to my consiousness.
+                                                        </label>
                                                     </div>
                                                 </div>
-
-                                                <div class="card mb-4">
-                                                    <div class="card-body">
-                                                        <h6 class="mb-0">Location</h6>
-                                                        <hr>
-
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="org_state">State</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span class="input-group-text"><i
-                                                                        class='bx bxs-map-alt'></i></span>
-                                                                <input type="text" id="org_state" class="form-control"
-                                                                    placeholder="" name="org_state"
-                                                                    value=<%=data[0].org_state%>>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="org_city">City</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span class="input-group-text"><i
-                                                                        class='bx bxs-city'></i></span>
-                                                                <input type="text" id="org_city" class="form-control"
-                                                                    placeholder="" name="org_city"
-                                                                    value=<%=data[0].org_city%>>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="org_pincode">Pincode</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span class="input-group-text"><i
-                                                                        class='bx bxs-map-pin'></i></span>
-                                                                <input type="text" id="org_pincode" class="form-control"
-                                                                    placeholder="" name="org_pincode"
-                                                                    value=<%=data[0].org_pincode%>>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="org_address">Address</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-message2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-address"></i></span>
-                                                                <textarea id="org_address" class="form-control"
-                                                                    placeholder="" name="org_address"
-                                                                    value=<%=data[0].org_address%>></textarea>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-
 
                                             </div>
+
+
                                         </div>
-                                        <!-- / User Profile Content -->
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary" id="submitbtn">Update</button>
+                                        <div class="col-xl-6 col-lg-6 col-md-6">
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                    <h6 class="mb-0">License</h6>
+                                                    <hr>
+
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="dl_no_1">DL No 1</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"><i
+                                                                    class='bx bx-detail'></i></span>
+                                                            <input type="text" class="form-control" id="org_dl_no_1"
+                                                                placeholder="" value="<%=data[0].org_dl_no_1%>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="dl_no_2">DL No 2</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"><i
+                                                                    class='bx bx-detail'></i></span>
+                                                            <input type="text" class="form-control" id="org_dl_no_2"
+                                                                placeholder="" value="<%=data[0].org_dl_no_2%>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="fssai_no">FSSAI No</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"><i
+                                                                    class='bx bx-badge-check'></i></span>
+                                                            <input type="text" class="form-control" id="org_fssai_no"
+                                                                placeholder="" value="<%=data[0].org_fssai_no%>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="shop_lic">Shop
+                                                            license</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                class="input-group-text"><i
+                                                                    class='bx bx-store-alt'></i></span>
+                                                            <input type="text" class="form-control" id="org_shop_lic"
+                                                                placeholder="" value="<%=data[0].org_shop_lic%>">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                    <h6 class="mb-0">Location</h6>
+                                                    <hr>
+
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="org_state">State</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"><i
+                                                                    class='bx bxs-map-alt'></i></span>
+                                                            <input type="text" id="org_state" class="form-control"
+                                                                placeholder="" value="<%=data[0].org_state%>">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="org_city">City</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"><i
+                                                                    class='bx bxs-city'></i></span>
+                                                            <input type="text" id="org_city" class="form-control"
+                                                                placeholder="" value="<%=data[0].org_city%>">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="org_pincode">Pincode</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"><i
+                                                                    class='bx bxs-map-pin'></i></span>
+                                                            <input type="text" id="org_pincode" class="form-control"
+                                                                placeholder="" value="<%=data[0].org_pincode%>">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="org_address">Address</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-message2"
+                                                                class="input-group-text"><i
+                                                                    class="bx bx-address"></i></span>
+                                                            <textarea id="org_address" class="form-control"
+                                                                ><%=data[0].org_address%></textarea>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
                                         </div>
-                                    </form>
+                                    </div>
+                                    <!-- / User Profile Content -->
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary" id="submitbtn">Update</button>
+                                    </div>
+
                                 </div>
                                 <!-- / Content -->
 
@@ -333,10 +319,38 @@
 
         <%- include('../partials/footercode.ejs') %>
 
-        <script>
-            $("#org_name").val('<%= data[0].org_name %>');
+            <script>
+                var orgId = '<%= orgId %>'
+                $("#submitbtn").click(function () {
+                    $.ajax({
+                        url: `/api/org/update/?orgId=${orgId}`,
+                        type: 'POST',
+                        data: JSON.stringify({
+                            org_name: $("#org_name").val(),
+                            owner_name: $("#owner_name").val(),
+                            org_gstin: $("#org_gstin").val(),
+                            org_alt_telephone: $("#org_alt_telephone").val(),
+                            org_email: $("#org_email").val(),
+                            org_dl_no_1: $("#org_dl_no_1").val(),
+                            org_dl_no_2: $("#org_dl_no_2").val(),
+                            org_fssai_no: $("#org_fssai_no").val(),
+                            org_shop_lic: $("#org_shop_lic").val(),
+                            org_state: $("#org_state").val(),
+                            org_city: $("#org_city").val(),
+                            org_pincode: $("#org_pincode").val(),
+                            org_address: $("#org_address").val()
+                        }),
+                        contentType: 'application/json',
+                        success: function (response) {
+                            window.location.href = "/profile"
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                })
 
-        </script>
+            </script>
 
     </body>
 

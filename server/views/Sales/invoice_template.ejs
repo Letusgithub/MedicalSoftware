@@ -63,10 +63,6 @@
                     <address>
                         <strong>Customer Details:</strong><br>
                         <div class="customerfields">
-                            <!-- Customer Name<br>
-                            1234 Main<br>
-                            Apt. 4B<br>
-                            Springfield, ST 54321 -->
                         </div>
                     </address>
                     <address>
@@ -139,69 +135,7 @@
                                 </tr>
     						</thead>
     						<tbody id="cartitems">
-    							<!-- foreach ($order->lineItems as $line) or some such thing here -->
-    							
-                                <!-- <tr>
-                                    <td>2</td>
-    								<td>YM-656</td>
-                                    <td class="text-center">56664</td>
-                                    <td class="text-center">Oct 21</td>
-                                    <td class="text-center">5</td>
-                                    <td class="text-center">734952</td>
-    								<td class="text-center">$70</td>
-                                    <td class="text-center">$10.99</td>
-    								<td class="text-center">6</td>
-    								<td class="text-right">$70</td>
-    							</tr>
-                                <tr>
-                                    <td>3</td>
-    								<td>GNR-697</td>
-                                    <td class="text-center">56664</td>
-                                    <td class="text-center">Jun 24</td>
-                                    <td class="text-center">5</td>
-                                    <td class="text-center">734952</td>
-    								<td class="text-center">$23</td>
-                                    <td class="text-center">$10.99</td>
-    								<td class="text-center">15</td>
-    								<td class="text-right">$23</td>
-    							</tr>
-                                
-    							<tr>
-    								<td class="thick-line"></td>
-    								<td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-    								<td class="thick-line text-center"><strong>Subtotal</strong></td>
-    								<td class="thick-line text-right">$670.99</td>
-    							</tr>
-    							<tr>
-    								<td class="no-line"></td>
-    								<td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Shipping</strong></td>
-    								<td class="no-line text-right">$15</td>
-    							</tr>
-    							<tr>
-    								<td class="no-line"></td>
-    								<td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Total</strong></td>
-    								<td class="no-line text-right">$685.99</td>
-    							</tr> -->
+
     						</tbody>
     					</table>
     				</div>
@@ -251,9 +185,6 @@
                 $("#shippedcustomerdetails .shippedcustomerfields").html(`${customerName} <br> `);
                 $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
                 $("#shippedcustomerdetails .invoicenumber").text(`${customer.invoice_id_main}`);
-
-
-                
         })
 
         var product=[];
@@ -283,30 +214,8 @@
             $("#cartitems").append(cartHtml);
       
           }
-          
-
-         
         })
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     })
-
-    
-
 </script>
 
 

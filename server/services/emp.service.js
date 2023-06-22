@@ -102,18 +102,10 @@ module.exports = {
   },
 
   // Get All Employees by Org ID
-  getAllById: (data, callBack) => {
+  getAllById: (org_id, callBack) => {
     getPool().query(
-      `select 
-                emp_id,
-                emp_name,
-                emp_mobile,
-                emp_alt_mobile,
-                emp_email,
-                emp_address,
-                emp_access
-            from employee where org_id = ?`,
-      [data.org_id],
+      'select * from employee where org_id = ?',
+      [org_id],
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -127,15 +119,7 @@ module.exports = {
   // Get Employee by Emp ID
   getById: (emp_id, callBack) => {
     getPool().query(
-      `select 
-                org_id,
-                emp_name,
-                emp_mobile,
-                emp_alt_mobile,
-                emp_email,
-                emp_address,
-                emp_access
-            from employee where emp_id = ?`,
+      'select * from employee where emp_id = ?',
       [emp_id],
       (error, results) => {
         if (error) {

@@ -24,9 +24,9 @@
 
                   <div class="d-flex justify-content-between m-0 p-0">
                     <h4 class="fw-bold py-3 mb-1"> New Customer</h4>
-                    <button type="button" class="btn btn-icon btn-danger my-2 mx-3" onclick="history.back()">
+                    <a type="button" href="/customer_list" class="btn btn-icon btn-danger my-2 mx-3">
                       <i class='bx bx-x bx-sm'></i>
-                    </button>
+                    </a>
                   </div>
 
                   <hr class="mb-4">
@@ -34,69 +34,63 @@
                   <div class="card mb-4 mx-auto col-md-10">
 
                     <div class="card-body ">
-                      <form>
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname" >Customer Name</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span id="basic-icon-default-fullname2" class="input-group-text"><i
-                                  class="bx bx-user"></i></span>
-                              <input type="text" class="form-control" id="basic-icon-default-fullname"
-                                placeholder="John Doe" aria-label="John Doe"
-                                aria-describedby="basic-icon-default-fullname2" name="cust_name">
-                            </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="cust_name">Customer Name</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                class="bx bx-user"></i></span>
+                            <input type="text" class="form-control" id="cust_name" placeholder="" name="cust_name">
                           </div>
                         </div>
+                      </div>
 
-                        <div class="row mb-3">
-                          <label class="col-sm-2 form-label" for="basic-icon-default-phone">Mobile No</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span id="basic-icon-default-phone2" class="input-group-text"><i
-                                  class="bx bx-phone"></i></span>
-                              <input type="text" id="basic-icon-default-phone" class="form-control phone-mask"
-                                placeholder="658 799 8941" aria-label="658 799 8941"
-                                aria-describedby="basic-icon-default-phone2" name="cust_telephone">
-                            </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 form-label" for="cust_telephone">Mobile No</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                class="bx bx-phone"></i></span>
+                            <input type="text" id="cust_telephone" class="form-control phone-mask" placeholder=""
+                              name="cust_telephone">
                           </div>
                         </div>
+                      </div>
 
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-address">Address</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span class="input-group-text"><i class="bx bx-building"></i></span>
-                              <input type="text" id="basic-icon-default-address" class="form-control"
-                                placeholder="address" aria-label="address"
-                                aria-describedby="basic-icon-default-address2" name="cust_address">
-
-                            </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="cust_address">Address</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-building"></i></span>
+                            <input type="text" id="cust_address" class="form-control" placeholder=""
+                              name="cust_address">
 
                           </div>
+
                         </div>
+                      </div>
 
 
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Email</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                              <input type="text" id="basic-icon-default-email" class="form-control"
-                                placeholder="john.doe" aria-label="john.doe"
-                                aria-describedby="basic-icon-default-email2"  name="cust_email">
-                              <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
-                            </div>
-
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="cust_email">Email</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                            <input type="text" id="cust_email" class="form-control" placeholder="" name="cust_email">
+                            <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
                           </div>
+
                         </div>
+                      </div>
 
 
-                        <div class="row justify-content-end">
-                          <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary" id="submitbtn">Add</button>
-                          </div>
+                      <div class="row justify-content-end">
+                        <div class="col-sm-10">
+                          <button type="submit" class="btn btn-primary" id="submitbtn">Add</button>
                         </div>
-                      </form>
+                      </div>
+
                     </div>
                   </div>
 
@@ -122,39 +116,31 @@
 
     <%- include('../partials/footercode.ejs') %>
 
-    <script>
-      $(document).ready(function(){
-        $("#submitbtn").click(function(){
+      <script>
+        $(document).ready(function () {
+          $("#submitbtn").click(function () {
 
-          var customerName = $("input[name='cust_name']").val();
-          var customerNumber = $("input[name='cust_telephone']").val();
-          var customerAdd = $("input[name='cust_address']").val();
-          var customerEmail = $("input[name='cust_email']").val();
-          var orgId = "<%= orgId %>";
-
-          var custDetails = {
-            cust_name: customerName,
-            org_id: orgId,
-            cust_telephone: customerNumber,
-            cust_address: customerAdd,
-            cust_email: customerEmail
-          }
-
-          $.ajax({
-            url: `/api/cust/`,
-            type: 'POST',
-            data: JSON.stringify(custDetails),
-            contentType: 'application/json',
-            success: function(response){
-              window.location.href ='/customer_list'                   
-            },
-            error: function(error){
-              console.log(error);
-            }
+            $.ajax({
+              url: `/api/cust/`,
+              type: 'POST',
+              data: JSON.stringify({
+                org_id: "<%= orgId %>",
+                cust_name: $("#cust_name").val(),
+                cust_telephone: $("#cust_telephone").val(),
+                cust_email: $("#cust_email").val(),
+                cust_address: $("#cust_address").val()
+              }),
+              contentType: 'application/json',
+              success: function (response) {
+                window.location.href = '/customer_list'
+              },
+              error: function (error) {
+                console.log(error);
+              }
+            })
           })
         })
-      })
-    </script>
+      </script>
 
   </body>
 

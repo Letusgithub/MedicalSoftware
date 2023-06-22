@@ -11,13 +11,10 @@ exports.createEmp = (req, res) => {
         message: 'Database connection error',
       });
     }
-    console.log('new data', data);
-
-    return res.redirect('/employee_master');
-    // return res.status(200).json({
-    //   success: 1,
-    //   data: results,
-    // });
+    return res.status(200).json({
+      success: 1,
+      message: 'Created successfully',
+    });
   });
 };
 
@@ -35,12 +32,10 @@ exports.updateEmp = (req, res) => {
         message: 'Record Not Found',
       });
     }
-
-    return res.redirect('/employee_master');
-    // return res.status(200).json({
-    //   success: 1,
-    //   message: 'Updated successfully',
-    // });
+    return res.status(200).json({
+      success: 1,
+      message: 'Updated successfully',
+    });
   });
 };
 

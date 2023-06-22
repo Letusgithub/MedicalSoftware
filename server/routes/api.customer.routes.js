@@ -12,7 +12,7 @@ module.exports = (app) => {
   });
 
   app.post('/api/cust/', createUser);
-  app.post('/api/cust/:id', updateUser);
+  app.post('/api/cust/:id/update', updateUser);
   app.get('/api/cust/:id', deleteUser);
   app.get('/api/cust/', getUsers);
   app.post('/api/custnumber/', getUserByNumber);
