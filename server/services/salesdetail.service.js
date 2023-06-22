@@ -175,9 +175,12 @@ module.exports = {
     );
   },
 
-  getRevenue: (callback) => {
+  getRevenue: (orgId, callback) => {
     getPool().query(
-      'select * from order_details',
+      `select * from order_details od
+      JOIN customer_data cd 
+      on cd.customer_id = od.customer_id 
+      where cd.org_id = ${orgId}`,
       [],
       (error, results) => {
         if (error) {

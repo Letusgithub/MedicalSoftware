@@ -155,7 +155,7 @@
                             <tr>
                               <th class="col-6">Product Name*</th>
                               <th class="col-5">Mfg / Mkt</th>
-                              <th class="col-1">Shelf Label<span style="font-size: 20px; color: red">*</span></th>
+                              <th class="col-1">Shelf Label</th>
                             </tr>
 
                           </thead>
@@ -194,7 +194,7 @@
                             <tr>
 
                               <td id="batchdroporinput">
-                                
+                                <input type="text" class="form-control" id="batch" placeholder="" />
                               </td>
                               
 
@@ -563,11 +563,12 @@
                .append('<div>' + item.med_name + '</div>')
                .appendTo(ul);
            };*/
-
+        
           var priceMed =-1;
           var primaryUnit;
           var secondaryUnit;
           var conversion;
+          var batchesMap=[];
           $('#medicinename').autocomplete({
             minLength: 3,
             source: function (request, response) {
@@ -589,30 +590,33 @@
                 console.log(ui.item);
                 productId=ui.item.sample_id;
 
-                $.get(`/api/getbatch/${productId}`, function(data, status){
+                $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function(data, status){
 
                   console.log('appp', data.data);
                   if(data.data.length==0){
+                    //$("#batchdroporinput input").remove();
                     $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
-                    $("#batchdroporinput").append(
-                      `<input type="text" class="form-control" id="batch" placeholder="" />`
-                    )
+                    //$("#batchdroporinput").append(
+                      //`<input type="text" class="form-control" id="batch" placeholder="" />`
+                    //)
                   } else{
                     //batch dropdown
+                    $("#batchdroporinput input").remove();
                     $("#batchdroporinput").append(
                       `
                       <select class="form-select" id="batchnumber" aria-label="unit">
                       </select>
-                      <p class="unit" id="batchstock"></p>
-                        
-                        `
+                      `
+                      //<p class="unit" id="batchstock"></p>
                       )
 
                       data.data.map(function(value, key){
+                        batchesMap.push(`${value.batch_id} ( ${value.batch_qty} )`);
                         $("#batchdroporinput #batchnumber").append(
-                          `<option value=${key}> ${value.batch_id} </option>`
+                          `<option value=${key}> ${value.batch_id} ( ${value.batch_qty} ) </option>`
                           )
                         })
+                        console.log(batchesMap);
                   }
 
                     
@@ -636,8 +640,8 @@
                   $("#batch").val(data.data[0].batch_id);
                   priceMed = data.data[0].mrp;
                   $("#price").val(priceMed);
-                  var batchId = $("#batchdroporinput #batchnumber").val();
-                  $("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
+                  //var batchId = $("#batchdroporinput #batchnumber").val();
+                  //$("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
 
                   $("#batchdroporinput").on("change", "#batchnumber", function(){
                     var batchId = $("#batchdroporinput #batchnumber").val();
@@ -755,10 +759,6 @@
               return alert('PLEASE ADD QUANTITY FIRST');
             }
 
-            if($("#shelflabel").val()==''){
-              return alert('PLEASE ADD SHELFLABEL FIRST');
-            }
-
             if($("#batch").val()==''){
               return alert('PLEASE ADD BATCH FIRST');
             }
@@ -773,7 +773,7 @@
             var disc = discInput.val();
             var total = totalInput.val();
             var shelflabel = $("#shelflabel").val();
-            var batch = $("#batch").val();
+            var batch = $("#batchdroporinput #batchnumber").val();
             var exp = $("#expdate").val();
             var selectedUnit = $("#unit").val();
 
@@ -784,6 +784,7 @@
               brand: brand,
               shelflabel: shelflabel,
               batch: batch,
+              allbatches: batchesMap,
               expdate: exp,
               primaryUnit: primaryUnit,
               secondaryUnit: secondaryUnit,
@@ -815,7 +816,8 @@
             $("#discount").val("");
             $("#total").val("");
             $("#shelflabel").val("");
-            $("#batch").val("");
+            $("#batchdroporinput").empty();
+            $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
             $("#expdate").val("");
             $("#unit").empty();
             $("#pack .unit").empty();
@@ -858,9 +860,59 @@
             $("#price").val(selectedItem.mrp);
             $("#discount").val(selectedItem.disc);
             $("#total").val(selectedItem.total);
-            $("#batch").val(selectedItem.batch);
-            $("#shelflabel").val(selectedItem.shelflabel);
-            $("#expdate").val(selectedItem.expdate);
+            
+            
+
+            //getting all data for batches
+            $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function(data, status){
+              console.log('on edit of the product', data.data);
+              if(data.data.length==0){
+                $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+              } else{
+                //batch dropdown
+                $("#batchdroporinput input").remove();
+                $("#batchdroporinput").append(
+                  `
+                  <select class="form-select" id="batchnumber" aria-label="unit">
+                  </select>
+                  `
+                )
+                data.data.map(function(value, key){
+                  $("#batchdroporinput #batchnumber").append(
+                    `<option value=${key}> ${value.batch_id} ( ${value.batch_qty} ) </option>`
+                  )
+                })
+                $("#batchdroporinput #batchnumber").prop('selectedIndex', selectedItem.batch);
+              }
+              primaryUnit=data.data[selectedItem.batch].primary_unit;
+              secondaryUnit=data.data[selectedItem.batch].secondary_unit;
+              conversion=data.data[selectedItem.batch].conversion;
+/*
+              $("#unit").append("<option>"+ data.data[selectedItem.batch].primary_unit+ "</option>");
+              $("#unit").append("<option>"+data.data[selectedItem.batch].secondary_unit + "</option>");
+              $("#pack .unit")
+              .text(`1 ${data.data[selectedItem.batch].primary_unit} of ${data.data[selectedItem.batch].conversion} ${data.data[selectedItem.batch].secondary_unit}`);
+   */           
+              var date= new Date(data.data[selectedItem.batch].exp_date);
+              $("#expdate").val(date.toISOString().split('T')[0]);
+              $("#shelflabel").val(data.data[selectedItem.batch].shelf_label);
+              
+              //$("#batch").val(data.data[0].batch_id);
+              priceMed = data.data[selectedItem.batch].mrp;
+              $("#price").val(priceMed);
+
+              $("#batchdroporinput").on("change", "#batchnumber", function(){
+                var batchId = $("#batchdroporinput #batchnumber").val();
+                $("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`);
+                $("#shelflabel").val(data.data[batchId].shelf_label);
+                var date= new Date(data.data[batchId].exp_date);
+                $("#expdate").val(date.toISOString().split('T')[0]);
+              })
+
+            })
+
+            //$("#shelflabel").val(selectedItem.shelflabel);
+            //$("#expdate").val(selectedItem.expdate);
             if(selectedItem.selectedUnit){
 
               $("#unit").append("<option>"+ selectedItem.selectedUnit+"</option>");
@@ -1034,6 +1086,27 @@
                         var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
                         
                         for(let i in orderDetails){
+                          batchId = orderDetails[i].allbatches[orderDetails[i].batch];
+                          var number = batchId.match(/^\d+/)[0];
+                          console.log(number);
+                          $.ajax({
+                            url: `/api/updatebatchwhensale/`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                              batch_id: number,
+                              sales_qty: orderDetails[i].qty
+                            }),
+                            contentType: 'application/json',
+                            success: function(response){
+                              console.log(response);                   
+                            },
+                            error: function(error){
+                              console.log(error);
+                            }
+                          })
+
+
+
                           var cartDetails = ({
                             product_id:orderDetails[i].productId,
                             product_name: orderDetails[i].productname,

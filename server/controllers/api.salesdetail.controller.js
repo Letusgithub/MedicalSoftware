@@ -176,7 +176,9 @@ module.exports = {
   },
 
   getRevenue: (req, res) => {
-    getRevenue((error, results) => {
+    const orgId = req.query.org;
+    console.log(orgId);
+    getRevenue(orgId, (error, results) => {
       if (error) {
         console.log(error);
         return;
