@@ -405,16 +405,27 @@
 
       <script>
         $(document).ready(function () {
-          $("#congratsowner").text(`Congratulations <%= owner %>! 🎉`)
-          localStorage.setItem("name", JSON.stringify({
-            pharmacyName: "<%= name %>",
-            ownerName: "<%= owner %>",
-            number: "<%= number %>",
-            gst: "<%= gst %>",
-            pharmaId: "<%= pharmacyId %>"
-          })
-          );
-          $.get('/api/orderdetails/', function (data, status) {
+          
+          var check = JSON.parse(localStorage.getItem('name'));
+          if(check == null){
+            console.log('no items found');
+            $("#congratsowner").text(`Congratulations <%= owner %>! 🎉`);
+            localStorage.setItem("name", JSON.stringify({
+                pharmacyName: "<%= name %>",
+                ownerName: "<%= owner %>",
+                number: "<%= number %>",
+                gst: "<%= gst %>",
+                pharmaId: "<%= pharmacyId %>"
+              })
+            );
+          }
+          else{
+            $("#congratsowner").text(`Congratulations ${check.ownerName}! 🎉`);
+            console.log('item is found');
+          }
+
+          
+          $.get('/api/orderdetails?org=<%=orgId%>', function (data, status) {
             var items = data.data;
             var revenue = 0;
             for (let i in items) {

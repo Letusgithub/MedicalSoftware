@@ -52,7 +52,7 @@
             <div class="dropdown-divider"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="/api/logout/">
+            <a class="dropdown-item" href="/api/logout/" id="logout"> 
               <i class="bx bx-power-off me-2"></i>
               <span class="align-middle">Log Out</span>
             </a>
@@ -69,9 +69,16 @@
 <script src="/vendor/libs/jquery/jquery.js"></script>
 <script>
   $(document).ready(function(){
-    const name =JSON.parse( localStorage.getItem("name") );
-    $("#pharmacyname").text(`${name.pharmacyName}`);
-    $("#ownername").text(name.ownerName);
+          var check = JSON.parse(localStorage.getItem('name'));
+      
+            $("#pharmacyname").text(`<%=orgName%>`);
+            $("#ownername").text('<%=ownerName%>');           
+         
+    
+
+          $("#logout").click(function(){
+            localStorage.clear();
+          })
     
   })
 </script>

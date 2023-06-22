@@ -21,7 +21,7 @@ exports.generateOtp = (contactNumber) => new Promise(
         message: `Your OTP is ${otp_value}`,
         numbers: [contactNumber],
       });
-      console.log(sms);
+      console.log('sms', sms);
 
       // Bcrypt contact number
       const currentDate = new Date();

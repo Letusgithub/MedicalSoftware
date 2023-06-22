@@ -272,8 +272,6 @@
 
 
 
-
-
                     $("#conversion").text(`1 ${items.primary_unit} = ${items.conversion} ${items.secondary_unit}`)
                     $("#unit").append(`<option> ${items.primary_unit} </option>`);
                     $("#unit").append(`<option> ${items.secondary_unit} </option>`);
@@ -285,6 +283,7 @@
                 $("#submitbatch").click(function(){
                     var batchDetails = {
                        product_id: productId,
+                       org_id: '<%=orgId%>',
                        exp_date: $("input[name='addexp']").val(),
                        qty_unit: $("#unit").val(),
                        batch_qty: $("input[name='addqty']").val(),

@@ -104,7 +104,7 @@ exports.registerOrg = (req, res) => {
 
 exports.loginOrg = (req, res) => {
   const data = req.body;
-  // console.log('number', req.body.org_telephone);
+  console.log('number', req.body.org_telephone);
   try {
     // Check if telephone exists //
     getByTel(data, async (err, results) => {
@@ -154,5 +154,6 @@ exports.loginOrg = (req, res) => {
 
 exports.logoutOrg = (req, res) => {
   res.clearCookie('token');
+  res.clearCookie('gotalldata');
   res.redirect('/login');
 };

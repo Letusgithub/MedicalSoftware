@@ -1,5 +1,5 @@
 const {
-  create, getBatch,
+  create, getBatch, getAllBatchesById, updateBatchWhenSale
 } = require('../services/batch.service');
 
 module.exports = {
@@ -21,8 +21,9 @@ module.exports = {
   },
 
   getBatch: (req, res) => {
-    const id = req.params.id;
-    getBatch(id, (err, results) => {
+    const id = req.query.id;
+    const orgId = req.query.org;
+    getBatch(id, orgId, (err, results) => {
       if (err) {
         console.log(err);
         return;
@@ -34,5 +35,34 @@ module.exports = {
     });
   },
 
+  getAllBatchesById: (req, res) => {
+    const id = req.query.id;
+    const orgId = req.query.org;
+
+    getAllBatchesById(orgId, id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.status(200).json({
+        success: 'gotorders',
+        data: results,
+      });
+    });
+  },
+
+  updateBatchWhenSale: (req, res) => {
+    const data = req.body;
+    updateBatchWhenSale(data, (updateError, updateResults) => {
+      if (updateError) {
+        console.log(updateError);
+        return;
+      }
+      return res.status(200).json({
+        success: 'Updated',
+        data: updateResults,
+      });
+    });
+  },
 
 };

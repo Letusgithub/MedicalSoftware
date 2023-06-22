@@ -21,7 +21,8 @@ exports.createInventory = (req, res) => {
 
 exports.updateInventory = (req, res) => {
   const data = req.body;
-  service.update(data, (err, results) => {
+  const id = req.params.id;
+  service.update(data, id, (err, results) => {
     if (err) {
       console.log(err);
       return;
