@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
+const jwt = require('jsonwebtoken');
 const { getPool } = require('../config/database');
 
 exports.fetchOrgId = async (req, res, next) => {
   const org_telephone = req.org_telephone;
-
   getPool().query(
-    'select org_id from organisation where org_telephone = ?',
+    'select org_id, org_name, owner_name from organisation where org_telephone = ?',
     [org_telephone],
     (error, results) => {
       if (error) {
@@ -21,6 +21,8 @@ exports.fetchOrgId = async (req, res, next) => {
       }
       // Store the user ID in the request object //
       req.org_id = results[0].org_id;
+      req.org_name = results[0].org_name;
+      req.owner_name = results[0].owner_name;
 
       // return results[0].org_id;
 

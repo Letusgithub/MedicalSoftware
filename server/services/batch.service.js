@@ -24,12 +24,12 @@ module.exports = {
       },
     );
   },
-  getBatch: (id, callback) => {
+  getBatch: (id, orgId, callback) => {
     getPool().query(
       `select * from batch 
       JOIN inventory inv
       ON batch.product_id =  inv.product_id
-      where batch.product_id =?`,
+      where batch.product_id =? and batch.org_id =${orgId}`,
       [id],
       (error, results) => {
         if (error) return callback(error);
@@ -49,6 +49,24 @@ module.exports = {
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
+      },
+    );
+  },
+
+  updateBatchWhenSale: (data, callBack) => {
+    getPool().query(
+      `update batch set
+            sales_qty =? 
+            where batch_id = ?`,
+      [
+        data.sales_qty,
+        data.batch_id,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
       },
     );
   },
