@@ -9,12 +9,9 @@ module.exports = (app) => {
     next();
   });
 
-  app.post('/vendor', controller.createVendor);
-
-  app.post('/vendor/:id', controller.updateVendor);
-  app.get('/vendor/:id', controller.deleteVendor);
-  app.get('/getvendor/:id', controller.getVendorById);
-  // app.get('/vendor/:id', controller.getAllVendorsById);
-  app.get('/allvendors/', controller.getAllVendors);
-
+  app.post('/api/vendor', controller.createVendor);
+  app.post('/api/vendor/:id/update', controller.updateVendor);
+  app.get('/api/vendor/:id', controller.deleteVendor);
+  app.get('/api/getvendor/:id', controller.getVendorById);
+  // app.get('/api/vendor/:id', controller.getAllVendorsById);
 };

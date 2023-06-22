@@ -58,22 +58,6 @@ module.exports = async (app) => {
     const id = req.org_id;
     res.send({ id });
   });
-  // Login Page
-  app.get('/login', (req, res) => {
-    res.render('Auth/login');
-  });
-
-  // Register Login
-  app.get('/register', (req, res) => {
-    res.render('Auth/register');
-  });
-
-  // OTP Verification
-  app.get('/verify_otp', (req, res) => {
-    const number = req.query.phoneNumber;
-    const token = req.query.OTPtoken;
-    res.render('Auth/otp_verification', { number, token });
-  });
 
   // Home Page
   app.get('/', checkAuth, fetchOrgId, getPharmaData, (req, res) => {
@@ -146,10 +130,10 @@ module.exports = async (app) => {
     res.render('OwnerControls/add_employee', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
-  app.get('/update_employee/:id', (req, res) => {
+  app.get('/update_employee/:id', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
-      'select * from employee where emp_id =?',
-      [req.params.id],
+      'select * from employee where org_id = ? and emp_id =?',
+      [req.org_id, req.params.id],
       (error, results) => {
         if (error) {
           return res.send({ status: 'error', error });
@@ -181,14 +165,15 @@ module.exports = async (app) => {
     res.render('OwnerControls/new_customer', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
-  app.get('/update_customer/:id', (req, res) => {
+  app.get('/update_customer/:id', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
-      'select * from customer_data where customer_id =?',
-      [req.params.id],
+      'select * from customer_data where org_id = ? and customer_id =?',
+      [req.org_id, req.params.id],
       (error, results) => {
         if (error) {
           throw error;
         }
+
         res.render('OwnerControls/update_customer', {
           customers: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
         });
@@ -214,8 +199,8 @@ module.exports = async (app) => {
 
   app.get('/update_vendor/:id', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
-      'select * from vendor where vendor_id =?',
-      [req.params.id],
+      'select * from vendor where org_id = ? and vendor_id =?',
+      [req.org_id, req.params.id],
       (error, results) => {
         if (error) {
           throw error;
@@ -327,6 +312,9 @@ module.exports = async (app) => {
         });
       },
     );
+  });
+  app.get('/po_template/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/po_template', { id: req.params.id, orgId: req.org_id });
   });
 
   app.get('/po_report', checkAuth, fetchOrgId, (req, res) => {

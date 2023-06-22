@@ -24,10 +24,10 @@
 
                                     <div class="d-flex justify-content-between m-0 p-0">
                                         <h4 class="fw-bold py-3 mb-1"> Add Employee</h4>
-                                        <button type="button" class="btn btn-icon btn-danger my-2 mx-3"
-                                            onclick="history.back()">
+                                        <a type="button" class="btn btn-icon btn-danger my-2 mx-3"
+                                            href="/employee_master">
                                             <i class='bx bx-x bx-sm'></i>
-                                        </button>
+                                        </a>
                                     </div>
 
                                     <hr class="mb-4">
@@ -40,69 +40,62 @@
 
                                         <hr>
                                         <div class="card-body">
-                                            <form>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="emp_name">Employee
-                                                        Name</label>
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-fullname2"
-                                                            class="input-group-text"><i class="bx bx-user"></i></span>
-                                                        <input type="text" class="form-control"
-                                                            id="emp_name" placeholder=""
-                                                            name="emp_name">
-                                                    </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_name">Employee
+                                                    Name</label>
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                                            class="bx bx-user"></i></span>
+                                                    <input type="text" class="form-control" id="emp_name" placeholder=""
+                                                        name="emp_name">
                                                 </div>
+                                            </div>
 
 
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="emp_mobile">Contact
-                                                        No</label>
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
-                                                                class="bx bx-phone"></i></span>
-                                                        <input type="text" id="emp_mobile"
-                                                            class="form-control phone-mask" placeholder=""
-                                                            name="emp_mobile">
-                                                    </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_mobile">Contact
+                                                    No</label>
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                            class="bx bx-phone"></i></span>
+                                                    <input type="text" id="emp_mobile" class="form-control phone-mask"
+                                                        placeholder="" name="emp_mobile">
                                                 </div>
+                                            </div>
 
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="emp_alt_mobile"> Alternet
-                                                        Contact
-                                                        No</label>
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
-                                                                class="bx bx-phone"></i></span>
-                                                        <input type="text" id="emp_alt_mobile"
-                                                            class="form-control phone-mask" placeholder=""
-                                                            name="emp_alt_mobile">
-                                                    </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_alt_mobile"> Alternet
+                                                    Contact
+                                                    No</label>
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                            class="bx bx-phone"></i></span>
+                                                    <input type="text" id="emp_alt_mobile"
+                                                        class="form-control phone-mask" placeholder=""
+                                                        name="emp_alt_mobile">
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label"
-                                                        for="emp_email">Email</label>
-                                                    <div class="input-group input-group-merge">
-                                                        <span class="input-group-text"><i
-                                                                class="bx bx-envelope"></i></span>
-                                                        <input type="text" id="emp_email"
-                                                            class="form-control" placeholder="" name="emp_email">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_email">Email</label>
+                                                <div class="input-group input-group-merge">
+                                                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                                    <input type="text" id="emp_email" class="form-control"
+                                                        placeholder="">
 
-                                                    </div>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label"
-                                                        for="emp_address">Address</label>
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-message2"
-                                                            class="input-group-text"><i
-                                                                class="bx bx-address"></i></span>
-                                                        <textarea id="emp_address" class="form-control"
-                                                            placeholder="" name="emp_address"></textarea>
-                                                    </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_address">Address</label>
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-message2" class="input-group-text"><i
+                                                            class="bx bx-address"></i></span>
+                                                    <textarea id="emp_address" class="form-control" placeholder=""
+                                                        name="emp_address"></textarea>
                                                 </div>
+                                            </div>
 
-                                                <button type="submit" class="btn btn-primary" id="submitbtn">Submit</button>
-                                            </form>
+                                            <button type="submit" class="btn btn-primary" id="submitbtn">Submit</button>
                                         </div>
 
 
@@ -131,37 +124,29 @@
         <%- include('../partials/footercode.ejs') %>
 
             <script>
-                $(document).ready(function () {
-                    $("#submitbtn").click(function () {
 
-                        var empName = $("input[name='emp_name']").val();
-                        var empNumber = $("input[name='emp_mobile']").val();
-                        var empAdd = $("input[name='emp_address']").val();
-                        var empEmail = $("input[name='emp_email']").val();
-                        var orgId = "<%= orgId %>";
+                $("#submitbtn").click(function () {
 
-                        var empDetails = {
-                            org_id: orgId,
-                            emp_name: empName,
-                            emp_mobile: empNumber,
-                            emp_email: empEmail,
-                            emp_address: empAdd
+                    $.ajax({
+                        url: `/api/emp/`,
+                        type: 'POST',
+                        data: JSON.stringify({
+                            org_id: "<%= orgId %>",
+                            emp_name: $("#emp_name").val(),
+                            emp_mobile: $("#emp_mobile").val(),
+                            emp_email: $("#emp_email").val(),
+                            emp_address: $("#emp_address").val()
+                        }),
+                        contentType: 'application/json',
+                        success: function (response) {
+                            window.location.href = '/employee_master'
+                        },
+                        error: function (error) {
+                            console.log(error);
                         }
-
-                        $.ajax({
-                            url: `/api/emp/`,
-                            type: 'POST',
-                            data: JSON.stringify(empDetails),
-                            contentType: 'application/json',
-                            success: function (response) {
-                                window.location.href = '/employee_master'
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            }
-                        })
                     })
                 })
+
             </script>
 
     </body>

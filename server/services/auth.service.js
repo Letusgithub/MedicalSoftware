@@ -64,13 +64,15 @@ module.exports = {
                 org_gstin,
                 org_telephone,
                 owner_name,
+                org_pincode,
                 is_verified)
-                values(?,?,?,?,false)`,
+                values(?,?,?,?,?,false)`,
       [
         data.org_name,
         data.org_gstin,
         data.org_telephone,
         data.owner_name,
+        data.org_pincode,
       ],
       (error, results) => {
         if (error) {

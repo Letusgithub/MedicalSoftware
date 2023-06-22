@@ -31,6 +31,7 @@ require('./server/routes/api.purchase_order.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);
+require('./server/routes/front.auth.routes')(app);
 
 initialisePool().then(() => {
   app.listen(process.env.PORT || 4800, () => {

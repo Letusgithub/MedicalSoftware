@@ -22,121 +22,110 @@
 
                                 <div class="container-xxl flex-grow-1 container-p-y">
 
-                                    
+
                                     <div class="d-flex justify-content-between m-0 p-0">
                                         <h4 class="fw-bold py-3 mb-1"> New Vendor</h4>
-                                        <button type="button" class="btn btn-icon btn-danger my-2 mx-3" onclick="history.back()">
-                                          <i class='bx bx-x bx-sm'></i>
-                                        </button>
+                                        <a type="button" class="btn btn-icon btn-danger my-2 mx-3" href="/vendor_list">
+                                            <i class='bx bx-x bx-sm'></i>
+                                        </a>
                                     </div>
                                     <hr class="mb-4">
 
                                     <div class="card mb-4 mx-auto col-md-10">
-                                            <div class="card-body ">
-                                                <form>
+                                        <div class="card-body ">
 
-                                                    <div class="row mb-3">
-                                                        <label class="col-sm-2 col-form-label"
-                                                            for="basic-icon-default-fullname">Company Name</label>
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-user"></i></span>
-                                                                <input type="text" class="form-control"
-                                                                    id="basic-icon-default-fullname" placeholder="DAWA"
-                                                                    aria-label="John Doe"
-                                                                    aria-describedby="basic-icon-default-fullname2" name="company">
-                                                            </div>
-                                                        </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_name">Vendor
+                                                    Name</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-fullname2"
+                                                            class="input-group-text"><i class="bx bx-user"></i></span>
+                                                        <input type="text" class="form-control" id="vendor_name"
+                                                            placeholder="" name="vendor_name">
                                                     </div>
-
-                                                    <div class="row mb-3">
-                                                        <label class="col-sm-2 col-form-label"
-                                                            for="basic-icon-default-fullname">Vendor Name</label>
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-user"></i></span>
-                                                                <input type="text" class="form-control"
-                                                                    id="basic-icon-default-fullname" placeholder="John Doe"
-                                                                    aria-label="John Doe"
-                                                                    aria-describedby="basic-icon-default-fullname2" name="vendor_name">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <label class="col-sm-2 col-form-label"
-                                                            for="basic-icon-default-gstin">ADDRESS</label>
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group input-group-merge">
-                                                                <span class="input-group-text"><i
-                                                                        class="bx bx-"></i></span>
-                                                                <input type="text" id="basic-icon-default-address"
-                                                                    class="form-control" placeholder="Address"
-                                                                    aria-label="gstin"
-                                                                    aria-describedby="basic-icon-default-address2" name="vendor_address">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <label class="col-sm-2 form-label"
-                                                            for="basic-icon-default-phone">Contact Number</label>
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-phone2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-phone"></i></span>
-                                                                <input type="text" id="basic-icon-default-phone"
-                                                                    class="form-control phone-mask"
-                                                                    placeholder="0000000000" aria-label="658 799 8941"
-                                                                    aria-describedby="basic-icon-default-phone2" name="vendor_contact">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <label class="col-sm-2 form-label"
-                                                            for="basic-icon-default-phone">GSTIN</label>
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-phone2"
-                                                                    class="input-group-text"><i class="bx bx-envelope"></i></span>
-                                                                <input type="text" id="basic-icon-default-phone"
-                                                                    class="form-control phone-mask"
-                                                                    placeholder="658 799 8941" aria-label="658 799 8941"
-                                                                    aria-describedby="basic-icon-default-phone2" name="vendor_gstin">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- <div class="row mb-3">
-                                                        <label class="col-sm-2 form-label"
-                                                            for="basic-icon-default-phone">EMAIL</label>
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-phone2"
-                                                                    class="input-group-text"><i
-                                                                        class="bx bx-phone"></i></span>
-                                                                <input type="text" id="basic-icon-default-phone"
-                                                                    class="form-control phone-mask"
-                                                                    placeholder="658 799 8941" aria-label="658 799 8941"
-                                                                    aria-describedby="basic-icon-default-phone2" name="email">
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
-
-                                                    <div class="row justify-content-end">
-                                                        <div class="col-sm-10">
-                                                            <button type="submit" class="btn btn-primary" id="submitvendor">Add</button>
-                                                        </div>
-                                                    </div>
-
-                                                </form>    
+                                                </div>
                                             </div>
+
+
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_contact">Contact
+                                                    Number</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                                class="bx bx-phone"></i></span>
+                                                        <input type="text" id="vendor_contact"
+                                                            class="form-control phone-mask" placeholder=""
+                                                            name="vendor_contact">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_email">Email</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span class="input-group-text"><i
+                                                                class="bx bx-envelope"></i></span>
+                                                        <input type="text" id="vendor_email" class="form-control"
+                                                            placeholder="" name="vendor_email">
+                                                        <span id="basic-icon-default-email2"
+                                                            class="input-group-text">@example.com</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                                class="bx bxs-bank"></i></span>
+                                                        <input type="text" id="vendor_gstin"
+                                                            class="form-control phone-mask" placeholder=""
+                                                            name="vendor_gstin">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_dl_no">DL No.</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                                class='bx bx-detail'></i></span>
+                                                        <input type="text" id="vendor_dl_no"
+                                                            class="form-control phone-mask" placeholder=""
+                                                            name="vendor_dl_no">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="vendor_address">Address</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span class="input-group-text"></span>
+                                                        <textarea type="text" id="vendor_address" class="form-control"
+                                                            placeholder="" name="vendor_address">
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary"
+                                                        id="submitBtn">Add</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
 
 
@@ -160,42 +149,34 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
-        <script>
-            $(document).ready(function(){
-                $("#submitvendor").click(function(){
-                    var companyName = $("input[name='company']").val();
-                    var vendorName = $("input[name='vendor_name']").val();
-                    var vendorAdd = $("input[name='vendor_address']").val();
-                    var vendorContact = $("input[name='vendor_contact']").val();
-                    var vendorGST = $("input[name='vendor_gstin']").val();
-                    var orgId = "<%= orgId %>";
-
-                    var vendorDetails = {
-                        company: companyName,
-                        vendor_name: vendorName,
-                        vendor_address: vendorAdd,
-                        vendor_contact: vendorContact,
-                        vendor_gstin: vendorGST,
-                        org_id: orgId
-                    }
-                    console.log('vendor', vendorDetails);
-
-                    $.ajax({
-                        url: `/vendor/`,
-                        type: 'POST',
-                        data: JSON.stringify(vendorDetails),
-                        contentType: 'application/json',
-                        success: function(response){
-                            console.log(response);
-                          window.location.href ='/vendor_list'                   
-                        },
-                        error: function(error){
-                        console.log(error);
-                        }
+            <script>
+                $(document).ready(function () {
+                    $("#submitBtn").click(function () {
+                        
+                            $.ajax({
+                                url: `/api/vendor/`,
+                                type: 'POST',
+                                data: JSON.stringify({
+                                    org_id: "<%= orgId %>",
+                                    vendor_name: $("#vendor_name").val(),
+                                    vendor_address: $("#vendor_address").val(),
+                                    vendor_contact: $("#vendor_contact").val(),
+                                    vendor_gstin: $("#vendor_gstin").val(),
+                                    vendor_email: $("#vendor_email").val(),
+                                    vendor_dl_no: $("#vendor_dl_no").val(),
+                                }),
+                                contentType: 'application/json',
+                                success: function (response) {
+                                    console.log(response);
+                                    window.location.href = '/vendor_list'
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            })
                     })
                 })
-            })
-        </script>
+            </script>
 
     </body>
 

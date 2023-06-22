@@ -7,20 +7,22 @@ module.exports = {
     getPool().query(
       `insert into vendor(
                 org_id,
-                company,
                 vendor_name,
                 vendor_address,
                 vendor_contact,
-                vendor_gstin
+                vendor_email,
+                vendor_gstin,
+                vendor_dl_no
                 )
-                values(?,?,?,?,?,?)`,
+                values(?,?,?,?,?,?,?)`,
       [
         data.org_id,
-        data.company,
         data.vendor_name,
         data.vendor_address,
         data.vendor_contact,
+        data.vendor_email,
         data.vendor_gstin,
+        data.vendor_dl_no,
       ],
       (error, results) => {
         if (error) {
@@ -32,22 +34,23 @@ module.exports = {
   },
 
   // Update vendor
-
   update: (id, data, callBack) => {
     getPool().query(
       `update vendor set
-            company = ?,
             vendor_name= ?,
             vendor_address= ?,
             vendor_contact = ?,
-            vendor_gstin = ?
+            vendor_email = ?,
+            vendor_gstin = ?,
+            vendor_dl_no = ?
             where vendor_id = ?`,
       [
-        data.company,
         data.vendor_name,
         data.vendor_address,
         data.vendor_contact,
+        data.vendor_email,
         data.vendor_gstin,
+        data.vendor_dl_no,
         id,
       ],
 

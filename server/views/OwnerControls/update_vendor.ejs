@@ -1,9 +1,6 @@
-
 <%- include('../partials/headercode.ejs') %>
 
-
-
-<body>
+  <body>
 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar  ">
@@ -27,9 +24,9 @@
 
                   <div class="d-flex justify-content-between m-0 p-0">
                     <h4 class="fw-bold py-3 mb-1"> Update Vendor Details</h4>
-                    <button type="button" class="btn btn-icon btn-danger my-2 mx-3" onclick="history.back()">
+                    <a type="button" class="btn btn-icon btn-danger my-2 mx-3" href="/vendor_list">
                       <i class='bx bx-x bx-sm'></i>
-                    </button>
+                    </a>
                   </div>
 
                   <hr class="mb-4">
@@ -37,98 +34,91 @@
                   <div class="card mb-4 mx-auto col-md-10">
 
                     <div class="card-body ">
-                      <form action="/vendor/<%= vendor[0].vendor_id %>" method="post" >
 
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname" >Company</label>
-                            <div class="col-sm-10">
-                              <div class="input-group input-group-merge">
-                                <span id="basic-icon-default-fullname2" class="input-group-text"><i
-                                    class="bx bx-user"></i></span>
-                                <input type="text" class="form-control" id="basic-icon-default-fullname"
-                                  placeholder="John Doe" aria-label="John Doe"
-                                  aria-describedby="basic-icon-default-fullname2" name="company" value=<%= vendor[0].company %> >
-                              </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname" >Vendor Name</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span id="basic-icon-default-fullname2" class="input-group-text"><i
-                                  class="bx bx-user"></i></span>
-                              <input type="text" class="form-control" id="basic-icon-default-fullname"
-                                placeholder="John Doe" aria-label="John Doe"
-                                aria-describedby="basic-icon-default-fullname2" name="vendor_name" value=<%= vendor[0].vendor_name %> >
-                            </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="vendor_name">Vendor
+                          Name</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                class="bx bx-user"></i></span>
+                            <input type="text" class="form-control" id="vendor_name" placeholder="" name="vendor_name"
+                              value="<%=vendor[0].vendor_name%>">
                           </div>
                         </div>
+                      </div>
 
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-address">Address</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span class="input-group-text"><i class="bx bx-building"></i></span>
-                              <input type="text" id="basic-icon-default-address" class="form-control" 
-                                placeholder="address" aria-label="address"
-                                aria-describedby="basic-icon-default-address2" name="vendor_address" value=<%= vendor[0].vendor_address %>>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="vendor_contact">Contact
+                          Number</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                class="bx bx-phone"></i></span>
+                            <input type="text" id="vendor_contact" class="form-control phone-mask" placeholder=""
+                              name="vendor_contact" value="<%=vendor[0].vendor_contact%>">
+                          </div>
+                        </div>
+                      </div>
 
-                            </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="vendor_email">Email</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                            <input type="text" id="vendor_email" class="form-control" placeholder="" name="vendor_email"
+                              value="<%=vendor[0].vendor_email%>">
+                            <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                class="bx bxs-bank"></i></span>
+                            <input type="text" id="vendor_gstin" class="form-control phone-mask" placeholder=""
+                              name="vendor_gstin" value="<%=vendor[0].vendor_gstin %>">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="vendor_dl_no">DL No.</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                class='bx bx-detail'></i></span>
+                            <input type="text" id="vendor_dl_no" class="form-control phone-mask" placeholder=""
+                              name="vendor_dl_no" value="<%=vendor[0].vendor_dl_no %>">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="vendor_address">Address</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span class="input-group-text"></span>
+                            <textarea type="text" id="vendor_address" class="form-control" placeholder=""
+                              name="vendor_address"><%=vendor[0].vendor_address %></textarea>
 
                           </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Contact number</label>
-                            <div class="col-sm-10">
-                              <div class="input-group input-group-merge">
-                                <span class="input-group-text"><i
-                                  class="bx bx-phone"></i></span>
-                                <input type="text" id="basic-icon-default-email" class="form-control"
-                                  placeholder="john.doe" aria-label="john.doe"
-                                  aria-describedby="basic-icon-default-email2" name="vendor_contact" value=<%= vendor[0].vendor_contact %>>
-                                
-                              </div>
-  
-                            </div>
+                      </div>
+
+                      <div class="row justify-content-end">
+                        <div class="col-sm-10">
+                          <button type="submit" id="submitbtn" class="btn btn-primary">Update</button>
                         </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-icon-default-email">GSTIN</label>
-                            <div class="col-sm-10">
-                              <div class="input-group input-group-merge">
-                                <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                                <input type="text" id="basic-icon-default-email" class="form-control"
-                                  placeholder="john.doe" aria-label="john.doe"
-                                  aria-describedby="basic-icon-default-email2" name="vendor_gstin" value=<%= vendor[0].vendor_gstin %>>
-                               
-                              </div>
-  
-                            </div>
-                        </div>
+                      </div>
 
-                        <!-- <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Email</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                              <input type="text" id="basic-icon-default-email" class="form-control"
-                                placeholder="john.doe" aria-label="john.doe"
-                                aria-describedby="basic-icon-default-email2" name="email" value=<%= vendor[0].email %>>
-                              <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
-                            </div>
-
-                          </div>
-                        </div> -->
-
-
-                        <div class="row justify-content-end">
-                          <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary" >Update</button>
-                          </div>
-                        </div>
-                      </form>
                     </div>
                   </div>
+
+
 
 
                 </div>
@@ -152,39 +142,32 @@
 
     <%- include('../partials/footercode.ejs') %>
 
-    <!-- <script>
+      <script>
+        $("#submitbtn").click(function () {
 
-      const name = document.getElementById('basic-icon-default-fullname').value;
-      const phone = document.getElementById('basic-icon-default-phone').value;
-      const address = document.getElementById('basic-icon-default-address').value;
-      const email = document.getElementById('basic-icon-default-email').value;
+          var vendorId = "<%= vendor[0].vendor_id %>";
 
-      const customer = {
-        name: name,
-        cust_telephone: phone,
-        cust_address: address,
-        cust_email: email
-      };
-
-      const handleSubmit = (e) => {
-        e.preventDefault(); //prevents reloading when form is send
-        console.log(customer);
-        sendRequest();
-      };
-      
-     
-      
-      
-      const sendRequest = async()=>{
-          await axios.post("/api/",{
-            cust_telephone: phone,
-            cust_address: address,
-            cust_email: email
-        }).then(res=>res.data);
-      }
-      
-    </script> -->
+          $.ajax({
+            url: `/api/vendor/${vendorId}/update`,
+            type: 'POST',
+            data: JSON.stringify({
+              vendor_name: $("#vendor_name").val(),
+              vendor_address: $("#vendor_address").val(),
+              vendor_contact: $("#vendor_contact").val(),
+              vendor_gstin: $("#vendor_gstin").val(),
+              vendor_email: $("#vendor_email").val(),
+              vendor_dl_no: $("#vendor_dl_no").val(),
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+              window.location.href = '/vendor_list'
+            },
+            error: function (error) {
+              console.log(error);
+            }
+          })
+        })
+      </script>
   </body>
-
 
   </html>

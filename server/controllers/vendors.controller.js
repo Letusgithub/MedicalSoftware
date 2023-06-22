@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
 const service = require('../services/vendor.service');
 
 exports.createVendor = (req, res) => {
   const data = req.body;
-  service.create(data, (err, results) => {
+  service.create(data, (err) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -12,17 +13,14 @@ exports.createVendor = (req, res) => {
     }
     return res.status(200).json({
       success: 1,
-      data: results,
+      message: 'Created successfully',
     });
-    // res.redirect('/vendor_list');
   });
 };
 
 exports.updateVendor = (req, res) => {
   const data = req.body;
   const id = req.params.id;
-  console.log('data', req.body);
-  console.log('dataid', req.params.id);
 
   service.update(id, data, (err, results) => {
     if (err) {
@@ -32,11 +30,16 @@ exports.updateVendor = (req, res) => {
         message: 'Database connection error',
       });
     }
-    // return res.status(200).json({
-    //   success: 1,
-    //   data: results,
-    // });
-    res.redirect('/vendor_list');
+    if (!results) {
+      return res.json({
+        success: 0,
+        message: 'Record Not Found',
+      });
+    }
+    return res.status(200).json({
+      success: 1,
+      message: 'Updated successfully',
+    });
   });
 };
 
@@ -63,10 +66,8 @@ exports.deleteVendor = (req, res) => {
 };
 
 exports.getVendorById = (req, res) => {
-
   const vendorId = req.params.id;
   service.getById(vendorId, (err, results) => {
-
     if (err) {
       console.log(err);
       return;
@@ -91,21 +92,6 @@ exports.getAllVendorsById = (req, res) => {
         success: 0,
         message: 'Records Not Found',
       });
-    }
-
-    return res.status(200).json({
-      success: 1,
-      data: results,
-    });
-  });
-};
-
-
-exports.getAllVendors = (req, res) => {
-  service.getAllVendors((err, results) => {
-    if (err) {
-      console.log(err);
-      return;
     }
     return res.status(200).json({
       success: 1,
