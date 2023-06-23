@@ -216,10 +216,13 @@
                                                         <label class="form-label" for="org_dl_no_1">DL No 1</label>
                                                         <div class="input-group">
                                                             <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class='bx bx-detail'></i></span>
-                                                            <input type="text" id="dl1_ft" placeholder="Form Type (ex.20, 21)" class="form-control">
-                                                            <input type="text" id="dl1_ln" placeholder="License No." class="form-control">
+                                                                class="input-group-text"><i
+                                                                    class='bx bx-detail'></i></span>
+                                                            <input type="text" id="dl1_ft"
+                                                                placeholder="Form Type (ex.20, 21)"
+                                                                class="form-control">
+                                                            <input type="text" id="dl1_ln" placeholder="License No."
+                                                                class="form-control" minlength="6" maxlength="6">
                                                         </div>
                                                     </div>
 
@@ -227,10 +230,13 @@
                                                         <label class="form-label" for="org_dl_no_2">DL No 2</label>
                                                         <div class="input-group">
                                                             <span id="basic-icon-default-fullname2"
-                                                                    class="input-group-text"><i
-                                                                        class='bx bx-detail'></i></span>
-                                                            <input type="text" id="dl2_ft" placeholder="Form Type (ex.20, 21)" class="form-control">
-                                                            <input type="text" id="dl2_ln" placeholder="License No." class="form-control">
+                                                                class="input-group-text"><i
+                                                                    class='bx bx-detail'></i></span>
+                                                            <input type="text" id="dl2_ft"
+                                                                placeholder="Form Type (ex.20, 21)"
+                                                                class="form-control">
+                                                            <input type="text" id="dl2_ln" placeholder="License No."
+                                                                class="form-control" minlength="6" maxlength="6">
                                                         </div>
                                                     </div>
 
@@ -294,7 +300,7 @@
                                                             <span class="input-group-text"><i
                                                                     class='bx bxs-map-pin'></i></span>
                                                             <input type="text" id="org_pincode" class="form-control"
-                                                                placeholder="" value="<%=data[0].org_pincode%>">
+                                                                placeholder="" value="<%=data[0].org_pincode%>" readonly>
 
                                                         </div>
                                                     </div>
@@ -304,8 +310,8 @@
                                                             <span id="basic-icon-default-message2"
                                                                 class="input-group-text"><i
                                                                     class="bx bx-address"></i></span>
-                                                            <textarea id="org_address" class="form-control"
-                                                                ><%=data[0].org_address%></textarea>
+                                                            <textarea id="org_address"
+                                                                class="form-control"><%=data[0].org_address%></textarea>
                                                         </div>
                                                     </div>
 
@@ -343,40 +349,53 @@
         <%- include('../partials/footercode.ejs') %>
 
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     var orgId = '<%= orgId %>'
-                var dl_no_1 = $("#dl1_ft").val()
-                console.log(dl_no_1)
 
-                $("#submitbtn").click(function () {
-                    $.ajax({
-                        url: `/api/org/update/?orgId=${orgId}`,
-                        type: 'POST',
-                        data: JSON.stringify({
-                            org_name: $("#org_name").val(),
-                            owner_name: $("#owner_name").val(),
-                            org_gstin: $("#org_gstin").val(),
-                            org_alt_telephone: $("#org_alt_telephone").val(),
-                            org_email: $("#org_email").val(),
-                            org_dl_no_1: dl_no_1,
-                            org_dl_no_2: $("#org_dl_no_2").val(),
-                            org_fssai_no: $("#org_fssai_no").val(),
-                            org_shop_lic: $("#org_shop_lic").val(),
-                            org_state: $("#org_state").val(),
-                            org_city: $("#org_city").val(),
-                            org_pincode: $("#org_pincode").val(),
-                            org_address: $("#org_address").val()
-                        }),
-                        contentType: 'application/json',
-                        success: function (response) {
-                            console.log(response)
-                            // window.location.href = "/profile"
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
+                    // Split DL No.1
+                    var org_dl_no_1 = '<%= data[0].org_dl_no_1 %>'
+                    var splitDL1 = org_dl_no_1.split(/-/);
+                    $("#dl1_ft").val(splitDL1[0]);
+                    $("#dl1_ln").val(splitDL1[1]);
+
+                    // Split DL No.2
+                    var org_dl_no_2 = '<%= data[0].org_dl_no_2 %>'
+                    var splitDL2 = org_dl_no_2.split(/-/);
+                    $("#dl2_ft").val(splitDL2[0]);
+                    $("#dl2_ln").val(splitDL2[1]);
+
+
+                    $("#submitbtn").click(function () {
+                        var dl_no_1 = $("#dl1_ft").val().toString()+'-'+$("#dl1_ln").val().toString();
+                        var dl_no_2 = $("#dl2_ft").val().toString()+'-'+$("#dl2_ln").val().toString()
+
+                        $.ajax({
+                            url: `/api/org/update/?orgId=${orgId}`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                org_name: $("#org_name").val(),
+                                owner_name: $("#owner_name").val(),
+                                org_gstin: $("#org_gstin").val(),
+                                org_alt_telephone: $("#org_alt_telephone").val(),
+                                org_email: $("#org_email").val(),
+                                org_dl_no_1: dl_no_1,
+                                org_dl_no_2: dl_no_2,
+                                org_fssai_no: $("#org_fssai_no").val(),
+                                org_shop_lic: $("#org_shop_lic").val(),
+                                org_state: $("#org_state").val(),
+                                org_city: $("#org_city").val(),
+                                org_pincode: $("#org_pincode").val(),
+                                org_address: $("#org_address").val()
+                            }),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                window.location.href = "/profile"
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        })
                     })
-                })
 
 
                 })
