@@ -190,7 +190,7 @@
                                                     <h6 class="mb-0">License</h6>
                                                     <hr>
 
-                                                    <div class="mb-2">
+                                                    <!-- <div class="mb-2">
                                                         <label class="form-label" for="dl_no_1">DL No 1</label>
                                                         <div class="input-group input-group-merge">
                                                             <span id="basic-icon-default-fullname2"
@@ -200,6 +200,7 @@
                                                                 placeholder="" value="<%=data[0].org_dl_no_1%>">
                                                         </div>
                                                     </div>
+
                                                     <div class="mb-2">
                                                         <label class="form-label" for="dl_no_2">DL No 2</label>
                                                         <div class="input-group input-group-merge">
@@ -208,6 +209,28 @@
                                                                     class='bx bx-detail'></i></span>
                                                             <input type="text" class="form-control" id="org_dl_no_2"
                                                                 placeholder="" value="<%=data[0].org_dl_no_2%>">
+                                                        </div>
+                                                    </div> -->
+
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="org_dl_no_1">DL No 1</label>
+                                                        <div class="input-group">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                    class="input-group-text"><i
+                                                                        class='bx bx-detail'></i></span>
+                                                            <input type="text" id="dl1_ft" placeholder="Form Type (ex.20, 21)" class="form-control">
+                                                            <input type="text" id="dl1_ln" placeholder="License No." class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="org_dl_no_2">DL No 2</label>
+                                                        <div class="input-group">
+                                                            <span id="basic-icon-default-fullname2"
+                                                                    class="input-group-text"><i
+                                                                        class='bx bx-detail'></i></span>
+                                                            <input type="text" id="dl2_ft" placeholder="Form Type (ex.20, 21)" class="form-control">
+                                                            <input type="text" id="dl2_ln" placeholder="License No." class="form-control">
                                                         </div>
                                                     </div>
 
@@ -320,7 +343,11 @@
         <%- include('../partials/footercode.ejs') %>
 
             <script>
-                var orgId = '<%= orgId %>'
+                $(document).ready(function() {
+                    var orgId = '<%= orgId %>'
+                var dl_no_1 = $("#dl1_ft").val()
+                console.log(dl_no_1)
+
                 $("#submitbtn").click(function () {
                     $.ajax({
                         url: `/api/org/update/?orgId=${orgId}`,
@@ -331,7 +358,7 @@
                             org_gstin: $("#org_gstin").val(),
                             org_alt_telephone: $("#org_alt_telephone").val(),
                             org_email: $("#org_email").val(),
-                            org_dl_no_1: $("#org_dl_no_1").val(),
+                            org_dl_no_1: dl_no_1,
                             org_dl_no_2: $("#org_dl_no_2").val(),
                             org_fssai_no: $("#org_fssai_no").val(),
                             org_shop_lic: $("#org_shop_lic").val(),
@@ -342,7 +369,8 @@
                         }),
                         contentType: 'application/json',
                         success: function (response) {
-                            window.location.href = "/profile"
+                            console.log(response)
+                            // window.location.href = "/profile"
                         },
                         error: function (error) {
                             console.log(error);
@@ -350,6 +378,8 @@
                     })
                 })
 
+
+                })
             </script>
 
     </body>

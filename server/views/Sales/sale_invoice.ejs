@@ -183,8 +183,9 @@
                               <th>Batch <span style="font-size: 20px; color: red">*</span></th>
                               <th>Exp Date <span style="font-size: 20px; color: red">*</span></th>
 
-                              <th>Unit</th>
-                              <th>MRP</th>
+                              <th>P.Unit</th>
+                              <th>S.Unit</th>
+                              <th>MRP / p.unit</th>
                               <th>QTY</th>
                               <th>Disc %</th>
                               <th>Total</th>
@@ -202,10 +203,18 @@
                                 <input class="form-control" type="date" id="expdate" />
                               </td>
 
-                              <td id="pack">
+                              <!-- <td id="pack">
                                 <select class="form-select" id="unit" name="unit" aria-label="unit">
                                 </select>
                                 <p class="unit"></p>
+                              </td> -->
+
+                              <td>
+                                <input type="text" class="form-control" id="pUnit" placeholder="" />
+                              </td>
+
+                              <td>
+                                <input type="text" class="form-control" id="sUnit" placeholder="" />
                               </td>
 
                               <td>
@@ -300,8 +309,8 @@
                   <div class="col-5">
                     <div class="mb-1 row">
 
-                      <label for="html5-text-input" class="col-5 col-form-label"><span style="font-size: 20px; color: red">*</span>Reference</label>
-                      <div class="col-10">
+                      <label for="reference" class="col-3 form-label mb-0"><span style="font-size: 20px; color: red">*</span>Reference</label>
+                      <div class="col-9 mb-2">
                         <input class="form-control" type="text" placeholder="Doctor/Hospital" id="reference" />
                       </div>
                     </div>

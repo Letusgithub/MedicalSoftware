@@ -175,7 +175,7 @@ module.exports = async (app) => {
         }
 
         res.render('OwnerControls/update_customer', {
-          customers: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+          data: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
         });
       },
     );
@@ -266,6 +266,7 @@ module.exports = async (app) => {
   //     },
   //   );
   // });
+
   app.get('/update_addproduct/:id', checkAuth, fetchOrgId, (req, res) => {
     console.log('herr', JSON.stringify(req.params.id));
     getPool().query(
