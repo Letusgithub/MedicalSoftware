@@ -41,7 +41,7 @@ module.exports = {
   },
   searchTotalSales: (month, year, callback) => {
     getPool().query(
-      `SELECT COUNT(*) as total_rows FROM order_details WHERE SUBSTRING(invoice_id_main, 20, 4) = ${month}${year}`,
+      `SELECT COUNT(*) as total_rows FROM order_details WHERE SUBSTRING(invoice_id_main, 20, 4) = ${month}${year} and `,
       [],
       (error, results) => {
         if (error) return callback(error);
