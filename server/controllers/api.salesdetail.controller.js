@@ -57,13 +57,14 @@ module.exports = {
 
   createSalesOrder: (req, res) => {
     const body = req.body;
+    const orgId = req.body.org_id;
     const now = new Date();
     const day = now.getDate().toString().padStart(2, '0');
     const month = (now.getMonth() + 1).toString().padStart(2, '0');
     const year = now.getFullYear().toString().slice(-2);
 
     const returnDate = day + month + year;
-    searchTotalSales(month, year, (totalError, totalResults) => {
+    searchTotalSales(orgId, month, year, (totalError, totalResults) => {
       if (totalError) console.log(totalError);
       const total = totalResults;
       const invoiceId = `${req.body.pharmacyId}SA${returnDate}${total + 1}`;
