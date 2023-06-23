@@ -21,8 +21,8 @@ exports.getPharmaData = async (req, res, next) => {
           req.app.locals.name = results[0].owner_name;
           req.app.locals.number = results[0].org_telephone;
           req.app.locals.gst = results[0].org_gstin;
-
-          if (results[0].org_id_main === '') {
+          console.log('inside the pharma', results[0].org_id_main);
+          if (results[0].org_id_main === null) {
             const orgID = results[0].org_id.toString().padStart(7, '0');
             const id = `AA${results[0].org_pincode}${orgID}`;
             console.log('id in PharmaMiddleware', id);
