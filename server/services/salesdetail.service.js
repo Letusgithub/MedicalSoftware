@@ -237,4 +237,41 @@ module.exports = {
     );
   },
 
+  getTotalSumfromSales: (orgId, callback) => {
+    getPool().query(
+      `SELECT
+       CASE months.month
+          WHEN 1 THEN 'Jan'
+          WHEN 2 THEN 'Feb'
+          WHEN 3 THEN 'Mar'
+          WHEN 4 THEN 'Apr'
+          WHEN 5 THEN 'May'
+          WHEN 6 THEN 'Jun'
+          WHEN 7 THEN 'Jul'
+          WHEN 8 THEN 'Aug'
+          WHEN 9 THEN 'Sept'
+          WHEN 10 THEN 'Oct'
+          WHEN 11 THEN 'Nov'
+          WHEN 12 THEN 'Dec'
+          END AS x,
+          COALESCE(SUM(od.grand_total), 0) AS total
+          FROM
+              (SELECT 1 AS month UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+              UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+              UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12) AS months
+          LEFT JOIN
+              newdata.order_details od ON MONTH(od.sales_created_date) = months.month
+          LEFT JOIN
+              newdata.customer_data AS cd ON cd.customer_id = od.customer_id AND cd.org_id = '30'
+          GROUP BY
+              months.month;
+          `,
+      [],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
 };

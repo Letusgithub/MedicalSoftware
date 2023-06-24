@@ -106,7 +106,8 @@
                         <div class="row row-bordered g-0">
                           <div class="col-md-8">
                             <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
-                            <div id="totalRevenueChart" class="px-2"></div>
+                            <!-- <div id="totalRevenueChart" class="px-2"></div> -->
+                            <canvas id="myChart"></canvas>
                           </div>
                           <div class="col-md-4">
                             <div class="card-body">
@@ -399,13 +400,134 @@
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+
+    
     <!-- / Layout wrapper -->
 
     <%- include('./partials/footercode.ejs') %>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
         $(document).ready(function () {
+          var result; 
+          const data = [{x: 'Jan', net: 100, cogs: 50, gm: 50}, {x: 'Feb', net: 120, cogs: 55, gm: 75}];
+          const ctx = $("#myChart");
+          $.get(`/api/totalsumfromsales?org=<%=orgId%>`, function(sales, status){
+            //var totalSales = data.results;
+            $.get(`/api/totalsumfrompurchase?org=<%=orgId%>`, function(purchase, status){
+              console.log(purchase);
+              //var totalPurchase = data.results;
+            
+          //const data = [{x: 'Jan', net: 100, cogs: 50, gm: 50}, {x: 'Feb', net: 120, cogs: 55, gm: 75}];
+          const cfg = {
+            type: 'bar',
+            data: {
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+              datasets: [
+                {
+                  label: 'Total Sales',
+                  borderRadius: 100,
+                  borderSkipped: 'middle',
+                  borderWidth:0,
+                  backgroundColor: 'rgba(105, 108, 255, 0.85)',
+                  //barThickness: 10,
+                  barPercentage: 0.8, // Adjust the bar width
+                  categoryPercentage: 0.5,
+                  barSpacing: 20,
+                  data: sales.results,
+                  parsing: {
+                    yAxisKey: 'total'
+                  },
+                },
+                {
+                  label: 'Total Purchase',
+                  borderRadius: 100,
+                  borderSkipped: 'middle',
+                  borderWidth:0,
+                  backgroundColor:"rgba(3, 195, 236, 0.85)",
+                  //barThickness: 10,
+                  barPercentage: 0.8, // Adjust the bar width
+                  categoryPercentage: 0.5,
+                  barSpacing: 200,
+                  data: purchase.results,
+                  parsing: {
+                    yAxisKey: 'total'
+                  }
+                },
+              ]
+            },
+            options: {
+              scales: {
+                x: {
+                  grid: {
+                    display:false,
+                  },
+                  ticks: {
+                    color: 'rgba(0, 0, 0, 0.5)',
+                    font: {
+                      family: 'Comic Sans MS', // Specify the font family
+                      size: 11,
+                      weight: "bold" // Specify the font size
+                       // Specify the font weight
+                    }  // Adjust the opacity of the x-axis labels
+                  },
+                },
+                y: {
+                  border:{
+                    display: false
+                  },
+                  ticks: {
+                    color: 'rgba(0, 0, 0, 0.5)',
+                    font: {
+                      family: 'Comic Sans MS', // Specify the font family
+                      size: 11, // Specify the font size
+                       // Specify the font weight
+                    } 
+                  },
+                  grid: {
+                    display: true,
+                    color: "rgba(0, 0, 0, 0.05)",
+                    
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  position: 'top',
+                  labels: {
+                    font: {
+                      family: 'Comic Sans MS', // Specify the font family for the legend labels
+                      size: 12, // Specify the font size for the legend labels
+                      //weight: 'bold' // Specify the font weight for the legend labels
+                    }
+                  }
+                },
+                beforeDraw: function(chart) {
+                  const ctx = chart.ctx;
+                  ctx.font = 'bold 16px Arial'; // Customize the font for the chart title
+                  ctx.fillStyle = 'black'; // Customize the color of the chart title
+                  ctx.fillText('Monthly Sales', chart.width / 2, 30); // Customize the position of the chart title
+                }
+              },
+          },
           
+      
+          };
+          new Chart(ctx, cfg);
+        })
+        })
+
+
+    
+
+
+
+
+
+
+
+
+
+
           var check = JSON.parse(localStorage.getItem('name'));
           if(check == null){
             console.log('no items found');
@@ -441,6 +563,23 @@
             $("#totalorders").text(formatedOrders);
 
           })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         })
 
       </script>

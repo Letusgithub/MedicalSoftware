@@ -70,4 +70,42 @@ module.exports = {
       },
     );
   },
+
+  getTotalSumfromPurchase: (orgId, callBack) => {
+    getPool().query(
+      `
+      SELECT
+       CASE months.month
+          WHEN 1 THEN 'Jan'
+          WHEN 2 THEN 'Feb'
+          WHEN 3 THEN 'Mar'
+          WHEN 4 THEN 'Apr'
+          WHEN 5 THEN 'May'
+          WHEN 6 THEN 'Jun'
+          WHEN 7 THEN 'Jul'
+          WHEN 8 THEN 'Aug'
+          WHEN 9 THEN 'Sept'
+          WHEN 10 THEN 'Oct'
+          WHEN 11 THEN 'Nov'
+          WHEN 12 THEN 'Dec'
+          END AS x,
+          COALESCE(SUM(bth.batch_qty * bth.purchase_rate), 0) AS total
+          FROM
+              (SELECT 1 AS month UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+              UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+              UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12) AS months
+          LEFT JOIN
+              batch bth ON MONTH(bth.created_date) = months.month 
+          AND
+              bth.org_id = ${orgId}
+          GROUP BY
+              months.month;
+      `,
+      [],
+      (error, results) => {
+        if (error) callBack(error);
+        return callBack(null, results);
+      },
+    );
+  },
 };

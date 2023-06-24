@@ -1,5 +1,5 @@
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase,
 } = require('../services/batch.service');
 
 module.exports = {
@@ -61,6 +61,17 @@ module.exports = {
       return res.status(200).json({
         success: 'Updated',
         data: updateResults,
+      });
+    });
+  },
+
+  getTotalSumfromPurchase: (req, res) => {
+    const orgId = req.query.org;
+    getTotalSumfromPurchase(orgId, (err, results) => {
+      if (err) console.log(err);
+      return res.status(200).json({
+        status: 'success',
+        results,
       });
     });
   },
