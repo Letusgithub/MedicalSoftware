@@ -266,6 +266,7 @@ module.exports = async (app) => {
   //     },
   //   );
   // });
+
   app.get('/update_addproduct/:id', checkAuth, fetchOrgId, (req, res) => {
     console.log('herr', JSON.stringify(req.params.id));
     getPool().query(
