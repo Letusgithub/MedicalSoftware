@@ -4,32 +4,20 @@ const { getPool } = require('../config/database');
 
 module.exports = {
   create: (data, callback) => {
-    const date_time = new Date();
-    const date = (`0${date_time.getDate()}`).slice(-2);
-    const month = (`0${date_time.getMonth() + 1}`).slice(-2);
-    const year = date_time.getFullYear();
-
-    const hours = date_time.getHours();
-    const minutes = date_time.getMinutes();
-    const seconds = date_time.getSeconds();
-
-    const created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-    const updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
     getPool().query(
 
-      `insert into cart_item(product_id, product_name, main_invoice_id, sales_invoice_id, quantity, unit_discount, created_date, mrp)
-        values(?,?,?,?,?,?,?,?)`,
+      `insert into cart_item(product_id, saled_pri_qty, saled_sec_qty, main_invoice_id, sales_invoice_id, saled_batch_id, unit_discount)
+        values(?,?,?,?,?,?,?)`,
       [
         data.product_id,
-        data.product_name,
+        data.saled_pri_qty,
+        data.saled_sec_qty === '' ? 0 : data.saled_sec_qty,
         data.main_invoice_id,
         data.sales_invoice_id,
-        data.quantity,
+        data.saled_batch_id,
         data.unit_discount === '' ? 0 : data.unit_discount,
-        created_date,
-        data.mrp,
       ],
-      (error, results, fields) => {
+      (error, results) => {
         if (error) {
           return callback(error);
         }

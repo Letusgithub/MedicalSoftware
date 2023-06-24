@@ -66,7 +66,7 @@
                                                         </th>
 
                                                         <th>
-                                                            <div>Pack Size</div>
+                                                            <div>Pack Units</div>
 
                                                         </th>
                                                         <th>
@@ -74,9 +74,13 @@
 
                                                         </th>
                                                         <th>
-                                                            <div>In Stock</div>
+                                                            <div>Total Stock</div>
 
                                                         </th>
+                                                        <!-- <th>
+                                                            <div>Stock</div>
+
+                                                        </th> -->
                                                         <!-- <th>
                                                             <div>Total Cost</div>
 
@@ -140,18 +144,18 @@
                     var lowHtml = `<td><span class="badge bg-label-danger me-1">LOW</span></td>`;
                     var okHtml = `<td><span class="badge bg-label-success me-1">OK</span></td>`;
                     var items =data.data;
-                    console.log(items);
+                    console.log('in product stock', items);
                     
                     for(let i=0;i<items.length;i++){
                         var inStock = items[i].batch_qty!=0?items[i].batch_qty:"ADD BATCH";
-                        var totalCost = items[i].purchase_rate*items[i].batch_qty?'₹'+items[i].purchase_rate*items[i].batch_qty:"ADD BATCH";
+                        //var totalCost = items[i].purchase_rate*items[i].batch_qty?'₹'+items[i].purchase_rate*items[i].batch_qty:"ADD BATCH";
                         var status = items[i].batch_qty >= items[i].threshold?okHtml:lowHtml;
 
                         var html= `
                                 <tr>
                                     <td id="selectedproduct"><i
                                             class="fab fa-angular fa-lg text-danger me-3"></i><strong>${items[i].med_name}</strong></td>
-                                    <td>1 ${items[i].primary_unit} of ${items[i].conversion} ${items[i].secondary_unit}</td>
+                                    <td>${items[i].primary_unit} of ${items[i].secondary_unit}</td>
                                     <td>${items[i].hsn}</td>
                                     <td>${inStock}</td>
                                     
@@ -163,13 +167,13 @@
                                                 data-bs-toggle="dropdown"><i
                                                     class="bx bx-dots-vertical-rounded"></i></button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/add_batch"
+                                                <button class="dropdown-item"
                                                      id="addbatch"><i
                                                         class='bx bx-customize me-1'></i>Add
-                                                    Batch</a>
+                                                    Batch</button>
                                                 <a class="dropdown-item"
                                                     href="/product_batch" id="viewbatches"><i
-                                                        class="bx bx-show me-1"></i> View</a>
+                                                        class="bx bx-show me-1"></i> View Batches</a>
                                                 <button class="dropdown-item" id="editproduct" ><i
                                                         class="bx bx-edit-alt me-1"></i> Edit Product</button>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
@@ -185,7 +189,7 @@
                 })
 
                 
-                $("#additems").on('click', "#addbatch, #viewbatches", function(){
+                $("#additems").on('click', "#viewbatches", function(){
                     var item = $(this).closest("tr");
                     var  productName= item.find("#selectedproduct strong").text();
                     var productId;
@@ -198,6 +202,27 @@
                                     let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
                                     productId = results[0].sample_id;
                                     localStorage.setItem('addbatchid', JSON.stringify(productId));
+                                })
+                            }
+                        });
+                    }
+
+                })
+
+                $("#additems").on('click', "#addbatch", function(){
+                    var item = $(this).closest("tr");
+                    var  productName= item.find("#selectedproduct strong").text();
+                    var productId;
+
+                    if('caches' in  window){
+                        caches.match(`/api/allsample`).then(res=>{
+                            if(res){
+                                res.json().then(data=>{
+                                    let searchTerm = productName;
+                                    let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
+                                    productId = results[0].sample_id;
+                                    localStorage.setItem('addbatchid', JSON.stringify(productId));
+                                    window.location.href = `/add_batch/${productId}`
                                 })
                             }
                         });
