@@ -175,7 +175,7 @@ module.exports = async (app) => {
         }
 
         res.render('OwnerControls/update_customer', {
-          customers: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+          data: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
         });
       },
     );

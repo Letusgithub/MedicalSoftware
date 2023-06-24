@@ -1,5 +1,5 @@
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase,
 } = require('../controllers/api.batch.controller');
 
 module.exports = (app) => {
@@ -15,4 +15,5 @@ module.exports = (app) => {
   app.get('/api/getbatch', getBatch);
   app.get('/api/getbatchforproductbatch', getAllBatchesById);
   app.post('/api/updatebatchwhensale', updateBatchWhenSale);
+  app.get('/api/totalsumfrompurchase', getTotalSumfromPurchase);
 };
