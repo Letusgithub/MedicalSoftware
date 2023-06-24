@@ -106,7 +106,7 @@ exports.getAllInventorysById = (req, res) => {
 
 exports.getAllInventory = (req, res) => {
   const orgID = req.query.orgID;
-  console.log("orgID", orgID);
+  console.log('orgID', orgID);
   service.getAllInventory(orgID, (allError, allResult) => {
     if (allError) {
       console.log(allError);
@@ -116,4 +116,18 @@ exports.getAllInventory = (req, res) => {
       data: allResult,
     });
   });
+
+// exports.getTotalStock = (req, res) => {
+//   const orgID = req.query.orgID;
+//   console.log('orgID', orgID);
+//   service.getAllInventory(orgID, (allError, allResult) => {
+//     if (allError) {
+//       console.log(allError);
+//     }
+//     return res.status(200).json({
+//       status: 'success',
+//       data: allResult,
+//     });
+//   });
+
 };

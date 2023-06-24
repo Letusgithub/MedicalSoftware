@@ -39,9 +39,13 @@ module.exports = {
       },
     );
   },
-  searchTotalSales: (month, year, callback) => {
+  searchTotalSales: (orgId, month, year, callback) => {
     getPool().query(
-      `SELECT COUNT(*) as total_rows FROM order_details WHERE SUBSTRING(invoice_id_main, 20, 4) = ${month}${year} and `,
+      `SELECT COUNT(*) as total_rows FROM order_details od
+      JOIN customer_data cd
+      ON cd.customer_id = od.customer_id
+      WHERE SUBSTRING(invoice_id_main, 20, 4) = ${month}${year} and cd.org_id =${orgId}
+      `,
       [],
       (error, results) => {
         if (error) return callback(error);

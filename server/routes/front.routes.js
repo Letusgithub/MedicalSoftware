@@ -295,8 +295,28 @@ module.exports = async (app) => {
     res.render('Inventory/product_batch', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
-  app.get('/add_batch', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Inventory/add_batch', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  // app.get('/add_batch', checkAuth, fetchOrgId, (req, res) => {
+  //   res.render('Inventory/add_batch', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  // });
+
+  app.get('/add_batch/:id', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      `select * from inventory inv
+      JOIN sample spl 
+      on spl.sample_id = inv.product_id
+      where product_id= ? and org_id = ${req.org_id}`,
+      [req.params.id],
+
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Inventory/add_batch_after', {
+          data: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+        });
+      },
+    );
+    // res.render('Inventory/add_batch_after', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
   app.get('/purchase_order', checkAuth, fetchOrgId, (req, res) => {

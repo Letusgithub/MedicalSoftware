@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase,
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales,
 } = require('../controllers/api.batch.controller');
 
 module.exports = (app) => {
@@ -16,4 +17,5 @@ module.exports = (app) => {
   app.get('/api/getbatchforproductbatch', getAllBatchesById);
   app.post('/api/updatebatchwhensale', updateBatchWhenSale);
   app.get('/api/totalsumfrompurchase', getTotalSumfromPurchase);
+  app.get('/api/getremqtyaftersales', getRemQtyafterSales);
 };

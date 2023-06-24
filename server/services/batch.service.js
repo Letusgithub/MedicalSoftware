@@ -3,18 +3,19 @@ const { getPool } = require('../config/database');
 module.exports = {
   create: (data, callback) => {
     getPool().query(
-      `insert into batch(product_id, vendor_id, org_id, exp_date, qty_unit, batch_qty, purchase_rate, mrp, shelf_label) 
-                                      values(?,?,?,?,?,?,?,?,?)`,
+      `insert into batch(batch_name, product_id, vendor_id, org_id, exp_date, batch_qty, purchase_rate, mrp, shelf_label, conversion) 
+                                      values(?,?,?,?,?,?,?,?,?,?)`,
       [
+        data.batch_name,
         data.product_id,
         data.vendor_id,
         data.org_id,
         data.exp_date,
-        data.qty_unit,
         data.batch_qty,
         data.purchase_rate,
         data.mrp,
         data.shelf_label,
+        data.conversion,
       ],
       (error, results) => {
         if (error) {
@@ -62,6 +63,33 @@ module.exports = {
         data.sales_qty,
         data.batch_id,
       ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  getRemQtyafterSales: (orgId, prodId, callBack) => {
+    getPool().query(
+      `
+      SELECT bth.batch_id, bth.batch_qty, bth.conversion, bth.batch_name, bth.shelf_label,  bth.exp_date, bth.mrp,
+      coalesce(sum(cart.saled_pri_qty),0) as pri, 
+        coalesce(sum(cart.saled_sec_qty),0) as sec,
+        inv.primary_unit as punit,
+        inv.secondary_unit as sunit
+        from newdata.cart_item cart
+
+        RIGHT JOIN newdata.batch bth
+        ON bth.batch_id = cart.saled_batch_id
+        LEFT JOIN
+            newdata.inventory inv ON inv.product_id = bth.product_id AND inv.org_id = bth.org_id
+        where bth.org_id = ${orgId} and bth.product_id = ${prodId}
+        group by bth.batch_id, punit,sunit ;
+      `,
+      [],
       (error, results) => {
         if (error) {
           return callBack(error);

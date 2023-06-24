@@ -177,8 +177,8 @@
 
                                                     </div>
                                                 </div>
-
-                                                <div class="row mb-3">
+                                                <!-- conversion moved to batches -->
+                                                <!-- <div class="row mb-3">
 
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">Conversion</label>
@@ -193,7 +193,7 @@
                                                         </div>
                                                     </div>
 
-                                                </div>
+                                                </div> -->
 
                                                 <div class="row mb-3">
 
@@ -229,13 +229,180 @@
 
                                                     
                                                 </div>
-                                                <div class="text-center mx-auto">
+                                                <!-- <div class="text-center mx-auto">
                                                     <button type="submit" class="btn btn-primary" id="submitproduct">Add</button>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                         <!-- </form> -->
                                     </div>
+
+                                    <div class="card mb-4 mx-auto col-md-8">
+                                 
+                                        <div class="card-body ">
+                                            <h4 class="fs-5">Batch Details</h4>
+                                            <hr>
+
+                                            <div class="row mb-2">
+                                                <div class="row col-sm-6">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-companyname">Quantity</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="number" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder="Qty"
+                                                                aria-label="John Doe" name="addqty"
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                                <span class="input-group-text" id="getprimaryunit" ></span>
+                                                                
+                                                            <!-- <select class="form-select" id="unit" name="unit"
+                                                                aria-label="unit">
+                                                            </select> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row col-sm-6">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-companyname">Batch NO.</label>
+                                                    <div class="col-sm-8 ">
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="text" class="form-control" placeholder=""
+                                                                aria-label="" id="batchname"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                            <!-- conversion moved to batches -->
+                                                <div class="row mb-1 mt-3">
+
+                                                    <label class="col-sm-3 col-form-label"
+                                                        for="basic-icon-default-companyname">Conversion</label>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text" id="primarypopulate"></span>
+                                                            <span class="input-group-text">=</span>
+                                                            <input type="number" class="form-control" placeholder=""
+                                                                aria-label="" id="conversion"/>
+                                                            <span class="input-group-text" id="secondarypopulate"></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3  ">
+                                                <div class="row col-sm-6 mb-3">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-companyname">MRP</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
+                                                                aria-label="John Doe" name="addmrp"
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row col-sm-7">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-companyname">Purchase Rate</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
+                                                                aria-label="John Doe" name="addpur"
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="row mb-3">
+                                                <div class="row col-sm-6">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-companyname">GST %</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
+                                                                aria-label="John Doe"
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row col-sm-6">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-companyname">HSN Code</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
+                                                                aria-label="John Doe"
+                                                                aria-describedby="basic-icon-default-companyname2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+
+                                            <div class="row mb-3">
+                                                <div class="row col-sm-6">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-address">Exp Date</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group input-group-merge">
+
+                                                            <input class="form-control" type="date"
+                                                                id="html5-date-input" name="addexp"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row col-sm-6">
+                                                    <label class="col-sm-4 col-form-label"
+                                                        for="basic-icon-default-email">Shelf Label</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group input-group-merge">
+                                                            <span class="input-group-text"></span>
+                                                            <input type="text" id="basic-icon-default-email"
+                                                                class="form-control" placeholder="" name="addshelf"
+                                                                aria-label="john.doe"
+                                                                aria-describedby="basic-icon-default-email2">
+                                                            <span id="basic-icon-default-email2"
+                                                                class="input-group-text"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary" id="submitbatch">Add</button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                
+                                </div>
 
 
                                 </div>
@@ -308,33 +475,66 @@
                     };
 //changes in stp and tabs
                     $("select[name='primary'], select[name='secondary']").on("change", function(){
-                        var primaryUnit = $("select[name='primary']").find('option:selected').text();
-                        var secondaryUnit = $("select[name='secondary']").find('option:selected').text();
+                        //var primaryUnit = $("select[name='primary']").find('option:selected').text();
+                        //var secondaryUnit = $("select[name='secondary']").find('option:selected').text();
+                        var primaryUnit = $("select[name='primary']").val();
+                        var secondaryUnit = $("select[name='secondary']").val();
+
 
                         $("#primarypopulate").text(`1 ${primaryUnit}`);
                         $("#secondarypopulate").text(`${secondaryUnit}`);
+                        $("#getprimaryunit").text(primaryUnit);
                     })
 
+//submit process after adding batch
 
-                $("#submitproduct").click(function(){
+                $("#submitbatch").click(function(){
                     var productDetails ={
                          product_id: productId,
                          org_id: orgID,
                          gst : $("input[name='gst']").val(),
                          hsn : $("input[name='hsn']").val(),
-                         primary_unit : $("select[name='primary']").find('option:selected').text(),
-                         secondary_unit : $("select[name='secondary']").find('option:selected').text(),
-                         conversion : $("input[name='conversion']").val(),
+                         primary_unit : $("select[name='primary']").val(),
+                         secondary_unit : $("select[name='secondary']").val(),
                          threshold: $("input[name='threshold']").val()
                     }
-                    console.log(productDetails);
+                    console.log('product details', productDetails);
                     $.ajax({
                         url: `/api/createinventory/`,
                         type: 'POST',
                         data: JSON.stringify(productDetails),
                         contentType: 'application/json',
                         success: function(response){
-                            window.location.href='/product_stock'                  
+                            //window.location.href='/product_stock'
+                            //add the batch to the respective product
+                            var batchDetails = {
+                                product_id: productId,
+                                org_id: orgID,
+                                batch_name: $("#batchname").val(),
+                                exp_date: $("input[name='addexp']").val(),
+                                conversion:$("#conversion").val(),
+                                batch_qty: $("input[name='addqty']").val(),
+                                purchase_rate: $("input[name='addpur']").val(),
+                                mrp: $("input[name='addmrp']").val(),
+                                shelf_label: $("input[name='addshelf']").val()
+                             }
+                             console.log(batchDetails);
+                             
+                             $.ajax({
+                                 url: `/api/addbatch/`,
+                                 type: 'POST',
+                                 data: JSON.stringify(batchDetails),
+                                 contentType: 'application/json',
+                                 success: function(response){
+                                     //window.location.href='/product_stock'  
+                                     //localStorage.setItem('addbatchid', productId);        
+                                     window.location.href=`/add_batch/${productId}`          
+                                     console.log(response);        
+                                 },
+                                 error: function(error){
+                                     console.log(error);
+                                 }
+                             })                
                         },
                         error: function(error){
                             console.log(error);
