@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales,
+  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -220,6 +220,17 @@ module.exports = {
       }
       return res.status(200).json({
         data: results,
+      });
+    });
+  },
+
+  getTotalSumfromSales: (req, res) => {
+    const orgId = req.query.org;
+    getTotalSumfromSales(orgId, (err, results) => {
+      if (err) console.log(err);
+      return res.status(200).json({
+        status: 'success',
+        results,
       });
     });
   },
