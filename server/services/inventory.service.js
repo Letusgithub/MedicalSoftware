@@ -108,7 +108,7 @@ module.exports = {
 
   getAllInventory: (orgID, callBack) => {
     getPool().query(
-      `SELECT inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold, spl.*, COALESCE(SUM(bth.batch_qty), 0) AS batch_qty
+      `SELECT inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold, spl.*, COALESCE(SUM(bth.batch_qty-bth.saled_pri_qty), 0) AS batch_qty
       FROM inventory AS inv
       JOIN sample AS spl ON inv.product_id = spl.sample_id
       LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
