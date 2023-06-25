@@ -136,4 +136,40 @@ module.exports = {
       },
     );
   },
+
+  getPrevSaledQty: (data, callBack) => {
+    getPool().query(
+      'select saled_pri_qty, saled_sec_qty, conversion from batch where batch_id =? and org_id =?',
+      [
+        data.batch_id,
+        data.org_id,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  updateBatchQtyAfterSales: (priQty, secQty, batchId, callBack) => {
+    getPool().query(
+      `update batch set
+            saled_pri_qty =?,
+            saled_sec_qty=? 
+            where batch_id = ?`,
+      [
+        priQty,
+        secQty,
+        batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
 };

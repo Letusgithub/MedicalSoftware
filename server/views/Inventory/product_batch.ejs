@@ -187,8 +187,8 @@
 
                 
 
-                $.get(`/api/getremqtyaftersales?pro=${productId}&org=<%=orgId%>`, function(data, status){
-                    var batch = data.results;
+                    $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function(batch, status){
+                    var batch = batch.data;
                     console.log('batch details', batch);
                     for(let i=0;i<batch.length;i++){
 
@@ -197,15 +197,13 @@
                         //var totalCost = batch[i].purchase_rate*batch[i].batch_qty;
                         //<td>₹${batch[i].purchase_rate}</td>
                         //<td>₹${totalCost}</td>
-                        var totalQty = batch[i].batch_qty;
-                        var saledPri = batch[i].pri;
-                        var saledSec = batch[i].sec;
+                        var totalQty = parseInt(batch[i].batch_qty);
+                        var saledPri = parseInt(batch[i].saled_pri_qty);
+                        var saledSec = parseInt(batch[i].saled_sec_qty);
+                        var conversion = parseInt(batch[i].conversion);
 
-                        var secQtyafterDeduction = (parseInt(batch[i].conversion) - parseInt(saledSec%batch[i].conversion)) === batch[i].conversion?0:(parseInt(batch[i].conversion) - parseInt(saledSec%batch[i].conversion));
-                       
-                        var priQtyafterDeduction = saledSec/batch[i].conversion;
-
-                        var totalPriafterAdd = totalQty - saledPri -  parseInt(priQtyafterDeduction);
+                        var remPriQty = totalQty - saledPri;
+                        var remSecQty = (conversion - saledSec) == conversion?0:conversion - saledSec;
 
                         
                         var htmlData = `
@@ -217,7 +215,7 @@
                                         <td>1 ${items.primary_unit} of ${batch[i].conversion} ${items.secondary_unit}</td>
                                         <td>₹${batch[i].mrp}</td>
                                         <td>${batch[i].batch_qty}</td>
-                                        <td>${totalPriafterAdd} : ${secQtyafterDeduction}</td>
+                                        <td>${remPriQty} : ${remSecQty}</td>
                                         
                                         <td>
                                             <div class="action-btns">
