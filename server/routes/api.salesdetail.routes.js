@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  createOrder, getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, allSamples, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales,
+  createOrder, getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, allSamples, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear,
 } = require('../controllers/api.salesdetail.controller');
 
 module.exports = (app) => {
@@ -23,4 +23,7 @@ module.exports = (app) => {
   app.get('/api/sampledetails', autoComplete);
   app.get('/api/allsample', allSamples);
   app.get('/api/totalsumfromsales', getTotalSumfromSales);
+  app.get('/api/salesmadeprevday', salesMadePrevDay);
+  app.get('/api/salesmadeprevmonth', salesMadePrevMonth);
+  app.get('/api/salesmadeprevyear', salesMadePrevYear);
 };

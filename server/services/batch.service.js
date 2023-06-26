@@ -38,6 +38,16 @@ module.exports = {
       },
     );
   },
+  getBatchfromBatchId: (id, callback) => {
+    getPool().query(
+      'select * from batch where batch_id =?',
+      [id],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
 
   getAllBatchesById: (orgId, id, callback) => {
     getPool().query(
@@ -169,6 +179,37 @@ module.exports = {
           return callBack(error);
         }
         return callBack(null, results);
+      },
+    );
+  },
+  updateBatchQtyAfterReturn: (priQty, secQty, batchId, callBack) => {
+    getPool().query(
+      `update batch set
+            saled_pri_qty =?,
+            saled_sec_qty=? 
+            where batch_id = ?`,
+      [
+        priQty,
+        secQty,
+        batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  getTotalPurchaseQty: (orgId, callback) => {
+    getPool().query(
+      `select COUNT(*) as row_count, coalesce(sum(bth.batch_qty * bth.purchase_rate),0) as total from batch as bth 
+      where org_id =${orgId}`,
+      [],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
       },
     );
   },
