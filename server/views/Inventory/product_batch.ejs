@@ -94,8 +94,8 @@
                                         <div class="d-flex justify-content-between m-0 p-0">
                                             <h5 class="card-header">Batch List</h5>
                                             <div class=" text-center mt-3 ">
-                                                <a class="btn btn-primary mx-4" style="color: white;" href="/add_batch">+
-                                                    Add Batch</a>
+                                                <button class="btn btn-primary mx-4" style="color: white;" id="addbatchinview">+
+                                                    Add Batch</button>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -233,6 +233,9 @@
                     }
 
                 })
+            })
+            $("#addbatchinview").click(function(){
+                window.location.href=`/add_batch/${productId}`;
             })
 
             })
