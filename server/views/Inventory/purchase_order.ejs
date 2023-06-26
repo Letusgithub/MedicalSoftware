@@ -217,7 +217,7 @@
                         $('#vendorselect').change(function () {
                             var selectedVendorId = $(this).val();
 
-                            $.get(`/getvendor/${selectedVendorId}`, function (data, status) {
+                            $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
                                 var vendorDetails = data.data;
                                 console.log(vendorDetails);
                                 vendorId = vendorDetails.vendor_id;
