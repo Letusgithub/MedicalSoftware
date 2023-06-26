@@ -132,27 +132,70 @@
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th>Batch</th>
-                                <th>Exp Date</th>
-                                <th>Unit</th>
-                                <th>MRP</th>
-                                <th>QTY</th>
-                                <th>Disc %</th>
+                                <th style="width: 12vw;">Batch <span style="font-size: 20px; color: red">*</span></th>
+                                <th style="width: 6vw;">Exp Date <span style="font-size: 20px; color: red">*</span></th>
+                                <th style="width: 8vw;" id="primaryunitname">P.Unit<span></span></th>
+                                <th style="width: 8vw;" id="secondaryunitname">S.Unit<span></span></th>
+                                <th style="width: 8vw;">MRP / p.unit</th>
+                              <!-- <th>QTY</th> -->
+
+                                <th style="width: 8vw;">Disc %</th>
                                 <th>Total</th>
+
+                                <!-- <th>Batch</th> -->
+                                <!-- <th>Exp Date</th> -->
+                                <!-- <th>Unit</th> -->
+                                <!-- <th>MRP</th> -->
+                                <!-- <th>QTY</th> -->
+                                <!-- <th>Disc %</th> -->
+                                <!-- <th>Total</th> -->
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-
+                                <td id="batchdroporinput">
+                                  <input type="text" class="form-control" id="batch" placeholder="" />
+                                </td>
+  
                                 <td>
+                                  <input class="form-control" type="date" id="expdate" />
+                                </td>
+  
+                                <td>
+                                  <input type="text" class="form-control" id="pUnit" placeholder="Qty" min="0"/>
+                                </td>
+  
+                                <td>
+                                  <input type="text" class="form-control" id="sUnit" placeholder="Qty" min="0"/>
+                                </td>
+  
+  
+                                <td>
+                                  <input type="text" class="form-control" id="price" placeholder="" min="0"/>
+                                </td>
+  
+                                <!-- <td>
+                                  <input type="text" class="form-control" id="qty" placeholder="" />
+                                </td> -->
+  
+  
+                                <td>
+                                  <input type="text" class="form-control" id="discount" placeholder="" min="0" />
+                                </td>
+  
+                                <td>
+                                  <input type="text" class="form-control" id="total" placeholder="" min="0"/>
+                                </td>
+
+                                <!-- <td>
                                   <input type="text" class="form-control" id="batch" placeholder="" />
                                 </td>
 
                                 <td>
                                   <input class="form-control" type="date" id="expdate" />
-                                </td>
+                                </td> -->
 
-                                <td>
+                                <!-- <td>
                                   <select class="form-select" id="unit" name="unit" aria-label="unit">
                   
                                   </select>
@@ -173,7 +216,7 @@
 
                                 <td>
                                   <input type="text" class="form-control" id="total" placeholder="" />
-                                </td>
+                                </td> -->
                               </tr>
 
 
@@ -206,7 +249,8 @@
                             <tr>
                               <th class="col-1">#</th>
                               <th class="col-7">Product name</th>
-                              <th class="col-1">Qty</th>
+                              <th class="col-1" id="priqtycart">PQty</th>
+                              <th class="col-1" id="secqtycart">SQty</th>
                               <th class="col-1">MRP</th>
                               <th class="col-1">Disc %</th>
                               <th class="col-1">Total</th>
@@ -372,142 +416,105 @@
           var secondaryUnit;
           var conversion;
           var prevQty;
+          var saledPrimaryQty;
+          var saledSecondaryQty;
+          var batchIdReturned;
           console.log('main invoice id',returnItem.id);
-       /*   $.get(`/api/cartmainid/${returnItem.id}`, function (data, status) {
-
-            var items =data.data;
-            console.log('in items', items);
-            
-            for(let i in items){
-              product.push({
-                productId: items[i].product_id,
-                productName: items[i].product_name,
-                mrp: items[i].mrp,
-                qty: items[i].quantity,
-                disc: items[i].unit_discount,
-              });
-            }
-            console.log("products",product);*/
 
             $("#medicinename").autocomplete({
               source: function(request, response){
                 $.get(`/api/cartmainid/${returnItem.id}`, function (data, status) {
                       console.log('inside search',data.data);
                       let searchTerm = request.term;
-                      let results = data.data.filter(item =>item.product_name.toLowerCase().includes(searchTerm.toLowerCase()));
+                      let results = data.data.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
                       response(results);
                 })
               },
               select: function(event, ui){
                 setTimeout(function(){
+                  console.log('ui.item', ui.item);
                   productId = ui.item.product_id;
-                  $.get(`/api/getbatch/${productId}`, function(data, status){
-
-                    console.log('appp', data.data);
+                  $.get(`/api/getbatchfrombatchid?id=${ui.item.saled_batch_id}`, function(data, status){
+                    
+                    console.log('batch data', data.data);
 
                     primaryUnit=data.data[0].primary_unit;
                     secondaryUnit=data.data[0].secondary_unit;
                     conversion=data.data[0].conversion;
-  
-                    $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
-                    $("#unit").append("<option>"+data.data[0].secondary_unit + "</option>");
-                    $("#pack")
-                    .text(`1 ${data.data[0].primary_unit} of ${data.data[0].conversion} ${data.data[0].secondary_unit}`);
+                    batchIdReturned = data.data[0].batch_id;
                     
+                    //populate expiry date
                     var date= new Date(data.data[0].exp_date);
                     $("#expdate").val(date.toISOString().split('T')[0]);
+                    //populate shelf label, batch name
                     $("#shelflabel").val(data.data[0].shelf_label);
-                    $("#batch").val(data.data[0].batch_id);
+                    $("#batch").val(data.data[0].batch_name);
+                    //populate mrp
                     priceMed = data.data[0].mrp;
                     $("#price").val(priceMed);
-  
-                    $("#medicinename").val(ui.item.product_name);
+                    //poulate medname, brand, primary, sec
+                    $("#medicinename").val(ui.item.med_name);
                     $('#brand').val(ui.item["mfd/mkt"]);
-                    $("#qty").val(ui.item.quantity);
-                    prevQty = ui.item.quantity;
+                    $("#pUnit").val(ui.item.saled_pri_qty);
+                    saledPrimaryQty = ui.item.saled_pri_qty;
+                    $("#sUnit").val(ui.item.saled_sec_qty);
+                    saledSecondaryQty = ui.item.saled_sec_qty;
                     $("#discount").val(ui.item.unit_discount);
-                    var minus = (ui.item.quantity*priceMed*ui.item.unit_discount)/100;
-                    $("#total").val(ui.item.quantity*priceMed - minus);
+                    calculateTotal();
                   })
                 },0)
               }
             }).data('ui-autocomplete')._renderItem = function(ul, item) {
               return $('<li>')
-                .append('<div>' + item.product_name  + '</div>')
+                .append('<div>' + item.med_name  + '</div>')
                 .appendTo(ul);
             };
 
-            $("#unit").change(function(){
-              var getUnit = $(this).val();
-              if(getUnit === primaryUnit){
-                $("#price").val(priceMed);
-                calculateTotal();
-              }
-              else{
-                $("#price").val(priceMed/conversion);
-                calculateTotal();
-              }
-            })
+          //logic for calculating total
+          var priQty = $("#pUnit");
+          var secQty = $("#sUnit");
+          var priceInput = $("#price");
+          var discInput = $("#discount");
+          var totalInput = $("#total");
 
-            var quantityInput = $("#qty");
-            var priceInput = $("#price");
-            var discInput = $("#discount");
-            var totalInput = $("#total");
-
-            quantityInput.on("input", calculateTotal);
-            discInput.on("input", calculateTotal);
+          priQty.on("input", calculateTotal);
+          secQty.on("input", calculateTotal);
+          discInput.on("input", calculateTotal);
 
             function calculateTotal() {
-              var quantity = parseInt(quantityInput.val()) || 0;
-
+              var primaryqty = parseInt(priQty.val()) || 0;
+              var secondaryqty = parseInt(secQty.val()) || 0;
               var price = parseFloat(priceInput.val()) || 0;
               var discount = parseFloat(discInput.val()) || 0;
               discount = discount / 100;
-              var total = quantity * price - (quantity * price * discount);
-  
-              totalInput.val(total.toFixed(2));
+
+            var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price/conversion;
+            var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
+
+            totalInput.val(totalQtyAfterDisc.toFixed(2));
             }
-
-/*
-            $("#medicinename").autocomplete({
-              source: product.map(function(data){
-                return data.productName;
-              }),
-              select: function(event, ui){
-                var selectedItem = product.find(p => p.productName == ui.item.value);
-                productId=selectedItem.productId;
-                $("#price").val(selectedItem.mrp);
-                $("#qty").val(selectedItem.qty);
-                $("#discount").val(selectedItem.disc);
-
-                discount = selectedItem.disc/100;
-                var total = selectedItem.qty * selectedItem.mrp - (selectedItem.qty*selectedItem.mrp* discount) ;
-
-                $("#total").val(total.toFixed(2));
-                
-    
-                
-              }
-            })*/
           
 
-
+            //add tocart logic
             var setLocalData;
             var getLocalData;
             var htmlData;
             $("#addtoreturncart").click(function(){
                       var products = $("#medicinename").val();  
                       var brand = $("#brand").val();  
-                      var qty = $("#qty").val();
+                      var priQty = $("#pUnit").val();
+                      var secQty = $("#sUnit").val();
                       var mrp =$("#price").val();
                       var disc =$("#discount").val();
                       var total = $("#total").val();
                       var shelflabel = $("#shelflabel").val();
                       var batch = $("#batch").val();
                       var exp = $("#expdate").val();
-                      var selectedUnit = $("#unit").val();
 
-                      if(qty>prevQty){
+                      if(priQty>saledPrimaryQty){
+                        return alert("CANT ADD QUANTITY GREATER THAN SALED");
+                      }
+                      if(secQty>saledSecondaryQty){
                         return alert("CANT ADD QUANTITY GREATER THAN SALED");
                       }
                       if(!products){
@@ -520,12 +527,11 @@
                         brand: brand,
                         shelflabel: shelflabel,
                         batch: batch,
-                        expdate: exp,
-                        primaryUnit: primaryUnit,
-                        secondaryUnit: secondaryUnit,
+                        batchIdReturned:batchIdReturned,
                         conversion:conversion,
-                        selectedUnit:selectedUnit,
-                        qty: qty, 
+                        expdate: exp,
+                        priQty: priQty,
+                        secQty: secQty, 
                         mrp: mrp, 
                         disc: disc, 
                         total: total, 
@@ -537,15 +543,14 @@
                       localStorage.setItem("returncartitems", setLocalData);
                       $("#medicinename").val("");
                       $("#brand").val("");
-                      $("#qty").val("");
+                      $("#pUnit").val("");
+                      $("#sUnit").val("");
                       $("#price").val("");
                       $("#discount").val("");
                       $("#total").val("");
                       $("#shelflabel").val("");
                       $("#batch").val("");
                       $("#expdate").val("");
-                      $("#unit").empty();
-                      $("#pack").empty();
                     });
                        
 // logic for redering cart data on addtocart click 
@@ -577,27 +582,18 @@
     
                 $("#medicinename").val(selectedItem.productname);
                 $("#brand").val(selectedItem.brand);
-                $("#qty").val(selectedItem.qty);
+                $("#pUnit").val(selectedItem.priQty);
+                $("#sUnit").val(selectedItem.secQty);
                 $("#price").val(selectedItem.mrp);
                 $("#discount").val(selectedItem.disc);
                 $("#total").val(selectedItem.total);
                 $("#batch").val(selectedItem.batch);
-            $("#shelflabel").val(selectedItem.shelflabel);
-            $("#expdate").val(selectedItem.expdate);
-            if(selectedItem.selectedUnit){
+                $("#shelflabel").val(selectedItem.shelflabel);
+                $("#expdate").val(selectedItem.expdate);
 
-              $("#unit").append("<option>"+ selectedItem.selectedUnit+"</option>");
-              if(selectedItem.primaryUnit === selectedItem.selectedUnit){
-                $("#unit").append("<option>"+ selectedItem.secondaryUnit + "</option>");
-              }
-              else{
-                $("#unit").append("<option>"+ selectedItem.primaryUnit + "</option>");
-              }
-              
-              $("#pack")
-              .text(`1 ${selectedItem.primaryUnit} of ${selectedItem.conversion} ${selectedItem.secondaryUnit}`);
-            }
-
+                productId = selectedItem.productId;
+                batchIdReturned = selectedItem.batchIdReturned;
+                conversion = selectedItem.conversion;
 
                 UpdatecartItemsinStorage.splice(item_id - 1,1);
                 cartarray = UpdatecartItemsinStorage;
@@ -607,8 +603,6 @@
 
             })
 //end of edit functionality
-/*
-*/
 
 //rendercart functionality
             function renderCart(items) {
@@ -619,7 +613,8 @@
                           <tr>
                             <td class="card_id">${i+1}</td>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
-                            <td>${items[i].qty}</td>
+                            <td>${items[i].priQty}</td>
+                            <td>${items[i].secQty}</td>
                             <td>${items[i].mrp}</td>
                             <td>${items[i].disc}</td>
                             <td>-${items[i].total}</td>
@@ -658,7 +653,6 @@
             $("#returnamount").val(subtotal.toFixed(0));
           }
           else if(getAllData.length == 0){
-          // console.log("none");
             $("#returnsubtotal").val(0);
             $("#returnamount").val(0);
           }
@@ -674,7 +668,7 @@
           
         })
 //allchanges done for footer total;
-
+var org = "<%= orgId %>";
         $("#submitreturn").click(function(){
           if($("#returnamount").val()=="" || 0){
             return alert("NO ITEMS");
@@ -700,13 +694,32 @@
               for(let i=0;i<localCartStored.length;i++){
                 var updateCartdetails = {
                   return_invoice_id: returnInvoiceId,
-                  return_qty: localCartStored[i].qty,
+                  return_pri_qty: localCartStored[i].priQty,
+                  return_sec_qty: localCartStored[i].secQty,
                   return_dis: localCartStored[i].disc,
                   return_mrp: localCartStored[i].mrp,
                 }
+
+                $.ajax({
+                  url: `/api/updatebatchwhenreturn/`,
+                  type: 'POST',
+                  data: JSON.stringify({
+                    batch_id: localCartStored[i].batchIdReturned,
+                    org_id: org,
+                    return_pri_qty: localCartStored[i].priQty,
+                    return_sec_qty: localCartStored[i].secQty
+                  }),
+                  contentType: 'application/json',
+                  success: function(response){
+                    console.log(response);                   
+                  },
+                  error: function(error){
+                    console.log('error in updateing batch', error);
+                  }
+                })
                 
                 $.ajax({
-                  url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}`,
+                  url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}&batch=${localCartStored[i].batchIdReturned}`,
                   type: 'POST',
                   data: JSON.stringify(updateCartdetails),
                   contentType: 'application/json',

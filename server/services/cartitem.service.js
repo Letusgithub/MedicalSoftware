@@ -41,7 +41,7 @@ module.exports = {
       `select * from cart_item cart
       JOIN sample spl
       on cart.product_id = spl.sample_id
-       where main_invoice_id =?`,
+      where main_invoice_id =?`,
       [id],
       (error, results) => {
         if (error) return callback(error);
@@ -49,16 +49,18 @@ module.exports = {
       },
     );
   },
-  updateOrders: (data, salesInvoiceId, productId, callback) => {
+  updateOrders: (data, salesInvoiceId, batchId, productId, callback) => {
     getPool().query(
-      'update cart_item set return_invoice_id=?, return_qty=?, return_dis=?, return_mrp=? where main_invoice_id =? and product_id=?',
+      'update cart_item set return_invoice_id=?, return_pri_qty=?, return_sec_qty=?, return_dis=?, return_mrp=? where main_invoice_id =? and product_id=? and saled_batch_id=?',
       [
         data.return_invoice_id,
-        data.return_qty,
+        data.return_pri_qty,
+        data.return_sec_qty,
         data.return_dis,
         data.return_mrp,
         salesInvoiceId,
         productId,
+        batchId,
       ],
       (error, results) => {
         if (error) return callback(error);

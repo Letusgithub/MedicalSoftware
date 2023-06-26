@@ -37,13 +37,11 @@ module.exports = {
   update: (data, id, callBack) => {
     getPool().query(
       `update inventory set
-            conversion =?,
             hsn =?,
             gst=?, 
             threshold=? 
             where product_id = ? and org_id =?`,
       [
-        data.conversion,
         data.hsn,
         data.gst,
         data.threshold,

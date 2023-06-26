@@ -47,7 +47,9 @@ module.exports = {
   updateOrders: (req, res) => {
     const salesInvoiceId = req.query.sales_invoice_id;
     const productId = req.query.product_id;
-    updateOrders(req.body, salesInvoiceId, productId, (updateError, updateResults) => {
+    const batchId = req.query.batch;
+
+    updateOrders(req.body, salesInvoiceId, batchId, productId, (updateError, updateResults) => {
       if (updateError) {
         console.log(updateError);
         return;

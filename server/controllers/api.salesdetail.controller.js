@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales,
+  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -233,6 +233,28 @@ module.exports = {
         results,
       });
     });
+  },
+
+  salesMadePrevDay: (req, res) => {
+    salesMadePrevDay((err, results) => {
+      if (err) console.log(err);
+      console.log(results);
+      res.status(200).json({
+        results,
+      });
+    });
+  },
+
+  salesMadePrevMonth: (req, res) => {
+    salesMadePrevMonth((err, results) => res.status(200).json({
+      results,
+    }));
+  },
+
+  salesMadePrevYear: (req, res) => {
+    salesMadePrevYear((err, results) => res.status(200).json({
+      results,
+    }));
   },
 
 };

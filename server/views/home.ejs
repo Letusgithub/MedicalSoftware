@@ -116,22 +116,23 @@
                                   <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
                                     id="growthReportId" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    2022
+                                    Check Growth Status
                                   </button>
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                    <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">2019</a>
+                                    <button class="dropdown-item" id="perdaygrowth">Per Day</button>
+                                    <button class="dropdown-item" id="permonthgrowth">Per Month</button>
+                                    <button class="dropdown-item" id="peryeargrowth">Per Year</button>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div id="growthChart"></div>
-                            <div class="text-center fw-semibold pt-3 mb-2">
-                              62% Company Growth
+                            <!-- <div id="growthChart"></div> -->
+                            <div id="companygrowthchart"></div>
+                            <div class="text-center fw-semibold pt-3 mb-2" id="textgrowthstatus">
+                              
                             </div>
 
-                            <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
+                            <!-- <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
                               <div class="d-flex">
                                 <div class="me-2">
                                   <span class="badge bg-label-primary p-2"><i
@@ -151,7 +152,7 @@
                                   <h6 class="mb-0">₹41.2k</h6>
                                 </div>
                               </div>
-                            </div>
+                            </div> -->
                           </div>
                         </div>
                       </div>
@@ -177,8 +178,8 @@
                                   </div>
                                 </div>
                               </div>
-                              <span class="d-block mb-1">Payments</span>
-                              <h3 class="card-title text-nowrap mb-2">₹2,456</h3>
+                              <span class="d-block mb-1">Inventory Cost</span>
+                              <h3 class="card-title text-nowrap mb-2" id="inventorycost"></h3>
                               <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>
                                 -14.82%</small>
                             </div>
@@ -202,8 +203,8 @@
                                   </div>
                                 </div>
                               </div>
-                              <span class="fw-semibold d-block mb-1">Transactions</span>
-                              <h3 class="card-title mb-2">₹14,857</h3>
+                              <span class="fw-semibold d-block mb-1">Total PO</span>
+                              <h3 class="card-title mb-2" id="purchaseordersmade"></h3>
                               <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
                             </div>
                           </div>
@@ -406,16 +407,15 @@
 
     <%- include('./partials/footercode.ejs') %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script>
         $(document).ready(function () {
           var result; 
           const data = [{x: 'Jan', net: 100, cogs: 50, gm: 50}, {x: 'Feb', net: 120, cogs: 55, gm: 75}];
           const ctx = $("#myChart");
           $.get(`/api/totalsumfromsales?org=<%=orgId%>`, function(sales, status){
-            //var totalSales = data.results;
             $.get(`/api/totalsumfrompurchase?org=<%=orgId%>`, function(purchase, status){
               console.log(purchase);
-              //var totalPurchase = data.results;
             
           //const data = [{x: 'Jan', net: 100, cogs: 50, gm: 50}, {x: 'Feb', net: 120, cogs: 55, gm: 75}];
           const cfg = {
@@ -516,10 +516,282 @@
         })
         })
 
+//growthchartfeature  
+        var chart;
+        $.get('/api/salesmadeprevday', function(data, status){
+          console.log("here", data);
+          let dayGrowth;
+          if(data.results.length == 0 ){
+            dayGrowth = 0;
+            console.log('empty');
+          }
+          else{
+            console.log(data.results[0].growth_percentage);
+            dayGrowth = parseInt(data.results[0].growth_percentage)<=0? 0:parseInt(data.results[0].growth_percentage);
+          }
+            $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`);
+      
+        
+        var options = {
+          chart: {
+            height: 240,
+            type: "radialBar",
+          },
+          series: [dayGrowth],
+          colors: ["#20E647"],
+          plotOptions: {
+            radialBar: {
+              hollow: {
+                margin: 0,
+                size: "60%",
+                background: "#0a0d52"
+              },
+              track: {
+                dropShadow: {
+                  enabled: true,
+                  top: 10,
+                  left: 10,
+                  blur: 10,
+                  opacity: 0.2
+                }
+              },
+              dataLabels: {
+                name: {
+                  offsetY: -10,
+                  color: "#fff",
+                  fontSize: "18px"
+                },
+                value: {
+                  color: "#fff",
+                  fontSize: "30px",
+                  show: true
+                }
+              }
+            }
+          },
+          fill: {
+            type: "gradient",
+            gradient: {
+              shade: "dark",
+              type: "vertical",
+              gradientToColors: ["#329ddb"],
+              stops: [0, 100]
+            }
+          },
+          stroke: {
+            lineCap: "round"
+          },
+          labels: ["Growth"]
+        };
+        chart = new ApexCharts(document.querySelector("#companygrowthchart"), options);
+        chart.render();
+      })
+
+      $("#perdaygrowth").click(function(){
+        $.get('/api/salesmadeprevday', function(data, status){
+          console.log('///', data.results[0].growth_percentage);
+          let dayGrowth = data.results[0].growth_percentage==null?0:parseInt(data.results[0].growth_percentage);
+          $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`)
+          var options = {
+            chart: {
+              height: 240,
+              type: "radialBar",
+            },
+            series: [dayGrowth],
+            colors: ["#20E647"],
+            plotOptions: {
+              radialBar: {
+                hollow: {
+                  margin: 0,
+                  size: "60%",
+                  background: "#0a0d52"
+                },
+                track: {
+                  dropShadow: {
+                    enabled: true,
+                    top: 10,
+                    left: 10,
+                    blur: 10,
+                    opacity: 0.2
+                  }
+                },
+                dataLabels: {
+                  name: {
+                    offsetY: -10,
+                    color: "#fff",
+                    fontSize: "18px"
+                  },
+                  value: {
+                    color: "#fff",
+                    fontSize: "30px",
+                    show: true
+                  }
+                }
+              }
+            },
+            fill: {
+              type: "gradient",
+              gradient: {
+                shade: "dark",
+                type: "vertical",
+                gradientToColors: ["#329ddb"],
+                stops: [0, 100]
+              }
+            },
+            stroke: {
+              lineCap: "round"
+            },
+            labels: ["Growth"]
+          };
+          chart.destroy();
+          chart = new ApexCharts(document.querySelector("#companygrowthchart"), options);
+          chart.render();
+
+          
+        })
+      })
+
+
+       $("#permonthgrowth").click(function(){
+          $.get('/api/salesmadeprevmonth', function(data, status){
+            console.log('///', data.results[0].growth_percentage);
+            let monthGrowth = data.results[0].growth_percentage==null?0:parseInt(data.results[0].growth_percentage);
+            $("#textgrowthstatus").text(`${monthGrowth}% More Orders This Month`)
+            var options = {
+              chart: {
+                height: 240,
+                type: "radialBar",
+              },
+              series: [monthGrowth],
+              colors: ["#20E647"],
+              plotOptions: {
+                radialBar: {
+                  hollow: {
+                    margin: 0,
+                    size: "60%",
+                    background: "#0a0d52"
+                  },
+                  track: {
+                    dropShadow: {
+                      enabled: true,
+                      top: 10,
+                      left: 10,
+                      blur: 10,
+                      opacity: 0.2
+                    }
+                  },
+                  dataLabels: {
+                    name: {
+                      offsetY: -10,
+                      color: "#fff",
+                      fontSize: "18px"
+                    },
+                    value: {
+                      color: "#fff",
+                      fontSize: "30px",
+                      show: true
+                    }
+                  }
+                }
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                  shade: "dark",
+                  type: "vertical",
+                  gradientToColors: ["#329ddb"],
+                  stops: [0, 100]
+                }
+              },
+              stroke: {
+                lineCap: "round"
+              },
+              labels: ["Growth"]
+            };
+            chart.destroy();
+            chart = new ApexCharts(document.querySelector("#companygrowthchart"), options);
+            chart.render();
+
+            
+          })
+        })
+
+        $("#peryeargrowth").click(function(){
+          $.get('/api/salesmadeprevyear', function(data, status){
+            console.log('///', data);
+            let yearGrowth = data.results[0].growth_percentage==null?0:parseInt(data.results[0].growth_percentage);
+            $("#textgrowthstatus").text(`${yearGrowth}% More Orders This Year`)
+            var options = {
+              chart: {
+                height: 240,
+                type: "radialBar",
+              },
+              series: [yearGrowth],
+              colors: ["#20E647"],
+              plotOptions: {
+                radialBar: {
+                  hollow: {
+                    margin: 0,
+                    size: "60%",
+                    background: "#0a0d52"
+                  },
+                  track: {
+                    dropShadow: {
+                      enabled: true,
+                      top: 10,
+                      left: 10,
+                      blur: 10,
+                      opacity: 0.2
+                    }
+                  },
+                  dataLabels: {
+                    name: {
+                      offsetY: -10,
+                      color: "#fff",
+                      fontSize: "18px"
+                    },
+                    value: {
+                      color: "#fff",
+                      fontSize: "30px",
+                      show: true
+                    }
+                  }
+                }
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                  shade: "dark",
+                  type: "vertical",
+                  gradientToColors: ["#329ddb"],
+                  stops: [0, 100]
+                }
+              },
+              stroke: {
+                lineCap: "round"
+              },
+              labels: ["Growth"]
+            };
+            chart.destroy();
+            chart = new ApexCharts(document.querySelector("#companygrowthchart"), options);
+            chart.render();
+
+            
+          })
+        })
+
+//end of growthstatus
 
     
-
-
+        $.get('/api/gettotalpurchaseqty?org=<%=orgId%>', function(data, status){
+          console.log(data);
+          var revenue = Math.round(data.results[0].total);
+          var formatedRevenue = (revenue.toLocaleString());
+          $("#inventorycost").text(`₹${formatedRevenue}`);
+          var orders = data.results[0].row_count;
+          var forders = (orders.toLocaleString());
+          $("#purchaseordersmade").text(forders);
+        })
 
 
 
@@ -556,7 +828,7 @@
             revenue = Math.round(revenue);
             var formatedRevenue = (revenue.toLocaleString());
             console.log(formatedRevenue);
-            $("#totalrevenue").text(formatedRevenue);
+            $("#totalrevenue").text('₹'+formatedRevenue);
 
             var totalOrders = data.data.length;
             var formatedOrders = (totalOrders.toLocaleString());

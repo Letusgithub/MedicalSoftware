@@ -2,7 +2,7 @@
 /* eslint-disable radix */
 /* eslint-disable max-len */
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales,
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn,
 } = require('../services/batch.service');
 
 module.exports = {
@@ -33,6 +33,19 @@ module.exports = {
       }
       return res.status(200).json({
         success: 'gotorders',
+        data: results,
+      });
+    });
+  },
+  getBatchfromBatchId: (req, res) => {
+    const id = req.query.id;
+    getBatchfromBatchId(id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.status(200).json({
+        success: 'gotbatch',
         data: results,
       });
     });
@@ -112,6 +125,45 @@ module.exports = {
           status: 'success',
           updateRes,
         });
+      });
+    });
+  },
+  updateBatchQtyAfterReturn: (req, res) => {
+    const data = req.body;
+    getPrevSaledQty(data, (error, results) => {
+      if (error) console.log(error);
+      const saledPriQty = results[0].saled_pri_qty === null ? 0 : parseInt(results[0].saled_pri_qty);
+      let saledSecQty = results[0].saled_sec_qty === null ? 0 : parseInt(results[0].saled_sec_qty);
+      const conversion = results[0].conversion === null ? 0 : parseInt(results[0].conversion);
+      let return_pri_qty = parseInt(data.return_pri_qty);
+      const return_sec_qty = parseInt(data.return_sec_qty);
+
+      if ((saledSecQty - return_sec_qty) < 0) {
+        return_pri_qty += 1;
+        saledSecQty += conversion;
+      }
+
+      const updateSecQty = saledSecQty - return_sec_qty;
+
+      const updatePriQty = (saledPriQty - return_pri_qty);
+
+      updateBatchQtyAfterReturn(updatePriQty, updateSecQty, data.batch_id, (updateErr, updateRes) => {
+        if (updateErr) console.log(updateErr);
+        return res.status(200).json({
+          status: 'success',
+          updateRes,
+        });
+      });
+    });
+  },
+
+  getTotalPurchaseQty: (req, res) => {
+    const orgId = req.query.org;
+    getTotalPurchaseQty(orgId, (err, results) => {
+      if (err) console.log(err);
+      return res.status(200).json({
+        status: 'success',
+        results,
       });
     });
   },
