@@ -1,4 +1,5 @@
 <%- include('../partials/headercode.ejs') %>
+
     <body>
         <!-- Layout wrapper -->
         <div class="layout-wrapper layout-content-navbar  ">
@@ -13,7 +14,7 @@
                         <!-- navbar imported -->
                         <%- include('../partials/navbar.ejs') %>
 
-                        <!-- Content wrapper -->
+                            <!-- Content wrapper -->
                             <div class="content-wrapper">
 
                                 <!-- Content -->
@@ -32,18 +33,23 @@
                                                         aria-label="Default select example">
                                                         <option selected>Select Vendor</option>
                                                         <%vendors.forEach(function(vendor) {%>
-                                                            <option value="<%= vendor.vendor_id %>"><%= vendor.vendor_name %></option>
-                                                        <%});%>
+                                                            <option value="<%= vendor.vendor_id %>">
+                                                                <%= vendor.vendor_name %>
+                                                            </option>
+                                                            <%});%>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
-                                            <div class="card mb-4">
+                                            <div class="card mb-4 py-1">
 
-                                                <h6 class="card-header" id="address"></h6>
-                                                <h6 class="card-header" id="contact"></h6>
+                                                <h6 class="card-header py-1" id="contact"></h6>
+                                                <h6 class="card-header py-1" id="email"></h6>
+                                                <h6 class="card-header py-1" id="dl_no"></h6>
+                                                <h6 class="card-header py-1" id="gstin"></h6>
+                                                <h6 class="card-header py-1" id="address"></h6>
 
                                             </div>
                                         </div>
@@ -54,65 +60,69 @@
                                     <div class="card mb-4">
 
                                         <!-- <form class="form-main"> -->
-                                            <div class="card-body form-block">
-                                                <div class="table-responsive text-nowrap ">
+                                        <div class="card-body form-block">
+                                            <div class="table-responsive text-nowrap ">
 
-                                                    <table class="table table-bordered">
+                                                <table class="table table-bordered">
 
-                                                    </table>
+                                                </table>
 
-                                                    <table class="table table-bordered">
+                                                <table class="table table-bordered">
 
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="col-5">Product Name</th>
-                                                                <th class="col-4">Brand Name</th>
-                                                                <th class="col-1">Quantity</th>
-                                                                <th class="col-2">Unit</th>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-5">Product Name</th>
+                                                            <th class="col-4">Brand Name</th>
+                                                            <th class="col-1">Quantity</th>
+                                                            <th class="col-2">Unit</th>
 
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        id="basic-default-name"
-                                                                        placeholder="Medicine Name" name="productname"/>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        id="basic-default-name" placeholder="" name="brand"/>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        id="basic-default-name" placeholder="" name="quantity"/>
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select"
-                                                                        id="exampleFormControlSelect1"
-                                                                        aria-label="Default select example" name="unitoption">
-                                                                        <option selected>Select Unit</option>
-                                                                        <option value="BOX">Box</option>
-                                                                        <option value="PACK">Packet</option>
-                                                                        <option value="STRIP">Strip</option>
-                                                                        <option value="BOTTLE">Bottle</option>
-                                                                        <option value="PCS">Piece</option>
-                                                                    </select>
-                                                                </td>
-                                                            </tr>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="basic-default-name" placeholder="Medicine Name"
+                                                                    name="productname" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="basic-default-name" placeholder=""
+                                                                    name="brand" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="basic-default-name" placeholder=""
+                                                                    name="quantity" />
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-select"
+                                                                    id="exampleFormControlSelect1"
+                                                                    aria-label="Default select example"
+                                                                    name="unitoption">
+                                                                    <option selected>Select Unit</option>
+                                                                    <option value="BOX">Box</option>
+                                                                    <option value="PACK">Packet</option>
+                                                                    <option value="STRIP">Strip</option>
+                                                                    <option value="BOTTLE">Bottle</option>
+                                                                    <option value="PCS">Piece</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
 
-                                                        </tbody>
+                                                    </tbody>
 
-                                                    </table>
-                                                </div>
+                                                </table>
                                             </div>
-                                            <div class="buttonBox text-center pb-3">
-                                                <btn class="btn btn-primary" style="color: white;" id="addtocart">Add</btn>
-                                                <input type="reset" class="btn btn-primary" style="color: white;" value="Clear" />
-                                            </div>
+                                        </div>
+                                        <div class="buttonBox text-center pb-3">
+                                            <btn class="btn btn-primary" style="color: white;" id="addtocart">Add</btn>
+                                            <input type="reset" class="btn btn-primary" style="color: white;"
+                                                value="Clear" />
+                                        </div>
                                         <!-- </form> -->
 
-                                        
+
 
                                     </div>
                                     <!--/ Bordered Table -->
@@ -135,7 +145,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="pocart">
-                                                        
+
 
                                                         <!-- <tr>
                                                             <td>1</td>
@@ -170,8 +180,7 @@
 
 
                                     <div class="text-center mt-3">
-                                        <button type="button" class="btn btn-primary" id="submitpo"
-                                            >Submit</button>
+                                        <button type="button" class="btn btn-primary" id="submitpo">Submit</button>
                                     </div>
 
 
@@ -194,175 +203,184 @@
 
 
             <%- include('../partials/footercode.ejs') %>
-            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-            <script>
-                var cartarray=[];
-                $(document).ready(function(){
-                    $("#address").text("Address:");
-                    $("#contact").text("Contact No:");
-                    
-                    var vendorId =-1;
-                    $('#vendorselect').change(function() {
-                        var selectedVendorId = $(this).val();
-                        
-                        $.get(`/getvendor/${selectedVendorId}`, function(data, status){
-                            var vendorDetails = data.data;
-                            console.log(vendorDetails);
-                            vendorId = vendorDetails.vendor_id;
-                            var address = `Address: ${vendorDetails.vendor_address}`
-                            var number = `Contact: ${vendorDetails.vendor_contact}`
-                            $("#address").text(address);
-                            $("#contact").text(number);
-                        })
-                    })
-// caching all the products
-                    if ('caches' in window) {
-                        caches.keys().then(name => {
-                          if (name.length == 0) {
-                            console.log('do something');
-                            caches.open('productCache').then((cache) => {
-                              cache.add('/api/allsample');
+                <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+                <script>
+                    var cartarray = [];
+                    $(document).ready(function () {
+                        $("#contact").text("Contact No :");
+                        $("#email").text("Email :");
+                        $("#dl_no").text("DL No. :");
+                        $("#gstin").text("GSTIN :");
+                        $("#address").text("Address :");
+
+                        var vendorId = -1;
+                        $('#vendorselect').change(function () {
+                            var selectedVendorId = $(this).val();
+
+                            $.get(`/getvendor/${selectedVendorId}`, function (data, status) {
+                                var vendorDetails = data.data;
+                                console.log(vendorDetails);
+                                vendorId = vendorDetails.vendor_id;
+                                var number = `Contact: ${vendorDetails.vendor_contact}`
+                                var email = `Email : ${vendorDetails.vendor_email}`
+                                var dl_no = `DL No. : ${vendorDetails.vendor_dl_no}`
+                                var gstin = `GSTIN : ${vendorDetails.vendor_gstin}`
+                                var address = `Address : ${vendorDetails.vendor_address}`
+                                $("#contact").text(number);
+                                $("#email").text(email);
+                                $("#dl_no").text(dl_no);
+                                $("#gstin").text(gstin);
+                                $("#address").text(address);
                             })
-                          }
-                          else {
-                            console.log('do nothing');
-                          }
                         })
-                      }
-//end of caching
+                        // caching all the products
+                        if ('caches' in window) {
+                            caches.keys().then(name => {
+                                if (name.length == 0) {
+                                    console.log('do something');
+                                    caches.open('productCache').then((cache) => {
+                                        cache.add('/api/allsample');
+                                    })
+                                }
+                                else {
+                                    console.log('do nothing');
+                                }
+                            })
+                        }
+                        //end of caching
 
-// autocomplete functionality
-                    var productId=-1;
-                    $("input[name='productname']").autocomplete({
-                        minLength: 3,
-                        source: function(request, response) {
-                            if('caches' in  window){
-                                caches.match(`/api/allsample`).then(res=>{
-                                    if(res){
-                                        res.json().then(data=>{
-                                            let searchTerm = request.term;
-                                            let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
-                                            response(results);
-                                        })
-                                    }
-                                });
+                        // autocomplete functionality
+                        var productId = -1;
+                        $("input[name='productname']").autocomplete({
+                            minLength: 3,
+                            source: function (request, response) {
+                                if ('caches' in window) {
+                                    caches.match(`/api/allsample`).then(res => {
+                                        if (res) {
+                                            res.json().then(data => {
+                                                let searchTerm = request.term;
+                                                let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                                                response(results);
+                                            })
+                                        }
+                                    });
+                                }
+                            },
+                            select: function (event, ui) {
+                                setTimeout(function () {
+                                    console.log(ui.item);
+                                    productId = ui.item.sample_id;
+                                    $("input[name='productname']").val(ui.item.med_name);
+                                    $("input[name='brand']").val(ui.item["mfd/mkt"]);
+                                }, 0)
                             }
-                        },
-                        select: function(event, ui) {
-                            setTimeout(function(){
-                                console.log(ui.item);
-                                productId=ui.item.sample_id;
-                                $("input[name='productname']").val(ui.item.med_name);
-                                $("input[name='brand']").val(ui.item["mfd/mkt"]);
-                            },0)
-                        }
-                    }).data('ui-autocomplete')._renderItem = function(ul, item) {
-                        return $('<li>')
-                        .append('<div>' + item.med_name + (item.salt_composition) + '</div>')
-                        .appendTo(ul);
-                    };
-//endof autocomplete
+                        }).data('ui-autocomplete')._renderItem = function (ul, item) {
+                            return $('<li>')
+                                .append('<div>' + item.med_name + (item.salt_composition) + '</div>')
+                                .appendTo(ul);
+                        };
+                        //endof autocomplete
 
-                    var setLocalData;
-                    var getLocalData;
-                    var htmlData;
-                    $("#addtocart").click(function () {
+                        var setLocalData;
+                        var getLocalData;
+                        var htmlData;
+                        $("#addtocart").click(function () {
 
-                        if($("input[name='productname']").val()==''){
-                            return alert('PLEASE ADD MEDICINE FIRST');
-                        }
+                            if ($("input[name='productname']").val() == '') {
+                                return alert('PLEASE ADD MEDICINE FIRST');
+                            }
 
-                        if($("input[name='quantity']").val()==''){
-                            return alert('PLEASE ADD QUANTITY FIRST');
-                        }
+                            if ($("input[name='quantity']").val() == '') {
+                                return alert('PLEASE ADD QUANTITY FIRST');
+                            }
 
-                        if($("select[name='unitoption']").find('option:selected').text()=="Select Unit"){
-                            return alert('PLEASE ADD UNIT FIRST');
-                        }
+                            if ($("select[name='unitoption']").find('option:selected').text() == "Select Unit") {
+                                return alert('PLEASE ADD UNIT FIRST');
+                            }
 
-                        var products = $("input[name='productname']").val();
-                        var brand = $("input[name='brand']").val();
-                        var qty = $("input[name='quantity']").val();                   
-                        var selectedUnit = $("select[name='unitoption']").val();
+                            var products = $("input[name='productname']").val();
+                            var brand = $("input[name='brand']").val();
+                            var qty = $("input[name='quantity']").val();
+                            var selectedUnit = $("select[name='unitoption']").val();
 
 
-                        cartarray.push({
-                            productId: productId,
-                            productname: products,
-                            brand: brand,
-                            selectedUnit: selectedUnit,
-                            qty: qty,
-                            timestamp: new Date().getTime()
+                            cartarray.push({
+                                productId: productId,
+                                productname: products,
+                                brand: brand,
+                                selectedUnit: selectedUnit,
+                                qty: qty,
+                                timestamp: new Date().getTime()
+                            })
+
+                            setLocalData = JSON.stringify(cartarray);
+
+                            localStorage.setItem("pocartitems", setLocalData);
+
+                            //also add the vendor data to local storage
+                            /*var storeCustomerData = {
+                                name: $("#customername").val(),
+                                phone: $("#phonenumber").val()
+                            };
+        
+                        localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
+            */
+                            $("input[name='productname']").val("");
+                            $("input[name='brand']").val("");
+                            $("input[name='quantity']").val("");
+                            $("select[name='unitoption']").prop('selectedIndex', 0);
+
                         })
 
-                        setLocalData = JSON.stringify(cartarray);
-
-                        localStorage.setItem("pocartitems", setLocalData);
-
-    //also add the vendor data to local storage
-                    /*var storeCustomerData = {
-                        name: $("#customername").val(),
-                        phone: $("#phonenumber").val()
-                    };
-
-                localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
-    */
-                        $("input[name='productname']").val("");
-                        $("input[name='brand']").val("");
-                        $("input[name='quantity']").val("");
-                        $("select[name='unitoption']").prop('selectedIndex', 0);
-
-                    })
 
 
+                        // logic for redering cart data on addtocart click 
+                        var cartitems = [];
+                        $("#addtocart").on('click', function () {
+                            cartItems = JSON.parse(localStorage.getItem('pocartitems')) || [];
+                            renderCart(cartItems);
+                        });
 
-// logic for redering cart data on addtocart click 
-                    var cartitems=[];
-                    $("#addtocart").on('click', function () {
-                        cartItems = JSON.parse(localStorage.getItem('pocartitems')) || [];
-                        renderCart(cartItems);
-                    });
-
-                    //deletefunctionality
-                    $("#pocart").on("click", ".delete-button", function () {
-                        var item = $(this).closest("tr");
-                        var item_id = item.find(".card_id").text().trim();
-                        var cartItemsinStorage = JSON.parse(localStorage.getItem('pocartitems')) || [];
-                        cartItemsinStorage.splice(item_id - 1, 1);
-                        cartarray = cartItemsinStorage;
-                        localStorage.setItem('pocartitems', JSON.stringify(cartItemsinStorage));
-                        renderCart(cartItemsinStorage);
-                    });
-                    //endofdeletefunctionality
+                        //deletefunctionality
+                        $("#pocart").on("click", ".delete-button", function () {
+                            var item = $(this).closest("tr");
+                            var item_id = item.find(".card_id").text().trim();
+                            var cartItemsinStorage = JSON.parse(localStorage.getItem('pocartitems')) || [];
+                            cartItemsinStorage.splice(item_id - 1, 1);
+                            cartarray = cartItemsinStorage;
+                            localStorage.setItem('pocartitems', JSON.stringify(cartItemsinStorage));
+                            renderCart(cartItemsinStorage);
+                        });
+                        //endofdeletefunctionality
 
 
-                    //edit functionality  
-                    $("#pocart").on("click", ".edit-button", function () {
-                        var item = $(this).closest("tr");
-                        var item_id = item.find(".card_id").text().trim();
-                        var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('pocartitems')) || [];
-                        var selectedItem = UpdatecartItemsinStorage[item_id - 1];
-                        productId = selectedItem.productId;
-                        $("input[name='productname']").val(selectedItem.productname);
-                        $("input[name='brand']").val(selectedItem.brand);
-                        $("input[name='quantity']").val(selectedItem.qty);
-                        $("select[name='unitoption']").prop('selectedIndex', selectedItem.selectedUnit);
+                        //edit functionality  
+                        $("#pocart").on("click", ".edit-button", function () {
+                            var item = $(this).closest("tr");
+                            var item_id = item.find(".card_id").text().trim();
+                            var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('pocartitems')) || [];
+                            var selectedItem = UpdatecartItemsinStorage[item_id - 1];
+                            productId = selectedItem.productId;
+                            $("input[name='productname']").val(selectedItem.productname);
+                            $("input[name='brand']").val(selectedItem.brand);
+                            $("input[name='quantity']").val(selectedItem.qty);
+                            $("select[name='unitoption']").prop('selectedIndex', selectedItem.selectedUnit);
 
-                        UpdatecartItemsinStorage.splice(item_id - 1, 1);
-                        cartarray = UpdatecartItemsinStorage;
-                        localStorage.setItem('pocartitems', JSON.stringify(UpdatecartItemsinStorage));
-                        renderCart(UpdatecartItemsinStorage);
-                    })
-                    //end of edit functionality
+                            UpdatecartItemsinStorage.splice(item_id - 1, 1);
+                            cartarray = UpdatecartItemsinStorage;
+                            localStorage.setItem('pocartitems', JSON.stringify(UpdatecartItemsinStorage));
+                            renderCart(UpdatecartItemsinStorage);
+                        })
+                        //end of edit functionality
 
-                    //rendercart functionality
-                    function renderCart(items) {
-                        $('#pocart').empty();
+                        //rendercart functionality
+                        function renderCart(items) {
+                            $('#pocart').empty();
 
-                        for (var i = 0; i < items.length; i++) {
-                            var htmlData = `
+                            for (var i = 0; i < items.length; i++) {
+                                var htmlData = `
                                             <tr>
-                                                <td class="card_id">${i+1}</td>
+                                                <td class="card_id">${i + 1}</td>
                                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                                     <strong>${items[i].productname}</strong>
                                                 </td>
@@ -379,94 +397,94 @@
                                                 </td>
                                             </tr>`
 
-                            $('#pocart').append(htmlData);
+                                $('#pocart').append(htmlData);
+                            }
                         }
-                    }
-            //end of rendereing data logic
-                                
-//submit functionality
-console.log($(`select[name="unitoption"] option[value=1]`).text());
-                    var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
-                    $("#submitpo").click(function(){
-                        var POdetails = {
-                            pharmacyId: pharmacyDetails.pharmaId,
-                            vendor_id: vendorId,
-                            org_id: '<%=orgId%>'
-                        }
+                        //end of rendereing data logic
 
-                        $.ajax({
-                            url: '/api/createpo/',
-                            method: 'POST',
-                            data: JSON.stringify(POdetails),
-                            contentType: 'application/json',
-                            success: function(response) {
-                                var poId =response.POId;
-                                var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
-                                
-                                for(let i=0;i<POcarts.length;i++){
-                                    var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
-                                    var POcartdetail = {
-                                        po_id_main: poId,
-                                        product_id: POcarts[i].productId,
-                                        quantity: POcarts[i].qty,
-                                        unit: unit
-                                    }
-                                    console.log('cartdetails',POcartdetail);
-                                    
-                                    $.ajax({
-                                        url: '/api/createpocarts/',
-                                        method: 'POST',
-                                        data: JSON.stringify(POcartdetail),
-                                        contentType: 'application/json',
-                                        success: function(response) {
-                                            console.log(response);
-                                        },
-                                        error: function(error) {
-                                            console.log('Error:', error);
+                        //submit functionality
+                        console.log($(`select[name="unitoption"] option[value=1]`).text());
+                        var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+                        $("#submitpo").click(function () {
+                            var POdetails = {
+                                pharmacyId: pharmacyDetails.pharmaId,
+                                vendor_id: vendorId,
+                                org_id: '<%=orgId%>'
+                            }
+
+                            $.ajax({
+                                url: '/api/createpo/',
+                                method: 'POST',
+                                data: JSON.stringify(POdetails),
+                                contentType: 'application/json',
+                                success: function (response) {
+                                    var poId = response.POId;
+                                    var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
+
+                                    for (let i = 0; i < POcarts.length; i++) {
+                                        var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
+                                        var POcartdetail = {
+                                            po_id_main: poId,
+                                            product_id: POcarts[i].productId,
+                                            quantity: POcarts[i].qty,
+                                            unit: unit
                                         }
-                                    });
-                                }
+                                        console.log('cartdetails', POcartdetail);
 
-                                localStorage.removeItem('pocartitems');
-                                location.reload();
+                                        $.ajax({
+                                            url: '/api/createpocarts/',
+                                            method: 'POST',
+                                            data: JSON.stringify(POcartdetail),
+                                            contentType: 'application/json',
+                                            success: function (response) {
+                                                console.log(response);
+                                            },
+                                            error: function (error) {
+                                                console.log('Error:', error);
+                                            }
+                                        });
+                                    }
+
+                                    localStorage.removeItem('pocartitems');
+                                    location.reload();
+                                },
+                                error: function (error) {
+                                    console.log('Error:', error);
+                                }
+                            });
+                        })
+
+
+
+
+
+                        /*
+                        var vendorName = [];
+                        
+                        $.ajax({
+                            url: '/allvendors/',
+                            method: 'GET',
+                            success: function(response) {
+                                // Parse the response data as JSON
+                                //var vendors = JSON.parse(response);
+                                console.log(response.data);
+                                for(let i in response.data){
+                                    vendorName.push({id: response.data[i].vendor_id,  name: response.data[i].vendor_name});
+                                }
+                                console.log(vendorName);
+                                // Render the vendors data using the EJS template
+                            
+                                
+                                $('#vendorname').append(renderedHtml);
                             },
                             error: function(error) {
                                 console.log('Error:', error);
                             }
                         });
+    
+                    */
                     })
-
-
-
-                    
-                    
-                    /*
-                    var vendorName = [];
-                    
-                    $.ajax({
-                        url: '/allvendors/',
-                        method: 'GET',
-                        success: function(response) {
-                            // Parse the response data as JSON
-                            //var vendors = JSON.parse(response);
-                            console.log(response.data);
-                            for(let i in response.data){
-                                vendorName.push({id: response.data[i].vendor_id,  name: response.data[i].vendor_name});
-                            }
-                            console.log(vendorName);
-                            // Render the vendors data using the EJS template
-                        
-                            
-                            $('#vendorname').append(renderedHtml);
-                        },
-                        error: function(error) {
-                            console.log('Error:', error);
-                        }
-                    });
-
-                */
-                })
-            </script>
+                </script>
 
 
 

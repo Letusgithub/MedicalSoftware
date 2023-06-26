@@ -39,7 +39,7 @@
                                             <input type="text" class="form-control" placeholder="Search Product..."
                                             onkeyup="var value = $(this).val().toLowerCase();$('#inventoryData tbody tr').filter(function() {$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});" >
                                         </div>
-                                        <div class="input-group px-3">
+                                        <!-- <div class="input-group px-3">
                                             <button class="btn btn-primary" type="button">Sort By</button>
                                             <select class="form-select" id="inputGroupSelect03"
                                                 aria-label="Example select with button addon">
@@ -48,7 +48,7 @@
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
                                             </select>
-                                        </div>
+                                        </div> -->
                                     </div>
 
 
@@ -201,6 +201,7 @@
                                     let searchTerm = productName;
                                     let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
                                     productId = results[0].sample_id;
+                                    console.log(productId)
                                     localStorage.setItem('addbatchid', JSON.stringify(productId));
                                 })
                             }

@@ -18,6 +18,8 @@ module.exports = {
             org_address = ?,
             org_dl_no_1 = ?,
             org_dl_no_2 =?,
+            org_dl_no_3 = ?,
+            org_dl_no_4 =?,
             org_fssai_no = ?,
             org_shop_lic = ?
             where org_id = ?`,
@@ -33,6 +35,8 @@ module.exports = {
         data.org_address,
         data.org_dl_no_1,
         data.org_dl_no_2,
+        data.org_dl_no_3,
+        data.org_dl_no_4,
         data.org_fssai_no,
         data.org_shop_lic,
         orgId,
