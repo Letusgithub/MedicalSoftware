@@ -1,9 +1,9 @@
-const { createReturnOrder, getTotalReturns } = require('../services/returndetails.service');
+const { createReturnOrder, getTotalReturns, searchDates, searchMonth, searchQuarter, searchYear,} = require('../services/returndetails.service');
 
 module.exports = {
   createReturnOrder: (req, res) => {
     const body = req.body;
-    const orgId = req.body.sales_invoice_id.slice(0, 16);
+    const orgId = req.body.sales_invoice_id.slice(0, 15);
 
     const now = new Date();
     const day = now.getDate().toString().padStart(2, '0');
@@ -33,18 +33,89 @@ module.exports = {
         });
       });
     });
-    // let getCount;
-    // getMonthCount(monthName, currentYear, (getError, getResults) => {
-    //   if (getError) console.log('error in get', getError);
-    //   console.log('getResults', getResults);
-    //   if (getResults.length === 0) {
-    //     createNewMonth(monthName, currentYear, 0, (createError, createResults) => {
-    //       if (createError) console.log('error', createError);
-    //       console.log(createResults);
-    //     });
-    //     getCount = 0;
-    //   } else {
-    //     getCount = getResults[0].count;
-    //   }
+  },
+
+  searchDates: (req, res) => {
+    const orgId = req.query.org;
+    const from = req.query.from;
+    const to = req.query.to;
+    searchDates(orgId, from, to, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          message: 'some error',
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        data: results,
+      });
+    });
+  },
+
+  searchMonth: (req, res) => {
+    const orgId = req.query.org;
+    const month = req.query.month;
+    searchMonth(orgId, month, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          message: 'some error',
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        data: results,
+      });
+    });
+  },
+
+  searchYear: (req, res) => {
+    const orgId = req.query.org;
+    const year = req.query.year;
+    searchYear(orgId, year, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          message: 'some error',
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        data: results,
+      });
+    });
+  },
+  
+  searchQuarter: (req, res) => {
+    const orgId = req.query.org;
+    const quarter = req.query.quarter;
+    let start;
+    let end;
+    if (quarter == 1) {
+      start = 4;
+      end = 6;
+    } else if (quarter == 2) {
+      start = 7;
+      end = 9;
+    } else if (quarter == 3) {
+      start = 10;
+      end = 12;
+    } else if (quarter == 4) {
+      start = 1;
+      end = 3;
+    }
+    searchQuarter(orgId, start, end, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          message: 'some error',
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        data: results,
+      });
+    });
   },
 };

@@ -70,7 +70,7 @@
                               </div>
                               <span class="fw-semibold d-block mb-1">Total Revenue</span>
                               <h3 class="card-title mb-2" id="totalrevenue"></h3>
-                              <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                              <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> -->
                             </div>
                           </div>
                         </div>
@@ -94,7 +94,7 @@
                               </div>
                               <span>Total Orders</span>
                               <h3 class="card-title text-nowrap mb-1" id="totalorders"></h3>
-                              <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                              <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
                             </div>
                           </div>
                         </div>
@@ -180,8 +180,8 @@
                               </div>
                               <span class="d-block mb-1">Inventory Cost</span>
                               <h3 class="card-title text-nowrap mb-2" id="inventorycost"></h3>
-                              <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>
-                                -14.82%</small>
+                              <!-- <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -->
+                                <!-- -14.82%</small> -->
                             </div>
                           </div>
                         </div>
@@ -205,7 +205,7 @@
                               </div>
                               <span class="fw-semibold d-block mb-1">Total PO</span>
                               <h3 class="card-title mb-2" id="purchaseordersmade"></h3>
-                              <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                              <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small> -->
                             </div>
                           </div>
                         </div>
@@ -217,15 +217,19 @@
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                   <div class="card-title">
                                     <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                    <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                    <span class="badge bg-label-warning rounded-pill" id="yearreport"></span>
                                   </div>
                                   <div class="mt-sm-auto">
-                                    <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
-                                      68.2%</small>
-                                    <h3 class="mb-0">₹84,686k</h3>
+                                    <!-- <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
+                                      68.2%</small> -->
+                                    <h3 class="mb-0" id="yearrevenue"></h3>
                                   </div>
-                                </div>
-                                <div id="profileReportChart"></div>
+                                </div >
+                                <!-- <div id="profileReportChart"></div> -->
+                                <div id="profileReport"></div>
+                                <!-- <div style="width: 180px; height:100px;">
+                                  <canvas id="profileReport" ></canvas>
+                                </div> -->
                               </div>
                             </div>
                           </div>
@@ -513,7 +517,141 @@
       
           };
           new Chart(ctx, cfg);
-        })
+          })
+
+          //profile report
+          
+          var profileReport = {
+            series: [
+              {
+                name: "Sales",
+                data: sales.results.map(function(datas){
+                  return datas.total;
+                })
+              }
+            ],
+            chart: {
+              height: 100,
+              type: 'line',
+              zoom: {
+                enabled: false
+              },
+              toolbar: {
+                show: false
+              },
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              curve: 'smooth',
+              colors: ['#fcba03'],
+              width: 5, // Adjust the line width as per your preference
+              dashArray: 0, // Remove any dashes in the line
+              lineCap: 'round',
+            },
+            grid:{
+              show: false
+            },
+          
+            xaxis: {
+              categories: sales.results.map(function(datas){
+                return datas.x;
+              }),
+              labels: {
+                show: false
+              },
+              axisBorder: {
+                show: false
+              },
+              axisTicks: {
+                show: false
+              },
+              grid: {
+                show:false,
+              }
+            },
+
+            yaxis: {
+              labels: {
+                show: false
+              },
+              axisBorder: {
+                show: false
+              },
+              axisTicks: {
+                show: false
+              },
+              grid: {
+                show:false,
+              }
+            }
+          };
+  
+          var profileChart = new ApexCharts(document.querySelector("#profileReport"), profileReport);
+          profileChart.render();
+/*
+          var profileReport = document.getElementById("profileReport");
+          new Chart(profileReport, {
+                type: "line",
+                data: {
+                  labels: sales.results.map(function (data) {
+                    return data.x;
+                  }),
+                  datasets: [
+                    {
+                      label: "Sales",
+                      data: sales.results.map(function (data) {
+                        return data.total;
+                      }),
+                      borderColor: "#fae711", // Set the line color here, for example, red color
+                      borderWidth: 7, // Adjust the line width as per your preference
+                      fill: false,
+                    
+                    }
+                  ]
+                },
+                options: {
+                  plugins: {
+                    tooltip: {
+                      enabled: true
+                    },
+                    legend: {
+                      display: false, // Set legend to false to remove it
+                    }
+                  },
+                  scales: {
+                    x: {
+                      display: false
+                    },
+                    y: {
+                      display: false
+                    }
+                  },
+                  elements: {
+                    point: {
+                      radius: 0, // Set the point radius to 0 to remove the data points
+                      hoverRadius: 0 // Set the hover radius to 0 to remove the data points on hover
+                    },
+                    line: {
+                      shadowColor: "rgba(59, 50, 50, 0.6)", // Set the shadow color
+                      shadowBlur: 10, // Adjust the shadow blur
+                      shadowOffsetY: 8,// Adjust the shadow offset
+                      tension: .4
+                    }
+                  },
+                  
+                }
+              });*/
+
+
+  
+
+
+
+
+
+
         })
 
 //growthchartfeature  
@@ -834,7 +972,25 @@
             var formatedOrders = (totalOrders.toLocaleString());
             $("#totalorders").text(formatedOrders);
 
+            var year = new Date();
+            $("#yearreport").text(`Year ${year.getFullYear()}`);
+            
+            var yearRevenue = parseInt(revenue/1000);
+
+            $("#yearrevenue").text(`₹${yearRevenue}K`)
+
+
           })
+
+          //profile report
+          
+          
+      
+        
+
+
+          
+
 
 
 

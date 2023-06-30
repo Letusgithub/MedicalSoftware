@@ -33,4 +33,97 @@ module.exports = {
       },
     );
   },
+
+  searchDates: (orgId, from, to, callback) => {
+    let querys;
+    let datas = [];
+    if (from && to) {
+      const date = new Date(to);
+      querys = 'WHERE return_created_date >= ? AND return_created_date < ?';
+      datas = [
+        from,
+        new Date(date.getTime() + 86400000),
+      ];
+    } else if (from) {
+      querys = 'WHERE return_created_date >= ?';
+      datas = [from];
+    } else if (to) {
+      const date = new Date(to);
+      querys = 'WHERE return_created_date < ?';
+      datas = [new Date(date.getTime() + 86400000)];
+    }
+    getPool().query(
+      `SELECT * FROM return_details rd
+      JOIN order_details od 
+      ON od.invoice_id_main = rd.sales_invoice_id
+      JOIN customer_data cd
+      on cd.customer_id = od.customer_id
+      ${querys} and org_id = ${orgId} 
+      ORDER BY return_created_date DESC`,
+      datas,
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchMonth: (orgId, month, callback) => {
+    getPool().query(
+      `SELECT * FROM return_details rd
+      JOIN order_details od 
+      ON od.invoice_id_main = rd.sales_invoice_id
+      JOIN customer_data cd
+      on cd.customer_id = od.customer_id
+      where MONTH(rd.return_created_date) =? and org_id = ${orgId} 
+      `,
+      [
+        month,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchQuarter: (orgId, start, end, callback) => {
+    getPool().query(
+      `SELECT * FROM return_details rd
+      JOIN order_details od 
+      ON od.invoice_id_main = rd.sales_invoice_id
+      JOIN customer_data cd
+      on cd.customer_id = od.customer_id
+      where MONTH(rd.return_created_date)>=? and MONTH(rd.return_created_date)<=? and org_id = ${orgId} 
+      `,
+      [
+        start,
+        end,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+  searchYear: (orgId, year, callback) => {
+    getPool().query(
+      `SELECT * FROM return_details rd
+      JOIN order_details od 
+      ON od.invoice_id_main = rd.sales_invoice_id
+      JOIN customer_data cd
+      on cd.customer_id = od.customer_id
+      where YEAR(rd.return_created_date)=? and org_id = ${orgId} 
+      order by MONTH(rd.return_created_date) DESC
+      `,
+      [
+        year,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
 };
