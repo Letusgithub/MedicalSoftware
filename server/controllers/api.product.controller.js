@@ -1,8 +1,8 @@
-const service = require('../services/order.service');
+const service = require('../services/product.service');
 
-exports.createOrder = (req, res) => {
+exports.createProduct = (req, res) => {
   const data = req.body;
-  service.create(data, (err, results) => {
+  service.create(data, (err) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -12,15 +12,27 @@ exports.createOrder = (req, res) => {
     }
 
     return res.status(200).json({
-      success: 1,
-      data: results,
+      status: 'success',
     });
   });
 };
 
-exports.updateOrder = (req, res) => {
+exports.updateProduct = (req, res) => {
   const data = req.body;
-  service.update(data, (err, results) => {
+  const id = req.params.id;
+  service.update(id, data, (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    res.redirect('/product_stock');
+  });
+};
+
+exports.deleteProduct = (req, res) => {
+  const data = req.params.id;
+  service.delete(data, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -32,37 +44,13 @@ exports.updateOrder = (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      success: 1,
-      message: 'Updated successfully',
-    });
+    res.redirect('/product_stock');
   });
 };
 
-exports.deleteOrder = (req, res) => {
-  const data = req.body;
-  service.delete(data, (err, results) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    if (!results) {
-      return res.json({
-        ssuccess: 0,
-        message: 'Record Not Found',
-      });
-    }
-
-    return res.status(200).json({
-      success: 1,
-      message: 'Deleted successfully',
-    });
-  });
-};
-
-exports.getOrderById = (req, res) => {
-  const order_id = req.params.id;
-  service.getById(order_id, (err, results) => {
+exports.getProductById = (req, res) => {
+  const productId = req.params.id;
+  service.getById(productId, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -81,22 +69,33 @@ exports.getOrderById = (req, res) => {
   });
 };
 
-exports.getAllOrdersById = (req, res) => {
-  const vendor_id = req.params.id;
-  service.getAllById(vendor_id, (err, results) => {
+exports.getAllProducts = (req, res) => {
+  service.getAll((err, results) => {
     if (err) {
       console.log(err);
       return;
     }
     if (!results) {
       return res.json({
-        ssuccess: 0,
+        success: 0,
         message: 'Records Not Found',
       });
     }
 
     return res.status(200).json({
       success: 1,
+      data: results,
+    });
+  });
+};
+
+exports.getSampleProducts = (req, res) => {
+  service.getSampleProducts((error, results) => {
+    if (error) {
+      console.log('error in sample', error);
+    }
+    return res.status(200).json({
+      status: 'success',
       data: results,
     });
   });

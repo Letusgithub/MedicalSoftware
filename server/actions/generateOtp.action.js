@@ -12,7 +12,6 @@ exports.generateOtp = (contactNumber) => new Promise(
     try {
       // Generate OTP
       const otp_value = Math.round(Math.random() * 1000000);
-      console.log('otp value', otp_value);
 
       // Send OTP
       const sms = await fast2sms.sendMessage({
