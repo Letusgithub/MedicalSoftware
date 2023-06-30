@@ -1,4 +1,4 @@
-const { createReturnOrder } = require('../controllers/api.returndetails.controller');
+const { createReturnOrder, searchDates, searchMonth, searchQuarter, searchYear } = require('../controllers/api.returndetails.controller');
 
 module.exports = (app) => {
   app.use((req, res, next) => {
@@ -10,4 +10,8 @@ module.exports = (app) => {
   });
   console.log('object');
   app.post('/api/return/', createReturnOrder);
+  app.get('/api/searchdatesreturn/', searchDates);
+  app.get('/api/searchmonthreturn/', searchMonth);
+  app.get('/api/searchquarterreturn/', searchQuarter);
+  app.get('/api/searchyearreturn/', searchYear);
 };

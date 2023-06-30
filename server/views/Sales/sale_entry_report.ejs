@@ -32,11 +32,21 @@
                         <h5 class="card-header">Monthly</h5>
                         <div class="card-body">
                           <div class="col-md-10">
-                            <select class="form-select" id="exampleFormControlSelect1"
+                            <select class="form-select" id="selectmonth"
                               aria-label="Default select example">
                               <option selected>Please Select</option>
                               <option value="1">January</option>
-                              <option value="1">February</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
 
                             </select>
                           </div>
@@ -51,11 +61,13 @@
                           <div>
 
                             <div class="col-md-10">
-                              <select class="form-select" id="exampleFormControlSelect1"
+                              <select class="form-select" id="selectquarter"
                                 aria-label="Default select example">
                                 <option selected>Please Select</option>
-                                <option value="1"></option>
-                                <option value="1"></option>
+                                <option value="1">April-June</option>
+                                <option value="2">July-Sept</option>
+                                <option value="3">Oct-Dec</option>
+                                <option value="4">Jan-March</option>
 
                               </select>
                             </div>
@@ -69,10 +81,10 @@
                         <h5 class="card-header">Yearly</h5>
                         <div class="card-body">
                           <div class="col-md-10">
-                            <select class="form-select" id="exampleFormControlSelect1"
+                            <select class="form-select" id="selectyear"
                               aria-label="Default select example">
                               <option selected>Please Select</option>
-                              <option value="1">2022</option>
+                              <!-- <option value="1">2022</option> -->
                               <option value="1">2023</option>
 
                             </select>
@@ -199,6 +211,92 @@
           toDate = $(this).val();
           console.log('todate', toDate);
         })*/
+        $('#selectmonth').change(function(){
+          var month = $(this).val();
+          $.get(`/api/searchmonth?org=<%=orgId%>&month=${month}`, function(data, status){
+            $("#reportcart").empty();
+            var items = data.data;
+            console.log(items);
+            for(let i=0;i<items.length;i++){
+
+                var datetime = items[i].sales_created_date; 
+                var date = moment(datetime).format('DD MMMM YYYY');
+                var time = moment(datetime).utcOffset('+05:30');
+                var localTime = time.format('hh:mm A');
+              var htmlData = `
+              <tr>
+                <td>${i+1}</td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
+                <td>${items[i].cust_name}</td>
+                <td>${items[i].grand_total}</td>
+                <td>${date}</td>
+                <td>${localTime}</td>
+              </tr>
+              `
+              $("#reportcart").append(htmlData);
+              
+            }
+          })
+        })
+
+        $('#selectquarter').change(function(){
+          var quarter = $(this).val();
+          $.get(`/api/searchquarter?org=<%=orgId%>&quarter=${quarter}`, function(data, status){
+            $("#reportcart").empty();
+            var items = data.data;
+            console.log(items);
+            for(let i=0;i<items.length;i++){
+
+                var datetime = items[i].sales_created_date; 
+                var date = moment(datetime).format('DD MMMM YYYY');
+                var time = moment(datetime).utcOffset('+05:30');
+                var localTime = time.format('hh:mm A');
+              var htmlData = `
+              <tr>
+                <td>${i+1}</td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
+                <td>${items[i].cust_name}</td>
+                <td>${items[i].grand_total}</td>
+                <td>${date}</td>
+                <td>${localTime}</td>
+              </tr>
+              `
+              $("#reportcart").append(htmlData);
+              
+            }
+          })
+        })
+
+        $('#selectyear').change(function(){
+          var year = $(this).find('option:selected').text();
+          console.log(year);
+          $.get(`/api/searchyear?org=<%=orgId%>&year=${year}`, function(data, status){
+            $("#reportcart").empty();
+            var items = data.data;
+            console.log(items);
+            for(let i=0;i<items.length;i++){
+
+                var datetime = items[i].sales_created_date; 
+                var date = moment(datetime).format('DD MMMM YYYY');
+                var time = moment(datetime).utcOffset('+05:30');
+                var localTime = time.format('hh:mm A');
+              var htmlData = `
+              <tr>
+                <td>${i+1}</td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
+                <td>${items[i].cust_name}</td>
+                <td>${items[i].grand_total}</td>
+                <td>${date}</td>
+                <td>${localTime}</td>
+              </tr>
+              `
+              $("#reportcart").append(htmlData);
+              
+            }
+          })
+        })
+
+
 
         $("#generatereport").click(function(){
           var fromDate = $("input[name='fromdate']").val();
@@ -217,7 +315,7 @@
               var htmlData = `
               <tr>
                 <td>${i+1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-${items[i].si_invoice_id}</strong></td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
                 <td>${items[i].cust_name}</td>
                 <td>${items[i].grand_total}</td>
                 <td>${date}</td>
