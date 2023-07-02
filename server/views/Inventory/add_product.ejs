@@ -460,6 +460,7 @@
                             }
                             else{
                                 $.get('/api/allsample', function(data, status){
+                                    console.log(data);
                                     let searchTerm = request.term;
                                             let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
                                             response(results);

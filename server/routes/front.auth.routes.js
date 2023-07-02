@@ -16,11 +16,4 @@ module.exports = (app) => {
   app.get('/register', (req, res) => {
     res.render('Auth/register');
   });
-
-  // OTP Verification
-  app.get('/verify_otp', (req, res) => {
-    const number = req.query.phoneNumber;
-    const token = req.query.OTPtoken;
-    res.render('Auth/otp_verification', { number, token });
-  });
 };

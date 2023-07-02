@@ -4,201 +4,201 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-<style>
-    .table > tbody > tr > .no-line {
-    border-top: none;
-    }
+    <style>
+        .table>tbody>tr>.no-line {
+            border-top: none;
+        }
 
-    .table > thead > tr > .no-line {
-    border-bottom: none;
-    }
+        .table>thead>tr>.no-line {
+            border-bottom: none;
+        }
 
-    .table > tbody > tr > .thick-line {
-    border-top: 2px solid;
-    }
-</style>
+        .table>tbody>tr>.thick-line {
+            border-top: 2px solid;
+        }
+    </style>
 </head>
 
 <body>
-    
 
 
-<div class="container">
-    <div class="p-2 m-3">
-        <button class="btn-border" onclick="CreatePDFfromHTML()">Download</button>
-    </div>
 
-    <div id="html-content" class="p-3 border">
-    
-    <div class="row ">
-        <div class="col">
-    		<div class="invoice-title">
-    			<h2 class="text-center">Invoice</h2>
-                <h4 class="text-center">Facilitated by Dawa.ai</h4>
-                
-    		</div>
-    		<hr>
-    		<div class="row">
-    			<div class="col-4">
-    				<address>
-    				<strong>Pharmacy Details:</strong><br>
-    					<div id="pharmacyname"></div>
-    				</address>
+    <div class="container">
+        <div class="p-2 m-3">
+            <button class="btn-border" onclick="CreatePDFfromHTML()">Download</button>
+        </div>
 
-                    <address>
-                        <strong>GST No.</strong><br>
-                        <div id="gst"></div>
-                    </address>
+        <div id="html-content" class="p-3 border">
 
-                    <address>
-                        <strong>License No.</strong><br>
-                        xxxxxxxxx<br>
-                    </address>
-                    <address>
-                        <strong>Contact No.</strong><br>
-                        <div id="contact"></div>
-                    </address>
-    			</div>
-                <div class="col-4 text-center" id="customerdetails">
-                    <address>
-                        <strong>Customer Details:</strong><br>
-                        <div class="customerfields">
+            <div class="row ">
+                <div class="col">
+                    <div class="invoice-title">
+                        <h2 class="text-center">Invoice</h2>
+                        <h4 class="text-center">Facilitated by Dawa.ai</h4>
+
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <address>
+                                <strong>Pharmacy Details:</strong><br>
+                                <div id="pharmacyname"></div>
+                            </address>
+
+                            <address>
+                                <strong>GST No.</strong><br>
+                                <div id="gst"></div>
+                            </address>
+
+                            <address>
+                                <strong>License No.</strong><br>
+                                xxxxxxxxx<br>
+                            </address>
+                            <address>
+                                <strong>Contact No.</strong><br>
+                                <div id="contact"></div>
+                            </address>
                         </div>
-                    </address>
-                    <address>
-                        <strong>Contact No.</strong><br>
-                        <div class="customernumber"></div>
-                    </address>
-                </div>
-    			<div class="col-4 text-right" id="shippedcustomerdetails">
-    				
-                    <address>
-                        <strong>Shipped To:</strong><br>
-                        <div class="shippedcustomerfields"></div>    
-                        <!-- Customer Name<br>
+                        <div class="col-4 text-center" id="customerdetails">
+                            <address>
+                                <strong>Customer Details:</strong><br>
+                                <div class="customerfields">
+                                </div>
+                            </address>
+                            <address>
+                                <strong>Contact No.</strong><br>
+                                <div class="customernumber"></div>
+                            </address>
+                        </div>
+                        <div class="col-4 text-right" id="shippedcustomerdetails">
+
+                            <address>
+                                <strong>Shipped To:</strong><br>
+                                <div class="shippedcustomerfields"></div>
+                                <!-- Customer Name<br>
                             1234 Main<br>
                             Apt. 4B<br>
                             Springfield, ST 54321 -->
-                    </address>
-                    <address>
-                        <strong>Contact No.</strong><br>
-                        <div class="shippedcustomernumber"></div>
-                    </address>
-                    <address>
-    					<strong>Invoice No.</strong><br>
-    					<div class="invoicenumber"></div>
-    				</address>
-    			</div>
-    		</div>
+                            </address>
+                            <address>
+                                <strong>Contact No.</strong><br>
+                                <div class="shippedcustomernumber"></div>
+                            </address>
+                            <address>
+                                <strong>Invoice No.</strong><br>
+                                <div class="invoicenumber"></div>
+                            </address>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <address>
+                                <strong>Payment Method:</strong><br>
+                                <div id="paymentmethod"></div>
+                            </address>
+
+                        </div>
+                        <div class="col-6 text-right">
+                            <h4>Order No. #2323</h4>
+                            <address>
+                                <strong>Order Date:</strong><br>
+                                <div id="orderdate"></div>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <hr>
-    		<div class="row">
-    			<div class="col-6">
-                    <address>
-    					<strong>Payment Method:</strong><br>
-    					<div id="paymentmethod"></div>
-    				</address>
-                    
-    			</div>
-    			<div class="col-6 text-right">
-                   <h4>Order No. #2323</h4>
-    				<address>
-    					<strong>Order Date:</strong><br>
-    					<div id="orderdate"></div>
-    				</address>
-    			</div>
-    		</div>
-    	</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>Order summary</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>Sr No.</strong></td>
+                                            <td><strong>Item</strong></td>
+                                            <td class="text-center"><strong>Batch No.</strong></td>
+                                            <td class="text-center"><strong>Exp. Date</strong></td>
+                                            <td class="text-center"><strong>Quantity</strong></td>
+                                            <td class="text-center"><strong>HSN</strong></td>
+                                            <td class="text-center"><strong>Price</strong></td>
+                                            <td class="text-center"><strong>GST</strong></td>
+                                            <td class="text-center"><strong>Discount(%)</strong></td>
+                                            <td class="text-right"><strong>Totals</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cartitems">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row my-5">
+                <div class="col-6">
+                    <strong>Disclaimer:</strong>
+                </div>
+                <div class="col-3">
+                    <strong>Signature</strong>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-    
-    <hr>
-    <div class="row">
-    	<div class="col-md-12">
-    		<div class="panel panel-default">
-    			<div class="panel-heading">
-    				<h3 class="panel-title"><strong>Order summary</strong></h3>
-    			</div>
-    			<div class="panel-body">
-    				<div class="table-responsive">
-    					<table class="table table-condensed">
-    						<thead>
-                                <tr>
-                                    <td><strong>Sr No.</strong></td>
-        							<td><strong>Item</strong></td>
-                                    <td class="text-center"><strong>Batch No.</strong></td>
-                                    <td class="text-center"><strong>Exp. Date</strong></td>
-                                    <td class="text-center"><strong>Quantity</strong></td>
-                                    <td class="text-center"><strong>HSN</strong></td>
-                                    <td class="text-center"><strong>Price</strong></td>
-                                    <td class="text-center"><strong>GST</strong></td>
-        							<td class="text-center"><strong>Discount(%)</strong></td>
-        							<td class="text-right"><strong>Totals</strong></td>
-                                </tr>
-    						</thead>
-    						<tbody id="cartitems">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        var id = '<%= id %>';
+        $(document).ready(function () {
 
-    						</tbody>
-    					</table>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-    <hr>
-    <div class="row my-5">
-      <div class="col-6">
-         <strong>Disclaimer:</strong>
-      </div>
-      <div class="col-3">
-        <strong>Signature</strong>
-     </div>
-    </div>
-    </div>
+            var todayDate = new Date();
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            var formattedDate = todayDate.toLocaleDateString('en-US', options);
+            $("#orderdate").text(formattedDate)
 
-    
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script>
-    var id = '<%= id %>';
-    $(document).ready(function(){
+            var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
+            $("#pharmacyname").text(pharmacyDetails.pharmacyName);
+            $("#gst").text(pharmacyDetails.gst);
+            $("#contact").text(pharmacyDetails.number);
 
-        var todayDate = new Date();
-        var options = { year: 'numeric', month: 'long', day: 'numeric' };
-        var formattedDate = todayDate.toLocaleDateString('en-US', options);
-        $("#orderdate").text(formattedDate)
-
-        var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
-        $("#pharmacyname").text(pharmacyDetails.pharmacyName);
-        $("#gst").text(pharmacyDetails.gst);
-        $("#contact").text(pharmacyDetails.number);
-
-        $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function(data, status){
+            $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
                 var customer = data.result[0];
                 console.log('inside the invoice template', customer);
                 $("#paymentmethod").text(customer.mop.toUpperCase());
-                
+
                 var customerName = customer.cust_name;
                 var customerNumber = customer.cust_telephone;
-                
+
                 $("#customerdetails .customerfields").html(`${customerName} <br> `);
                 $("#customerdetails .customernumber").html(`${customerNumber} <br> `);
-                
+
                 $("#shippedcustomerdetails .shippedcustomerfields").html(`${customerName} <br> `);
                 $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
                 $("#shippedcustomerdetails .invoicenumber").text(`${customer.invoice_id_main}`);
-        })
+            })
 
-        var product=[];
-        $.get(`/api/cartitems/${id}`, function (data, status) {
-          
-          var items =data.data;
-          console.log("items in data",items);
-          
-          for(var i =0;i<items.length;i++){
-            
-            var total = items[i].mrp* items[i].quantity - items[i].mrp* items[i].quantity * (items[i].unit_discount)/100;
-            cartHtml =  `
+            var product = [];
+            $.get(`/api/cartitems/${id}`, function (data, status) {
+
+                var items = data.data;
+                console.log("items in data", items);
+
+                for (var i = 0; i < items.length; i++) {
+
+                    var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
+                    cartHtml = `
                         <tr>
-                            <td>${i+1}</td>
+                            <td>${i + 1}</td>
                             <td>${items[i].product_name}</td>
                             <td class="text-center">56664</td>
                             <td class="text-center">Nov 22</td>
@@ -210,40 +210,41 @@
                             <td class="text-right">${total}</td>
                         </tr>
                         `
-            
-            $("#cartitems").append(cartHtml);
-      
-          }
+
+                    $("#cartitems").append(cartHtml);
+
+                }
+            })
         })
-    })
-</script>
+    </script>
 
 
-<script>
-    //Create PDf from HTML...
-function CreatePDFfromHTML() {
-    var HTML_Width = $("#html-content").width();
-    var HTML_Height = $("#html-content").height();
-    var top_left_margin = 15;
-    var PDF_Width = HTML_Width + (top_left_margin * 2);
-    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
-    var canvas_image_width = HTML_Width;
-    var canvas_image_height = HTML_Height;
+    <script>
+        //Create PDf from HTML...
+        function CreatePDFfromHTML() {
+            var HTML_Width = $("#html-content").width();
+            var HTML_Height = $("#html-content").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
 
-    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-    html2canvas($("#html-content")[0]).then(function (canvas) {
-        var imgData = canvas.toDataURL("image/jpeg", 1.0);
-        var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
-        for (var i = 1; i <= totalPDFPages; i++) { 
-            pdf.addPage(PDF_Width, PDF_Height);
-            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+            html2canvas($("#html-content")[0]).then(function (canvas) {
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+                pdf.save("invoice.pdf");
+                $("#html-content").hide();
+            });
         }
-        pdf.save("invoice.pdf");
-        $("#html-content").hide();
-    });
-}
-</script>
+    </script>
 </body>
+
 </html>

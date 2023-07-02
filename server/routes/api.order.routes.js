@@ -1,4 +1,4 @@
-const controller = require('../controllers/order.controller');
+const controller = require('../controllers/api.order.controller');
 
 module.exports = (app) => {
   app.use((req, res, next) => {

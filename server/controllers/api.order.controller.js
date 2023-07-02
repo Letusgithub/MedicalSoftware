@@ -1,8 +1,8 @@
-const service = require('../services/inventory.service');
+/* eslint-disable camelcase */
+const service = require('../services/order.service');
 
-exports.createInventory = (req, res) => {
+exports.createOrder = (req, res) => {
   const data = req.body;
-  console.log(data);
   service.create(data, (err, results) => {
     if (err) {
       console.log(err);
@@ -19,10 +19,9 @@ exports.createInventory = (req, res) => {
   });
 };
 
-exports.updateInventory = (req, res) => {
+exports.updateOrder = (req, res) => {
   const data = req.body;
-  const id = req.params.id;
-  service.update(data, id, (err, results) => {
+  service.update(data, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -41,7 +40,7 @@ exports.updateInventory = (req, res) => {
   });
 };
 
-exports.deleteInventory = (req, res) => {
+exports.deleteOrder = (req, res) => {
   const data = req.body;
   service.delete(data, (err, results) => {
     if (err) {
@@ -62,9 +61,9 @@ exports.deleteInventory = (req, res) => {
   });
 };
 
-exports.getInventoryById = (req, res) => {
-  const productId = req.params.id;
-  service.getById(productId, (err, results) => {
+exports.getOrderById = (req, res) => {
+  const order_id = req.params.id;
+  service.getById(order_id, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -83,9 +82,9 @@ exports.getInventoryById = (req, res) => {
   });
 };
 
-exports.getAllInventorysById = (req, res) => {
-  const org_id = req.params.id;
-  service.getAllById(org_id, (err, results) => {
+exports.getAllOrdersById = (req, res) => {
+  const vendor_id = req.params.id;
+  service.getAllById(vendor_id, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -102,32 +101,4 @@ exports.getAllInventorysById = (req, res) => {
       data: results,
     });
   });
-};
-
-exports.getAllInventory = (req, res) => {
-  const orgID = req.query.orgID;
-  console.log('orgID', orgID);
-  service.getAllInventory(orgID, (allError, allResult) => {
-    if (allError) {
-      console.log(allError);
-    }
-    return res.status(200).json({
-      status: 'success',
-      data: allResult,
-    });
-  });
-
-// exports.getTotalStock = (req, res) => {
-//   const orgID = req.query.orgID;
-//   console.log('orgID', orgID);
-//   service.getAllInventory(orgID, (allError, allResult) => {
-//     if (allError) {
-//       console.log(allError);
-//     }
-//     return res.status(200).json({
-//       status: 'success',
-//       data: allResult,
-//     });
-//   });
-
 };
