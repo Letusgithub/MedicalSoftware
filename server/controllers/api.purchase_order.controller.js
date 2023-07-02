@@ -173,3 +173,19 @@ exports.searchDates = (req, res) => {
     });
   });
 };
+
+exports.getPOInInvoice = (req, res) => {
+  const id = req.query.id;
+
+  service.getPOInInvoice(id, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log('data in library', results);
+    return res.status(200).json({
+      success: 1,
+      data: results,
+    });
+  });
+};

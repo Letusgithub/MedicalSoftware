@@ -257,19 +257,18 @@
         <div class="container">
             <div class="d-flex justify-content-between">
                 <div>
-                    <div class="shop-name">
-                        WELLNESS MEDICAL STORE
+                    <div class="shop-name" id="orgname">
+                       
                     </div>
                     <div class="shop-info d-flex justify-content-between">
-                        <div class="shop-info-child1">
-                            Shop no. 156, Springfield ST 54321,
-                            Mumbai (Maharashtra) 400076
-                            +91 99999 999999
+                        <div class="shop-info-child1" id="orgaddress">
+                            
                         </div>
-                        <div class="shop-info-child2">
-                            <p class="my-0">GSTIN:</p>
-                            <p class="my-0">D.L.no.:</p>
-                            <p class="my-0">F.L. no.:</p>
+                        <div class="shop-info-child2" style="width: 41vw;">
+                            <p class="my-0" id="flno">F.L. no.:</p>
+                            <p class="my-0" id="gstin">GSTIN:</p>
+                            <p class="my-0" id="dlno">D.L.no.:</p>
+                           
                         </div>
                     </div>
 
@@ -284,36 +283,36 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div class="customer-details">
-                    <p style="font-weight: 600;">
-                        Name: Medicare Pharmacy, Agar
+                    <p style="font-weight: 600;" id="vendorname">
+                        Name: 
                     </p>
-                    <p>
-                        Mobile: +91 99999 999999
+                    <p id="vendormobile">
+                        Mobile: 
                     </p>
-                    <p>
-                        Email: xyz@gmail.com
+                    <p id="vendoremail">
+                        Email: 
                     </p>
-                    <p>
-                        Address: Ujjain
+                    <p id="vendoradd">
+                        Address:
                     </p>
 
                 </div>
                 <div class="receipt-details">
-                    <p>
+                    <p id="vendorgst">
                         GSTIN:
                     </p>
-                    <p>
+                    <p id="vendordl">
                         D.L.no.:
                     </p>
-                    <p>
+                    <!-- <p id="vendorfl">
                         F.L. no.:
-                    </p>
+                    </p> -->
                 </div>
                 <div class="receipt-details">
-                    <p>
-                        Date:
+                    <p id="orderdate">
+                        Date: 
                     </p>
-                    <p>
+                    <p id="pono">
                         P.O. No.:
                     </p>
                 </div>
@@ -331,8 +330,8 @@
                         <th style="width: 6.21rem;">Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="cartitems">
+                    <!-- <tr>
                         <td style="width: 2.27rem; height: 1rem;">1</td>
                         <td style="width: 11.29rem; height: 1rem;">wyx</td>
                         <td style="width: 3.1rem; height: 1rem;">wyx</td>
@@ -349,7 +348,7 @@
                         <td style="width: 4.4rem; height: 1rem;">wyx</td>
                         <td style="width: 3.25rem; height: 1rem;">wyx</td>
                         <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                    </tr>
+                    </tr> -->
 
                 </tbody>
             </table>
@@ -400,6 +399,158 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var id = '<%=id%>';
+            console.log(id);
+            
+
+            var todayDate = new Date();
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            var formattedDate = todayDate.toLocaleDateString('en-US', options);
+            $("#orderdate").text(`Date: ${formattedDate}`)
+
+            $.get(`/api/getpoininvoice?id=${id}`, function (data, status) {
+                //var podata= data.result[0];
+                console.log('inside the po invoice', data);
+                var podata = data.data[0];
+                $("#pono").text(`P.O.:${podata.po_id_main}`)
+                $("#vendorname").text(`Name: ${podata.vendor_name}`)
+                $("#vendormobile").text(`Mobile: ${podata.vendor_contact}`)
+                $("#vendoremail").text(`Email: ${podata.vendor_email}`)
+                $("#vendoradd").text(`Email: ${podata.vendor_address}`)
+                $("#vendorgst").text(`GSTIN: ${podata.vendor_gstin}`)
+                $("#vendordl").text(`DL.no: ${podata.vendor_dl_no}`)
+                var items = data.data
+                for (var i = 0; i < items.length; i++) {
+                    
+                    
+
+                    //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
+                    cartHtml = `
+                    <tr>
+                        <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
+                        <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                        <td style="width: 3.1rem; height: 1rem;">${items[i]['mfd/mkt']}</td>
+                        <td style="width: 4.59rem; height: 1rem;">${items[i].quantity}</td>
+                        <td style="width: 4.4rem; height: 1rem;">${items[i].unit}</td>
+                        <td style="width: 3.25rem; height: 1rem;">wxy</td>
+                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
+                    </tr>
+
+                    
+                        
+                        `
+
+                    $("#cartitems").append(cartHtml);
+
+                }
+
+
+        
+
+            })
+
+            $.get(`/api/org/<%=orgId%>`, function(data, status){
+                var org = data.data
+                var orgName = org.org_name;
+                var orgNumber = org.org_telephone;
+                var orgAdd = org.org_address;
+
+                $("#orgname").html(`${orgName}`);
+                
+                
+                        
+
+                $("#orgaddress").html(`
+                    ${orgAdd}</br>
+                    ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
+                    ${org.org_telephone}
+                `)
+
+                $("#gstin").text(`GSTIN: ${org.org_gstin}`);
+                $("#dlno").text(`D.L.no.: ${org.org_dl_no_1}, ${org.org_dl_no_2}`)
+                $("#flno").text(`F.L. no.: ${org.org_fssai_no}`)
+
+
+            })
+            /*<tr>
+                <td>${i + 1}</td>
+                <td>${items[i].product_name}</td>
+                <td class="text-center">56664</td>
+                <td class="text-center">Nov 22</td>
+                <td class="text-center">${items[i].quantity}</td>
+                <td class="text-center">734952</td>
+                <td class="text-center">₹ ${items[i].mrp}</td>
+                <td class="text-center">₹ 10.99</td>
+                <td class="text-center">${items[i].unit_discount}</td>
+                <td class="text-right">${total}</td>
+            </tr>*/
+            var product = [];
+            $.get(`/api/getordercartininvoice/${id}`, function (data, status) {
+
+                var items = data.data;
+                console.log("items in data", items);
+
+                for (var i = 0; i < items.length; i++) {
+                    var datetime = items[i].exp_date; 
+                    console.log(datetime);
+                    var date = moment(datetime).format('DD-MM-YY');
+                    
+
+                    //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
+                    cartHtml = `
+
+                    <tr>
+                        <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
+                        <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                        <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
+                        <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
+                        <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
+                        <td style="width: 3.25rem; height: 1rem;">${date}</td>
+                        <td style="width: 3.62rem; height: 1rem;">${items[i].mrp}</td>
+                        <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
+                        <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
+                        <td style="width: 4.2rem; height: 1rem;">${items[i].saled_mrp}</td>
+                    </tr>
+                        
+                        `
+
+                    $("#cartitems").append(cartHtml);
+
+                }
+
+               
+            }) 
+        })
+    </script>
+
+    <script>
+        //Create PDf from HTML...
+        function CreatePDFfromHTML() {
+            var HTML_Width = $("#html-content").width();
+            var HTML_Height = $("#html-content").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+            html2canvas($("#html-content")[0]).then(function (canvas) {
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+                pdf.save("invoice.pdf");
+                $("#html-content").hide();
+            });
+        }
+    </script>
 
     <script>
         //Create PDf from HTML...
