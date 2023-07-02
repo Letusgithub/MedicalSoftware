@@ -31,11 +31,11 @@
 
                               </h5>
                               <p class="mb-4">
-                                You have done <span class="fw-bold">72%</span> more
-                                sales today. Check your new badge in your profile.
+                                You have done <span class="fw-bold" id="salesgrowth"></span> more
+                                sales today.
                               </p>
 
-                              <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
+                              <!-- <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a> -->
                             </div>
                           </div>
                           <div class="col-sm-5 text-center text-sm-left">
@@ -419,6 +419,7 @@
           const ctx = $("#myChart");
           $.get(`/api/totalsumfromsales?org=<%=orgId%>`, function(sales, status){
             console.log('sales', sales);
+          
             $.get(`/api/totalsumfrompurchase?org=<%=orgId%>`, function(purchase, status){
               console.log('purchase', purchase);
             
@@ -680,6 +681,7 @@
           }
 
           $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`);
+          $("#salesgrowth").text(`${dayGrowth}%`);
       
         
         var options = {
