@@ -455,10 +455,10 @@
                     //poulate medname, brand, primary, sec
                     $("#medicinename").val(ui.item.med_name);
                     $('#brand').val(ui.item["mfd/mkt"]);
-                    $("#pUnit").val(ui.item.saled_pri_qty);
-                    saledPrimaryQty = ui.item.saled_pri_qty;
-                    $("#sUnit").val(ui.item.saled_sec_qty);
-                    saledSecondaryQty = ui.item.saled_sec_qty;
+                    $("#pUnit").val(ui.item.saled_pri_qty_cart);
+                    saledPrimaryQty = ui.item.saled_pri_qty_cart;
+                    $("#sUnit").val(ui.item.saled_sec_qty_cart);
+                    saledSecondaryQty = ui.item.saled_sec_qty_cart;
                     $("#discount").val(ui.item.unit_discount);
                     calculateTotal();
                   })
@@ -687,7 +687,7 @@ var org = "<%= orgId %>";
             data: JSON.stringify(returnDetails),
             contentType: 'application/json',
             success: function(response){
-
+              var returninsertid = response.results.insertId;
               var returnInvoiceId = response.return_invoice_id;
               var localCartStored= JSON.parse(localStorage.getItem('returncartitems'));
 
@@ -698,6 +698,7 @@ var org = "<%= orgId %>";
                   return_sec_qty: localCartStored[i].secQty,
                   return_dis: localCartStored[i].disc,
                   return_mrp: localCartStored[i].mrp,
+                  return_total_cart: localCartStored[i].total
                 }
 
                 $.ajax({
@@ -725,7 +726,7 @@ var org = "<%= orgId %>";
                   contentType: 'application/json',
                   success: function(response){
                     localStorage.removeItem('returncartitems');
-                    window.location.href = '/sale_return_invoice';
+                    window.location.href = `/return_receipt/${returninsertid}`;
                   },
                   error: function(error){
                     console.log(error);

@@ -126,4 +126,33 @@ module.exports = {
     );
   },
 
+  getOrderinInvoice: (id, callback) => {
+    getPool().query(
+      `select * from  return_details rd
+        join cart_item ci
+        on ci.return_invoice_id = rd.return_invoice_id 
+        join order_details od 
+        on od.invoice_id_main = rd.sales_invoice_id
+        Join customer_data cd
+        on cd.customer_id = od.customer_id
+        
+        JOIN sample spl 
+        on ci.product_id = spl.sample_id
+        JOIN inventory inv
+        on inv.product_id = ci.product_id
+        JOIN batch bth
+        on ci.saled_batch_id = bth.batch_id
+        
+        where rd.return_id=?`,
+      [
+        id,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+
+        return callback(null, results);
+      },
+    );
+  },
+
 };
