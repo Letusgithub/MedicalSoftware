@@ -341,4 +341,17 @@ module.exports = async (app) => {
   app.get('/po_report', checkAuth, fetchOrgId, (req, res) => {
     res.render('Inventory/po_report', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
+
+  // Receipt
+  app.get('/saleInvoice', (req, res) => {
+    res.render('Receipt/saleInvoice');
+  });
+
+  app.get('/returnInvoice', (req, res) => {
+    res.render('Receipt/returnInvoice');
+  });
+
+  app.get('/po_receipt', (req, res) => {
+    res.render('Receipt/PO');
+  });
 };
