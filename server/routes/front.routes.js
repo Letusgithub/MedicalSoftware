@@ -69,10 +69,13 @@ module.exports = async (app) => {
 
     res.render('home', {
       name: req.app.locals.token,
-      owner: req.app.locals.name,
+      // owner: req.app.locals.name,
       number: req.app.locals.number,
-      gst: req.app.locals.gst,
+      // gst: req.app.locals.gst,
       pharmacyId: req.app.locals.pharmaId,
+      address: req.app.locals.address,
+      dl1: req.app.locals.dl1,
+      dl2: req.app.locals.dl2,
       orgName: req.org_name,
       ownerName: req.owner_name,
       orgId: req.org_id,
@@ -241,7 +244,7 @@ module.exports = async (app) => {
   app.get('/invoice_template/:id', checkAuth, fetchOrgId, (req, res) => {
     console.log('got the id', req.params.id);
     console.log(req.org_id);
-    res.render('Sales/invoice_template', {
+    res.render('Receipt/saleInvoice', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });

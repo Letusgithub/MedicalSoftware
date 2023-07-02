@@ -414,16 +414,18 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script>
         $(document).ready(function () {
+  
           var result; 
-          const data = [{x: 'Jan', net: 100, cogs: 50, gm: 50}, {x: 'Feb', net: 120, cogs: 55, gm: 75}];
           const ctx = $("#myChart");
           $.get(`/api/totalsumfromsales?org=<%=orgId%>`, function(sales, status){
+            console.log('sales', sales);
             $.get(`/api/totalsumfrompurchase?org=<%=orgId%>`, function(purchase, status){
-              console.log(purchase);
+              console.log('purchase', purchase);
             
           //const data = [{x: 'Jan', net: 100, cogs: 50, gm: 50}, {x: 'Feb', net: 120, cogs: 55, gm: 75}];
           const cfg = {
             type: 'bar',
+            
             data: {
               labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
               datasets: [
@@ -441,6 +443,7 @@
                   parsing: {
                     yAxisKey: 'total'
                   },
+                  
                 },
                 {
                   label: 'Total Purchase',
@@ -505,6 +508,7 @@
                     }
                   }
                 },
+          
                 beforeDraw: function(chart) {
                   const ctx = chart.ctx;
                   ctx.font = 'bold 16px Arial'; // Customize the font for the chart title
@@ -655,19 +659,27 @@
         })
 
 //growthchartfeature  
+        // day feature
         var chart;
-        $.get('/api/salesmadeprevday', function(data, status){
-          console.log("here", data);
+        $.get(`/api/salesmadeprevday?org=<%=orgId%>`, function(data, status){
+          console.log("sales made prev day", data);
           let dayGrowth;
           if(data.results.length == 0 ){
             dayGrowth = 0;
             console.log('empty');
           }
-          else{
-            console.log(data.results[0].growth_percentage);
-            dayGrowth = parseInt(data.results[0].growth_percentage)<=0? 0:parseInt(data.results[0].growth_percentage);
+          else if(data.results.length == 1 ){
+            let totalOrders = parseInt(data.results[0].row_count)
+            dayGrowth = totalOrders*100;
           }
-            $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`);
+          else{
+            let totalorderstoday = data.results[0].row_count;
+            let totalordersyes = data.results[1].row_count;
+            dayGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
+            dayGrowth = dayGrowth<=0? 0:dayGrowth;
+          }
+
+          $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`);
       
         
         var options = {
@@ -725,11 +737,27 @@
         chart.render();
       })
 
+      // click function for day growth
       $("#perdaygrowth").click(function(){
-        $.get('/api/salesmadeprevday', function(data, status){
-          console.log('///', data.results[0].growth_percentage);
-          let dayGrowth = data.results[0].growth_percentage==null?0:parseInt(data.results[0].growth_percentage);
-          $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`)
+        $.get(`/api/salesmadeprevday?org=<%=orgId%>`, function(data, status){
+          let dayGrowth;
+          if(data.results.length == 0 ){
+            dayGrowth = 0;
+            console.log('empty');
+          }
+          else if(data.results.length == 1 ){
+            let totalOrders = parseInt(data.results[0].row_count)
+            dayGrowth = totalOrders*100;
+          }
+          else{
+            let totalorderstoday = data.results[0].row_count;
+            let totalordersyes = data.results[1].row_count;
+            dayGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
+            dayGrowth = dayGrowth<=0? 0:dayGrowth;
+          }
+
+          $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`);
+
           var options = {
             chart: {
               height: 240,
@@ -789,12 +817,28 @@
         })
       })
 
-
+      //click fucntion for month growth
        $("#permonthgrowth").click(function(){
-          $.get('/api/salesmadeprevmonth', function(data, status){
-            console.log('///', data.results[0].growth_percentage);
-            let monthGrowth = data.results[0].growth_percentage==null?0:parseInt(data.results[0].growth_percentage);
-            $("#textgrowthstatus").text(`${monthGrowth}% More Orders This Month`)
+          $.get(`/api/salesmadeprevmonth?org=<%=orgId%>`, function(data, status){
+            console.log(data);
+              let monthGrowth;
+              if(data.results.length == 0 ){
+                monthGrowth = 0;
+                console.log('empty');
+              }
+              else if(data.results.length == 1 ){
+                let totalOrders = parseInt(data.results[0].row_count)
+                monthGrowth = totalOrders*100;
+              }
+              else{
+                let totalorderstoday = data.results[0].row_count;
+                let totalordersyes = data.results[1].row_count;
+                monthGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
+                monthGrowth = monthGrowth<=0? 0:monthGrowth;
+              }
+
+              $("#textgrowthstatus").text(`${monthGrowth}% More Orders this Month`);
+              
             var options = {
               chart: {
                 height: 240,
@@ -854,10 +898,27 @@
           })
         })
 
+        //click function for year growth
         $("#peryeargrowth").click(function(){
-          $.get('/api/salesmadeprevyear', function(data, status){
-            console.log('///', data);
-            let yearGrowth = data.results[0].growth_percentage==null?0:parseInt(data.results[0].growth_percentage);
+          $.get(`/api/salesmadeprevyear?org=<%=orgId%>`, function(data, status){
+            console.log(data);
+            let yearGrowth;
+              if(data.results.length == 0 ){
+                yearGrowth = 0;
+                console.log('empty');
+              }
+              else if(data.results.length == 1 ){
+                let totalOrders = parseInt(data.results[0].row_count)
+                yearGrowth = totalOrders*100;
+              }
+              else{
+                let totalorderstoday = data.results[0].row_count;
+                let totalordersyes = data.results[1].row_count;
+                yearGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
+                yearGrowth = yearGrowth<=0? 0:yearGrowth;
+              }
+
+
             $("#textgrowthstatus").text(`${yearGrowth}% More Orders This Year`)
             var options = {
               chart: {
@@ -941,18 +1002,21 @@
           var check = JSON.parse(localStorage.getItem('name'));
           if(check == null){
             console.log('no items found');
-            $("#congratsowner").text(`Congratulations <%= owner %>! 🎉`);
+            $("#congratsowner").text(`Congratulations! 🎉`);
             localStorage.setItem("name", JSON.stringify({
                 pharmacyName: "<%= name %>",
-                ownerName: "<%= owner %>",
+                
                 number: "<%= number %>",
-                gst: "<%= gst %>",
-                pharmaId: "<%= pharmacyId %>"
+            
+                pharmaId: "<%= pharmacyId %>",
+                address: "<%=address%>",
+                dl1: "<%=dl1%>",
+                dl2: "<%=dl2%>"
               })
             );
           }
           else{
-            $("#congratsowner").text(`Congratulations ${check.ownerName}! 🎉`);
+            $("#congratsowner").text(`Congratulations! 🎉`);
             console.log('item is found');
           }
 

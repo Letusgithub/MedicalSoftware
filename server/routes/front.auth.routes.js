@@ -14,6 +14,7 @@ module.exports = (app) => {
 
   // Register Login
   app.get('/register', (req, res) => {
-    res.render('Auth/register');
+    const mobileNumber = req.query.mobileNumber;
+    res.render('Auth/register', { mobileNumber });
   });
 };

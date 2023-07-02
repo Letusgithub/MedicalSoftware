@@ -178,6 +178,7 @@
                                         data: JSON.stringify(details),
                                         contentType: 'application/json',
                                         success: function (response) {
+                                            console.log('inside login', response);
                                             window.location.href = response.redirect;
                                         },
                                         error: function (error) {
