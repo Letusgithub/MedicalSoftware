@@ -1075,7 +1075,8 @@
                   total_dist: total_dist,
                   grand_total: grand_total,
                   mop: mop,
-                  pharmacyId: pharmacyDetails.pharmaId
+                  pharmacyId: pharmacyDetails.pharmaId,
+                  doctor_name: $("#reference").val()
                 }
 
 
@@ -1090,6 +1091,7 @@
                       var mainInvoiceId = response.invoiceId;
                      
                         var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
+                        console.log('orderdetails of sales', orderDetails);
                         
                         for(let i in orderDetails){
 
@@ -1120,7 +1122,8 @@
                             main_invoice_id: mainInvoiceId,
                             sales_invoice_id: salesId,
                             saled_batch_id: orderDetails[i].batchId,
-                            unit_discount: orderDetails[i].disc
+                            unit_discount: orderDetails[i].disc,
+                            saled_mrp: orderDetails[i].total
                           })
 
                           console.log('cartDetail for the saled product', cartDetails);

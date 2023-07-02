@@ -1,5 +1,5 @@
 const {
-  create, getOrdersById, getOrders, updateOrders,
+  create, getOrdersById, getOrders, updateOrders, getOrderCartInInvoice,
 } = require('../services/cartitem.service');
 
 module.exports = {
@@ -60,4 +60,20 @@ module.exports = {
       });
     });
   },
+
+  getOrderCartInInvoice: (req, res) => {
+    const id = req.params.id;
+    getOrderCartInInvoice(id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.status(200).json({
+        success: 'gotorders',
+        data: results,
+      });
+    });
+  },
+
+
 };

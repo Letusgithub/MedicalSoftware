@@ -19,8 +19,8 @@ module.exports = {
     const order_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
 
     getPool().query(
-      `insert into order_details(customer_id, invoice_id_main, subtotal, total_dist, grand_total, mop, current_total, sales_created_date) 
-                                    values(?,?,?,?,?,?,?,?)`,
+      `insert into order_details(customer_id, invoice_id_main, subtotal, total_dist, grand_total, mop, current_total, sales_created_date, doctor_name) 
+                                    values(?,?,?,?,?,?,?,?,?)`,
       [
         data.customer_id,
         invoiceId,
@@ -30,6 +30,7 @@ module.exports = {
         data.mop,
         data.current_total,
         order_created_date,
+        data.doctor_name,
       ],
       (error, results) => {
         if (error) {
@@ -292,8 +293,11 @@ module.exports = {
 
     );
   },
-
+  // LEFT JOIN
+  // customer_data AS cd ON cd.customer_id = od.customer_id
+  // where cd.org_id = ?
   getTotalSumfromSales: (orgId, callback) => {
+    console.log('service org', orgId);
     getPool().query(
       `SELECT
        CASE months.month
@@ -316,13 +320,15 @@ module.exports = {
               UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
               UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12) AS months
           LEFT JOIN
-              newdata.order_details od ON MONTH(od.sales_created_date) = months.month
+              order_details od ON MONTH(od.sales_created_date) = months.month
           LEFT JOIN
-              newdata.customer_data AS cd ON cd.customer_id = od.customer_id AND cd.org_id = '30'
+              customer_data cd ON cd.customer_id = od.customer_id
+          where
+              cd.org_id = ?
           GROUP BY
               months.month;
           `,
-      [],
+      [orgId],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -330,28 +336,106 @@ module.exports = {
     );
   },
 
-  salesMadePrevDay: (callback) => {
+  // salesMadePrevDay: (orgId, callback) => {
+  //   getPool().query(
+  //     `SELECT
+  //     t1.order_date,
+  //     t1.total_orders,
+  //     ((t1.total_orders - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
+  //   FROM
+  //     (SELECT DATE(od.sales_created_date) AS order_date, COUNT(*) AS total_orders
+  //      FROM newdata.order_details as od
+  //      JOIN customer_data cd on cd.customer_id=od.customer_id where cd.org_id = ${orgId}
+  //      GROUP BY DATE(od.sales_created_date)
+  //      ORDER BY order_date) AS t1
+  //   LEFT JOIN
+  //     (SELECT DATE(od.sales_created_date) AS prev_order_date, COUNT(*) AS prev_total_orders
+  //      FROM newdata.order_details as od
+  //      JOIN customer_data cd on cd.customer_id=od.customer_id where cd.org_id = ${orgId}
+  //      GROUP BY DATE(od.sales_created_date)
+  //      ORDER BY prev_order_date) AS t2
+  //   ON DATE_SUB(t1.order_date, INTERVAL 1 DAY) = t2.prev_order_date
+  //   WHERE order_date=?
+
+  //   `,
+  //     [new Date().toJSON().slice(0, 10)],
+  //     // [new Date('2023-06-25').toJSON()],
+  //     (error, results) => {
+  //       if (error) return callback(error);
+  //       console.log('sales made prev day', results);
+  //       return callback(null, results);
+  //     },
+
+  //   );
+  // },
+
+  salesMadePrevDay: (orgId, callback) => {
     getPool().query(
       `SELECT
-      t1.order_date,
-      t1.total_orders,
-      ((t1.total_orders - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
-    FROM
-      (SELECT DATE(newdata.order_details.sales_created_date) AS order_date, COUNT(*) AS total_orders
-       FROM newdata.order_details 
-       GROUP BY DATE(newdata.order_details.sales_created_date)
-       ORDER BY order_date) AS t1
-    LEFT JOIN
-      (SELECT DATE(newdata.order_details.sales_created_date) AS prev_order_date, COUNT(*) AS prev_total_orders
-       FROM newdata.order_details
-       GROUP BY DATE(newdata.order_details.sales_created_date)
-       ORDER BY prev_order_date) AS t2
-    ON DATE_SUB(t1.order_date, INTERVAL 1 DAY) = t2.prev_order_date
-    WHERE order_date=?
-    
+       DATE(od.sales_created_date) AS date,
+       COUNT(*) AS row_count
+       FROM
+        order_details as od
+		  JOIN customer_data as cd
+			  on cd.customer_id = od.customer_id
+		    where cd.org_id = ?
+      GROUP BY
+          DATE(od.sales_created_date) 
+		  order by DATE(od.sales_created_date) DESC limit 2
     `,
-      [new Date().toJSON().slice(0, 10)],
-      // [new Date('2023-06-25').toJSON()],
+      [orgId],
+      (error, results) => {
+        if (error) return callback(error);
+        console.log('sales made prev day', results);
+        return callback(null, results);
+      },
+
+    );
+  },
+
+  // salesMadePrevMonth: (callback) => {
+  //   getPool().query(
+  //     `SELECT
+  //     DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') AS order_month,
+  //     COUNT(*) AS total_orders,
+  //     ((COUNT(*) - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
+  //   FROM
+  //     newdata.order_details
+  //   LEFT JOIN
+  //     (SELECT DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') AS prev_order_month, COUNT(*) AS prev_total_orders
+  //      FROM newdata.order_details
+  //      WHERE newdata.order_details.sales_created_date < DATE_FORMAT(NOW(), '%Y-%m-01')
+  //      GROUP BY DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m')
+  //      ORDER BY prev_order_month) AS t2
+  //   ON DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') = t2.prev_order_month
+  //   WHERE newdata.order_details.sales_created_date >= DATE_FORMAT(NOW(), '%Y-%m-01')
+  //   GROUP BY DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m'), t2.prev_total_orders
+  //   ORDER BY order_month
+  //   `,
+  //     [],
+  //     (error, results) => {
+  //       if (error) return callback(error);
+  //       return callback(null, results);
+  //     },
+
+  //   );
+  // },
+
+  salesMadePrevMonth: (orgId, callback) => {
+    getPool().query(
+      `SELECT
+      MONTH(od.sales_created_date) AS date,
+      COUNT(*) AS row_count
+      FROM
+       order_details as od
+     JOIN customer_data as cd
+       on cd.customer_id = od.customer_id
+       where cd.org_id = ?
+     GROUP BY
+         MONTH(od.sales_created_date) 
+     order by MONTH(od.sales_created_date) DESC limit 2
+    `,
+      [orgId],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -360,54 +444,48 @@ module.exports = {
     );
   },
 
-  salesMadePrevMonth: (callback) => {
+  // salesMadePrevYear: (callback) => {
+  //   getPool().query(
+  //     `SELECT
+  //     YEAR(sales_created_date) AS order_year,
+  //     COUNT(*) AS total_orders,
+  //     ((COUNT(*) - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
+  //   FROM
+  //     order_details
+  //   LEFT JOIN
+  //     (SELECT YEAR(sales_created_date) AS prev_order_year, COUNT(*) AS prev_total_orders
+  //      FROM order_details
+  //      WHERE sales_created_date < DATE_FORMAT(NOW(), '%Y-01-01')
+  //      GROUP BY YEAR(sales_created_date)
+  //      ORDER BY prev_order_year) AS t2
+  //   ON YEAR(sales_created_date) = t2.prev_order_year
+  //   WHERE sales_created_date >= DATE_FORMAT(NOW(), '%Y-01-01')
+  //   GROUP BY YEAR(sales_created_date), t2.prev_total_orders
+  //   ORDER BY order_year    
+  //   `,
+  //     [],
+  //     (error, results) => {
+  //       if (error) return callback(error);
+  //       return callback(null, results);
+  //     },
+
+  //   );
+
+  salesMadePrevYear: (orgId, callback) => {
     getPool().query(
       `SELECT
-      DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') AS order_month,
-      COUNT(*) AS total_orders,
-      ((COUNT(*) - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
-    FROM
-      newdata.order_details
-    LEFT JOIN
-      (SELECT DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') AS prev_order_month, COUNT(*) AS prev_total_orders
-       FROM newdata.order_details
-       WHERE newdata.order_details.sales_created_date < DATE_FORMAT(NOW(), '%Y-%m-01')
-       GROUP BY DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m')
-       ORDER BY prev_order_month) AS t2
-    ON DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') = t2.prev_order_month
-    WHERE newdata.order_details.sales_created_date >= DATE_FORMAT(NOW(), '%Y-%m-01')
-    GROUP BY DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m'), t2.prev_total_orders
-    ORDER BY order_month
+      YEAR(od.sales_created_date) AS date,
+      COUNT(*) AS row_count
+      FROM
+       order_details as od
+     JOIN customer_data as cd
+       on cd.customer_id = od.customer_id
+       where cd.org_id = ?
+     GROUP BY
+         YEAR(od.sales_created_date) 
+     order by YEAR(od.sales_created_date) DESC limit 2
     `,
-      [],
-      (error, results) => {
-        if (error) return callback(error);
-        return callback(null, results);
-      },
-
-    );
-  },
-
-  salesMadePrevYear: (callback) => {
-    getPool().query(
-      `SELECT
-      YEAR(sales_created_date) AS order_year,
-      COUNT(*) AS total_orders,
-      ((COUNT(*) - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
-    FROM
-      order_details
-    LEFT JOIN
-      (SELECT YEAR(sales_created_date) AS prev_order_year, COUNT(*) AS prev_total_orders
-       FROM order_details
-       WHERE sales_created_date < DATE_FORMAT(NOW(), '%Y-01-01')
-       GROUP BY YEAR(sales_created_date)
-       ORDER BY prev_order_year) AS t2
-    ON YEAR(sales_created_date) = t2.prev_order_year
-    WHERE sales_created_date >= DATE_FORMAT(NOW(), '%Y-01-01')
-    GROUP BY YEAR(sales_created_date), t2.prev_total_orders
-    ORDER BY order_year    
-    `,
-      [],
+      [orgId],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);

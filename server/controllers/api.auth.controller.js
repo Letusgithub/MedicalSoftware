@@ -52,6 +52,7 @@ exports.verifyOtp = async (req, res) => {
             });
           }
           if (results[0] === undefined) {
+            console.log('inside verify', org_telephone);
             return res.json({ redirect: `/register?mobileNumber=${org_telephone}` });
           }
           if (results[0].is_verified === 0) {
@@ -86,6 +87,7 @@ exports.registerOrg = (req, res) => {
       }
       // Generate JWT token after successful otp verification //
       const token = createJwtToken(data.org_telephone);
+      console.log(token);
       // Set the JWT token as a cookie //
       res.cookie('token', token, { httpOnly: true });
 

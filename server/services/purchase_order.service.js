@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const { getPool } = require('../config/database');
 
 module.exports = {
@@ -55,8 +56,6 @@ module.exports = {
     );
   },
   // Update vendor
- 
-
 
   update: (id, data, callBack) => {
     getPool().query(
@@ -130,6 +129,58 @@ module.exports = {
         return callBack(null, results[0]);
       },
 
+    );
+  },
+
+  searchMonth: (orgId, month, callback) => {
+    getPool().query(
+      `SELECT * FROM purchase_order po
+      JOIN vendor
+      ON vendor.vendor_id = po.vendor_id
+      where MONTH(po.po_created_date)=? and po.org_id = ${orgId}
+      `,
+      [
+        month,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchQuarter: (orgId, start, end, callback) => {
+    getPool().query(
+      `SELECT * FROM purchase_order po
+      JOIN vendor
+      ON vendor.vendor_id = po.vendor_id
+      where MONTH(po.po_created_date)>=? and MONTH(po.po_created_date)<=? and po.org_id = ${orgId}
+      `,
+      [
+        start,
+        end,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+  searchYear: (orgId, year, callback) => {
+    getPool().query(
+      `SELECT * FROM purchase_order po
+      JOIN vendor
+      ON vendor.vendor_id = po.vendor_id
+      where YEAR(po.po_created_date)=?po.org_id = ${orgId}
+      order by MONTH(po.po_created_date) DESC
+      `,
+      [
+        year,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
     );
   },
 };

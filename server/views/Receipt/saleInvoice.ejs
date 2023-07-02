@@ -242,19 +242,17 @@
         <div class="container">
             <div class="d-flex justify-content-between">
                 <div>
-                    <div class="shop-name">
-                        WELLNESS MEDICAL STORE
+                    <div class="shop-name" id="pharmacyname">
+                        <!-- WELLNESS MEDICAL STORE -->
                     </div>
                     <div class="shop-info d-flex justify-content-between">
-                        <div class="shop-info-child1">
-                            Shop no. 156, Springfield ST 54321,
-                            Mumbai (Maharashtra) 400076
-                            +91 99999 999999
+                        <div class="shop-info-child1" id="shopaddress">
+                            
                         </div>
                         <div class="shop-info-child2">
-                            <p class="my-0">GSTIN:</p>
-                            <p class="my-0">D.L.no.:</p>
-                            <p class="my-0">F.L. no.:</p>
+                            <p class="my-0" id="gstin">GSTIN:</p>
+                            <p class="my-0" id="dlno">D.L.no.:</p>
+                            <p class="my-0" id="flno">F.L. no.:</p>
                         </div>
                     </div>
 
@@ -266,17 +264,17 @@
             <hr class="px-0">
             <div class="d-flex justify-content-between">
                 <div class="customer-details">
-                    <p class="fw-bold">
-                        Patient name: Jay Sharma
+                    <p class="fw-bold" id="customername">
+                        Patient name: 
                     </p>
-                    <p>
-                        Mobile: +91 99999 999999
+                    <p id="mobilenumber">
+                        Mobile:
                     </p>
-                    <p>
-                        Shipping Address: Ujjain
+                    <p id="shippingadd">
+                        Shipping Address:
                     </p>
-                    <p>
-                        Dr name: Dr. Ankit Jain
+                    <p id="doctorname"> 
+                        Dr name: 
                     </p>
 
                 </div>
@@ -284,15 +282,15 @@
                     Sales Invoice
                 </div>
                 <div class="receipt-details">
-                    <p>
-                        Date:
+                    <p id="orderdate">
+                        Date: 
                     </p>
-                    <p>
+                    <p id="invoicenumber">
                         Invoice no.:
                     </p>
-                    <p>
+                    <!-- <p>
                         Cart id.:
-                    </p>
+                    </p> -->
                 </div>
 
             </div>
@@ -311,32 +309,44 @@
                         <th style="width: 4.2rem;">Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td style="width: 2.27rem; height: 1rem;">1</td>
-                        <td style="width: 11.29rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.1rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.59rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.4rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.25rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 2.27rem; height: 1rem;">1</td>
-                        <td style="width: 11.29rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.1rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.59rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.4rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.25rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                    </tr>
+                <tbody id="cartitems">
                     <!-- <tr>
+                        <td style="width: 2.27rem; height: 1rem;">1</td>
+                        <td style="width: 11.29rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.1rem; height: 1rem;">wyx</td>
+                        <td style="width: 4.59rem; height: 1rem;">wyx</td>
+                        <td style="width: 4.4rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.25rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
+                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 2.27rem; height: 1rem;">1</td>
+                        <td style="width: 11.29rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.1rem; height: 1rem;">wyx</td>
+                        <td style="width: 4.59rem; height: 1rem;">wyx</td>
+                        <td style="width: 4.4rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.25rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
+                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
+                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 2.27rem;">3</td>
+                        <td style="width: 11.29rem;">wyx</td>
+                        <td style="width: 3.1rem;">wyx</td>
+                        <td style="width: 4.59rem;">wyx</td>
+                        <td style="width: 4.4rem;">wyx</td>
+                        <td style="width: 3.25rem;">wyx</td>
+                        <td style="width: 3.62rem;">wyx</td>
+                        <td style="width: 3.61rem;">wyx</td>
+                        <td style="width: 3.91rem;">wyx</td>
+                        <td style="width: 4.2rem;">wyx</td>
+                    </tr>
+                    <tr>
                         <td style="width: 2.27rem;">3</td>
                         <td style="width: 11.29rem;">wyx</td>
                         <td style="width: 3.1rem;">wyx</td>
@@ -374,39 +384,39 @@
                             <div class="label">
                                 Subtotal:
                             </div>
-                            <div>
-                                360.00 
+                            <div id="subtotal">
+                                
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="label">
                                 Additonal Discount:
                             </div>
-                            <div>
-                                0.00 
+                            <div id="additionaldisc">
+                                 
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between">
+                        <!-- <div class="d-flex justify-content-between">
                             <div class="label">
                                 Total Discount:
                             </div>
                             <div>
                                 0.00 
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-between">
+                        </div> -->
+                        <!-- <div class="d-flex justify-content-between">
                             <div class="label">
                                 Shipping:
                             </div>
                             <div>
                                 50.00 
                             </div>
-                        </div>
+                        </div> -->
                         <div class="d-flex justify-content-between my-2">
                             <div class="label">
                                 Payment:
                             </div>
-                            <div>
+                            <div id="mop">
                                 CASH 
                             </div>
                         </div>
@@ -417,8 +427,8 @@
                             <div>
                                 Amount:
                             </div>
-                            <div>
-                                410.00 
+                            <div id="grandtotal">
+                                
                             </div>
                         </div>
                     </div>
@@ -436,6 +446,109 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var id = '<%=id%>';
+            
+
+            var todayDate = new Date();
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            var formattedDate = todayDate.toLocaleDateString('en-US', options);
+            $("#orderdate").text(`Date: ${formattedDate}`)
+
+            var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
+            $("#pharmacyname").text(pharmacyDetails.pharmacyName);
+            //$("#gstin").text(`GSTIN: ${pharmacyDetails.gst}`);
+            $("#contact").text(pharmacyDetails.number);
+
+            $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
+                var customer = data.result[0];
+                console.log('inside the invoice template', customer);
+                $("#mop").text(customer.mop.toUpperCase());
+
+                var customerName = customer.cust_name;
+                var customerNumber = customer.cust_telephone;
+                var customerAdd = customer.cust_address;
+
+                $("#customername").text(`Patient Name: ${customerName}`);
+                $("#mobilenumber").text(`Mobile: ${customerNumber}`);
+
+                $("#shippingadd").text(`Shipping Address: ${customerAdd}`);
+                $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
+                $("#invoicenumber").text(`Invoice no: ${customer.invoice_id_main}`);
+                $("#subtotal").text(customer.subtotal);
+                $("#additionaldisc").text(customer.total_dist);
+                $("#grandtotal").text(customer.grand_total);
+                $("#doctorname").text(`Dr name: ${customer.doctor_name}`)
+
+            })
+
+            $.get(`/api/org/<%=orgId%>`, function(data, status){
+                console.log(data);
+                
+                $("#shopaddress").html(`
+                    ${data.data.org_address}</br>
+                    ${data.data.org_city}( ${data.data.org_state} ), ${data.data.org_pincode}</br>
+                    ${data.data.org_telephone}
+                `)
+
+                $("#gstin").text(`GSTIN: ${data.data.org_gstin}`);
+                $("#dlno").text(`D.L.no.: ${data.data.org_dl_no_1}, ${data.data.org_dl_no_2}`)
+                $("#flno").text(`F.L. no.: ${data.data.org_fssai_no}`)
+
+
+            })
+            /*<tr>
+                <td>${i + 1}</td>
+                <td>${items[i].product_name}</td>
+                <td class="text-center">56664</td>
+                <td class="text-center">Nov 22</td>
+                <td class="text-center">${items[i].quantity}</td>
+                <td class="text-center">734952</td>
+                <td class="text-center">₹ ${items[i].mrp}</td>
+                <td class="text-center">₹ 10.99</td>
+                <td class="text-center">${items[i].unit_discount}</td>
+                <td class="text-right">${total}</td>
+            </tr>*/
+            var product = [];
+            $.get(`/api/getordercartininvoice/${id}`, function (data, status) {
+
+                var items = data.data;
+                console.log("items in data", items);
+
+                for (var i = 0; i < items.length; i++) {
+                    var datetime = items[i].exp_date; 
+                    console.log(datetime);
+                    var date = moment(datetime).format('DD-MM-YY');
+                    
+
+                    //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
+                    cartHtml = `
+
+                    <tr>
+                        <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
+                        <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                        <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
+                        <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
+                        <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
+                        <td style="width: 3.25rem; height: 1rem;">${date}</td>
+                        <td style="width: 3.62rem; height: 1rem;">${items[i].mrp}</td>
+                        <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
+                        <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
+                        <td style="width: 4.2rem; height: 1rem;">${items[i].saled_mrp}</td>
+                    </tr>
+                        
+                        `
+
+                    $("#cartitems").append(cartHtml);
+
+                }
+
+               
+            }) 
+        })
+    </script>
 
     <script>
         //Create PDf from HTML...

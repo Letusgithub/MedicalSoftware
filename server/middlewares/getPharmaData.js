@@ -17,10 +17,14 @@ exports.getPharmaData = async (req, res, next) => {
         if (error) {
           console.log(error);
         } else {
+          console.log('pharma results', results);
           req.app.locals.token = results[0].org_name;
-          req.app.locals.name = results[0].owner_name;
+          // req.app.locals.name = results[0].owner_name;
           req.app.locals.number = results[0].org_telephone;
-          req.app.locals.gst = results[0].org_gstin;
+          // req.app.locals.gst = results[0].org_gstin;
+          req.app.locals.address = results[0].org_address;
+          req.app.locals.dl1 = results[0].org_dl_no_1;
+          req.app.locals.dl2 = results[0].org_dl_no_2;
 
           console.log('inside the pharma', results[0].org_id_main);
 

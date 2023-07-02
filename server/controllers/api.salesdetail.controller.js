@@ -292,8 +292,10 @@ module.exports = {
 
   getTotalSumfromSales: (req, res) => {
     const orgId = req.query.org;
+    console.log('orgid', orgId);
     getTotalSumfromSales(orgId, (err, results) => {
       if (err) console.log(err);
+      console.log('inside total', results)
       return res.status(200).json({
         status: 'success',
         results,
@@ -302,7 +304,8 @@ module.exports = {
   },
 
   salesMadePrevDay: (req, res) => {
-    salesMadePrevDay((err, results) => {
+    const orgId = req.query.org;
+    salesMadePrevDay(orgId, (err, results) => {
       if (err) console.log(err);
       console.log(results);
       res.status(200).json({
@@ -312,13 +315,15 @@ module.exports = {
   },
 
   salesMadePrevMonth: (req, res) => {
-    salesMadePrevMonth((err, results) => res.status(200).json({
+    const orgId = req.query.org;
+    salesMadePrevMonth(orgId, (err, results) => res.status(200).json({
       results,
     }));
   },
 
   salesMadePrevYear: (req, res) => {
-    salesMadePrevYear((err, results) => res.status(200).json({
+    const orgId = req.query.org;
+    salesMadePrevYear(orgId, (err, results) => res.status(200).json({
       results,
     }));
   },

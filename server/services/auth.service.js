@@ -60,6 +60,7 @@ module.exports = {
       ],
       (error, results) => {
         if (error) {
+          console.log('erro in service', error);
           return callBack(error);
         }
         return callBack(null, results);
