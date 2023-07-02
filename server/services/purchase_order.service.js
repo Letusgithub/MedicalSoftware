@@ -102,14 +102,22 @@ module.exports = {
   },
 
   // Get All Vendors by Org ID
-  getAllById: (data, callBack) => {
+  getPOInInvoice: (id, callBack) => {
     getPool().query(
-      'select * from vendor where org_id = ?',
-      [data.org_id],
+      `SELECT * FROM purchase_order po
+      JOIN vendor
+      ON vendor.vendor_id = po.vendor_id
+      JOIN po_items poi
+      on poi.po_id_main = po.po_id_main
+      JOIN sample spl
+      on spl.sample_id = poi.product_id
+      where po.po_id = ? `,
+      [id],
       (error, results) => {
         if (error) {
           return callBack(error);
         }
+        console.log(results);
         return callBack(null, results);
       },
 

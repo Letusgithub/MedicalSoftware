@@ -424,6 +424,8 @@
                                 data: JSON.stringify(POdetails),
                                 contentType: 'application/json',
                                 success: function (response) {
+                                    var poinsertid = response.result.insertId;
+                                    console.log(poinsertid);
                                     var poId = response.POId;
                                     var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
 
@@ -436,7 +438,7 @@
                                             unit: unit
                                         }
                                         console.log('cartdetails', POcartdetail);
-
+                                        
                                         $.ajax({
                                             url: '/api/createpocarts/',
                                             method: 'POST',
@@ -453,6 +455,7 @@
 
                                     localStorage.removeItem('pocartitems');
                                     location.reload();
+                                    window.location.href = `/po_receipt/${poinsertid}`
                                 },
                                 error: function (error) {
                                     console.log('Error:', error);

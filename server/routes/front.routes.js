@@ -350,7 +350,9 @@ module.exports = async (app) => {
     res.render('Receipt/returnInvoice');
   });
 
-  app.get('/po_receipt', (req, res) => {
-    res.render('Receipt/PO');
+  app.get('/po_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/PO', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
   });
 };
