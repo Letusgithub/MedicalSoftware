@@ -238,8 +238,17 @@
 
 <body>
 
+    <div class="d-flex justify-content-between">
+        <div class="p-2 m-3">
+            <button class="btn-border" onclick="CreatePDFfromHTML()">Download</button>
+        </div>
+        <div class="p-2 m-3">
+            <a class="btn btn-border" href='/'>Back</a>
+        </div>
+    </div>
+
     <div class="frame1">
-        <div class="container">
+        <div class="container" id="html-content">
             <div class="d-flex justify-content-between">
                 <div>
                     <div class="shop-name" id="orgname">
@@ -382,7 +391,7 @@
                     <div class="cart-total">
                         <div class="d-flex justify-content-between my-2">
                             <div>
-                                Amount:
+                                Return Amount:
                             </div>
                             <div id="returnamount"> 
                                 
