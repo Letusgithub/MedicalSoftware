@@ -295,10 +295,6 @@ module.exports = async (app) => {
     res.render('Inventory/product_batch', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
-  // app.get('/add_batch', checkAuth, fetchOrgId, (req, res) => {
-  //   res.render('Inventory/add_batch', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
-  // });
-
   app.get('/add_batch/:id', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
       `select * from inventory inv
@@ -311,7 +307,7 @@ module.exports = async (app) => {
         if (error) {
           return res.send({ status: 'error', error });
         }
-        res.render('Inventory/add_batch_after', {
+        res.render('Inventory/add_batch', {
           data: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
         });
       },

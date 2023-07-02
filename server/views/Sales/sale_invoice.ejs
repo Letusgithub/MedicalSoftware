@@ -77,67 +77,6 @@
                 </div>
               </div>
 
-
-
-
-              <!-- Content
-
-                <div class="container-xxl flex-grow-1 container-p-y">
-                  <h4 class="fw-bold py-3 mb-1"> Sale Invoice</h4>
-                  <hr class="mb-4">
-                  <form>
-                    <div class="row">
-
-                      <tr>
-                        <th>
-                          <div class="col-md-6">
-                            <div class="card mb-4">
-                              <h5 class="card-header">Customer Mobile</h5>
-                              <div class="card-body">
-                                <div>
-
-                                  <input type="text" class="form-control" id="phonenumber"
-                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </th>
-
-                        <th>
-
-                          <div class="col-md-6">
-
-                            <div class="card mb-4">
-                              <div class="d-flex justify-content-between m-0 p-0">
-                                <h5 class="card-header">Customer Name</h5>
-                                <div class=" text-center mt-3 ">
-                                  <a class="btn btn-primary mx-4" style="color: white;" href="">Add
-                                    Customer</a>
-                                </div>
-                              </div>
-                              <div class="card-body pt-0">
-                                <div>
-
-                                  <input type="text" class="form-control" id="customername"
-                                    aria-describedby="defaultFormControlHelp" placeholder="Customer name" />
-
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
-                        </th>
-
-                      </tr>
-                    </div>
-                
-                  </form>
-                </div>
-              </div> -->
-
-
               <div class="row mx-3">
                 <h4 class="fw-bold mb-4">Add Items</h4>
                 <h5 id="message" style="color:red"></h5>
@@ -807,7 +746,7 @@
             }
 
             if($("#expdate").val() < new Date().toJSON().slice(0, 10)){
-              return alert('PLEASE ADD CORRECT EXPDate FIRST');
+              return alert('PLEASE ADD CORRECT EXP Date FIRST');
             }
 
             if(priQty.val()>availablePrimaryQty){

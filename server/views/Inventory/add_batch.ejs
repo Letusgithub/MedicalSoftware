@@ -25,213 +25,244 @@
 
 
                                     <div class="d-flex justify-content-between m-0 p-0">
-                                        <h4 class="fw-bold py-3 mb-1"> Add Batch</h4>
-                                        <a type="button" class="btn btn-icon btn-danger my-2 mx-3" href="/product_stock">
+                                        <h4 class="fw-bold py-3 mb-1"> Add Batches</h4>
+                                        <a type="button" class="btn btn-icon btn-danger my-2 mx-3"
+                                            href="/product_stock">
                                             <i class='bx bx-x bx-sm'></i>
                                         </a>
                                     </div>
                                     <hr class="mb-4">
 
-                                    <div class="card mb-4 mx-auto col-md-10">
+                                    <div class="card mb-4 mx-auto col-md-8">
 
-                                            <div class="card-body ">
-                                                <h4 class="fs-5">Product Details</h4>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <div>
-                                                            <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Product name</label>
-                                                            <p class="fw-bold pb-0" id="productname"></p>
-                                                        </div>
+                                        <div class="card-body ">
 
-                                                        <div>
-                                                            <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Mfg/Mkt</label>
-                                                            <p class="fw-bold pb-0" id="brand">
-                                                            </p>
-                                                        </div>
-
-                                                        <div>
-                                                            <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Salt</label>
-                                                            <p class="fw-bold pb-0" id="salt">
-                                                            </p>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div>
-                                                            <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">HSN Code</label>
-                                                            <p class="fw-bold pb-0" id="hsncode"></p>
-                                                        </div>
-
-                                                        <div>
-                                                            <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">GST</label>
-                                                            <p class="fw-bold pb-0" id="gst"></p>
-                                                        </div>
-
-                                                        <!-- <div>
-                                                            <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Shelf Label</label>
-                                                            <p class="fw-bold pb-0" id=""></p>
-                                                        </div> -->
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <img class="w-100"alt="Calpol 500mg Tablet" src="https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/dpsh8z3rldqlg33kavbh.jpg" title="Calpol 500mg Tablet">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-fullname">Product Name</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-fullname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-fullname2"
+                                                            name="productname" value="<%=data[0].med_name%>" disabled>
                                                     </div>
                                                 </div>
                                             </div>
-                                        
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-fullname">Mfg/Mkt</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-fullname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-fullname2" name="brand"
+                                                            disabled value="<%=data[0]['mfd/mkt']%>">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-fullname">Salt Comp.</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-fullname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-fullname2" name="salt"
+                                                            disabled value="<%=data[0].salt_composition%>">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-companyname">GST (%)</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-companyname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-companyname2"
+                                                            name="gst" disabled value="<%=data[0].gst%>">
+                                                    </div>
+                                                </div>
+
+
+
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="basic-icon-default-companyname">HSN Code</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-companyname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-companyname2"
+                                                            name="hsn" disabled value="<%=data[0].hsn%>">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+                                            <div class="row mb-2">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-address">Unit</label>
+                                                <div class="col-sm-4 me-0">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="hsn" disabled
+                                                            value="<%=data[0].primary_unit%>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-1 text-center mx-0 p-0">
+                                                    <p class="fs-4">-</p>
+                                                </div>
+
+                                                <div class="col-sm-4 ms-0">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="hsn" disabled
+                                                            value="<%=data[0].secondary_unit%>">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-companyname">Min Order Quantity</label>
+
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="threshold"
+                                                            disabled value="<%=data[0].threshold%>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="card mb-4 mx-auto col-md-8">
-                                 
-                                            <div class="card-body ">
-                                                <h4 class="fs-5">Batch Details</h4>
-                                                <hr>
 
-                                                <div class="row mb-2">
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-companyname">Quantity</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-companyname2"
-                                                                    class="input-group-text"></span>
-                                                                <input type="text" class="form-control"
-                                                                    id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe" name="addqty"
-                                                                    aria-describedby="basic-icon-default-companyname2">
-                                                                <select class="form-select" id="unit" name="unit"
-                                                                    aria-label="unit">
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        <div class="card-body ">
+                                            <h4 class="fs-5">Batch Details</h4>
+                                            <hr>
 
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-companyname">Conversion</label>
-                                                        <div class="col-sm-8 ">
-                                                            <div class="align-middle">
-                                                                <p class="" id="conversion">S</p> 
-                                                            </div>
-                                                        </div>
+                                            <div class="row mb-3">
+
+
+                                                <label class="col-sm-2 col-form-label "
+                                                    for="basic-icon-default-companyname">Batch No.</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-companyname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control" placeholder=""
+                                                            aria-label="" id="batchname" />
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-2">
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-companyname">MRP</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-companyname2"
-                                                                    class="input-group-text"></span>
-                                                                <input type="text" class="form-control"
-                                                                    id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe" name="addmrp"
-                                                                    aria-describedby="basic-icon-default-companyname2">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="basic-icon-default-address">Exp Date</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
 
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-companyname">Purchase Rate</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-companyname2"
-                                                                    class="input-group-text"></span>
-                                                                <input type="text" class="form-control"
-                                                                    id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe" name="addpur"
-                                                                    aria-describedby="basic-icon-default-companyname2">
-                                                            </div>
-                                                        </div>
+                                                        <input class="form-control" type="date" id="html5-date-input"
+                                                            name="addexp" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-companyname">Conversion</label>
+
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span class="input-group-text" id="primarypopulate">
+                                                            <%=data[0].primary_unit%>
+                                                        </span>
+                                                        <span class="input-group-text">=</span>
+                                                        <input type="number" class="form-control" placeholder=""
+                                                            aria-label="" id="conversion" />
+                                                        <span class="input-group-text" id="secondarypopulate">
+                                                            <%=data[0].secondary_unit%>
+                                                        </span>
                                                     </div>
                                                 </div>
 
-                                                <!-- <div class="row mb-3">
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-companyname">GST %</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-companyname2"
-                                                                    class="input-group-text"></span>
-                                                                <input type="text" class="form-control"
-                                                                    id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe"
-                                                                    aria-describedby="basic-icon-default-companyname2">
-                                                            </div>
-                                                        </div>
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="basic-icon-default-companyname">Quantity</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-companyname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="number" class="form-control" name="addqty">
+                                                        <span class="input-group-text" id="getprimaryunit">
+                                                            <%=data[0].primary_unit%>
+                                                        </span>
                                                     </div>
+                                                </div>
+                                            </div>
 
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-companyname">HSN Code</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group input-group-merge">
-                                                                <span id="basic-icon-default-companyname2"
-                                                                    class="input-group-text"></span>
-                                                                <input type="text" class="form-control"
-                                                                    id="basic-icon-default-companyname" placeholder=""
-                                                                    aria-label="John Doe"
-                                                                    aria-describedby="basic-icon-default-companyname2">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                            <div class="row mb-3  ">
 
-
-                                                <div class="row mb-3">
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-address">Exp Date</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group input-group-merge">
-
-                                                                <input class="form-control" type="date"
-                                                                    id="html5-date-input" name="addexp"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row col-sm-6">
-                                                        <label class="col-sm-4 col-form-label"
-                                                            for="basic-icon-default-email">Shelf Label</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group input-group-merge">
-                                                                <span class="input-group-text"></span>
-                                                                <input type="text" id="basic-icon-default-email"
-                                                                    class="form-control" placeholder="" name="addshelf"
-                                                                    aria-label="john.doe"
-                                                                    aria-describedby="basic-icon-default-email2">
-                                                                <span id="basic-icon-default-email2"
-                                                                    class="input-group-text"></span>
-                                                            </div>
-                                                        </div>
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-companyname">MRP</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-companyname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control" name="addmrp">
                                                     </div>
                                                 </div>
 
 
 
-
-
-
-                                                <div class="row justify-content-end">
-                                                    <div class="col-sm-10">
-                                                        <button type="submit" class="btn btn-primary" id="submitbatch">Add</button>
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="basic-icon-default-companyname">Purchase Rate</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-companyname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control" name="addpur">
                                                     </div>
                                                 </div>
-
 
                                             </div>
-                                    
+
+                                            <div class="row mb-3">
+
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-email">Shelf Label</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span class="input-group-text"></span>
+                                                        <input type="text" id="basic-icon-default-email"
+                                                            class="form-control" placeholder="" name="addshelf">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary"
+                                                        id="submitbatch">Add</button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
                                     </div>
 
 
@@ -255,61 +286,123 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
-        <script>
-            $(document).ready(function(){
-                var productId=JSON.parse(localStorage.getItem('addbatchid'));
+            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+            <script>
+                console.log('<%=data[0].sample_id%>');
+                //var productId = ;
+                var orgID = '<%= orgId %>';
+                /*
+                $(document).ready(function(){
+                    if ('caches' in window) {
+                        caches.keys().then(name=>{
+                          if(name.length == 0){
+                            console.log('do something');
+                            caches.open('productCache').then((cache) => {
+                              cache.add('/api/allsample');
+                            })
+                          }
+                          else{
+                            console.log('do nothing');
+                          } 
+                        })    
+                    }
+    // autopopulate product
+                        $("input[name='productname']").autocomplete({
+                            minLength: 3,
+                            source: function(request, response) {
+                                if('caches' in  window){
+                                    caches.match(`/api/allsample`).then(res=>{
+                                        if(res){
+                                            res.json().then(data=>{
+                                                let searchTerm = request.term;
+                                                let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
+                                                response(results);
+                                            })
+                                        }
+                                    });
+                                }
+                            },
+                            select: function(event, ui) {
+                                setTimeout(function(){
+                                    console.log(ui.item);
+                                    productId=ui.item.sample_id;
+                                    $("input[name='productname']").val(ui.item.med_name);
+                                    $("input[name='brand']").val(ui.item["mfd/mkt"]);
+                                    $("input[name='salt']").val(ui.item.salt_composition);
+                                },0)
+                            }
+                        }).data('ui-autocomplete')._renderItem = function(ul, item) {
+                            return $('<li>')
+                            .append('<div>' + item.med_name + '</div>')
+                            .appendTo(ul);
+                        };
+    //changes in stp and tabs
+                        $("select[name='primary'], select[name='secondary']").on("change", function(){
+                            //var primaryUnit = $("select[name='primary']").find('option:selected').text();
+                            //var secondaryUnit = $("select[name='secondary']").find('option:selected').text();
+                            var primaryUnit = $("select[name='primary']").val();
+                            var secondaryUnit = $("select[name='secondary']").val();
+    
+    
+                            $("#primarypopulate").text(`1 ${primaryUnit}`);
+                            $("#secondarypopulate").text(`${secondaryUnit}`);
+                            $("#getprimaryunit").text(primaryUnit);
+                        })
+    */
 
-                $.get(`/api/getinventory/${productId}`, function(data, status){
-                    var items = data.data[0];
-                    console.log(items);
-                    $("#productname").text(items.med_name);
-                    $("#hsncode").text(items.hsn);
-                    $("#brand").text(items['mfd/mkt']);
-                    $("#salt").text(items.salt_composition);
-                    $("#gst").text(items.gst+'%');
+                $("input[name='addexp']").on('input', function () {
+                    var input = $(this);
+                    var exp_date = input.val();
+                    if (exp_date < new Date().toJSON().slice(0, 10)) {
+                        $("input[name='addexp']").val(null);
+                        return alert('PLEASE ADD CORRECT EXPDate FIRST');
+                    }
+                });
+                //submit process after adding batch
 
+                $("#submitbatch").click(function () {
+                    if ($("input[name='addpur']").val() > $("input[name='addmrp']").val()) {
+                        return alert("Purchase Rate can't be greater than MRP");
+                    }
 
-
-
-                    $("#conversion").text(`1 ${items.primary_unit} = ${items.conversion} ${items.secondary_unit}`)
-                    $("#unit").append(`<option> ${items.primary_unit} </option>`);
-                    $("#unit").append(`<option> ${items.secondary_unit} </option>`);
-
-                })
-
-
-
-                $("#submitbatch").click(function(){
                     var batchDetails = {
-                       product_id: productId,
-                       org_id: '<%=orgId%>',
-                       exp_date: $("input[name='addexp']").val(),
-                       qty_unit: $("#unit").val(),
-                       batch_qty: $("input[name='addqty']").val(),
-                       purchase_rate: $("input[name='addpur']").val(),
-                       mrp: $("input[name='addmrp']").val(),
-                       shelf_label: $("input[name='addshelf']").val()
+                        product_id: "<%=data[0].sample_id%>",
+                        org_id: orgID,
+                        batch_name: $("#batchname").val(),
+                        exp_date: $("input[name='addexp']").val(),
+                        conversion: $("#conversion").val(),
+                        batch_qty: $("input[name='addqty']").val(),
+                        purchase_rate: $("input[name='addpur']").val(),
+                        mrp: $("input[name='addmrp']").val(),
+                        shelf_label: $("input[name='addshelf']").val()
                     }
                     console.log(batchDetails);
-                    
+
                     $.ajax({
                         url: `/api/addbatch/`,
                         type: 'POST',
                         data: JSON.stringify(batchDetails),
                         contentType: 'application/json',
-                        success: function(response){
-                            window.location.href='/product_stock'                  
+                        success: function (response) {
+                            //window.location.href='/product_stock'          
+                            console.log(response);
+                            $("#batchname").val("");
+                            $("input[name='addexp']").val("");
+                            $("#conversion").val("");
+                            $("input[name='addqty']").val("");
+                            $("input[name='addpur']").val("");
+                            $("input[name='addmrp']").val("");
+                            $("input[name='addshelf']").val("");
+
                         },
-                        error: function(error){
+                        error: function (error) {
                             console.log(error);
                         }
                     })
 
                 })
 
-
-            })
-        </script>
+            </script>
 
     </body>
 
