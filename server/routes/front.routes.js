@@ -346,8 +346,8 @@ module.exports = async (app) => {
     res.render('Receipt/saleInvoice');
   });
 
-  app.get('/returnInvoice', (req, res) => {
-    res.render('Receipt/returnInvoice');
+  app.get('/returnInvoice/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/returnInvoice', { id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name});
   });
 
   app.get('/po_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
