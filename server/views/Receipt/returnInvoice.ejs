@@ -113,7 +113,7 @@
         }
 
         .receipt-details {
-            width: 11.61225rem;
+            width: 17.61225rem;
             height: 2.77413rem;
             flex-shrink: 0;
 
@@ -242,19 +242,17 @@
         <div class="container">
             <div class="d-flex justify-content-between">
                 <div>
-                    <div class="shop-name">
-                        WELLNESS MEDICAL STORE
+                    <div class="shop-name" id="orgname">
+                        
                     </div>
                     <div class="shop-info d-flex justify-content-between">
-                        <div class="shop-info-child1">
-                            Shop no. 156, Springfield ST 54321,
-                            Mumbai (Maharashtra) 400076
-                            +91 99999 999999
+                        <div class="shop-info-child1" id="shopaddress">
+                            
                         </div>
                         <div class="shop-info-child2">
-                            <p class="my-0">GSTIN:</p>
-                            <p class="my-0">D.L.no.:</p>
-                            <p class="my-0">F.L. no.:</p>
+                            <p class="my-0" id="gstin">GSTIN:</p>
+                            <p class="my-0" id="dlno">D.L.no.:</p>
+                            <p class="my-0" id="flno">F.L. no.:</p>
                         </div>
                     </div>
 
@@ -266,17 +264,17 @@
             <hr class="px-0">
             <div class="d-flex justify-content-between">
                 <div class="customer-details">
-                    <p class="fw-bold">
-                        Patient name: Jay Sharma
+                    <p class="fw-bold" id="customername">
+                        Patient name: 
                     </p>
-                    <p>
-                        Mobile: +91 99999 999999
+                    <p id="customermobile">
+                        Mobile:
                     </p>
-                    <p>
-                        Shipping Address: Ujjain
+                    <p id="shippingadd">
+                        Shipping Address: 
                     </p>
-                    <p>
-                        Dr name: Dr. Ankit Jain
+                    <p id="doctorname">
+                        Dr name: 
                     </p>
 
                 </div>
@@ -284,15 +282,15 @@
                     Return Invoice
                 </div>
                 <div class="receipt-details">
-                    <p>
+                    <p id="orderdate">
                         Date:
                     </p>
-                    <p>
+                    <span id="salesinvoiceno" >
                         Invoice no.:
-                    </p>
-                    <p>
+                    </span>
+                    <span id="returninvoiceno">
                         Return Invoice no.:
-                    </p>                
+                    </span>                
 
                 </div>
 
@@ -312,8 +310,8 @@
                         <th style="width: 4.2rem;">Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="cartitems">
+                    <!-- <tr>
                         <td style="width: 2.27rem; height: 1rem;">1</td>
                         <td style="width: 11.29rem; height: 1rem;">wyx</td>
                         <td style="width: 3.1rem; height: 1rem;">wyx</td>
@@ -336,7 +334,7 @@
                         <td style="width: 3.61rem; height: 1rem;">wyx</td>
                         <td style="width: 3.91rem; height: 1rem;">wyx</td>
                         <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                    </tr>
+                    </tr> -->
                     <!-- <tr>
                         <td style="width: 2.27rem;">3</td>
                         <td style="width: 11.29rem;">wyx</td>
@@ -375,8 +373,8 @@
                             <div class="label">
                                 Subtotal:
                             </div>
-                            <div>
-                                360.00 
+                            <div id="subtotal">
+                               
                             </div>
                         </div>
 
@@ -386,8 +384,8 @@
                             <div>
                                 Amount:
                             </div>
-                            <div>
-                                410.00 
+                            <div id="returnamount"> 
+                                
                             </div>
                         </div>
                     </div>
@@ -405,6 +403,110 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var id = '<%=id%>';
+            
+
+            var todayDate = new Date();
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            var formattedDate = todayDate.toLocaleDateString('en-US', options);
+            $("#orderdate").text(`Date: ${formattedDate}`);
+
+            $.get(`/api/org/<%=orgId%>`, function(data, status){
+                console.log(data);
+                
+                $("#shopaddress").html(`
+                    ${data.data.org_address}</br>
+                    ${data.data.org_city}( ${data.data.org_state} ), ${data.data.org_pincode}</br>
+                    ${data.data.org_telephone}
+                `)
+
+                $("#gstin").text(`GSTIN: ${data.data.org_gstin}`);
+                $("#dlno").text(`D.L.no.: ${data.data.org_dl_no_1}, ${data.data.org_dl_no_2}`)
+                $("#flno").text(`F.L. no.: ${data.data.org_fssai_no}`)
+            })
+
+
+            $.get(`/api/org/<%=orgId%>`, function(data, status){
+                var org = data.data
+                var orgName = org.org_name;
+                var orgNumber = org.org_telephone;
+                var orgAdd = org.org_address;
+
+                $("#orgname").html(`${orgName}`);
+
+                $("#orgaddress").html(`
+                    ${orgAdd}</br>
+                    ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
+                    ${org.org_telephone}
+                `)
+
+                $("#gstin").text(`GSTIN: ${org.org_gstin}`);
+                $("#dlno").text(`D.L.no.: ${org.org_dl_no_1}, ${org.org_dl_no_2}`)
+                $("#flno").text(`F.L. no.: ${org.org_fssai_no}`)
+            })
+
+            $.get(`/api/getinvoiceorder?id=${id}`, function(data, status){
+                console.log(data);
+                var customer = data.result[0]; 
+              
+
+                var customerName = customer.cust_name;
+                var customerNumber = customer.cust_telephone;
+                var customerAdd = customer.cust_address;
+
+                $("#customername").text(`Patient Name: ${customerName}`);
+                $("#customermobile").text(`Mobile: ${customerNumber}`);
+
+                $("#shippingadd").text(`Shipping Address: ${customerAdd}`);
+                $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
+                $("#salesinvoiceno").text(`Invoice no: ${customer.invoice_id_main}`);
+                $("#returninvoiceno").text(`Return Invoice no: ${customer.return_invoice_id}`);
+                $("#subtotal").text(customer.return_subtotal);
+                $("#returnamount").text(customer.return_amount);
+             
+                $("#doctorname").text(`Dr name: ${customer.doctor_name}`)
+
+
+                var items = data.result;
+
+                for (var i = 0; i < items.length; i++) {
+                    var datetime = items[i].exp_date; 
+                    console.log(datetime);
+                    var date = moment(datetime).format('DD-MM-YY');
+
+                    cartHtml = `
+
+                    <tr>
+                        <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
+                        <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                        <td style="width: 3.1rem; height: 1rem;">${items[i].return_pri_qty}:${items[i].return_sec_qty}</td>
+                        <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
+                        <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
+                        <td style="width: 3.25rem; height: 1rem;">${date}</td>
+                        <td style="width: 3.62rem; height: 1rem;">${items[i].return_mrp}</td>
+                        <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
+                        <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
+                        <td style="width: 4.2rem; height: 1rem;">${items[i].return_total_cart}</td>
+                    </tr>
+
+
+                        
+                        `
+
+                    $("#cartitems").append(cartHtml);
+
+                }
+
+
+
+            })
+
+            
+        })
+    </script>
 
     <script>
         //Create PDf from HTML...
