@@ -18,7 +18,7 @@ module.exports = (app) => {
   app.patch('/api/owner/', controller.updateOwner);
   app.delete('/api/owner/', controller.deleteOwner);
 
-  // app.get('/api/searchdatespo/', controller.searchDates);
+  app.get('/api/searchdatespo/', controller.searchDates);
   app.get('/api/searchmonthpo/', controller.searchMonth);
   app.get('/api/searchquarterpo/', controller.searchQuarter);
   app.get('/api/searchyearpo/', controller.searchYear);
