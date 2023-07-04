@@ -213,4 +213,20 @@ module.exports = {
       },
     );
   },
+
+  getOrderStatistics: (orgId, callback) => {
+    getPool().query(
+      `SELECT inv.primary_unit, inv.secondary_unit, sum(bth.saled_pri_qty) as pri, sum(bth.saled_sec_qty) as sec from newdata.inventory inv
+      JOIN newdata.batch bth on bth.product_id = inv.product_id
+      where inv.org_id = ?
+      group by inv.primary_unit, inv.secondary_unit 
+      
+      `,
+      [orgId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
 };
