@@ -226,17 +226,18 @@
                                     window.location.href = `/add_batch/${productId}`
                                 })
                             }
-                            else{
-                                $.get('/api/allsample', function(data, status){
-                                    let searchTerm = productName;
-                                    let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
-                                    productId = results[0].sample_id;
-                                    localStorage.setItem('addbatchid', JSON.stringify(productId));
-                                    window.location.href = `/add_batch/${productId}`
-                                })
-                              }
+                            
                         });
-                    }
+                    }else{
+                        $.get('/api/allsample', function(data, status){
+                            let searchTerm = productName;
+                            let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
+                            productId = results[0].sample_id;
+                            console.log(productId);
+                            localStorage.setItem('addbatchid', JSON.stringify(productId));
+                            window.location.href = `/add_batch/${productId}`
+                        })
+                      }
 
                 })
 

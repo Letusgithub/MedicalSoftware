@@ -454,8 +454,8 @@
                                     contentType: 'application/json',
                                     success: function (response) {
                                         window.location.href = '/product_stock'
-                                        //localStorage.setItem('addbatchid', productId);        
-                                        // window.location.href = `/add_batch/${productId}`
+                                        localStorage.setItem('addbatchid', productId);        
+                                        window.location.href = `/add_batch/${productId}`
                                         console.log(response);
                                     },
                                     error: function (error) {
