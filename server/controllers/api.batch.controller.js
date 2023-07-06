@@ -2,7 +2,7 @@
 /* eslint-disable radix */
 /* eslint-disable max-len */
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn,
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics,
 } = require('../services/batch.service');
 
 module.exports = {
@@ -160,6 +160,17 @@ module.exports = {
   getTotalPurchaseQty: (req, res) => {
     const orgId = req.query.org;
     getTotalPurchaseQty(orgId, (err, results) => {
+      if (err) console.log(err);
+      return res.status(200).json({
+        status: 'success',
+        results,
+      });
+    });
+  },
+
+  getOrderStatistics: (req, res) => {
+    const orgId = req.query.org;
+    getOrderStatistics(orgId, (err, results) => {
       if (err) console.log(err);
       return res.status(200).json({
         status: 'success',
