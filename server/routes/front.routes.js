@@ -45,7 +45,6 @@ module.exports = async (app) => {
     //     },
     //   );
     // }
-
     res.header(
       'Access-Control-Allow-Headers',
       'x-access-token, Origin, Content-Type, Accept',
@@ -205,6 +204,7 @@ module.exports = async (app) => {
       'select * from vendor where org_id = ? and vendor_id =?',
       [req.org_id, req.params.id],
       (error, results) => {
+        console.log(results);
         if (error) {
           throw error;
         }
@@ -239,14 +239,6 @@ module.exports = async (app) => {
 
   app.get('/sale_return_report', checkAuth, fetchOrgId, (req, res) => {
     res.render('Sales/sale_return_report', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
-  });
-
-  app.get('/invoice_template/:id', checkAuth, fetchOrgId, (req, res) => {
-    console.log('got the id', req.params.id);
-    console.log(req.org_id);
-    res.render('Receipt/saleInvoice', {
-      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
-    });
   });
 
   // Inventory Managment component
@@ -333,24 +325,52 @@ module.exports = async (app) => {
       },
     );
   });
-  app.get('/po_template/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Inventory/po_template', { id: req.params.id, orgId: req.org_id });
-  });
 
   app.get('/po_report', checkAuth, fetchOrgId, (req, res) => {
     res.render('Inventory/po_report', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
   // Receipt
-  app.get('/saleInvoice', (req, res) => {
-    res.render('Receipt/saleInvoice');
+  app.get('/sale_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    console.log('got the id', req.params.id);
+    console.log(req.org_id);
+    res.render('Receipt/sale_receipt', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
   });
 
-  app.get('/returnInvoice', (req, res) => {
-    res.render('Receipt/returnInvoice');
+  app.get('/return_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/return_receipt', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
   });
 
-  app.get('/po_receipt', (req, res) => {
-    res.render('Receipt/PO');
+  app.get('/po_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/po_receipt', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
+  });
+
+  app.get('/credit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/credit_note_receipt', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
+  });
+
+  // notes
+  app.get('/credit_note', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      'select * from vendor where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        }
+
+        res.render('Notes/credit_note', {
+          vendors: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+        });
+      },
+    );
   });
 };

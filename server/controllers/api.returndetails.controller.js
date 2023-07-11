@@ -1,4 +1,6 @@
-const { createReturnOrder, getTotalReturns, searchDates, searchMonth, searchQuarter, searchYear,} = require('../services/returndetails.service');
+const {
+  createReturnOrder, getTotalReturns, searchDates, searchMonth, searchQuarter, searchYear, getOrderinInvoice,
+} = require('../services/returndetails.service');
 
 module.exports = {
   createReturnOrder: (req, res) => {
@@ -16,7 +18,7 @@ module.exports = {
       console.log('err', totalError);
       console.log('res', totalResults);
 
-      const returnInvoiceId = `${orgId}RE${returnDate}${totalResults}`;
+      const returnInvoiceId = `${orgId}RE${returnDate}${totalResults + 1}`;
       // console.log('invoiceId', returnInvoiceId);
       createReturnOrder(body, returnInvoiceId, (returnError, returnResults) => {
         if (returnError) {
@@ -28,7 +30,7 @@ module.exports = {
         }
         return res.status(200).json({
           status: 'success',
-          message: returnResults,
+          results: returnResults,
           return_invoice_id: returnInvoiceId,
         });
       });
@@ -86,7 +88,7 @@ module.exports = {
       });
     });
   },
-  
+
   searchQuarter: (req, res) => {
     const orgId = req.query.org;
     const quarter = req.query.quarter;
@@ -115,6 +117,24 @@ module.exports = {
       return res.status(200).json({
         status: 'success',
         data: results,
+      });
+    });
+  },
+
+  getInvoiceOrder: (req, res) => {
+    const id = req.query.id;
+    getOrderinInvoice(id, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'No Orders Found',
+        });
+      }
+      // console.log(results);
+      res.status(200).json({
+        success: 'here',
+        result: results,
       });
     });
   },

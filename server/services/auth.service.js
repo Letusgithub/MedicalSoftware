@@ -44,15 +44,17 @@ module.exports = {
       `insert into organisation(
                 org_telephone,
                 org_name,
+                owner_name,
                 org_dl_no_1,
                 org_dl_no_2,
                 org_pincode,
                 org_address,
                 is_verified)
-                values(?,?,?,?,?,?,true)`,
+                values(?,?,?,?,?,?,?,true)`,
       [
         data.org_telephone,
         data.org_name,
+        data.owner_name,
         data.org_dl_no_1,
         data.org_dl_no_2,
         data.org_pincode,

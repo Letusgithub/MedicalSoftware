@@ -38,6 +38,11 @@
                                                 required />
                                         </div>
                                         <div class="col-sm-10">
+                                            <label class="form-label" for="owner_name">Owner name</label>
+                                            <input type="text" id="owner_name" name="owner_name" class="form-control"
+                                                required />
+                                        </div>
+                                        <div class="col-sm-10">
                                             <label class="form-label" for="org_dl_no_1">DL No. 1</label>
                                             <div class="input-group">
                                                 <span id="basic-icon-default-fullname2" class="input-group-text"><i
@@ -127,6 +132,7 @@
                             data: JSON.stringify({
                                 org_telephone: '<%= mobileNumber %>',
                                 org_name: $("#org_name").val() ,
+                                owner_name: $("#owner_name").val() ,
                                 org_dl_no_1: dl_no_1,
                                 org_dl_no_2: dl_no_2,
                                 org_pincode: $("#org_pincode").val(),

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn,
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics,
 } = require('../controllers/api.batch.controller');
 
 module.exports = (app) => {
@@ -22,4 +22,6 @@ module.exports = (app) => {
   app.get('/api/totalsumfrompurchase', getTotalSumfromPurchase);
   app.get('/api/getremqtyaftersales', getRemQtyafterSales);
   app.get('/api/gettotalpurchaseqty', getTotalPurchaseQty);
+
+  app.get('/api/getorderstatistics', getOrderStatistics);
 };

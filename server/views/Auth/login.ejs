@@ -25,10 +25,11 @@
                             <p class="mb-4">Please enter your mobile number</p>
 
 
-                            <div class="mb-3">
+                            <div class="mb-3" id="validatemobile">
                                 <label for="org_telephone" class="form-label">Mobile No.</label>
-                                <input type="number" class="form-control" id="org_telephone" name="org_telephone"
-                                    placeholder="Enter 10-digit mobile no." autofocus="">
+                                <input type="number" class="form-control" id="org_telephone" name="mobilenumber"
+                                    placeholder="Enter 10-digit mobile no." autofocus>
+                                <p id="validation-message" style="display: none; color: red;">Please enter a valid 10-digit number.</p>
                             </div>
 
                             <div class="mb-3">
@@ -115,7 +116,7 @@
                             <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
                             <div class="mb-3">
                                 <label for="otp_value" class="form-label">Enter OTP</label>
-                                <input type="number" class="form-control" id="otp_value" autofocus="">
+                                <input type="number" class="form-control" id="otp_value" >
                             </div>
 
                             <button class="btn btn-primary d-grid w-100 mb-3" id="confirmOtpButton">
@@ -138,9 +139,39 @@
             <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
             <script>
                 $(document).ready(function () {
+                    $('#sendOtpButton').prop('disabled', true);
+
+                    //validate the number
+                    function validateMobileNumber() {
+                        console.log('object');
+                        var mobileNumber = $('#org_telephone').val();
+                    
+                        if (mobileNumber.length < 10 || mobileNumber.length>10) {
+                          $('#validation-message').show();
+                          $('#sendOtpButton').prop('disabled', true);
+                        } else {
+                          $('#validation-message').hide();
+                          $('#sendOtpButton').prop('disabled', false);
+                        }
+                    }
+
+                    function handleKeyPress(event) {
+                        // Check if Enter key was pressed (key code 13)
+                        if (event.keyCode === 13) {
+                          // Trigger a click event on the submit button
+                          if (!$("#sendOtpButton").prop("disabled")) {
+                            // Trigger a click event on the submit button
+                            $("#sendOtpButton").click();
+                          }
+                        }
+                    }
+
+                    $('input[name="mobilenumber"]').on("input" , validateMobileNumber);
+                    $("#org_telephone").keypress(handleKeyPress);
 
                     // Send OTP button click event handler
                     $("#sendOtpButton").click(function () {
+                        $('#sendOtpButton').prop('disabled', true);
                         // Get the mobile number entered by the user
                         var mobileNumber = $('#org_telephone').val();
                         console.log(mobileNumber);
@@ -158,10 +189,13 @@
                                 $("#mobileNumberInput").hide();
                                 // Display the OTP input field and verify button
                                 $("#otpInput").show();
-
+                                $("#otpInput #otp_value").focus();
                                 // OTP form submission event handler
                                 var OTPtoken = response.OTPtoken
                                 $("#confirmOtpButton").click(function () {
+
+                                    //$('#confirmOtpButton').prop('disabled', true);
+
                                     var otp = $("#otp_value").val();
 
                                     var details = {

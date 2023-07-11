@@ -3,7 +3,7 @@ const service = require('../services/vendor.service');
 
 exports.createVendor = (req, res) => {
   const data = req.body;
-  service.create(data, (err) => {
+  service.create(data, (err, results) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -13,6 +13,7 @@ exports.createVendor = (req, res) => {
     }
     return res.status(200).json({
       success: 1,
+      results,
       message: 'Created successfully',
     });
   });
@@ -81,7 +82,7 @@ exports.getVendorById = (req, res) => {
 };
 
 exports.getAllVendorsById = (req, res) => {
-  const org_id = req.params.id;
+  const org_id = req.query.org;
   service.getAllById(org_id, (err, results) => {
     if (err) {
       console.log(err);

@@ -11,6 +11,7 @@ module.exports = (app) => {
 
   app.post('/api/createinventory/', controller.createInventory);
   app.get('/api/getallinventory', controller.getAllInventory);
+  
   app.post('/api/updateinventory/:id', controller.updateInventory);
   app.delete('/inventory/', controller.deleteInventory);
   app.get('/api/getinventory/:id', controller.getInventoryById);

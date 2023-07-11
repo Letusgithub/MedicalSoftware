@@ -25,7 +25,7 @@
 
 
                                     <div class="d-flex justify-content-between m-0 p-0">
-                                        <h4 class="fw-bold py-3 mb-1"> Add Product</h4>
+                                        <h4 class="fw-bold py-3 mb-1"> Add Product To Your Inventory</h4>
                                         <a type="button" class="btn btn-icon btn-danger my-2 mx-3"
                                             href="/product_stock">
                                             <i class='bx bx-x bx-sm'></i>
@@ -45,8 +45,8 @@
                                                         <span id="basic-icon-default-fullname2"
                                                             class="input-group-text"></span>
                                                         <input type="text" class="form-control"
-                                                            id="basic-icon-default-fullname" placeholder=""
-                                                            aria-label="John Doe"
+                                                            id="basic-icon-default-fullname" placeholder="Type some letters of the medicine name"
+                                                            aria-label="John Doe" 
                                                             aria-describedby="basic-icon-default-fullname2"
                                                             name="productname">
                                                     </div>
@@ -432,6 +432,11 @@
                                         res.json().then(data => {
                                             let searchTerm = request.term;
                                             let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+
+                                            if (results.length === 0) {
+                                                results.push({ med_name: null }); // Add a null item for the custom message
+                                            }
+
                                             response(results);
                                         })
                                     }
@@ -439,9 +444,12 @@
                             }
                             else {
                                 $.get('/api/allsample', function (data, status) {
-                                    console.log(data);
                                     let searchTerm = request.term;
                                     let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+
+                                    if (results.length === 0) {
+                                        results.push({ med_name: null }); // Add a null item for the custom message
+                                    }
                                     response(results);
                                 })
                             }
@@ -456,9 +464,17 @@
                             }, 0)
                         }
                     }).data('ui-autocomplete')._renderItem = function (ul, item) {
-                        return $('<li>')
-                            .append('<div>' + item.med_name + '</div>')
-                            .appendTo(ul);
+                        
+                            if(item.med_name){
+
+                                return $('<li>')
+                                    .append('<div>' + item.med_name + '</div>')
+                                    .appendTo(ul);
+                            }
+                            else{
+                                return $('<li>').append('<div>No matching products found</div>').appendTo(ul);
+                            }
+                         
                     };
                     //changes in stp and tabs
                     $("select[name='primary'], select[name='secondary']").on("change", function () {
@@ -485,7 +501,9 @@
                     //submit process after adding batch
 
                     $("#submitbatch").click(function () {
-                        if ($("input[name='addpur']").val() > $("input[name='addmrp']").val()) {
+
+                        if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
+
                             return alert("Purchase Rate can't be greater than MRP");
                         }
 
@@ -527,8 +545,8 @@
                                     contentType: 'application/json',
                                     success: function (response) {
                                         window.location.href = '/product_stock'
-                                        //localStorage.setItem('addbatchid', productId);        
-                                        // window.location.href = `/add_batch/${productId}`
+                                        localStorage.setItem('addbatchid', productId);        
+                                        window.location.href = `/add_batch/${productId}`
                                         console.log(response);
                                     },
                                     error: function (error) {

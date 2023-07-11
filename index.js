@@ -32,6 +32,7 @@ require('./server/routes/api.returndetails.routes')(app);
 require('./server/routes/api.batch.routes')(app);
 require('./server/routes/api.purchase_order.routes')(app);
 require('./server/routes/api.FileUpload.routes')(app);
+require('./server/routes/api.credit.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);

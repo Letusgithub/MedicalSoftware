@@ -102,14 +102,22 @@ module.exports = {
   },
 
   // Get All Vendors by Org ID
-  getAllById: (data, callBack) => {
+  getPOInInvoice: (id, callBack) => {
     getPool().query(
-      'select * from vendor where org_id = ?',
-      [data.org_id],
+      `SELECT * FROM purchase_order po
+      JOIN vendor
+      ON vendor.vendor_id = po.vendor_id
+      JOIN po_items poi
+      on poi.po_id_main = po.po_id_main
+      JOIN sample spl
+      on spl.sample_id = poi.product_id
+      where po.po_id = ? `,
+      [id],
       (error, results) => {
         if (error) {
           return callBack(error);
         }
+        console.log(results);
         return callBack(null, results);
       },
 
@@ -137,6 +145,11 @@ module.exports = {
       `SELECT * FROM purchase_order po
       JOIN vendor
       ON vendor.vendor_id = po.vendor_id
+      JOIN po_items poi
+      on poi.po_id_main = po.po_id_main
+      JOIN sample spl
+      on spl.sample_id = poi.product_id
+
       where MONTH(po.po_created_date)=? and po.org_id = ${orgId}
       `,
       [
@@ -154,6 +167,11 @@ module.exports = {
       `SELECT * FROM purchase_order po
       JOIN vendor
       ON vendor.vendor_id = po.vendor_id
+      JOIN po_items poi
+      on poi.po_id_main = po.po_id_main
+      JOIN sample spl
+      on spl.sample_id = poi.product_id
+
       where MONTH(po.po_created_date)>=? and MONTH(po.po_created_date)<=? and po.org_id = ${orgId}
       `,
       [
@@ -171,12 +189,55 @@ module.exports = {
       `SELECT * FROM purchase_order po
       JOIN vendor
       ON vendor.vendor_id = po.vendor_id
-      where YEAR(po.po_created_date)=?po.org_id = ${orgId}
+      JOIN po_items poi
+      on poi.po_id_main = po.po_id_main
+      JOIN sample spl
+      on spl.sample_id = poi.product_id
+
+      where YEAR(po.po_created_date)=? and po.org_id = ${orgId}
       order by MONTH(po.po_created_date) DESC
       `,
       [
         year,
       ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchDates: (orgId, from, to, callback) => {
+    let querys;
+    let datas = [];
+    if (from && to) {
+      const date = new Date(to);
+      querys = 'WHERE po_created_date >= ? AND po_created_date < ?';
+      datas = [
+        from,
+        new Date(date.getTime() + 86400000),
+      ];
+    } else if (from) {
+      querys = 'WHERE po_created_date >= ?';
+      datas = [from];
+    } else if (to) {
+      const date = new Date(to);
+      querys = 'WHERE po_created_date < ?';
+      datas = [new Date(date.getTime() + 86400000)];
+    }
+
+    getPool().query(
+      `SELECT * FROM purchase_order po
+      JOIN vendor
+      ON vendor.vendor_id = po.vendor_id
+      JOIN po_items poi
+      on poi.po_id_main = po.po_id_main
+      JOIN sample spl
+      on spl.sample_id = poi.product_id
+
+      ${querys} and po.org_id = ${orgId} 
+      ORDER BY po_created_date DESC`,
+      datas,
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);

@@ -99,10 +99,13 @@
 
         .receipt-type {
             display: flex;
-            width: 8.40925rem;
-            height: 1.2455rem;
+            width: 19.58875rem;
+            height: 1.625rem;
             flex-direction: column;
             flex-shrink: 0;
+            text-align: center;
+            margin: auto;
+            margin-top: 0.2rem;
 
             color: #1E1E1E;
             font-size: 1.25rem;
@@ -202,7 +205,7 @@
             height: 5.95rem;
         }
 
-        .receipt-sign{
+        .receipt-sign {
             border-top: 0.05rem solid #1E1E1E;
             width: 9.03875rem;
             font-weight: 600;
@@ -213,7 +216,7 @@
             margin-bottom: 1rem;
         }
 
-        .footer-2{
+        .footer-2 {
             width: 13.25rem;
             height: 10.15rem;
 
@@ -222,37 +225,60 @@
             font-family: Poppins;
             font-style: normal;
         }
-        .cart-summary{
+
+        .cart-summary {
             height: 7.32rem;
-            border-bottom: 0.05rem solid #1E1E1E; 
+            border-bottom: 0.05rem solid #1E1E1E;
         }
-        .cart-summary .label{
+
+        .cart-summary .label {
             font-weight: 600;
         }
-        .cart-total{
+
+        .cart-total {
             font-size: 1rem;
             font-weight: 600;
+        }
+
+        .line-1 {
+            left: -1rem;
+            width: 44.11925rem;
+            height: 0rem;
+            flex-shrink: 0;
+            color: #1E1E1E;
+            margin: 0.15rem 0rem 0.2rem 0rem;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="frame1">
+    <div class="d-flex justify-content-between">
+        <div class="p-2 m-3">
+            <button class="btn-border" onclick="CreatePDFfromHTML()">Download</button>
+        </div>
+        <div class="p-2 m-3">
+            <a class="btn btn-border" href='/purchase_order'>Back</a>
+        </div>
+    </div>
+    
+
+    <div class="frame1" id="html-content">
         <div class="container">
             <div class="d-flex justify-content-between">
                 <div>
-                    <div class="shop-name" id="pharmacyname">
-                        <!-- WELLNESS MEDICAL STORE -->
+                    <div class="shop-name" id="orgname">
+                       
                     </div>
                     <div class="shop-info d-flex justify-content-between">
-                        <div class="shop-info-child1" id="shopaddress">
+                        <div class="shop-info-child1" id="orgaddress">
                             
                         </div>
-                        <div class="shop-info-child2">
+                        <div class="shop-info-child2" style="width: 41vw;">
+                            <p class="my-0" id="flno">F.L. no.:</p>
                             <p class="my-0" id="gstin">GSTIN:</p>
                             <p class="my-0" id="dlno">D.L.no.:</p>
-                            <p class="my-0" id="flno">F.L. no.:</p>
+                           
                         </div>
                     </div>
 
@@ -261,36 +287,44 @@
                     <img src="/images/logo.svg"></img>
                 </div>
             </div>
-            <hr class="px-0">
+            <hr class="line-1">
+            <div class="receipt-type">
+                Purchase Order
+            </div>
             <div class="d-flex justify-content-between">
                 <div class="customer-details">
-                    <p class="fw-bold" id="customername">
-                        Patient name: 
+                    <p style="font-weight: 600;" id="vendorname">
+                        Name: 
                     </p>
-                    <p id="mobilenumber">
-                        Mobile:
+                    <p id="vendormobile">
+                        Mobile: 
                     </p>
-                    <p id="shippingadd">
-                        Shipping Address:
+                    <p id="vendoremail">
+                        Email: 
                     </p>
-                    <p id="doctorname"> 
-                        Dr name: 
+                    <p id="vendoradd">
+                        Address:
                     </p>
 
                 </div>
-                <div class="receipt-type">
-                    Sales Invoice
+                <div class="receipt-details">
+                    <p id="vendorgst">
+                        GSTIN:
+                    </p>
+                    <p id="vendordl">
+                        D.L.no.:
+                    </p>
+                    <!-- <p id="vendorfl">
+                        F.L. no.:
+                    </p> -->
                 </div>
                 <div class="receipt-details">
                     <p id="orderdate">
                         Date: 
                     </p>
-                    <p id="invoicenumber">
-                        Invoice no.:
+                    <p id="pono">
+                        P.O. No.:
                     </p>
-                    <!-- <p>
-                        Cart id.:
-                    </p> -->
                 </div>
 
             </div>
@@ -298,15 +332,12 @@
                 <thead>
                     <tr>
                         <th style="width: 2.27rem;">S.N.</th>
-                        <th style="width: 11.29rem;">Item</th>
-                        <th style="width: 3.1rem;">QTY</th>
-                        <th style="width: 4.59rem;">HSN</th>
-                        <th style="width: 4.4rem;">Batch</th>
-                        <th style="width: 3.25rem;">Exp.</th>
-                        <th style="width: 3.62rem;">MRP</th>
-                        <th style="width: 3.61rem;">GST%</th>
-                        <th style="width: 3.91rem;">Discount</th>
-                        <th style="width: 4.2rem;">Total</th>
+                        <th style="width: 12.8rem;">Item</th>
+                        <th style="width: 14.8rem;">Brand</th>
+                        <th style="width: 6.82rem;">QTY</th>
+                        <th style="width: 6.75rem;">Unit</th>
+                        <!-- <th style="width: 5.98rem;">MRP</th>
+                        <th style="width: 6.21rem;">Total</th> -->
                     </tr>
                 </thead>
                 <tbody id="cartitems">
@@ -318,45 +349,6 @@
                         <td style="width: 4.4rem; height: 1rem;">wyx</td>
                         <td style="width: 3.25rem; height: 1rem;">wyx</td>
                         <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 2.27rem; height: 1rem;">1</td>
-                        <td style="width: 11.29rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.1rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.59rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.4rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.25rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 2.27rem;">3</td>
-                        <td style="width: 11.29rem;">wyx</td>
-                        <td style="width: 3.1rem;">wyx</td>
-                        <td style="width: 4.59rem;">wyx</td>
-                        <td style="width: 4.4rem;">wyx</td>
-                        <td style="width: 3.25rem;">wyx</td>
-                        <td style="width: 3.62rem;">wyx</td>
-                        <td style="width: 3.61rem;">wyx</td>
-                        <td style="width: 3.91rem;">wyx</td>
-                        <td style="width: 4.2rem;">wyx</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 2.27rem;">3</td>
-                        <td style="width: 11.29rem;">wyx</td>
-                        <td style="width: 3.1rem;">wyx</td>
-                        <td style="width: 4.59rem;">wyx</td>
-                        <td style="width: 4.4rem;">wyx</td>
-                        <td style="width: 3.25rem;">wyx</td>
-                        <td style="width: 3.62rem;">wyx</td>
-                        <td style="width: 3.61rem;">wyx</td>
-                        <td style="width: 3.91rem;">wyx</td>
-                        <td style="width: 4.2rem;">wyx</td>
                     </tr> -->
 
                 </tbody>
@@ -365,7 +357,7 @@
                 <div class="footer-1">
                     <div class="receipt-msg">
                         <p>
-                            GST 309.67805=0SGST, “ GET WELL SOON”
+                            GST 309.67805=0SGST
                         </p>
                     </div>
                     <div class="receipt-info">
@@ -380,46 +372,8 @@
                 </div>
                 <div class="footer-2">
                     <div class="cart-summary">
-                        <div class="d-flex justify-content-between">
-                            <div class="label">
-                                Subtotal:
-                            </div>
-                            <div id="subtotal">
-                                
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="label">
-                                Additonal Discount:
-                            </div>
-                            <div id="additionaldisc">
-                                 
-                            </div>
-                        </div>
-                        <!-- <div class="d-flex justify-content-between">
-                            <div class="label">
-                                Total Discount:
-                            </div>
-                            <div>
-                                0.00 
-                            </div>
-                        </div> -->
-                        <!-- <div class="d-flex justify-content-between">
-                            <div class="label">
-                                Shipping:
-                            </div>
-                            <div>
-                                50.00 
-                            </div>
-                        </div> -->
-                        <div class="d-flex justify-content-between my-2">
-                            <div class="label">
-                                Payment:
-                            </div>
-                            <div id="mop">
-                                CASH 
-                            </div>
-                        </div>
+
+
 
                     </div>
                     <div class="cart-total">
@@ -427,8 +381,8 @@
                             <div>
                                 Amount:
                             </div>
-                            <div id="grandtotal">
-                                
+                            <div>
+                                0.00
                             </div>
                         </div>
                     </div>
@@ -446,10 +400,10 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script>
         $(document).ready(function(){
             var id = '<%=id%>';
+            console.log(id);
             
 
             var todayDate = new Date();
@@ -457,45 +411,65 @@
             var formattedDate = todayDate.toLocaleDateString('en-US', options);
             $("#orderdate").text(`Date: ${formattedDate}`)
 
-            var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
-            $("#pharmacyname").text(pharmacyDetails.pharmacyName);
-            //$("#gstin").text(`GSTIN: ${pharmacyDetails.gst}`);
-            $("#contact").text(pharmacyDetails.number);
+            $.get(`/api/getpoininvoice?id=${id}`, function (data, status) {
+                //var podata= data.result[0];
+                console.log('inside the po invoice', data);
+                var podata = data.data[0];
+                $("#pono").text(`P.O.:${podata.po_id_main}`)
+                $("#vendorname").text(`Name: ${podata.vendor_name}`)
+                $("#vendormobile").text(`Mobile: ${podata.vendor_contact}`)
+                $("#vendoremail").text(`Email: ${podata.vendor_email}`)
+                $("#vendoradd").text(`Email: ${podata.vendor_address}`)
+                $("#vendorgst").text(`GSTIN: ${podata.vendor_gstin}`)
+                $("#vendordl").text(`DL.no: ${podata.vendor_dl_no_1}, ${podata.vendor_dl_no_2}`)
+                var items = data.data
+                for (var i = 0; i < items.length; i++) {
+                    
+                    
 
-            $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
-                var customer = data.result[0];
-                console.log('inside the invoice template', customer);
-                $("#mop").text(customer.mop.toUpperCase());
+                    //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
+                    cartHtml = `
+                    <tr>
+                        <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
+                        <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                        <td style="width: 3.1rem; height: 1rem;">${items[i]['mfd/mkt']}</td>
+                        <td style="width: 4.59rem; height: 1rem;">${items[i].quantity}</td>
+                        <td style="width: 4.4rem; height: 1rem;">${items[i].unit}</td>
+                    </tr>
 
-                var customerName = customer.cust_name;
-                var customerNumber = customer.cust_telephone;
-                var customerAdd = customer.cust_address;
+                    
+                        
+                        `
 
-                $("#customername").text(`Patient Name: ${customerName}`);
-                $("#mobilenumber").text(`Mobile: ${customerNumber}`);
+                    $("#cartitems").append(cartHtml);
 
-                $("#shippingadd").text(`Shipping Address: ${customerAdd}`);
-                $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
-                $("#invoicenumber").text(`Invoice no: ${customer.invoice_id_main}`);
-                $("#subtotal").text(customer.subtotal);
-                $("#additionaldisc").text(customer.total_dist);
-                $("#grandtotal").text(customer.grand_total);
-                $("#doctorname").text(`Dr name: ${customer.doctor_name}`)
+                }
+
+
+        
 
             })
 
             $.get(`/api/org/<%=orgId%>`, function(data, status){
-                console.log(data);
+                var org = data.data
+                var orgName = org.org_name;
+                var orgNumber = org.org_telephone;
+                var orgAdd = org.org_address;
+
+                $("#orgname").html(`${orgName}`);
                 
-                $("#shopaddress").html(`
-                    ${data.data.org_address}</br>
-                    ${data.data.org_city}( ${data.data.org_state} ), ${data.data.org_pincode}</br>
-                    ${data.data.org_telephone}
+                
+                        
+
+                $("#orgaddress").html(`
+                    ${orgAdd}</br>
+                    ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
+                    ${org.org_telephone}
                 `)
 
-                $("#gstin").text(`GSTIN: ${data.data.org_gstin}`);
-                $("#dlno").text(`D.L.no.: ${data.data.org_dl_no_1}, ${data.data.org_dl_no_2}`)
-                $("#flno").text(`F.L. no.: ${data.data.org_fssai_no}`)
+                $("#gstin").text(`GSTIN: ${org.org_gstin}`);
+                $("#dlno").text(`D.L.no.: ${org.org_dl_no_1}, ${org.org_dl_no_2}`)
+                $("#flno").text(`F.L. no.: ${org.org_fssai_no}`)
 
 
             })
@@ -572,10 +546,10 @@
                     pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
                 }
                 pdf.save("invoice.pdf");
-                $("#html-content").hide();
             });
         }
     </script>
+
 </body>
 
 </html>

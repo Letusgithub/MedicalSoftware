@@ -361,7 +361,7 @@
                 //submit process after adding batch
 
                 $("#submitbatch").click(function () {
-                    if ($("input[name='addpur']").val() > $("input[name='addmrp']").val()) {
+                    if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
                         return alert("Purchase Rate can't be greater than MRP");
                     }
 
@@ -384,7 +384,7 @@
                         data: JSON.stringify(batchDetails),
                         contentType: 'application/json',
                         success: function (response) {
-                            //window.location.href='/product_stock'          
+                            // window.location.href='/product_stock'          
                             console.log(response);
                             $("#batchname").val("");
                             $("input[name='addexp']").val("");
