@@ -429,11 +429,9 @@
                     //submit process after adding batch
 
                     $("#submitbatch").click(function () {
-                        console.log(($("input[name='addpur']").val()));
-                        console.log($("input[name='addmrp']").val());
-                        console.log(parseInt($("input[name='addpur']").val()) > parseInt($("input[name='addmrp']").val()));
 
-                        if(parseInt($("input[name='addpur']").val()) > parseInt($("input[name='addmrp']").val())) {
+                        if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
+
                             return alert("Purchase Rate can't be greater than MRP");
                         }
 
