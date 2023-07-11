@@ -17,7 +17,9 @@ exports.fetchOrgId = async (req, res, next) => {
         });
       }
       if (results.length === 0) {
-        return res.status(404).json({ error: 'User not found' });
+        res.clearCookie('token');
+        res.clearCookie('gotalldata');
+        return res.redirect('/login');
       }
       // Store the user ID in the request object //
       req.org_id = results[0].org_id;

@@ -371,7 +371,6 @@
                             }
                             else {
                                 $.get('/api/allsample', function (data, status) {
-                                   
                                     let searchTerm = request.term;
                                     let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
 
