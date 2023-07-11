@@ -13,5 +13,5 @@ module.exports = (app) => {
   app.post('/api/vendor/:id/update', controller.updateVendor);
   app.get('/api/vendor/:id', controller.deleteVendor);
   app.get('/api/getvendor/:id', controller.getVendorById);
-  // app.get('/api/vendor/:id', controller.getAllVendorsById);
+  app.get('/api/getallvendors', controller.getAllVendorsById);
 };

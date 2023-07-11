@@ -23,7 +23,144 @@
                                     <h4 class="fw-bold py-3 mb-1"> Purchase Order</h4>
                                     <hr class="mb-4">
 
-                                    <div class="row">
+                                    <!-- New VEndor -->
+                                    <div class="card mb-4 mx-auto col-md-10">
+                                        <div class="card-body ">
+
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_name" >Distributer
+                                                    Name<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-fullname2"
+                                                            class="input-group-text"><i class="bx bx-user"></i></span>
+                                                        <input type="text" class="form-control" id="vendor_name"
+                                                            placeholder="Type the first few letters of your distributers name" name="vendor_name">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_contact">Contact
+                                                    Number<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                                class="bx bx-phone"></i></span>
+                                                        <input type="text" id="vendor_contact"
+                                                            class="form-control phone-mask" placeholder=" One 10 Digit Mobile Number"
+                                                            name="vendor_contact">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_email">Email</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span class="input-group-text"><i
+                                                                class="bx bx-envelope"></i></span>
+                                                        <input type="text" id="vendor_email" class="form-control"
+                                                            placeholder="Example: distributer@gmail.com" name="vendor_email">
+                                                        
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                                class="bx bxs-bank"></i></span>
+                                                        <input type="text" id="vendor_gstin"
+                                                            class="form-control phone-mask" placeholder="Distributer's Gst No"
+                                                            name="vendor_gstin">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <label class="col-sm-2 col-form-label" for="org_dl_no_1">DL No 1<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-fullname2"
+                                                        class="input-group-text"><i
+                                                        class='bx bx-detail'></i></span>
+                                                        <input type="text" id="dl1_ft" value="20" style="text-align: center;"
+                                                        class="form-control" readonly>
+                                                        <input type="text" id="dl1_st" placeholder="State (eg:-MH)"
+                                                        class="form-control" >
+                                                        <input type="text" id="dl1_ct" placeholder="City (eg:-NG)"
+                                                        class="form-control" >
+                                                        <input type="text" id="dl1_ln" placeholder="License No."
+                                                        class="form-control" minlength="6" maxlength="6" >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <label class="col-sm-2 col-form-label" for="org_dl_no_2">DL No 2<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-fullname2"
+                                                        class="input-group-text"><i
+                                                        class='bx bx-detail'></i></span>
+                                                        <input type="text" id="dl2_ft" value="21" style="text-align: center;"
+                                                        class="form-control" readonly>
+                                                        <input type="text" id="dl2_st" placeholder="State (eg:-MH)"
+                                                        class="form-control" >
+                                                        <input type="text" id="dl2_ct" placeholder="City (eg:-NG)"
+                                                        class="form-control" >
+                                                        <input type="text" id="dl2_ln" placeholder="License No."
+                                                        class="form-control" minlength="6" maxlength="6" >
+                                                    </div>
+                                                </div>
+                                            </div>  
+
+                                            <!-- <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="vendor_dl_no">DL No.</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                                class='bx bx-detail'></i></span>
+                                                        <input type="text" id="vendor_dl_no"
+                                                            class="form-control phone-mask" placeholder=""
+                                                            name="vendor_dl_no">
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="vendor_address">Address<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                     
+                                                        <textarea type="text" id="vendor_address" class="form-control"
+                                                            placeholder=" Distributers Address" name="vendor_address">
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary"
+                                                        id="submitBtn">Add</button>
+                                                </div>
+                                            </div> -->
+
+                                        </div>
+                                    </div>
+                                    <!-- New VEndor -->
+
+
+                                    <!-- <div class="row">
 
                                         <div class="col-md-6">
                                             <div class="card mb-4">
@@ -54,7 +191,7 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> -->
                                     <hr>
 
                                     <div class="card mb-4">
@@ -119,6 +256,9 @@
                                             <btn class="btn btn-primary" style="color: white;" id="addtocart">Add</btn>
                                             <input type="reset" class="btn btn-primary" style="color: white;"
                                                 value="Clear" />
+                                                
+
+                                                
                                         </div>
                                         <!-- </form> -->
 
@@ -205,8 +345,115 @@
             <%- include('../partials/footercode.ejs') %>
                 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
                 <script>
+
+       
+
+
                     var cartarray = [];
                     $(document).ready(function () {
+                        $("#vendor_name");
+                        $("#vendor_contact").prop('readonly', true);
+                        $("#vendor_email").prop('readonly', true);
+                        $("#vendor_address").prop('readonly', true);
+                        $("#vendor_gstin").prop('readonly', true);
+                        $("#dl1_st").prop('readonly', true);
+                        $("#dl1_ct").prop('readonly', true);
+                        $("#dl1_ln").prop('readonly', true);
+                        $("#dl2_st").prop('readonly', true);
+                        $("#dl2_ct").prop('readonly', true);
+                        $("#dl2_ln").prop('readonly', true);
+                        var vendorId = -1;
+                        //autocomplete suggestion   
+                        $("#vendor_name").autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                    
+                                    $.get('/api/getallvendors?org=<%=orgId%>', function (data, status) {
+                                      
+                                       let searchTerm = request.term;
+                                       let results = data.data.filter(item => item.vendor_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+   
+                                       if (results.length === 0) {
+                                           results.push({ vendor_name: null }); // Add a null item for the custom message
+                                       }
+
+                                       response(results);
+                                    })
+                                
+                            },
+                            select: function (event, ui) {
+                                setTimeout(function () {
+                                    console.log(ui.item);
+                                    vendorId = ui.item.vendor_id;
+                                    
+                                    var splitDL1;
+                                    var dl_no_1 = ui.item.vendor_dl_no_1;
+                                    
+                                    if(dl_no_1 != ''){
+
+                                        splitDL1 = dl_no_1.split(/-/);
+                                        $("#dl1_st").val(splitDL1[1]);
+                                        $("#dl1_ct").val(splitDL1[2]);
+                                        $("#dl1_ln").val(splitDL1[3]);
+                                    }
+
+                                    var splitDL2;
+                                    var dl_no_2 = ui.item.vendor_dl_no_2;
+                                    if(dl_no_2 != ''){
+
+                                        splitDL2 = dl_no_2.split(/-/);
+                                        $("#dl2_st").val(splitDL2[1]);
+                                        $("#dl2_ct").val(splitDL2[2]);
+                                        $("#dl2_ln").val(splitDL2[3]);
+                                    }
+
+                                    $("#vendor_name").val(ui.item.vendor_name);
+                                    $("#vendor_contact").val(ui.item.vendor_contact);
+                                    $("#vendor_email").val(ui.item.vendor_email);
+                                    $("#vendor_address").val(ui.item.vendor_address);
+                                    $("#vendor_gstin").val(ui.item.vendor_gstin);
+                                    
+
+                                }, 0)
+                            }
+                        }).data('ui-autocomplete')._renderItem = function (ul, item) {
+                            
+                                if(item.vendor_name){
+                                        $("#vendor_contact").prop('readonly', true);
+                                        $("#vendor_email").prop('readonly', true);
+                                        $("#vendor_address").prop('readonly', true);
+                                        $("#vendor_gstin").prop('readonly', true);
+                                        $("#dl1_st").prop('readonly', true);
+                                        $("#dl1_ct").prop('readonly', true);
+                                        $("#dl1_ln").prop('readonly', true);
+                                        $("#dl2_st").prop('readonly', true);
+                                        $("#dl2_ct").prop('readonly', true);
+                                        $("#dl2_ln").prop('readonly', true);
+    
+                                    return $('<li>')
+                                        .append('<div>' + item.vendor_name + '</div>')
+                                        .appendTo(ul);
+                                }
+                                else{
+                                    $("#vendor_contact").prop('readonly', false);
+                                    $("#vendor_email").prop('readonly', false);
+                                    $("#vendor_address").prop('readonly', false);
+                                    $("#vendor_gstin").prop('readonly', false);
+                                    $("#dl1_st").prop('readonly', false);
+                                    $("#dl1_ct").prop('readonly', false);
+                                    $("#dl1_ln").prop('readonly', false);
+                                    $("#dl2_st").prop('readonly', false);
+                                    $("#dl2_ct").prop('readonly', false);
+                                    $("#dl2_ln").prop('readonly', false);
+                                    return $('<li>').append('<div>No Distributer With this Name. Please Add all the details of New Vendor Down</div>').appendTo(ul);
+                                }
+                             
+                        };
+
+
+
+
+/*
                         $("#contact").text("Contact No :");
                         $("#email").text("Email :");
                         $("#dl_no").text("DL No. :");
@@ -232,7 +479,7 @@
                                 $("#gstin").text(gstin);
                                 $("#address").text(address);
                             })
-                        })
+                        })*/
                         // caching all the products
                         if ('caches' in window) {
                             caches.keys().then(name => {
@@ -412,6 +659,94 @@
                         console.log($(`select[name="unitoption"] option[value=1]`).text());
                         var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
                         $("#submitpo").click(function () {
+
+                            
+
+                            if(vendorId == -1){
+
+                                var vendor_dl_no_1 = $("#dl1_ft").val().toString()+ '-' + $("#dl1_st").val().toString()+ '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
+                                var vendor_dl_no_2 = $("#dl2_ft").val().toString()+ '-' + $("#dl2_st").val().toString()+ '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
+
+                                $.ajax({
+                                    url: `/api/vendor/`,
+                                    type: 'POST',
+                                    data: JSON.stringify({
+                                        org_id: "<%= orgId %>",
+                                        vendor_name: $("#vendor_name").val(),
+                                        vendor_address: $("#vendor_address").val(),
+                                        vendor_contact: $("#vendor_contact").val(),
+                                        vendor_gstin: $("#vendor_gstin").val(),
+                                        vendor_email: $("#vendor_email").val(),
+                                        vendor_dl_no_1: vendor_dl_no_1,
+                                        vendor_dl_no_2: vendor_dl_no_2
+                                    }),
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        vendorId = response.results.insertId;
+                                        console.log(response.results.insertId);
+                                        //window.location.href = '/vendor_list'
+
+                                        var POdetails = {
+                                            pharmacyId: pharmacyDetails.pharmaId,
+                                            vendor_id: vendorId,
+                                            org_id: '<%=orgId%>'
+                                        }
+            
+                                        $.ajax({
+                                            url: '/api/createpo/',
+                                            method: 'POST',
+                                            data: JSON.stringify(POdetails),
+                                            contentType: 'application/json',
+                                            success: function (response) {
+                                                var poinsertid = response.result.insertId;
+                                                console.log(poinsertid);
+                                                var poId = response.POId;
+                                                var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
+            
+                                                for (let i = 0; i < POcarts.length; i++) {
+                                                    var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
+                                                    var POcartdetail = {
+                                                        po_id_main: poId,
+                                                        product_id: POcarts[i].productId,
+                                                        quantity: POcarts[i].qty,
+                                                        unit: unit
+                                                    }
+                                                    console.log('cartdetails', POcartdetail);
+                                                    
+                                                    $.ajax({
+                                                        url: '/api/createpocarts/',
+                                                        method: 'POST',
+                                                        data: JSON.stringify(POcartdetail),
+                                                        contentType: 'application/json',
+                                                        success: function (response) {
+                                                            console.log(response);
+                                                        },
+                                                        error: function (error) {
+                                                            console.log('Error:', error);
+                                                        }
+                                                    });
+                                                }
+            
+                                                localStorage.removeItem('pocartitems');
+                                                location.reload();
+                                                window.location.href = `/po_receipt/${poinsertid}`
+                                            },
+                                            error: function (error) {
+                                                console.log('Error:', error);
+                                            }
+                                        });
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+                                })
+                            }
+                            else{
+
+                                
+                                
+
+
                             var POdetails = {
                                 pharmacyId: pharmacyDetails.pharmaId,
                                 vendor_id: vendorId,
@@ -452,7 +787,7 @@
                                             }
                                         });
                                     }
-
+                                    
                                     localStorage.removeItem('pocartitems');
                                     location.reload();
                                     window.location.href = `/po_receipt/${poinsertid}`
@@ -461,6 +796,7 @@
                                     console.log('Error:', error);
                                 }
                             });
+                        }
                         })
 
 

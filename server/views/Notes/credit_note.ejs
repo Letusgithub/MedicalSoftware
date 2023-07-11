@@ -1,0 +1,788 @@
+<%- include('../partials/headercode.ejs') %>
+
+    <body>
+        <!-- Layout wrapper -->
+        <div class="layout-wrapper layout-content-navbar  ">
+            <div class="layout-container">
+
+                <!-- sidebar imported -->
+                <%- include('../partials/sidebar.ejs') %>
+
+                    <!-- Layout container -->
+                    <div class="layout-page">
+
+                        <!-- navbar imported -->
+                        <%- include('../partials/navbar.ejs') %>
+
+                            <!-- Content wrapper -->
+                            <div class="content-wrapper">
+
+                                <!-- Content -->
+
+                                <div class="container-xxl flex-grow-1 container-p-y">
+                                    <h4 class="fw-bold py-3 mb-1">Credit Note</h4>
+                                    <hr class="mb-4">
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="card mb-4">
+                                                <h5 class="card-header">Vendor Name</h5>
+                                                <div class="card-body" id="vendorname">
+                                                    <select class="form-select" id="vendorselect"
+                                                        aria-label="Default select example">
+                                                        <option selected>Select Vendor</option>
+                                                        <%vendors.forEach(function(vendor) {%>
+                                                            <option value="<%= vendor.vendor_id %>">
+                                                                <%= vendor.vendor_name %>
+                                                            </option>
+                                                            <%});%>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="card mb-4 py-1">
+
+                                                <h6 class="card-header py-1" id="contact"></h6>
+                                                <h6 class="card-header py-1" id="email"></h6>
+                                                <h6 class="card-header py-1" id="dl_no"></h6>
+                                                <h6 class="card-header py-1" id="gstin"></h6>
+                                                <h6 class="card-header py-1" id="address"></h6>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr>
+
+                                    <div class="card mb-4">
+
+                                        <!-- <form class="form-main"> -->
+                                        <div class="card-body form-block">
+                                            <div class="table-responsive text-nowrap ">
+
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                      <tr>
+                                                        <th class="col-6">Product Name</th>
+                                                        <th class="col-5">Mfg / Mkt</th>
+                                                        <th class="col-1">Shelf Label</th>
+                                                      </tr>
+                          
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td>
+                                                          <input type="text" class="form-control" id="medicinename" placeholder="Medicine Name" />
+                                                        </td>
+                                                        <td>
+                                                          <input type="text" class="form-control" id="brand" placeholder="Brand Name" />
+                                                        </td>
+                                                        <td>
+                                                          <input type="text" class="form-control" id="shelflabel" placeholder="" />
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                          
+                                                  </table>
+                          
+                          
+                                                  <table class="table table-bordered">
+                                                    <thead>
+                                                      <tr>
+                          
+                                                        <th style="width: 15vw;">Batch</th>
+                                                        <th style="width: 6vw;">Exp Date</th>
+                          
+                          
+                                                        <th style="width: 10vw;" id="primaryunitname">P.Unit<span></span></th>
+                                                        <th style="width: 10vw;" id="secondaryunitname">S.Unit<span></span></th>
+                                                        <th style="width: 5vw;">MRP / p.unit</th>
+                                                        <!-- <th>QTY</th> -->
+                          
+                                                        <!-- <th style="width: 8vw;">Disc %</th> -->
+                                                        <th>Total</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                          
+                                                        <td id="batchdroporinput">
+                                                          <input type="text" class="form-control" id="batch" placeholder="" />
+                                                        </td>
+                                                        
+                          
+                                                        <td>
+                                                          <input class="form-control" type="date" id="expdate" readonly style="color: inherit;
+                                                          background-color: transparent;
+                                                          cursor: default;"/>
+                                                        </td>
+                          
+                                                        <!-- <td id="pack">
+                                                          <select class="form-select" id="unit" name="unit" aria-label="unit">
+                                                          </select>
+                                                          <p class="unit"></p>
+                                                        </td> -->
+                          
+                          
+                                                        <td>
+                                                          <input type="number" class="form-control" id="pUnit" placeholder="Qty" min="0"/>
+                                                        </td>
+                          
+                                                        <td>
+                                                          <input type="number" class="form-control" id="sUnit" placeholder="Qty" min="0" />
+                                                        </td>
+                          
+                          
+                                                        <td>
+                                                          <input type="text" class="form-control" id="price" placeholder="" min="0" readonly style="color: inherit;
+                                                          background-color: transparent;
+                                                          cursor: default;"/>
+                                                        </td>
+                          
+                                                        <!-- <td>
+                                                          <input type="text" class="form-control" id="qty" placeholder="" />
+                                                        </td> -->
+                          
+                          
+                                                        <!-- <td>
+                                                          <input type="text" class="form-control" id="discount" placeholder="" min="0" />
+                                                        </td> -->
+                          
+                                                        <td>
+                                                          <input type="text" class="form-control" id="total" placeholder="" min="0"/>
+                                                        </td>
+                                                      </tr>
+                          
+                          
+                          
+                          
+                                                    </tbody>
+                          
+                                                  </table>
+                                            </div>
+                                        </div>
+                                        <div class="buttonBox text-center pb-3">
+                                            <btn class="btn btn-primary" style="color: white;" id="addtocart">Add</btn>
+                                            <input type="reset" class="btn btn-primary" style="color: white;"
+                                                value="Clear" />
+                                        </div>
+                                        <!-- </form> -->
+
+
+
+                                    </div>
+                                    <!--/ Bordered Table -->
+
+                                    <!-- PO Cart -->
+                                    <div class="card mx-3">
+                                        <h5 class="card-header">Item Cart</h5>
+                                        <div class="card-body">
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-1">#</th>
+                                                            <th class="col-7">Product name</th>
+                                                            <th class="col-1" id="priqtycart">PQty</th>
+                                                            <th class="col-1" id="secqtycart">SQty</th>
+                                                            <th class="col-1">MRP/PUnit</th>
+                                                            <!-- <th class="col-1">Disc %</th> -->
+                                                            <th class="col-1">Total</th>
+                                                            <th class="col-1">Action</th>
+                                        
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="itemcart">
+
+
+                                                        <!-- <tr>
+                                                            <td>1</td>
+                                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                                <strong>Actapro Tablet</strong>
+                                                            </td>
+                                                            <td>Sun Pharmaceutical Industries Ltd</td>
+                                                            <td>10</td>
+                                                            <td>Box</td>
+                                                            <td>
+                                                                <div class="action-btns">
+                                                                    <button type="button" class="btn p-0 mx-2"><i
+                                                                            class='bx bxs-edit'></i></button>
+                                                                    <button type="button" class="btn p-0 mx-2"><i
+                                                                            class="bx bx-trash me-1"></i></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr> -->
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- / PO Cart -->
+
+
+                                    <!-- / Content -->
+
+
+                                    <div class="text-center mt-3">
+                                        <button type="button" class="btn btn-primary" id="submitcredit">Submit</button>
+                                    </div>
+
+
+
+                                    <div class="content-backdrop fade"></div>
+                                </div>
+                                <!-- Content wrapper -->
+                            </div>
+                            <!-- / Layout page -->
+                    </div>
+
+
+
+                    <!-- Overlay -->
+                    <div class="layout-overlay layout-menu-toggle"></div>
+
+
+            </div>
+            <!-- / Layout wrapper -->
+
+
+            <%- include('../partials/footercode.ejs') %>
+                <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+                <script>
+                    localStorage.removeItem('creditnoteitems');
+
+                    
+
+                    var cartarray = [];
+                    $(document).ready(function () {
+                        $("#contact").text("Contact No :");
+                        $("#email").text("Email :");
+                        $("#dl_no").text("DL No. :");
+                        $("#gstin").text("GSTIN :");
+                        $("#address").text("Address :");
+
+                        var vendorId = -1;
+                        $('#vendorselect').change(function () {
+                            var selectedVendorId = $(this).val();
+
+                            $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
+                                var vendorDetails = data.data;
+                                console.log(vendorDetails);
+                                vendorId = vendorDetails.vendor_id;
+                                
+                                var number = `Contact: ${vendorDetails.vendor_contact}`
+                                var email = `Email : ${vendorDetails.vendor_email}`
+                                var dl_no = `DL No. : ${vendorDetails.vendor_dl_no}`
+                                var gstin = `GSTIN : ${vendorDetails.vendor_gstin}`
+                                var address = `Address : ${vendorDetails.vendor_address}`
+                                $("#contact").text(number);
+                                $("#email").text(email);
+                                $("#dl_no").text(dl_no);
+                                $("#gstin").text(gstin);
+                                $("#address").text(address);
+                            })
+                        })
+                      
+
+                        // autocomplete functionality
+                        var priceMed =-1;
+                        var primaryUnit;
+                        var secondaryUnit;
+                        var conversion;
+                        var batchIdwhenSelected;
+                        var availablePrimaryQty;
+                        var availableSecondaryQty;
+
+                        $('#medicinename').autocomplete({
+                          minLength: 3,
+                          source: function (request, response) {
+                           
+                              $.get('/api/getinvdetailsincreditnote?org=<%=orgId%>', function(data, status){
+                                console.log('asd', data);
+                                    let searchTerm = request.term;
+                                    let results = data.data.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                                    response(results);
+                              })
+              
+                          },
+                          select: function (event, ui) {
+                            setTimeout(function () {
+                              console.log('the selected med', ui.item);
+                              productId=ui.item.sample_id;
+              
+                              //getting all the batches associated with the product
+                              $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function(data, status){
+              
+                                console.log('all batches', data.data);
+                                if(data.data.length==0){
+                                  $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+                                } else{
+                                  //batch dropdown
+                                  $("#batchdroporinput input").remove();
+                                  $("#batchdroporinput").append(
+                                    `
+                                    <select class="form-select" id="batchnumber" aria-label="unit">
+                                    </select>
+                                    `
+                                    )
+              
+                                    data.data.map(function(value, key){
+                                     
+                                      var remPriQty = value.batch_qty - value.saled_pri_qty;
+                                      var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion?0:value.conversion - value.saled_sec_qty;
+                                      $("#batchdroporinput #batchnumber").append(
+                                        `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
+                                      )
+                                    })
+                    
+                                }
+                                //populate the first qty to the product cart
+                                batchIdwhenSelected = data.data[0].batch_id;
+                                primaryUnit = data.data[0].primary_unit;
+                                secondaryUnit = data.data[0].secondary_unit;
+                                conversion = data.data[0].conversion;
+              
+                                availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
+                                availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion?0:data.data[0].conversion - data.data[0].saled_sec_qty;
+                                $("#pUnit").val(availablePrimaryQty);
+                                $("#sUnit").val(availableSecondaryQty);
+                                priceMed = data.data[0].mrp;
+                                $("#price").val(priceMed);
+                                calculateTotal();
+              
+                                $("#primaryunitname span").text(` (${primaryUnit})`);
+                                $("#secondaryunitname span").text(` (${secondaryUnit})`);
+              
+                                //exp date populate and shelf label
+                                var date= new Date(data.data[0].exp_date);
+                                $("#expdate").val(date.toISOString().split('T')[0]);
+                                //$("#expdate").prop('disabled', true);
+                                
+                                $("#shelflabel").val(data.data[0].shelf_label);
+                                
+                                $("#batch").val(data.data[0].batch_id);
+                               
+                   
+              
+                                $("#batchdroporinput").on("change", "#batchnumber", function(){
+                                  var batchId = $("#batchdroporinput #batchnumber").val();
+                                  batchIdwhenSelected = data.data[batchId].batch_id;
+                   
+                                  $("#shelflabel").val(data.data[batchId].shelf_label);
+                                  var date= new Date(data.data[batchId].exp_date);
+                                  $("#expdate").val(date.toISOString().split('T')[0]);
+                                  $("#price").val(data.data[batchId].mrp);
+                                  conversion = data.data[batchId].conversion;
+              
+                                  availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
+                                  availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion?0:data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
+
+                                  $("#pUnit").val(availablePrimaryQty);
+                                $("#sUnit").val(availableSecondaryQty);
+              
+                                  calculateTotal();
+                                })
+              
+                              })
+              
+                              $("#medicinename").val(ui.item.med_name);
+                              $('#brand').val(ui.item["mfd/mkt"]);
+                            },0)
+                          }
+                        }).data('ui-autocomplete')._renderItem = function (ul, item) {
+                          return $('<li>')
+                            .append('<div>' + item.med_name + '('+ item.salt_composition +')' + '</div>')
+                            .appendTo(ul);
+                        };
+                        //endof autocomplete
+
+                        var priQty = $("#pUnit");
+                        var secQty = $("#sUnit");
+                        var priceInput = $("#price");
+                        var discInput = $("#discount");
+                        var totalInput = $("#total");
+
+                        priQty.on("input", calculateTotal);
+                        secQty.on("input", calculateTotal);
+                        discInput.on("input", calculateTotal);
+
+                        function calculateTotal() {
+                            var primaryqty = parseInt(priQty.val()) || 0;
+                            
+                            var secondaryqty = parseInt(secQty.val()) || 0;
+                            
+                            var price = parseFloat(priceInput.val()) || 0;
+
+                            console.log(price);
+                            
+                            var total = primaryqty * price + secondaryqty * price/conversion;
+                            
+                
+                            totalInput.val(total.toFixed(2));
+                        }
+
+
+                        //redering cart details in credit note cart
+                        var setLocalData;
+                        var getLocalData;
+                        var htmlData;
+                        $("#addtocart").click(function () {
+                            
+                            if($("#vendorselect").val()=='Select Vendor'){
+                                return alert('PLEASE ADD VENDOR FIRST');
+                            }
+                            
+
+                            if($("#medicinename").val()==''){
+                                return alert('PLEASE ADD MEDICINE FIRST');
+                            }
+
+                            if($("#pUnit").val()==''){
+                                return alert('PLEASE ADD QUANTITY FIRST');
+                            }
+
+                            if($("#batch").val()==''){
+                                return alert('PLEASE ADD BATCH FIRST');
+                            }
+
+                            
+
+                            if(priQty.val()>availablePrimaryQty){
+                                return alert("Don't Have Enough Meds Please ADD!!");
+                            }
+
+                            if(priQty.val() == availablePrimaryQty){
+                                if(secQty.val() > availableSecondaryQty)
+                                    return alert("Don't Have Enough Meds Please ADD!!");
+                            }
+
+                            var products = $("#medicinename").val();
+                            var brand = $("#brand").val();
+                            var priCartQty = priQty.val();
+                            var secCartQty = secQty.val();
+                            var mrp = priceInput.val();
+                            
+                            var total = totalInput.val();
+                            
+                            var shelflabel = $("#shelflabel").val();
+                            var batch = $("#batchdroporinput #batchnumber").val();
+                            var exp = $("#expdate").val();
+                            var selectedUnit = $("#unit").val();
+
+
+
+                            cartarray.push({
+                                batchId: batchIdwhenSelected, 
+                                productId: productId,
+                                productname: products,
+                                brand: brand,
+                                shelflabel: shelflabel,
+                                batch: batch,
+                                
+                                expdate: exp,
+                                priQty: priCartQty,
+                                secQty: secCartQty,
+                                conversion:conversion,
+                                selectedUnit:selectedUnit,
+                                mrp: mrp,
+                                
+                                total: total,
+                                timestamp: new Date().getTime()
+                            })
+
+                            setLocalData = JSON.stringify(cartarray);
+
+                            localStorage.setItem("creditnoteitems", setLocalData);
+
+                            $("#medicinename").val("");
+                            $("#brand").val("");
+                            $("#pUnit").val("");
+                            $("#sUnit").val("");
+                            $("#price").val("");
+                            
+                            $("#total").val("");
+                            $("#shelflabel").val("");
+                            $("#batchdroporinput").empty();
+                            $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+                            $("#expdate").val("");
+                            $("#unit").empty();
+                            $("#pack .unit").empty();
+                            $("#message").empty();
+
+                        })
+
+
+
+                        // logic for redering cart data on addtocart click 
+                        $("#addtocart").on('click', function () {
+                            cartItems = JSON.parse(localStorage.getItem('creditnoteitems')) || [];
+                            console.log(cartItems);
+                            renderCart(cartItems);
+                            //getSubTotal();
+                        });
+
+                          //deletefunctionality
+                            $("#itemcart").on("click", ".delete-button", function () {
+                                var item = $(this).closest("tr");
+                                var item_id = item.find(".card_id").text().trim();
+                                var cartItemsinStorage = JSON.parse(localStorage.getItem('creditnoteitems')) || [];
+                                cartItemsinStorage.splice(item_id - 1, 1);
+                                cartarray = cartItemsinStorage;
+                                localStorage.setItem('creditnoteitems', JSON.stringify(cartItemsinStorage));
+                                renderCart(cartItemsinStorage);
+                            });
+                            //endofdeletefunctionality
+
+
+                             //edit functionality  
+                            $("#itemcart").on("click", ".edit-button", function () {
+                                var item = $(this).closest("tr");
+                                var item_id = item.find(".card_id").text().trim();
+                                var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('creditnoteitems')) || [];
+                                var selectedItem = UpdatecartItemsinStorage[item_id - 1];
+                                productId = selectedItem.productId;
+                                $("#medicinename").val(selectedItem.productname);
+                                $("#brand").val(selectedItem.brand);
+                                $("#pUnit").val(selectedItem.priQty);
+                                $("#sUnit").val(selectedItem.secQty);
+                                $("#price").val(selectedItem.mrp);
+                                $("#total").val(selectedItem.total);
+
+                                //getting all data for batches
+                                $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function(data, status){
+                                console.log('on edit of the product', data.data);
+                                if(data.data.length==0){
+                                        $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+                                    } else{
+                                        //batch dropdown
+                                        $("#batchdroporinput input").remove();
+                                        $("#batchdroporinput").append(
+                                        `
+                                        <select class="form-select" id="batchnumber" aria-label="unit">
+                                        </select>
+                                        `
+                                        )
+
+                                        data.data.map(function(value, key){
+                                     
+                                            var remPriQty = value.batch_qty - value.saled_pri_qty;
+                                            var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion?0:value.conversion - value.saled_sec_qty;
+                                            $("#batchdroporinput #batchnumber").append(
+                                              `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
+                                            )
+                                          })
+                                    }
+                                    //populate the first qty to the product cart
+                                    var batchnumber = selectedItem.batch;
+                                    batchIdwhenSelected = selectedItem.batchId;
+                                    $("#batchdroporinput #batchnumber").prop('selectedIndex', batchnumber);
+                                    primaryUnit=data.data[batchnumber].primary_unit;
+                                    secondaryUnit=data.data[batchnumber].secondary_unit;
+                                    conversion=data.data[batchnumber].conversion;
+
+                                    $("#primaryunitname span").text(` (${primaryUnit})`);
+                                    $("#secondaryunitname span").text(` (${secondaryUnit})`);
+
+                                    //exp date populate and shelf label
+                                    var date= new Date(data.data[batchnumber].exp_date);
+                                    $("#expdate").val(date.toISOString().split('T')[0]);
+                                    $("#shelflabel").val(data.data[batchnumber].shelf_label);
+                                    
+                                    //$("#batch").val(data.data[0].batch_id);
+                                    priceMed = data.data[batchnumber].mrp;
+                                    $("#price").val(priceMed);
+
+                                    $("#batchdroporinput").on("change", "#batchnumber", function(){
+                                        var batchId = $("#batchdroporinput #batchnumber").val();
+                                        batchIdwhenSelected = data.data[batchId].batch_id;
+                        
+                                        $("#shelflabel").val(data.data[batchId].shelf_label);
+                                        var date= new Date(data.data[batchId].exp_date);
+                                        $("#expdate").val(date.toISOString().split('T')[0]);
+                                        $("#price").val(data.data[batchId].mrp);
+                                        conversion = data.data[batchId].conversion;
+
+                                        availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
+                                        availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion?0:data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
+
+                                        $("#pUnit").val(availablePrimaryQty);
+                                        $("#sUnit").val(availableSecondaryQty);
+                                        calculateTotal();
+                                    })
+
+
+                                })
+
+                                UpdatecartItemsinStorage.splice(item_id - 1, 1);
+                                cartarray = UpdatecartItemsinStorage;
+                                localStorage.setItem('creditnoteitems', JSON.stringify(UpdatecartItemsinStorage));
+                                renderCart(UpdatecartItemsinStorage);
+
+
+                            })
+                            //end of edit functionality
+
+
+                        //rendercart functionality
+                        function renderCart(items) {
+                            console.log('rendered', items);
+                            $('#itemcart').empty();
+
+                            for (var i = 0; i < items.length; i++) {
+                            htmlData = `
+                                        <tr>
+                                            <td class="card_id">${i + 1}</td>
+                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                                            <td>${items[i].priQty}</td>
+                                            <td>${items[i].secQty}</td>
+                                            <td>${items[i].mrp}</td>
+                                            <td>${items[i].total}</td>
+                                            <td>
+                                            <div class="action-btns">
+                                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                        `
+                            $('#itemcart').append(htmlData);
+                            }
+                        }
+                        //end of rendereing data logic
+
+
+                       
+                       
+                   
+   
+
+        // post the data to the credit note
+            var creditInvoice;
+          $("#submitcredit").click(function () {
+
+            var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
+
+            if(creditCarts == null || creditCarts.length == 0){
+                return alert("Item Cart Empty");
+            }
+
+            var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+
+            $.ajax({
+                url: `/api/createcreditnote/`,
+                type: 'POST',
+                data: JSON.stringify({
+                  vendor_id: vendorId,
+                  pharmacyId: pharmacyDetails.pharmaId,
+                  org_id: '<%=orgId%>',
+                }),
+
+                contentType: 'application/json',
+                success: function (response) {
+
+                  console.log('credit note made');
+                  creditInvoice= response.credit_invoice_no;
+
+                    for(let i in creditCarts){
+
+                        $.ajax({
+                            url: `/api/updatebatchwhensale/`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                batch_id: creditCarts[i].batchId,
+                                org_id: '<%=orgId%>',
+                                saled_pri_qty: creditCarts[i].priQty,
+                                saled_sec_qty: creditCarts[i].secQty
+                            }),
+                            contentType: 'application/json',
+                            success: function(response){
+                                console.log(response);                   
+                            },
+                            error: function(error){
+                                console.log('error in updateing batch', error);
+                            }
+                        })
+
+                        var cartDetails = ({
+                            product_id:creditCarts[i].productId,
+                            pri_unit_credit: creditCarts[i].priQty,
+                            sec_unit_credit: creditCarts[i].secQty,
+                            credit_invoice_no: creditInvoice,
+                            batch_id_credit: creditCarts[i].batchId,
+                            total_credit: creditCarts[i].total
+                        })
+
+                        console.log('cartDetail for the saled product', cartDetails);
+
+                        $.ajax({
+                            url: `/api/creditnotecartdetails/`,
+                            type: 'POST',
+                            data: JSON.stringify(cartDetails),
+                            contentType: 'application/json',
+                            success: function(response){
+                            console.log(response);                   
+                            },
+                            error: function(error){
+                            console.log(error);
+                            }
+                        })
+                    }
+                        
+                    localStorage.removeItem("creditnotecartitems");
+                    window.location.href = `/credit_note_receipt/${creditInvoice}`
+      
+                
+                },
+                error: function(error){
+                  alert("not Created", error )
+                }
+            })
+
+
+        })
+
+
+
+                        /*
+                        var vendorName = [];
+                        
+                        $.ajax({
+                            url: '/allvendors/',
+                            method: 'GET',
+                            success: function(response) {
+                                // Parse the response data as JSON
+                                //var vendors = JSON.parse(response);
+                                console.log(response.data);
+                                for(let i in response.data){
+                                    vendorName.push({id: response.data[i].vendor_id,  name: response.data[i].vendor_name});
+                                }
+                                console.log(vendorName);
+                                // Render the vendors data using the EJS template
+                            
+                                
+                                $('#vendorname').append(renderedHtml);
+                            },
+                            error: function(error) {
+                                console.log('Error:', error);
+                            }
+                        });
+    
+                    */
+                    })
+                </script>
+
+
+
+
+    </body>
+
+
+    </html>
