@@ -1,0 +1,110 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
+const { getPool } = require('../config/database');
+
+const date_time = new Date();
+module.exports = {
+  // Create Credit Note
+  createCreditNote: (data, creditInvoice, callBack) => {
+    getPool().query(
+      `insert into credit_note(
+                  credit_invoice_id,
+                  vendor_id,
+                  org_id)
+                  value(?,?,?)`,
+      [
+        creditInvoice,
+        data.vendor_id,
+        data.org_id,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+  createCreditNoteCarts: (data, callBack) => {
+    getPool().query(
+      `insert into credit_note_cart_details(
+                  
+                  credit_invoice_no,
+                  product_id,
+                  batch_id_credit,
+                  pri_unit_credit,
+                  sec_unit_credit,
+                  total_credit)
+                  value(?,?,?,?,?,?)`,
+      [
+        data.credit_invoice_no,
+        data.product_id,
+        data.batch_id_credit,
+        data.pri_unit_credit,
+        data.sec_unit_credit,
+        data.total_credit,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  getTotalCreditNotes: (callback) => {
+    getPool().query(
+      'SELECT COUNT(*) as total_rows FROM credit_note',
+      [],
+      (error, results) => {
+        if (error) return callback(error);
+        const totalCount = JSON.parse(results[0].total_rows);
+        return callback(null, totalCount);
+      },
+    );
+  },
+
+  // get all inventory details in credit ejs
+  getINVDetailsinCreditNote: (orgId, callBack) => {
+    getPool().query(
+      `SELECT * FROM inventory inv
+      JOIN sample spl ON inv.product_id = spl.sample_id
+      where inv.org_id= ?
+      `,
+      [
+        orgId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  getCreditNoteinInvoice: (id, callBack) => {
+    getPool().query(
+      `SELECT DISTINCT vendor.*, crdetails.*, inv.hsn, inv.gst, batch.batch_name, batch.exp_date, batch.mrp,  sample.med_name FROM credit_note cr
+      JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_no
+      Join vendor on cr.vendor_id = vendor.vendor_id
+      Join sample on crdetails.product_id = sample.sample_id
+      Join batch on batch.batch_id = crdetails.batch_id_credit 
+      Join inventory inv on inv.product_id = crdetails.product_id
+      where cr.credit_invoice_id = ?
+      
+      `,
+      [
+        id,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+};

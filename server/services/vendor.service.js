@@ -12,9 +12,10 @@ module.exports = {
                 vendor_contact,
                 vendor_email,
                 vendor_gstin,
-                vendor_dl_no
+                vendor_dl_no_1,
+                vendor_dl_no_2
                 )
-                values(?,?,?,?,?,?,?)`,
+                values(?,?,?,?,?,?,?,?)`,
       [
         data.org_id,
         data.vendor_name,
@@ -22,7 +23,8 @@ module.exports = {
         data.vendor_contact,
         data.vendor_email,
         data.vendor_gstin,
-        data.vendor_dl_no,
+        data.vendor_dl_no_1,
+        data.vendor_dl_no_2,
       ],
       (error, results) => {
         if (error) {
@@ -42,7 +44,8 @@ module.exports = {
             vendor_contact = ?,
             vendor_email = ?,
             vendor_gstin = ?,
-            vendor_dl_no = ?
+            vendor_dl_no_1 = ?,
+            vendor_dl_no_2 = ?
             where vendor_id = ?`,
       [
         data.vendor_name,
@@ -50,7 +53,8 @@ module.exports = {
         data.vendor_contact,
         data.vendor_email,
         data.vendor_gstin,
-        data.vendor_dl_no,
+        data.vendor_dl_no_1,
+        data.vendor_dl_no_2,
         id,
       ],
 
@@ -81,10 +85,10 @@ module.exports = {
   },
 
   // Get All Vendors by Org ID
-  getAllById: (data, callBack) => {
+  getAllById: (orgId, callBack) => {
     getPool().query(
       'select * from vendor where org_id = ?',
-      [data.org_id],
+      [orgId],
       (error, results) => {
         if (error) {
           return callBack(error);

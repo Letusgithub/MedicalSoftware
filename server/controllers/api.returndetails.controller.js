@@ -18,7 +18,7 @@ module.exports = {
       console.log('err', totalError);
       console.log('res', totalResults);
 
-      const returnInvoiceId = `${orgId}RE${returnDate}${totalResults}`;
+      const returnInvoiceId = `${orgId}RE${returnDate}${totalResults + 1}`;
       // console.log('invoiceId', returnInvoiceId);
       createReturnOrder(body, returnInvoiceId, (returnError, returnResults) => {
         if (returnError) {
