@@ -1,4 +1,0 @@
-product_id,org_id,gst,hsn,primary_unit,secondary_unit,threshold,batch_name,exp_date,conversion,batch_qty,purchase_rate,mrp,shelf_label
-106,30,14,1860,10,5,10,AFT4,2023-30-07,15,20,120,150,ASFFF
-107,30,14,1860,5,4,6,AFT5,2023-30-08,15,21,130,150,ASFFF
-108,30,14,1860,8,7,8,AFT6,2023-29-09,20,21,140,160,ASFFF

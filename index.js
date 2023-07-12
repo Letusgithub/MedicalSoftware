@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 
 const express = require('express');
-const { initialisePool, getPool } = require('./server/config/database');
+const { initialisePool } = require('./server/config/database');
 const cookieParser = require('cookie-parser');
 const app = express();
 
@@ -31,7 +31,6 @@ require('./server/routes/api.cartitem.routes')(app);
 require('./server/routes/api.returndetails.routes')(app);
 require('./server/routes/api.batch.routes')(app);
 require('./server/routes/api.purchase_order.routes')(app);
-require('./server/routes/api.FileUpload.routes')(app);
 require('./server/routes/api.credit.routes')(app);
 
 // FRONT Routes
