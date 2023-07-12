@@ -145,6 +145,7 @@
                                 <th>Total Amount</th>
                                 <th>Date</th>
                                 <th>Time</th>
+                                <!-- <th>View Bill</th> -->
                                 <!-- <th class="col-1">Actions</th> -->
                               </tr>
                             </thead>
@@ -226,14 +227,16 @@
               var htmlData = `
               <tr>
                 <td>${i+1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
                 <td>${items[i].cust_name}</td>
                 <td>${items[i].grand_total}</td>
                 <td>${date}</td>
                 <td>${localTime}</td>
+                
               </tr>
               `
               $("#reportcart").append(htmlData);
+              // <td><button><i class="bi bi-receipt"></i></button></td>
               
             }
           })
@@ -254,14 +257,16 @@
               var htmlData = `
               <tr>
                 <td>${i+1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
                 <td>${items[i].cust_name}</td>
                 <td>${items[i].grand_total}</td>
                 <td>${date}</td>
                 <td>${localTime}</td>
+                
               </tr>
               `
               $("#reportcart").append(htmlData);
+              // <td><button><i class="bi bi-receipt"></i></button></td>
               
             }
           })
@@ -283,14 +288,16 @@
               var htmlData = `
               <tr>
                 <td>${i+1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
                 <td>${items[i].cust_name}</td>
                 <td>${items[i].grand_total}</td>
                 <td>${date}</td>
                 <td>${localTime}</td>
+                
               </tr>
               `
               $("#reportcart").append(htmlData);
+              // <td><button><i class="bi bi-receipt"></i></button></td>
               
             }
           })
@@ -307,26 +314,57 @@
             var items = data.data;
             console.log(items);
             for(let i=0;i<items.length;i++){
-
+             // <td id='bills'><button><i class="bi bi-receipt" id="showbill"></i></button></td>
                 var datetime = items[i].sales_created_date; 
                 var date = moment(datetime).format('DD MMMM YYYY');
                 var time = moment(datetime).utcOffset('+05:30');
                 var localTime = time.format('hh:mm A');
-              var htmlData = `
-              <tr>
-                <td>${i+1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].invoice_id_main}</strong></td>
-                <td>${items[i].cust_name}</td>
-                <td>${items[i].grand_total}</td>
-                <td>${date}</td>
-                <td>${localTime}</td>
-              </tr>
-              `
+                var htmlData = `
+                <tr>
+                  <td>${i+1}</td>
+                  <td id="selectedinvoiceid"><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" ><strong>${items[i].invoice_id_main}</strong></a></td>
+                  <td>${items[i].cust_name}</td>
+                  <td>${items[i].grand_total}</td>
+                  <td>${date}</td>
+                  <td>${localTime}</td>
+                  
+                  
+                </tr>
+                `
               $("#reportcart").append(htmlData);
+              /*<td>
+                <div class="action-btns" id="showbill">
+                  <a type="button" class="return-item btn p-0 mx-2"><i class='bi bi-receipt'></i></a>
+                </div>
+              </td>*/
               
             }
+
+            /*$("#bills").on("click", "#showbill", function(){
+              var item = $(this).closest("tr");
+              var invoiceId = item.find("#selectedinvoiceid strong");
+              console.log(invoiceId);
+            })*/
+            
+           /* $("#showbill").click(function(){
+              var item = $(this).closest("tr");
+              var invoiceId = item.find("#selectedinvoiceid strong").text();
+              console.log(invoiceId);
+            })*/
           })
         })
+
+        $("#reportcart").on('click', '#showbill', function(){
+          var item = $(this).closest("tr");
+          var invoiceId = item.find("#selectedinvoiceid strong").text();
+          console.log(invoiceId);
+          $.get(`/api/getsalesidforreport/${invoiceId}`, function(data, status){
+            var id = data.result[0].si_invoice_id;
+            window.location.href = `/sale_receipt/${id}`
+          })
+        })
+        
+
       
       
       

@@ -136,6 +136,21 @@ module.exports = {
     );
   },
 
+  getSalesIdforReport: (id, callback) => {
+    getPool().query(
+      'select si_invoice_id from order_details where invoice_id_main = ?',
+      [id],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
+
+
   allSamples: (callback) => {
     getPool().query(
       'select * from sample',

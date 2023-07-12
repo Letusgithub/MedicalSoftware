@@ -518,7 +518,9 @@
                       let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
                       if (results.length === 0) {
                         results.push({ med_name: null }); // Add a null item for the custom message
+
                       }
+
                       response(results);
                     })
                   }
@@ -622,6 +624,7 @@
               }, 0)
             }
           }).data('ui-autocomplete')._renderItem = function (ul, item) {
+
             if (item.med_name) {
 
               return $('<li>')
@@ -631,6 +634,7 @@
             else {
               return $('<li>').append('<div>No matching products found</div>').appendTo(ul);
             }
+
           };
 
           //logic for selected units (discontinued)
