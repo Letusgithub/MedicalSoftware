@@ -3,8 +3,9 @@
 /* eslint-disable camelcase */
 
 const express = require('express');
-const { initialisePool } = require('./server/config/database');
 const cookieParser = require('cookie-parser');
+const { initialisePool } = require('./server/config/database');
+
 const app = express();
 
 // View engine setup

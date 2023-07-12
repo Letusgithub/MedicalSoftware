@@ -286,8 +286,10 @@ module.exports = async (app) => {
     res.render('Inventory/add_product', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
-  app.get('/product_batch', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Inventory/product_batch', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  app.get('/product_batch/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/product_batch', {
+      orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name, id: req.params.id,
+    });
   });
 
   app.get('/add_batch/:id', checkAuth, fetchOrgId, (req, res) => {
