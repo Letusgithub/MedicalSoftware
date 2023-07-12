@@ -21,10 +21,10 @@
 
                                 <div class="container-xxl flex-grow-1 container-p-y">
                                     <h4 class="fw-bold py-3 mb-1"> Purchase Order</h4>
-                                    <hr class="mb-4">
+                                    <hr class="mb-2">
 
-                                    <!-- New VEndor -->
-                                    <div class="card mb-4 mx-auto col-md-10">
+                                    <!-- New Vendor -->
+                                    <div class="card mb-2 mx-auto col-md-12">
                                         <div class="card-body ">
 
 
@@ -50,9 +50,11 @@
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bx-phone"></i></span>
-                                                        <input type="text" id="vendor_contact"
+                                                        <input id="vendor_contact"
                                                             class="form-control phone-mask" placeholder=" One 10 Digit Mobile Number"
-                                                            name="vendor_contact">
+                                                            name="vendor_contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            type = "number"
+                                                            maxlength = "10">
                                                     </div>
                                                 </div>
                                             </div>
@@ -63,7 +65,7 @@
                                                     <div class="input-group input-group-merge">
                                                         <span class="input-group-text"><i
                                                                 class="bx bx-envelope"></i></span>
-                                                        <input type="text" id="vendor_email" class="form-control"
+                                                        <input type="email" id="vendor_email" class="form-control"
                                                             placeholder="Example: distributer@gmail.com" name="vendor_email">
                                                         
                                                     </div>
@@ -78,86 +80,64 @@
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bxs-bank"></i></span>
                                                         <input type="text" id="vendor_gstin"
-                                                            class="form-control phone-mask" placeholder="Distributer's Gst No"
+                                                            class="form-control phone-mask" placeholder="Distributer's GSTIN"
                                                             name="vendor_gstin">
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-2">
-                                                <label class="col-sm-2 col-form-label" for="org_dl_no_1">DL No 1<span style="font-size: 15px; color: red">*</span></label>
-                                                <div class="col-sm-10">
+                                            <div class="row mb-3">
+                                                <label class="col-2 col-form-label" for="org_dl_no_1">DL Number 1<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-fullname2"
-                                                        class="input-group-text"><i
+                                                        class="input-group-text border"><i
                                                         class='bx bx-detail'></i></span>
                                                         <input type="text" id="dl1_ft" value="20" style="text-align: center;"
-                                                        class="form-control" readonly>
-                                                        <input type="text" id="dl1_st" placeholder="State (eg:-MH)"
-                                                        class="form-control" >
-                                                        <input type="text" id="dl1_ct" placeholder="City (eg:-NG)"
-                                                        class="form-control" >
-                                                        <input type="text" id="dl1_ln" placeholder="License No."
-                                                        class="form-control" minlength="6" maxlength="6" >
+                                                        class="form-control border" readonly>
+                                                        <input type="text" id="dl1_st" style="text-align: center;" placeholder="State"
+                                                        class="form-control border" >
+                                                        <input type="text" id="dl1_ct" style="text-align: center;" placeholder="City"
+                                                        class="form-control border" >
+                                                        <input type="text" id="dl1_ln" style="text-align: center;" placeholder="Lic. no."
+                                                        class="form-control border" minlength="6" maxlength="6" >
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="row mb-2">
-                                                <label class="col-sm-2 col-form-label" for="org_dl_no_2">DL No 2<span style="font-size: 15px; color: red">*</span></label>
-                                                <div class="col-sm-10">
+                                                <label class="col-2 col-form-label ps-4" style="text-align: center;" for="org_dl_no_2">DL Number 2<span style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-fullname2"
-                                                        class="input-group-text"><i
+                                                        class="input-group-text border"><i
                                                         class='bx bx-detail'></i></span>
                                                         <input type="text" id="dl2_ft" value="21" style="text-align: center;"
-                                                        class="form-control" readonly>
-                                                        <input type="text" id="dl2_st" placeholder="State (eg:-MH)"
-                                                        class="form-control" >
-                                                        <input type="text" id="dl2_ct" placeholder="City (eg:-NG)"
-                                                        class="form-control" >
-                                                        <input type="text" id="dl2_ln" placeholder="License No."
-                                                        class="form-control" minlength="6" maxlength="6" >
+                                                        class="form-control border" readonly>
+                                                        <input type="text" id="dl2_st" style="text-align: center;" placeholder="State"
+                                                        class="form-control border" >
+                                                        <input type="text" id="dl2_ct" style="text-align: center;" placeholder="City"
+                                                        class="form-control border" >
+                                                        <input type="text" id="dl2_ln" style="text-align: center;" placeholder="Lic. no."
+                                                        class="form-control border" minlength="6" maxlength="6" >
                                                     </div>
                                                 </div>
-                                            </div>  
+                                            </div> 
 
-                                            <!-- <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="vendor_dl_no">DL No.</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
-                                                                class='bx bx-detail'></i></span>
-                                                        <input type="text" id="vendor_dl_no"
-                                                            class="form-control phone-mask" placeholder=""
-                                                            name="vendor_dl_no">
-                                                    </div>
-                                                </div>
-                                            </div> -->
-
-                                            <div class="row mb-3">
+                                            <div class="row mb-0">
                                                 <label class="col-sm-2 col-form-label"
                                                     for="vendor_address">Address<span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="col-sm-10">
                                                     <div class="input-group input-group-merge">
                                                      
-                                                        <textarea type="text" id="vendor_address" class="form-control"
+                                                        <input type="text" id="vendor_address" class="form-control"
                                                             placeholder=" Distributers Address" name="vendor_address">
-                                                        </textarea>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="row justify-content-end">
-                                                <div class="col-sm-10">
-                                                    <button type="submit" class="btn btn-primary"
-                                                        id="submitBtn">Add</button>
-                                                </div>
-                                            </div> -->
-
                                         </div>
                                     </div>
-                                    <!-- New VEndor -->
+                                    <!-- New Vendor -->
 
 
                                     <!-- <div class="row">
@@ -219,7 +199,7 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="text" class="form-control"
-                                                                    id="basic-default-name" placeholder="Medicine Name"
+                                                                    id="basic-default-name" placeholder="Enter product name"
                                                                     name="productname" />
                                                             </td>
                                                             <td>
@@ -268,7 +248,7 @@
                                     <!--/ Bordered Table -->
 
                                     <!-- PO Cart -->
-                                    <div class="card mx-3">
+                                    <div class="card ">
                                         <h5 class="card-header">Item Cart</h5>
                                         <div class="card-body">
                                             <div class="table-responsive text-nowrap">

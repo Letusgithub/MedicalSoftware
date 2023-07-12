@@ -32,12 +32,13 @@
                         <th>
                           <div class="col-md-6">
                             <div class="card mb-4">
-                              <h5 class="card-header">Customer Mobile<span style="font-size: 20px; color: red">*</span></h5>
+                              <h5 class="card-header">Customer Mobile<span style="font-size: 20px; color: red">*</span>
+                              </h5>
                               <div class="card-body">
                                 <div>
 
                                   <input type="text" class="form-control" id="phonenumber"
-                                    aria-describedby="defaultFormControlHelp" placeholder="10-digit number" />
+                                    placeholder="Enter 10-digit number" maxLength="10" />
 
                                 </div>
                               </div>
@@ -53,15 +54,12 @@
                               <div class="d-flex justify-content-between m-0 p-0">
                                 <h5 class="card-header">Customer Name <span style="font-size: 20px; color: red">*</span>
                                 </h5>
-                                <!-- <div class=" text-center mt-3 ">
-                                  <a class="btn btn-primary mx-4" style="color: white;" id="addnewcustomer">Add Customer</a>
-                                </div> -->
                               </div>
                               <div class="card-body pt-0">
                                 <div>
 
                                   <input type="text" class="form-control" id="customername"
-                                    aria-describedby="defaultFormControlHelp" placeholder="Customer name" />
+                                    placeholder="Enter customer name" />
 
                                 </div>
                               </div>
@@ -80,7 +78,7 @@
               <div class="row mx-3">
                 <h4 class="fw-bold mb-4">Add Items</h4>
                 <h5 id="message" style="color:red"></h5>
-                
+
 
                 <!-- Bordered Table -->
                 <div class="bordered-table card mb-4 mx-0">
@@ -126,10 +124,9 @@
                               <th style="width: 6vw;" id="primaryunitname">P.Unit<span></span></th>
                               <th style="width: 6vw;" id="secondaryunitname">S.Unit<span></span></th>
                               <th style="width: 5vw;">MRP / p.unit</th>
-                              <!-- <th>QTY</th> -->
 
                               <th style="width: 8vw;">Disc %</th>
-                              <th>Total</th>
+                              <th style="width: 10vw;">Total</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -138,48 +135,31 @@
                               <td id="batchdroporinput">
                                 <input type="text" class="form-control" id="batch" placeholder="" />
                               </td>
-                              
 
                               <td>
                                 <input class="form-control" type="date" id="expdate" />
                               </td>
 
-                              <!-- <td id="pack">
-                                <select class="form-select" id="unit" name="unit" aria-label="unit">
-                                </select>
-                                <p class="unit"></p>
-                              </td> -->
-
-
                               <td>
-                                <input type="number" class="form-control" id="pUnit" placeholder="Qty" min="0"/>
+                                <input type="number" class="form-control px-1" id="pUnit" min="0" />
                               </td>
 
                               <td>
-                                <input type="number" class="form-control" id="sUnit" placeholder="Qty" min="0"/>
+                                <input type="number" class="form-control px-1" id="sUnit" min="0" />
                               </td>
-
 
                               <td>
-                                <input type="text" class="form-control" id="price" placeholder="" min="0"/>
+                                <input type="text" class="form-control" id="price" placeholder="" min="0" />
                               </td>
-
-                              <!-- <td>
-                                <input type="text" class="form-control" id="qty" placeholder="" />
-                              </td> -->
-
 
                               <td>
                                 <input type="text" class="form-control" id="discount" placeholder="" min="0" />
                               </td>
 
                               <td>
-                                <input type="text" class="form-control" id="total" placeholder="" min="0"/>
+                                <input type="text" class="form-control" id="total" placeholder="" min="0" />
                               </td>
                             </tr>
-
-
-
 
                           </tbody>
 
@@ -254,7 +234,8 @@
                   <div class="col-5">
                     <div class="mb-1 row">
 
-                      <label for="reference" class="col-3 form-label mb-0"><span style="font-size: 20px; color: red">*</span>Reference</label>
+                      <label for="reference" class="col-3 form-label mb-0"><span
+                          style="font-size: 20px; color: red">*</span>Reference</label>
                       <div class="col-9 mb-2">
                         <input class="form-control" type="text" placeholder="Doctor/Hospital" id="reference" />
                       </div>
@@ -335,12 +316,12 @@
                 <div class="form-check mt-3">
                   <div>
                     <input class="form-check-input mx-auto" type="checkbox" value="" id="defaultCheck1" checked>
-                    <label class="form-check-label mx-1" for="defaultCheck1" >
+                    <label class="form-check-label mx-1" for="defaultCheck1">
                       Disclaimer : Hereby I asure that product details given here is
                       validated by this pharmacy .
                     </label>
                   </div>
-                  
+
                 </div>
 
 
@@ -517,8 +498,8 @@
                .append('<div>' + item.med_name + '</div>')
                .appendTo(ul);
            };*/
-        
-          var priceMed =-1;
+
+          var priceMed = -1;
           var primaryUnit;
           var secondaryUnit;
           var conversion;
@@ -535,16 +516,22 @@
                     res.json().then(data => {
                       let searchTerm = request.term;
                       let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                      if (results.length === 0) {
+                        results.push({ med_name: null }); // Add a null item for the custom message
+                      }
                       response(results);
                     })
                   }
                 });
               }
-              else{
-                $.get('/api/allsample', function(data, status){
-                      let searchTerm = request.term;
-                      let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
-                      response(results);
+              else {
+                $.get('/api/allsample', function (data, status) {
+                  let searchTerm = request.term;
+                  let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                  if (results.length === 0) {
+                    results.push({ med_name: null }); // Add a null item for the custom message
+                  }
+                  response(results);
                 })
               }
 
@@ -552,15 +539,15 @@
             select: function (event, ui) {
               setTimeout(function () {
                 console.log('the selected med', ui.item);
-                productId=ui.item.sample_id;
+                productId = ui.item.sample_id;
 
                 //getting all the batches associated with the product
-                $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function(data, status){
+                $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
 
                   console.log('all batches', data.data);
-                  if(data.data.length==0){
+                  if (data.data.length == 0) {
                     $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
-                  } else{
+                  } else {
                     //batch dropdown
                     $("#batchdroporinput input").remove();
                     $("#batchdroporinput").append(
@@ -568,28 +555,28 @@
                       <select class="form-select" id="batchnumber" aria-label="unit">
                       </select>
                       `
-                      )
+                    )
 
-                      data.data.map(function(value, key){
-                        //batchesMap.push(`${value.batch_id} ( ${value.batch_qty} )`);
-                        var remPriQty = value.batch_qty - value.saled_pri_qty;
-                        var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion?0:value.conversion - value.saled_sec_qty;
-                        $("#batchdroporinput #batchnumber").append(
-                          `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
-                        )
-                      })
-                      //console.log(batchesMap);
+                    data.data.map(function (value, key) {
+                      //batchesMap.push(`${value.batch_id} ( ${value.batch_qty} )`);
+                      var remPriQty = value.batch_qty - value.saled_pri_qty;
+                      var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion ? 0 : value.conversion - value.saled_sec_qty;
+                      $("#batchdroporinput #batchnumber").append(
+                        `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
+                      )
+                    })
+                    //console.log(batchesMap);
                   }
                   //populate the first qty to the product cart
                   batchIdwhenSelected = data.data[0].batch_id;
-                  primaryUnit=data.data[0].primary_unit;
-                  secondaryUnit=data.data[0].secondary_unit;
-                  conversion=data.data[0].conversion;
+                  primaryUnit = data.data[0].primary_unit;
+                  secondaryUnit = data.data[0].secondary_unit;
+                  conversion = data.data[0].conversion;
 
                   availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
-                  availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion?0:data.data[0].conversion - data.data[0].saled_sec_qty;
+                  availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
 
-            
+
 
                   /*
                   $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
@@ -602,28 +589,28 @@
                   $("#secondaryunitname span").text(` (${secondaryUnit})`);
 
                   //exp date populate and shelf label
-                  var date= new Date(data.data[0].exp_date);
+                  var date = new Date(data.data[0].exp_date);
                   $("#expdate").val(date.toISOString().split('T')[0]);
                   $("#shelflabel").val(data.data[0].shelf_label);
-                  
+
                   $("#batch").val(data.data[0].batch_id);
                   priceMed = data.data[0].mrp;
                   $("#price").val(priceMed);
                   //var batchId = $("#batchdroporinput #batchnumber").val();
                   //$("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
 
-                  $("#batchdroporinput").on("change", "#batchnumber", function(){
+                  $("#batchdroporinput").on("change", "#batchnumber", function () {
                     var batchId = $("#batchdroporinput #batchnumber").val();
                     batchIdwhenSelected = data.data[batchId].batch_id;
-     
+
                     $("#shelflabel").val(data.data[batchId].shelf_label);
-                    var date= new Date(data.data[batchId].exp_date);
+                    var date = new Date(data.data[batchId].exp_date);
                     $("#expdate").val(date.toISOString().split('T')[0]);
                     $("#price").val(data.data[batchId].mrp);
                     conversion = data.data[batchId].conversion;
 
                     availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
-                    availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion?0:data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
+                    availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion ? 0 : data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
 
                     calculateTotal();
                   })
@@ -632,14 +619,20 @@
 
                 $("#medicinename").val(ui.item.med_name);
                 $('#brand').val(ui.item["mfd/mkt"]);
-              },0)
+              }, 0)
             }
           }).data('ui-autocomplete')._renderItem = function (ul, item) {
-            return $('<li>')
-              .append('<div>' + item.med_name + '('+ item.salt_composition +')' + '</div>')
-              .appendTo(ul);
+            if (item.med_name) {
+
+              return $('<li>')
+                .append('<div>' + item.med_name + '(' + item.salt_composition + ')' + '</div>')
+                .appendTo(ul);
+            }
+            else {
+              return $('<li>').append('<div>No matching products found</div>').appendTo(ul);
+            }
           };
-          
+
           //logic for selected units (discontinued)
           /*
         $("#unit").change(function(){
@@ -654,7 +647,7 @@
           }
         })*/
 
-        //logic for calculating total
+          //logic for calculating total
           var priQty = $("#pUnit");
           var secQty = $("#sUnit");
           var priceInput = $("#price");
@@ -673,7 +666,7 @@
             discount = discount / 100;
 
             //var total = quantity * price - (quantity * price * discount);
-            var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price/conversion;
+            var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
             var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
 
             totalInput.val(totalQtyAfterDisc.toFixed(2));
@@ -728,33 +721,33 @@
           var getLocalData;
           var htmlData;
           $("#addtocart").click(function () {
-            
-            if($("#customername").val()==''){
-              return alert('PLEASE ADD CUSTOMER FIRST');
+
+            if ($("#customername").val() == '') {
+              return alert('Please fill "Customer Details"');
             }
 
-            if($("#medicinename").val()==''){
-              return alert('PLEASE ADD MEDICINE FIRST');
+            if ($("#medicinename").val() == '') {
+              return alert('Enter "Medicine Name"');
             }
 
-            if($("#pUnit").val()==''){
-              return alert('PLEASE ADD QUANTITY FIRST');
+            if ($("#pUnit").val() == '') {
+              return alert('Enter Quantity');
             }
 
-            if($("#batch").val()==''){
-              return alert('PLEASE ADD BATCH FIRST');
+            if ($("#batch").val() == '') {
+              return alert('Select Batch');
             }
 
-            if($("#expdate").val() < new Date().toJSON().slice(0, 10)){
-              return alert('PLEASE ADD CORRECT EXP Date FIRST');
+            if ($("#expdate").val() < new Date().toJSON().slice(0, 10)) {
+              return alert("Can't proceed with Expired product");
             }
 
-            if(priQty.val()>availablePrimaryQty){
-              return alert("Don't Have Enough Meds Please ADD!!");
+            if (priQty.val() > availablePrimaryQty) {
+              return alert("Don't have Enough Quantity!");
             }
-            if(priQty.val() == availablePrimaryQty){
-              if(secQty.val() > availableSecondaryQty)
-              return alert("Don't Have Enough Meds Please ADD!!");
+            if (priQty.val() == availablePrimaryQty) {
+              if (secQty.val() > availableSecondaryQty)
+                return alert("Don't have Enough Quantity!");
             }
 
             var products = $("#medicinename").val();
@@ -772,18 +765,17 @@
 
 
             cartarray.push({
-              batchId: batchIdwhenSelected, 
+              batchId: batchIdwhenSelected,
               productId: productId,
               productname: products,
               brand: brand,
               shelflabel: shelflabel,
               batch: batch,
-              //allbatches: batchesMap,
               expdate: exp,
               priQty: priCartQty,
               secQty: secCartQty,
-              conversion:conversion,
-              selectedUnit:selectedUnit,
+              conversion: conversion,
+              selectedUnit: selectedUnit,
               mrp: mrp,
               disc: disc,
               total: total,
@@ -816,9 +808,7 @@
             $("#unit").empty();
             $("#pack .unit").empty();
             $("#message").empty();
-
           })
-
 
 
           // logic for redering cart data on addtocart click 
@@ -855,82 +845,82 @@
             $("#price").val(selectedItem.mrp);
             $("#discount").val(selectedItem.disc);
             $("#total").val(selectedItem.total);
-            
-            
+
+
 
             //getting all data for batches
-            $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function(data, status){
+            $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
               console.log('on edit of the product', data.data);
-              if(data.data.length==0){
-                    $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
-                  } else{
-                    //batch dropdown
-                    $("#batchdroporinput input").remove();
-                    $("#batchdroporinput").append(
-                      `
+              if (data.data.length == 0) {
+                $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+              } else {
+                //batch dropdown
+                $("#batchdroporinput input").remove();
+                $("#batchdroporinput").append(
+                  `
                       <select class="form-select" id="batchnumber" aria-label="unit">
                       </select>
                       `
-                      )
+                )
 
-                      data.data.map(function(value, key){
-                        //batchesMap.push(`${value.batch_id} ( ${value.batch_qty} )`);
-                        $("#batchdroporinput #batchnumber").append(
-                          `<option value=${key}> ${value.batch_name} ( ${value.batch_qty} ) </option>`
-                        )
-                      })
-                      //console.log(batchesMap);
-                  }
-                  //populate the first qty to the product cart
-                  var batchnumber = selectedItem.batch;
-                  batchIdwhenSelected = selectedItem.batchId;
-                  $("#batchdroporinput #batchnumber").prop('selectedIndex', batchnumber);
-                  primaryUnit=data.data[batchnumber].primary_unit;
-                  secondaryUnit=data.data[batchnumber].secondary_unit;
-                  conversion=data.data[batchnumber].conversion;
+                data.data.map(function (value, key) {
+                  //batchesMap.push(`${value.batch_id} ( ${value.batch_qty} )`);
+                  $("#batchdroporinput #batchnumber").append(
+                    `<option value=${key}> ${value.batch_name} ( ${value.batch_qty} ) </option>`
+                  )
+                })
+                //console.log(batchesMap);
+              }
+              //populate the first qty to the product cart
+              var batchnumber = selectedItem.batch;
+              batchIdwhenSelected = selectedItem.batchId;
+              $("#batchdroporinput #batchnumber").prop('selectedIndex', batchnumber);
+              primaryUnit = data.data[batchnumber].primary_unit;
+              secondaryUnit = data.data[batchnumber].secondary_unit;
+              conversion = data.data[batchnumber].conversion;
 
-                  $("#primaryunitname span").text(` (${primaryUnit})`);
-                  $("#secondaryunitname span").text(` (${secondaryUnit})`);
+              $("#primaryunitname span").text(` (${primaryUnit})`);
+              $("#secondaryunitname span").text(` (${secondaryUnit})`);
 
-                  //exp date populate and shelf label
-                  var date= new Date(data.data[batchnumber].exp_date);
-                  $("#expdate").val(date.toISOString().split('T')[0]);
-                  $("#shelflabel").val(data.data[batchnumber].shelf_label);
-                  
-                  //$("#batch").val(data.data[0].batch_id);
-                  priceMed = data.data[batchnumber].mrp;
-                  $("#price").val(priceMed);
+              //exp date populate and shelf label
+              var date = new Date(data.data[batchnumber].exp_date);
+              $("#expdate").val(date.toISOString().split('T')[0]);
+              $("#shelflabel").val(data.data[batchnumber].shelf_label);
 
-                  $("#batchdroporinput").on("change", "#batchnumber", function(){
-                    var batchId = $("#batchdroporinput #batchnumber").val();
-                    batchIdwhenSelected = data.data[batchId].batch_id;
-     
-                    $("#shelflabel").val(data.data[batchId].shelf_label);
-                    var date= new Date(data.data[batchId].exp_date);
-                    $("#expdate").val(date.toISOString().split('T')[0]);
-                    $("#price").val(data.data[batchId].mrp);
-                    conversion = data.data[batchId].conversion;
-                    calculateTotal();
-                  })
+              //$("#batch").val(data.data[0].batch_id);
+              priceMed = data.data[batchnumber].mrp;
+              $("#price").val(priceMed);
+
+              $("#batchdroporinput").on("change", "#batchnumber", function () {
+                var batchId = $("#batchdroporinput #batchnumber").val();
+                batchIdwhenSelected = data.data[batchId].batch_id;
+
+                $("#shelflabel").val(data.data[batchId].shelf_label);
+                var date = new Date(data.data[batchId].exp_date);
+                $("#expdate").val(date.toISOString().split('T')[0]);
+                $("#price").val(data.data[batchId].mrp);
+                conversion = data.data[batchId].conversion;
+                calculateTotal();
+              })
 
 
             })
 
             //$("#shelflabel").val(selectedItem.shelflabel);
             //$("#expdate").val(selectedItem.expdate);
-           /* if(selectedItem.selectedUnit){
-
-              $("#unit").append("<option>"+ selectedItem.selectedUnit+"</option>");
-              if(selectedItem.primaryUnit === selectedItem.selectedUnit){
-                $("#unit").append("<option>"+ selectedItem.secondaryUnit + "</option>");
-              }
-              else{
-                $("#unit").append("<option>"+ selectedItem.primaryUnit + "</option>");
-              }
-              
-              $("#pack .unit")
-              .text(`1 ${selectedItem.primaryUnit} of ${selectedItem.conversion} ${selectedItem.secondaryUnit}`);
-            }*/
+            /* if(selectedItem.selectedUnit){
+ 
+               $("#unit").append("<option>"+ selectedItem.selectedUnit+"</option>");
+               if(selectedItem.primaryUnit === selectedItem.selectedUnit){
+                 $("#unit").append("<option>"+ selectedItem.secondaryUnit + "</option>");
+               }
+               else{
+                 $("#unit").append("<option>"+ selectedItem.primaryUnit + "</option>");
+               }
+               
+               $("#pack .unit")
+               .text(`1 ${selectedItem.primaryUnit} of ${selectedItem.conversion} ${selectedItem.secondaryUnit}`);
+             }*/
 
             UpdatecartItemsinStorage.splice(item_id - 1, 1);
             cartarray = UpdatecartItemsinStorage;
@@ -1038,10 +1028,10 @@
           var orderDetails;
           $("#submitorder").click(function () {
 
-            if($("#reference").val()==""){
+            if ($("#reference").val() == "") {
               return alert("NO DOCTOR REF");
             }
-            if($("#subtotal").val() == 0 || $("#subtotal").val() == ''){
+            if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
               return alert("PLEASE ADD SOME ITEMS FIRST");
             }
 
@@ -1080,85 +1070,85 @@
                 }
 
 
-                  $.ajax({
-                    url: '/api/salesdetail/',
-                    type:'POST',
-                    data: JSON.stringify(orderDetails),
-                    contentType: 'application/json',
-                    success: function(response){
-                      console.log('inside the submit function', response);
-                      var salesId = response.result.insertId;
-                      var mainInvoiceId = response.invoiceId;
-                     
-                        var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
-                        console.log('orderdetails of sales', orderDetails);
-                        
-                        for(let i in orderDetails){
+                $.ajax({
+                  url: '/api/salesdetail/',
+                  type: 'POST',
+                  data: JSON.stringify(orderDetails),
+                  contentType: 'application/json',
+                  success: function (response) {
+                    console.log('inside the submit function', response);
+                    var salesId = response.result.insertId;
+                    var mainInvoiceId = response.invoiceId;
 
-                          $.ajax({
-                            url: `/api/updatebatchwhensale/`,
-                            type: 'POST',
-                            data: JSON.stringify({
-                              batch_id: orderDetails[i].batchId,
-                              org_id: org,
-                              saled_pri_qty: orderDetails[i].priQty,
-                              saled_sec_qty: orderDetails[i].secQty
-                            }),
-                            contentType: 'application/json',
-                            success: function(response){
-                              console.log(response);                   
-                            },
-                            error: function(error){
-                              console.log('error in updateing batch', error);
-                            }
-                          })
+                    var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
+                    console.log('orderdetails of sales', orderDetails);
 
+                    for (let i in orderDetails) {
 
-
-                          var cartDetails = ({
-                            product_id:orderDetails[i].productId,
-                            saled_pri_qty: orderDetails[i].priQty,
-                            saled_sec_qty: orderDetails[i].secQty,
-                            main_invoice_id: mainInvoiceId,
-                            sales_invoice_id: salesId,
-                            saled_batch_id: orderDetails[i].batchId,
-                            unit_discount: orderDetails[i].disc,
-                            saled_mrp: orderDetails[i].total
-                          })
-
-                          console.log('cartDetail for the saled product', cartDetails);
-
-                          $.ajax({
-                            url: `/api/cartitems/`,
-                            type: 'POST',
-                            data: JSON.stringify(cartDetails),
-                            contentType: 'application/json',
-                            success: function(response){
-                              console.log(response);                   
-                            },
-                            error: function(error){
-                              console.log(error);
-                            }
-                          })
+                      $.ajax({
+                        url: `/api/updatebatchwhensale/`,
+                        type: 'POST',
+                        data: JSON.stringify({
+                          batch_id: orderDetails[i].batchId,
+                          org_id: org,
+                          saled_pri_qty: orderDetails[i].priQty,
+                          saled_sec_qty: orderDetails[i].secQty
+                        }),
+                        contentType: 'application/json',
+                        success: function (response) {
+                          console.log(response);
+                        },
+                        error: function (error) {
+                          console.log('error in updateing batch', error);
                         }
-                      
-                        localStorage.removeItem("cartitems");
-                        localStorage.removeItem("custdata");
-                        window.location.href = `/sale_receipt/${salesId}`
-      
-                    //})
-                    },
-                    error: function(error){
-                      alert("not Created", error )
+                      })
+
+
+
+                      var cartDetails = ({
+                        product_id: orderDetails[i].productId,
+                        saled_pri_qty: orderDetails[i].priQty,
+                        saled_sec_qty: orderDetails[i].secQty,
+                        main_invoice_id: mainInvoiceId,
+                        sales_invoice_id: salesId,
+                        saled_batch_id: orderDetails[i].batchId,
+                        unit_discount: orderDetails[i].disc,
+                        saled_mrp: orderDetails[i].total
+                      })
+
+                      console.log('cartDetail for the saled product', cartDetails);
+
+                      $.ajax({
+                        url: `/api/cartitems/`,
+                        type: 'POST',
+                        data: JSON.stringify(cartDetails),
+                        contentType: 'application/json',
+                        success: function (response) {
+                          console.log(response);
+                        },
+                        error: function (error) {
+                          console.log(error);
+                        }
+                      })
                     }
-                  })
+
+                    localStorage.removeItem("cartitems");
+                    localStorage.removeItem("custdata");
+                    window.location.href = `/sale_receipt/${salesId}`
+
+                    //})
                   },
                   error: function (error) {
                     alert("not Created", error)
                   }
-
-
                 })
+              },
+              error: function (error) {
+                alert("not Created", error)
+              }
+
+
+            })
 
 
           })
@@ -1212,75 +1202,9 @@
                           updateElement.remove();
                         }) 
                         */
-
-
-
-
-
-
-
-
-
-
-
-
-
         })
 
       </script>
-
-      <script>
-        var addToCart = document.getElementById("addtocart")
-        addToCart.addEventListener("click", displayItems)
-
-        var row = 0
-
-        function displayItems() {
-
-          var medicinename = document.getElementById("medicinename").value
-          var shelflabel = document.getElementById("shelflabel").value
-          var hsn = document.getElementById("hsn").value
-          var batch = document.getElementById("batch").value
-          var mfgdate = document.getElementById("mfgdate").value
-          var expdate = document.getElementById("expdate").value
-          var price = document.getElementById("price").value
-          var qty = document.getElementById("qty").value
-          var discount = document.getElementById("discount").value
-          var gst = document.getElementById("gst").value
-          var total = document.getElementById("total").value
-
-          var cart = document.getElementById("cart");
-
-          var newRow = cart.insertRow(row);
-
-          var cell1 = newRow.insertCell(0);
-          var cell2 = newRow.insertCell(1);
-          var cell3 = newRow.insertCell(2);
-          var cell4 = newRow.insertCell(3);
-          var cell5 = newRow.insertCell(4);
-          var cell6 = newRow.insertCell(5);
-          var cell7 = newRow.insertCell(6);
-
-          actionHTML = "<div class='action-btns'><button type='button' class='btn p-0 mx-2'><i class='bx bxs-edit'></i></button><button onclick='deleteItem(this)' type='button' class='btn p-0 mx-2'><i class='bx bx-trash me-1'></i></button></div>";
-
-          cell1.innerHTML = row + 1;
-          cell2.innerHTML = medicinename;
-          cell3.innerHTML = qty;
-          cell4.innerHTML = price;
-          cell5.innerHTML = discount;
-          cell6.innerHTML = total;
-          cell7.insertAdjacentHTML("afterbegin", actionHTML);
-
-          row++;
-        };
-
-        function deleteItem(r) {
-          var i = r.parentNode.parentNode.rowIndex;
-          document.getElementById("cart").deleteRow(i + 1);
-        };
-
-      </script>
-
 
   </body>
 

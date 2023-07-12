@@ -26,7 +26,7 @@ module.exports = {
                 emp_email,
                 emp_address,
                 emp_created,
-                emp_updated)
+                emp_lastUpdated)
                 value(?,?,?,?,?,?,?,?)`,
       [
         data.org_id,
