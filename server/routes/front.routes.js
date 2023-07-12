@@ -45,6 +45,7 @@ module.exports = async (app) => {
     //     },
     //   );
     // }
+    res.set('Cache-Control', 'public, max-age=31536000');
     res.header(
       'Access-Control-Allow-Headers',
       'x-access-token, Origin, Content-Type, Accept',

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter,searchYear,
+  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter,searchYear, getSalesIdforReport,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -107,6 +107,24 @@ module.exports = {
   mainId: (req, res) => {
     const id = req.params.id;
     mainId(id, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'No Orders Found',
+        });
+      }
+      // console.log(results);
+      res.status(200).json({
+        success: 'nice',
+        result: results,
+      });
+    });
+  },
+
+  getSalesIdforReport: (req, res) => {
+    const id = req.params.id;
+    getSalesIdforReport(id, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
