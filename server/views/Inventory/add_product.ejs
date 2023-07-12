@@ -45,8 +45,9 @@
                                                         <span id="basic-icon-default-fullname2"
                                                             class="input-group-text"></span>
                                                         <input type="text" class="form-control"
-                                                            id="basic-icon-default-fullname" placeholder="Type some letters of the medicine name"
-                                                            aria-label="John Doe" 
+                                                            id="basic-icon-default-fullname"
+                                                            placeholder="Type some letters of the medicine name"
+                                                            aria-label="John Doe"
                                                             aria-describedby="basic-icon-default-fullname2"
                                                             name="productname">
                                                     </div>
@@ -309,8 +310,6 @@
                                         </div>
 
                                     </div>
-
-
                                 </div>
                                 <!-- / Content -->
 
@@ -331,10 +330,12 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
-            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js">
+            </script>
             <script>
                 var productId;
                 var orgID = '<%= orgId %>';
+
                 $(document).ready(function () {
                     if ('caches' in window) {
                         caches.keys().then(name => {
@@ -349,6 +350,24 @@
                             }
                         })
                     }
+                    $('#file-upload').on('change', function () {
+
+                        var fileName = $(this).val().split('\\').pop();
+                        var label = $('label[for="file-upload"]');
+                        if (fileName) {
+                            label.text(fileName);
+                        } else {
+                            label.text('Choose file');
+                        }
+                    });
+                    $('#SubmitFile').click(function () {
+
+                        if ($("input[name='file']").val() == '') {
+                            alert('PLEASE SELECT A FILE');
+                            event.preventDefault();
+                        }
+                    })
+
                     // autopopulate product
                     $("input[name='productname']").autocomplete({
                         minLength: 3,
@@ -371,7 +390,6 @@
                             }
                             else {
                                 $.get('/api/allsample', function (data, status) {
-                                   
                                     let searchTerm = request.term;
                                     let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
 
@@ -392,17 +410,17 @@
                             }, 0)
                         }
                     }).data('ui-autocomplete')._renderItem = function (ul, item) {
-                        
-                            if(item.med_name){
 
-                                return $('<li>')
-                                    .append('<div>' + item.med_name + '</div>')
-                                    .appendTo(ul);
-                            }
-                            else{
-                                return $('<li>').append('<div>No matching products found</div>').appendTo(ul);
-                            }
-                         
+                        if (item.med_name) {
+
+                            return $('<li>')
+                                .append('<div>' + item.med_name + '</div>')
+                                .appendTo(ul);
+                        }
+                        else {
+                            return $('<li>').append('<div>No matching products found</div>').appendTo(ul);
+                        }
+
                     };
                     //changes in stp and tabs
                     $("select[name='primary'], select[name='secondary']").on("change", function () {
@@ -473,7 +491,7 @@
                                     contentType: 'application/json',
                                     success: function (response) {
                                         window.location.href = '/product_stock'
-                                        localStorage.setItem('addbatchid', productId);        
+                                        localStorage.setItem('addbatchid', productId);
                                         window.location.href = `/add_batch/${productId}`
                                         console.log(response);
                                     },
@@ -488,10 +506,10 @@
                         })
                     })
 
+
                 })
             </script>
 
     </body>
-
 
     </html>

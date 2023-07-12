@@ -1,3 +1,5 @@
+<!-- IMPORTANT!!- Not in use -->
+
 <%- include('../partials/headercode.ejs') %>
 
     <body>
@@ -37,13 +39,16 @@
 
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="vendor_name">Vendor
-                                                    Name</label>
+                                                    Name<span
+                                                    style="font-size: 15px; color: red">*</span></label>
                                                 <div class="col-sm-10">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-fullname2"
                                                             class="input-group-text"><i class="bx bx-user"></i></span>
-                                                        <input type="text" class="form-control" id="vendor_name"
-                                                            placeholder="" name="vendor_name">
+                                                        <input class="form-control" id="vendor_name" placeholder=""
+                                                            name="vendor_name"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            type="number" maxlength="10" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -52,14 +57,16 @@
 
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="vendor_contact">Contact
-                                                    Number</label>
+                                                    Number<span
+                                                    style="font-size: 15px; color: red">*</span></label>
                                                 <div class="col-sm-10">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bx-phone"></i></span>
-                                                        <input type="text" id="vendor_contact"
-                                                            class="form-control phone-mask" placeholder=""
-                                                            name="vendor_contact">
+                                                        <input id="vendor_contact" class="form-control phone-mask"
+                                                            placeholder="" name="vendor_contact" \
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            type="number" maxlength="10" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,28 +159,28 @@
             <script>
                 $(document).ready(function () {
                     $("#submitBtn").click(function () {
-                        
-                            $.ajax({
-                                url: `/api/vendor/`,
-                                type: 'POST',
-                                data: JSON.stringify({
-                                    org_id: "<%= orgId %>",
-                                    vendor_name: $("#vendor_name").val(),
-                                    vendor_address: $("#vendor_address").val(),
-                                    vendor_contact: $("#vendor_contact").val(),
-                                    vendor_gstin: $("#vendor_gstin").val(),
-                                    vendor_email: $("#vendor_email").val(),
-                                    vendor_dl_no: $("#vendor_dl_no").val(),
-                                }),
-                                contentType: 'application/json',
-                                success: function (response) {
-                                    console.log(response);
-                                    window.location.href = '/vendor_list'
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            })
+
+                        $.ajax({
+                            url: `/api/vendor/`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                org_id: "<%= orgId %>",
+                                vendor_name: $("#vendor_name").val(),
+                                vendor_address: $("#vendor_address").val(),
+                                vendor_contact: $("#vendor_contact").val(),
+                                vendor_gstin: $("#vendor_gstin").val(),
+                                vendor_email: $("#vendor_email").val(),
+                                vendor_dl_no: $("#vendor_dl_no").val(),
+                            }),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log(response);
+                                window.location.href = '/vendor_list'
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        })
                     })
                 })
             </script>
