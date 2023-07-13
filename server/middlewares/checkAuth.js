@@ -5,7 +5,6 @@ exports.checkAuth = async (req, res, next) => {
   // Get the token from the request cookies
   const token = req.cookies.token;
 
-
   // Check if the token exists
   if (!token) {
     return res.redirect('/login');
@@ -22,7 +21,6 @@ exports.checkAuth = async (req, res, next) => {
     next();
   } catch (err) {
     // Token verification failed, redirect to login
-    console.log(err)
     return res.redirect('/login');
   }
 };

@@ -6,9 +6,7 @@ const { checkAuth } = require('../middlewares/checkAuth');
 const { fetchOrgId } = require('../middlewares/fetchOrgId');
 const { getPharmaData } = require('../middlewares/getPharmaData');
 
-
 module.exports = async (app) => {
-  
   app.use((req, res, next) => {
     res.header(
       'Access-Control-Allow-Headers',
@@ -25,7 +23,6 @@ module.exports = async (app) => {
 
   // Home Page
   app.get('/', checkAuth, fetchOrgId, getPharmaData, (req, res) => {
-
     console.log('insdie the req statement', req.app.locals.token);
     console.log('insdie the req statement', req.app.locals.name);
     console.log('insdie the req statement', req.app.locals.number);
