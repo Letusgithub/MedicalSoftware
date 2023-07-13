@@ -6,45 +6,10 @@ const { checkAuth } = require('../middlewares/checkAuth');
 const { fetchOrgId } = require('../middlewares/fetchOrgId');
 const { getPharmaData } = require('../middlewares/getPharmaData');
 
+
 module.exports = async (app) => {
+  
   app.use((req, res, next) => {
-    // if (!req.app.locals.cookieRetrieved && req.cookies.token != null) {
-    //   const token = req.cookies.token;
-    //   const { payload } = jwt.decode(token);
-
-    //   getPool().query(
-    //     'select * from organisation where org_telephone =?',
-    //     [payload],
-    //     (error, results) => {
-    //       req.app.locals.token = results[0].org_name;
-    //       req.app.locals.name = results[0].owner_name;
-    //       req.app.locals.number = results[0].org_telephone;
-    //       req.app.locals.GST = results[0].org_gstin;
-
-    //       if (results[0].org_id_main === '') {
-    //         const orgID = results[0].org_id.toString().padStart(7, '0');
-    //         const id = `AA${results[0].org_pincode}${orgID}`;
-    //         console.log('id in midd', id);
-    //         getPool().query(
-    //           'update organisation set org_id_main=? where org_id=?',
-    //           [id, results[0].org_id],
-    //           (idError, idResult) => {
-    //             if (idError) {
-    //               console.log('id ka error', idError);
-    //             }
-    //             console.log('id ka result', idResult);
-    //             req.app.locals.pharmaId = id;
-    //           },
-
-    //         );
-    //       } else {
-    //         console.log('here');
-    //         req.app.locals.pharmaId = results[0].org_id_main;
-    //       }
-    //       req.app.locals.cookieRetrieved = true;
-    //     },
-    //   );
-    // }
     res.header(
       'Access-Control-Allow-Headers',
       'x-access-token, Origin, Content-Type, Accept',
@@ -60,6 +25,7 @@ module.exports = async (app) => {
 
   // Home Page
   app.get('/', checkAuth, fetchOrgId, getPharmaData, (req, res) => {
+
     console.log('insdie the req statement', req.app.locals.token);
     console.log('insdie the req statement', req.app.locals.name);
     console.log('insdie the req statement', req.app.locals.number);

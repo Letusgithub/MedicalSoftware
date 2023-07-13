@@ -425,6 +425,21 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script>
         $(document).ready(function () {
+
+          if ('caches' in window) {
+            caches.keys().then(name => {
+              if (name.length == 0) {
+                console.log('do something');
+                caches.open('productCache').then((cache) => {
+                  cache.add('/api/allsample');
+                })
+              }
+              else {
+                console.log('do nothing');
+              }
+            })
+          }
+
   
           var result; 
           const ctx = $("#myChart");

@@ -5,6 +5,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { initialisePool } = require('./server/config/database');
+const { setCache } = require('./server/middlewares/Caching');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.set('views', './server/views');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(setCache);
 
 // API Routes
 require('./server/routes/api.org.routes')(app);

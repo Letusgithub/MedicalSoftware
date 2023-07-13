@@ -3,7 +3,8 @@ const { verifyJwtToken } = require('../utils/token.util');
 
 exports.checkAuth = async (req, res, next) => {
   // Get the token from the request cookies
-  const token = await req.cookies.token;
+  const token = req.cookies.token;
+
 
   // Check if the token exists
   if (!token) {
@@ -12,7 +13,6 @@ exports.checkAuth = async (req, res, next) => {
 
   try {
     // Verify the token
-
     const org_telephone = verifyJwtToken(token);
 
     // Attach the org_telephone request for future use
@@ -22,6 +22,7 @@ exports.checkAuth = async (req, res, next) => {
     next();
   } catch (err) {
     // Token verification failed, redirect to login
+    console.log(err)
     return res.redirect('/login');
   }
 };

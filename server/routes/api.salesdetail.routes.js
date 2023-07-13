@@ -3,7 +3,9 @@ const {
   createOrder, getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, allSamples, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport,
 } = require('../controllers/api.salesdetail.controller');
 
+
 module.exports = (app) => {
+  
   app.use((req, res, next) => {
     res.header(
       'Access-Control-Allow-Headers',
@@ -26,7 +28,7 @@ module.exports = (app) => {
   app.get('/api/searchmonth/', searchMonth);
   app.get('/api/searchquarter/', searchQuarter);
   app.get('/api/searchyear/', searchYear);
-  
+
   app.get('/api/sampledetails', autoComplete);
   app.get('/api/allsample', allSamples);
   app.get('/api/totalsumfromsales', getTotalSumfromSales);
