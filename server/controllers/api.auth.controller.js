@@ -43,7 +43,8 @@ exports.verifyOtp = async (req, res) => {
         console.error('Failed to verify OTP:', otpErr);
         return res.status(500).json({ error: 'Failed to verify' });
       }
-      if (otpResult) {
+      console.log('length', otpResult.length);
+      if (otpResult.length !== 0) {
         checkIfExists(org_telephone, (err, results) => {
           if (err) {
             return res.status(500).json({
@@ -53,18 +54,20 @@ exports.verifyOtp = async (req, res) => {
           }
           if (results[0] === undefined) {
             console.log('inside verify', org_telephone);
-            return res.json({ redirect: `/register?mobileNumber=${org_telephone}` });
+            return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
           }
           if (results[0].is_verified === 0) {
-            return res.json({ redirect: `/register?mobileNumber=${org_telephone}` });
+            return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
           }
           // Generate JWT token after successful otp verification //
           const token = createJwtToken(org_telephone);
           // Set the JWT token as a cookie //
           res.cookie('token', token, { httpOnly: true });
 
-          return res.json({ redirect: '/' });
+          return res.json({ success: 1, redirect: '/' });
         });
+      } else {
+        return res.json({ success: 0, message: 'Invalid OTP' });
       }
     });
   } catch (error) {
@@ -101,5 +104,6 @@ exports.registerOrg = (req, res) => {
 exports.logoutOrg = (req, res) => {
   res.clearCookie('token');
   res.clearCookie('gotalldata');
+
   res.redirect('/login');
 };

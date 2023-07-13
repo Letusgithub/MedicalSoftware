@@ -8,7 +8,7 @@ const {
 module.exports = {
   create: (req, res) => {
     const data = req.body;
-    create(data, (error, results) => {
+    create(data, (error) => {
       if (error) {
         console.log(error);
         return res.status(500).json({

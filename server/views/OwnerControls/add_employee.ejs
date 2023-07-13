@@ -43,24 +43,27 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_name">Employee
-                                                    Name</label>
+                                                    Name<span
+                                                        style="font-size: 15px; color: red">*</span></label></label>
                                                 <div class="input-group input-group-merge">
                                                     <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                             class="bx bx-user"></i></span>
                                                     <input type="text" class="form-control" id="emp_name" placeholder=""
-                                                        name="emp_name">
+                                                        name="emp_name" required>
                                                 </div>
                                             </div>
 
 
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_mobile">Contact
-                                                    No</label>
+                                                    No<span style="font-size: 15px; color: red">*</span></label></label>
                                                 <div class="input-group input-group-merge">
                                                     <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                             class="bx bx-phone"></i></span>
-                                                    <input type="text" id="emp_mobile" class="form-control phone-mask"
-                                                        placeholder="" name="emp_mobile">
+                                                    <input id="emp_mobile" class="form-control phone-mask"
+                                                        placeholder="" name="emp_mobile" name="vendor_contact"
+                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                        type="number" maxlength="10" required>
                                                 </div>
                                             </div>
 
@@ -71,16 +74,17 @@
                                                 <div class="input-group input-group-merge">
                                                     <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                             class="bx bx-phone"></i></span>
-                                                    <input type="text" id="emp_alt_mobile"
-                                                        class="form-control phone-mask" placeholder=""
-                                                        name="emp_alt_mobile">
+                                                    <input id="emp_alt_mobile" class="form-control phone-mask"
+                                                        placeholder="" name="emp_alt_mobile"
+                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                        type="number" maxlength="10">
                                                 </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_email">Email</label>
                                                 <div class="input-group input-group-merge">
                                                     <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                                                    <input type="text" id="emp_email" class="form-control"
+                                                    <input type="email" id="emp_email" class="form-control"
                                                         placeholder="">
 
                                                 </div>

@@ -1,3 +1,7 @@
+/* eslint-disable quotes */
+/* eslint-disable max-len */
+/* eslint-disable camelcase */
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { initialisePool } = require('./server/config/database');

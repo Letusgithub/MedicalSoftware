@@ -118,15 +118,22 @@
 
                                                         </th>
                                                         <th>
-                                                            <div>Qty (Pri: Sec)</div>
+                                                            <div>Current Qty (Pri: Sec)</div>
 
                                                         </th>
-                                                        <th>Actions</th>
+                                                        <!-- <th>Actions</th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table-border-bottom-0" id="batchcart">
 
-
+                                                    <!-- <td>
+                                                        <div class="action-btns">
+                                                            <button type="button" class="btn p-0 mx-2"><i
+                                                                class='bx bxs-edit'></i></button>
+                                                                <button type="button" class="btn p-0 mx-2"><i
+                                                                    class="bx bx-trash me-1"></i></button>
+                                                        </div>
+                                                    </td> -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -159,7 +166,10 @@
         <%- include('../partials/footercode.ejs') %>
             <script>
                 $(document).ready(function () {
-                    var productId = JSON.parse(localStorage.getItem('addbatchid'));
+                    // var productId = JSON.parse(localStorage.getItem('addbatchid'));
+
+                    var productId = '<%= id %>'
+                    console.log(productId)
 
                     $.get(`/api/getinventory/${productId}`, function (data, status) {
                         var items = data.data[0];
@@ -202,16 +212,8 @@
                                         <td>${batch[i].batch_qty}</td>
                                         <td>${remPriQty} : ${remSecQty}</td>
                                         
-                                        <td>
-                                            <div class="action-btns">
-                                                <button type="button" class="btn p-0 mx-2"><i
-                                                    class='bx bxs-edit'></i></button>
-                                                    <button type="button" class="btn p-0 mx-2"><i
-                                                        class="bx bx-trash me-1"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            `
+                                        
+                                    </tr>`
 
                                 $("#batchcart").append(htmlData);
 
