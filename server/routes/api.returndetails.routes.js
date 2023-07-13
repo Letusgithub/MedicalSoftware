@@ -8,7 +8,6 @@ module.exports = (app) => {
     );
     next();
   });
-  console.log('object');
   app.post('/api/return/', createReturnOrder);
   app.get('/api/searchdatesreturn/', searchDates);
   app.get('/api/searchmonthreturn/', searchMonth);
