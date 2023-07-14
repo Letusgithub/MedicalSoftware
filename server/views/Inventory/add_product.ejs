@@ -350,23 +350,6 @@
                             }
                         })
                     }
-                    $('#file-upload').on('change', function () {
-
-                        var fileName = $(this).val().split('\\').pop();
-                        var label = $('label[for="file-upload"]');
-                        if (fileName) {
-                            label.text(fileName);
-                        } else {
-                            label.text('Choose file');
-                        }
-                    });
-                    $('#SubmitFile').click(function () {
-
-                        if ($("input[name='file']").val() == '') {
-                            alert('PLEASE SELECT A FILE');
-                            event.preventDefault();
-                        }
-                    })
 
                     // autopopulate product
                     $("input[name='productname']").autocomplete({
@@ -422,6 +405,7 @@
                         }
 
                     };
+
                     //changes in stp and tabs
                     $("select[name='primary'], select[name='secondary']").on("change", function () {
                         //var primaryUnit = $("select[name='primary']").find('option:selected').text();
@@ -444,8 +428,8 @@
                         }
                     });
 
-                    //submit process after adding batch
 
+                    //submit process after adding batch
                     $("#submitbatch").click(function () {
 
                         if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
@@ -456,11 +440,11 @@
                         var productDetails = {
                             product_id: productId,
                             org_id: orgID,
-                            gst: $("select[name='gst']").val(),
+                            gst: parseFloat(("select[name='gst']").val()),
                             hsn: $("input[name='hsn']").val(),
                             primary_unit: $("select[name='primary']").val(),
                             secondary_unit: $("select[name='secondary']").val(),
-                            threshold: $("input[name='threshold']").val()
+                            threshold: parseFloat(("input[name='threshold']").val())
                         }
                         console.log('product details', productDetails);
                         $.ajax({
@@ -476,10 +460,10 @@
                                     org_id: orgID,
                                     batch_name: $("#batchname").val(),
                                     exp_date: $("input[name='addexp']").val(),
-                                    conversion: $("#conversion").val(),
-                                    batch_qty: $("input[name='addqty']").val(),
-                                    purchase_rate: $("input[name='addpur']").val(),
-                                    mrp: $("input[name='addmrp']").val(),
+                                    conversion: parseFloat(("#conversion").val()),
+                                    batch_qty: parseFloat(("input[name='addqty']").val()),
+                                    purchase_rate: parseFloat($("input[name='addpur']").val()),
+                                    mrp: parseFloat(("input[name='addmrp']").val()),
                                     shelf_label: $("input[name='addshelf']").val()
                                 }
                                 console.log(batchDetails);
