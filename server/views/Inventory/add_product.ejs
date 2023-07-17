@@ -440,11 +440,11 @@
                         var productDetails = {
                             product_id: productId,
                             org_id: orgID,
-                            gst: parseFloat(("select[name='gst']").val()),
+                            gst: $("select[name='gst']").val(),
                             hsn: $("input[name='hsn']").val(),
                             primary_unit: $("select[name='primary']").val(),
                             secondary_unit: $("select[name='secondary']").val(),
-                            threshold: parseFloat(("input[name='threshold']").val())
+                            threshold: $("input[name='threshold']").val()
                         }
                         console.log('product details', productDetails);
                         $.ajax({
@@ -460,10 +460,10 @@
                                     org_id: orgID,
                                     batch_name: $("#batchname").val(),
                                     exp_date: $("input[name='addexp']").val(),
-                                    conversion: parseFloat(("#conversion").val()),
-                                    batch_qty: parseFloat(("input[name='addqty']").val()),
-                                    purchase_rate: parseFloat($("input[name='addpur']").val()),
-                                    mrp: parseFloat(("input[name='addmrp']").val()),
+                                    conversion: $("#conversion").val(),
+                                    batch_qty: $("input[name='addqty']").val(),
+                                    purchase_rate: $("input[name='addpur']").val(),
+                                    mrp: $("input[name='addmrp']").val(),
                                     shelf_label: $("input[name='addshelf']").val()
                                 }
                                 console.log(batchDetails);
