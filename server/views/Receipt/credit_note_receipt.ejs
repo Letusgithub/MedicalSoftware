@@ -311,8 +311,11 @@
                     <p id="vendorgst">
                         GSTIN:
                     </p>
-                    <p id="vendordl">
-                        D.L.no.:
+                    <p id="vendordl1">
+                        D.L.no-1:
+                    </p>
+                    <p id="vendordl2">
+                        D.L.no-2:
                     </p>
                     <!-- <p id="vendorfl">
                         F.L. no.:
@@ -422,13 +425,14 @@
                 var podata= data.data[0];
                 console.log('inside the po invoice', data);
                 var podata = data.data[0];
-                $("#pono").text(`CR No:${id}`)
+                $("#pono").html(`Credit No:<br>${id}`)
                 $("#vendorname").text(`Name: ${podata.vendor_name}`)
                 $("#vendormobile").text(`Mobile: ${podata.vendor_contact}`)
                 $("#vendoremail").text(`Email: ${podata.vendor_email}`)
                 $("#vendoradd").text(`Address: ${podata.vendor_address}`)
                 $("#vendorgst").text(`GSTIN: ${podata.vendor_gstin}`)
-                $("#vendordl").text(`DL.no: ${podata.vendor_dl_no}`)
+                $("#vendordl1").text(`DL.no: ${podata.vendor_dl_no_1}`)
+                $("#vendordl2").text(`DL.no: ${podata.vendor_dl_no_2}`)
                 
                 var items = data.data
                 var total=0;
