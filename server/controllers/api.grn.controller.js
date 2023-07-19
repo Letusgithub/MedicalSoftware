@@ -41,6 +41,21 @@ exports.createGRNcarts = (req, res) => {
       });
     }
     console.log('new data', data);
-    res.send({ results });
+    return res.json({ results });
+  });
+};
+
+exports.getGRNreceipt = (req, res) => {
+  const id = req.params.id;
+  console.log('in cart items', id);
+  service.getGRNreceipt(id, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({
+        success: 0,
+        message: 'Db error',
+      });
+    }
+    return res.json({ results });
   });
 };

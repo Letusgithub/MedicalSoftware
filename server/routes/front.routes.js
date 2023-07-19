@@ -328,6 +328,11 @@ module.exports = async (app) => {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
+  app.get('/grn_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/grn_receipt', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
+  });
 
   // notes
   app.get('/credit_note', checkAuth, fetchOrgId, (req, res) => {

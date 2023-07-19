@@ -13,4 +13,5 @@ module.exports = (app) => {
 
   app.post('/api/creategrn', controller.createGRN);
   app.post('/api/creategrncarts', controller.createGRNcarts);
+  app.get('/api/getgrnreceipts/:id', controller.getGRNreceipt);
 }

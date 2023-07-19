@@ -54,8 +54,7 @@ module.exports = {
         data.shelf_label,
         data.mrp,
         data.purchase,
-        data.qty
-
+        data.qty,
 
       ],
       (error, results) => {
@@ -67,6 +66,21 @@ module.exports = {
     );
   },
 
-
+  getGRNreceipt: (id, callback) => {
+    getPool().query(
+      `SELECT sample.med_name, grncd.*, vendor.* FROM grn
+      Join grn_cart_details grncd on grncd.grn_id = grn.grn_id
+      Join vendor on vendor.vendor_id = grn.vendor_id
+      Join sample on grncd.product_id = sample.sample_id
+      where grn.grn_id = ?
+      `,
+      [id],
+      (error, results) => {
+        if (error) return callback(error);
+        
+        return callback(null, results);
+      },
+    );
+  },
 
 };
