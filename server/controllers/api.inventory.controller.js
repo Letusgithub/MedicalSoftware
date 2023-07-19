@@ -117,7 +117,20 @@ exports.getAllInventory = (req, res) => {
       data: allResult,
     });
   });
+};
+exports.checkById = (req, res) => {
+  const productId = req.params.id;
+  service.checkById(productId, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
 
+    return res.status(200).json({
+      success: 1,
+      data: results,
+    });
+  });
   // exports.getTotalStock = (req, res) => {
   //   const orgID = req.query.orgID;
   //   console.log('orgID', orgID);

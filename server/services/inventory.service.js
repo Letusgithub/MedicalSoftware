@@ -120,4 +120,20 @@ module.exports = {
       },
     );
   },
+
+  // check if inventory exists
+  checkById: (productId, callBack) => {
+    getPool().query(
+      `select * from inventory inv
+      where product_id = ? `,
+      [productId],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+
+    );
+  },
 };

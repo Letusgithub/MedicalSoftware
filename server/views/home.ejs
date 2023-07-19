@@ -1,9 +1,14 @@
 <%- include('./partials/headercode.ejs') %>
   <!-- Atharv -->
 
-  <body>
+  <body >
     <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
+    <div id="loaderpage"></div>
+
+    
+
+    <!-- style="filter: blur(3px);" -->
+    <div class="layout-wrapper layout-content-navbar loaderstyles" >
       <div class="layout-container">
 
         <!-- sidebar imported -->
@@ -424,14 +429,64 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script>
+        //if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+        //console.log('yes service worker available');
+        //}
         $(document).ready(function () {
 
           if ('caches' in window) {
             caches.keys().then(name => {
               if (name.length == 0) {
+
+                var htmlLoader =`
+                    <div class='container'>
+                      <div class='loader-container'>
+                        <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class='spinner-container'>
+                      <div class="spinner-path">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="textshow">
+                    <h1>Getting Your Products. Please Hold Tight...</h1>
+                  </div>
+                  
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                    <defs>
+                      <filter id="gooey">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7" result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                      </filter>
+                    </defs>
+                  </svg>
+                `
+                $(".loaderstyles").css({
+                  'filter': 'blur(3px)'
+                })
+                $("#loaderpage").append(htmlLoader);
+
+
+                setTimeout( function(){
+                  $("#loaderpage").fadeOut("slow");
+                  $(".loaderstyles").removeAttr('style');
+                }, 5000);
+
                 console.log('do something');
                 caches.open('productCache').then((cache) => {
-                  cache.add('/api/allsample');
+                  cache.add('/api/allsample').then(
+                    
+                  );
                 })
               }
               else {

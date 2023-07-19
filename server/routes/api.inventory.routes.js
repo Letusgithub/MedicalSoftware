@@ -16,4 +16,6 @@ module.exports = (app) => {
   app.delete('/inventory/', controller.deleteInventory);
   app.get('/api/getinventory/:id', controller.getInventoryById);
   app.get('/inventory/:id', controller.getAllInventorysById);
+
+  app.get('/api/checkbyid/:id', controller.checkById);
 };
