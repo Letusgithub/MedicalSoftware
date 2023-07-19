@@ -324,6 +324,12 @@ module.exports = async (app) => {
     });
   });
 
+  app.get('/debit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/debit_note_receipt', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
+  });
+
   // notes
   app.get('/credit_note', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
@@ -335,6 +341,22 @@ module.exports = async (app) => {
         }
 
         res.render('Notes/credit_note', {
+          vendors: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+        });
+      },
+    );
+  });
+
+  app.get('/debit_note', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      'select * from vendor where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        }
+
+        res.render('Notes/debit_note', {
           vendors: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
         });
       },
@@ -358,5 +380,13 @@ module.exports = async (app) => {
 
   app.get('/credit_report', checkAuth, fetchOrgId, (req, res) => {
     res.render('Notes/credit_report', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  });
+
+  app.get('/debit_report', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Notes/debit_note_report', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  });
+
+  app.get('/grn_report', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Notes/grn_report', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 };

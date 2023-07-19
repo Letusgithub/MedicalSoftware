@@ -67,6 +67,96 @@ module.exports = {
     );
   },
 
+  searchDates: (orgId, from, to, callback) => {
+    let querys;
+    let datas = [];
+    if (from && to) {
+      const date = new Date(to);
+      querys = 'WHERE grn.created_date_grn >= ? AND grn.created_date_grn < ?';
+      datas = [
+        from,
+        new Date(date.getTime() + 86400000),
+      ];
+    } else if (from) {
+      querys = 'WHERE grn.created_date_grn >= ?';
+      datas = [from];
+    } else if (to) {
+      const date = new Date(to);
+      querys = 'WHERE grn.created_date_grn < ?';
+      datas = [new Date(date.getTime() + 86400000)];
+    }
+
+    getPool().query(
+      `SELECT grncart.*,vendor.vendor_name,grn.created_date_grn
+      FROM grn_cart_details grncart
+      JOIN grn ON grncart.grn_id = grn.grn_id
+      JOIN vendor ON vendor.vendor_id = grn.vendor_id
+      ${querys} and grn.org_id = ${orgId} 
+      ORDER BY created_date_grn DESC`,
+      datas,
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+  searchMonth: (orgId, month, callback) => {
+    getPool().query(
+      `SELECT grncart.*,vendor.vendor_name,grn.created_date_grn
+      FROM grn_cart_details grncart
+      JOIN grn ON grncart.grn_id = grn.grn_id
+      JOIN vendor on vendor.vendor_id = grn.vendor_id
+      where MONTH(grn.created_date_grn)=? and grn.org_id = ${orgId} 
+      `,
+      [
+        month,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchQuarter: (orgId, start, end, callback) => {
+    getPool().query(
+      `SELECT grncart.*,vendor.vendor_name,grn.created_date_grn
+      FROM grn_cart_details grncart
+      JOIN grn ON grncart.grn_id = grn.grn_id
+      JOIN vendor ON vendor.vendor_id = grn.vendor_id
+      where MONTH(grn.created_date_grn)>=? and MONTH(grn.created_date_grn)<=? and grn.org_id = ${orgId} 
+      `,
+      [
+        start,
+        end,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchYear: (orgId, year, callback) => {
+    getPool().query(
+      `SELECT grncart.*,vendor.vendor_name,grn.created_date_grn
+      FROM grn_cart_details grncart
+      JOIN grn ON grncart.grn_id = grn.grn_id
+      JOIN vendor ON vendor.vendor_id = grn.vendor_id
+      where YEAR(grn.created_date_grn)=? and grn.org_id = ${orgId} 
+      order by MONTH(grn.created_date_grn) DESC
+      `,
+      [
+        year,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+
 
 
 };

@@ -13,4 +13,9 @@ module.exports = (app) => {
 
   app.post('/api/creategrn', controller.createGRN);
   app.post('/api/creategrncarts', controller.createGRNcarts);
-}
+
+    app.get('/api/searchdatesgrn/', controller.searchDates);
+    app.get('/api/searchmonthgrn/', controller.searchMonth);
+    app.get('/api/searchquartergrn/', controller.searchQuarter);
+    app.get('/api/searchyeargrn/', controller.searchYear);
+};
