@@ -1,5 +1,4 @@
 const setCache = (req, res, next) => {
-  
   // Only cache GET requests to the '/api/allsample' endpoint
   if (req.method === 'GET' && req.url === '/api/allsample') {
     console.log('called the setCache', req.url);

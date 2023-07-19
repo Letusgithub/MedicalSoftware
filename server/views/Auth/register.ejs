@@ -11,7 +11,7 @@
                 <!-- Left Text -->
                 <div class="d-none d-lg-flex col-lg-4 align-items-center justify-content-end p-5 pe-0">
                     <div class="w-px-400">
-                        <img src="/img/illustrations/create-account-light.png" class="img-fluid" alt="multi-steps"
+                        <img src="/img/backgrounds/create-account-light.png" class="img-fluid" alt="multi-steps"
                             width="600" data-app-dark-img="illustrations/create-account-dark.png"
                             data-app-light-img="illustrations/create-account-light.html">
                     </div>
@@ -85,7 +85,7 @@
                                         <div class="col-sm-10">
                                             <div class="form-check mt-3">
                                                 <input class="form-check-input" type="checkbox" value=""
-                                                    id="defaultCheck1" checked/>
+                                                    id="defaultCheck1" checked />
                                                 <label class="form-check-label" for="defaultCheck1">
                                                     Disclaimer : Hereby I asure that data given here is
                                                     validated by me and is genuine to my consiousness as this data
@@ -94,9 +94,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 text-center my-4">
-                                            <button class="btn btn-primary btn-next" id="submitPharmacyDetails"> <span
-                                                    class="align-middle d-sm-inline-block d-none me-sm-1 me-0">Confirm</span></button>
+                                        <div class="col-sm-4 text-center my-4">
+                                            <button class="btn btn-primary btn-next w-100" id="submitPharmacyDetails">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -127,7 +126,10 @@
                         var dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
 
                         if ($("#org_name").val() && $("#owner_name").val() && dl_no_1 && dl_no_2 && $("#org_pincode").val() && $("#org_address").val()) {
-                            $.ajax({
+                            if ($("#org_pincode").val().length < 6 || $("#org_pincode").val().length > 6) {
+                                return alert("Enter correct 6-digit Pincode")
+                            }
+                            $.ajax({ 
                                 url: `/api/auth/register`,
                                 type: 'POST',
                                 data: JSON.stringify({

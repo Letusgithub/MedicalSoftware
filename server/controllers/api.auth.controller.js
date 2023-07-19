@@ -41,22 +41,22 @@ exports.verifyOtp = async (req, res) => {
     verify(OTPtoken, otp_value, (otpErr, otpResult) => {
       if (otpErr) {
         console.error('Failed to verify OTP:', otpErr);
-        return res.status(500).json({ error: 'Failed to verify' });
+        return res.status(500).json({ message: 'Failed to verify' });
       }
       if (otpResult) {
         checkIfExists(org_telephone, (err, results) => {
           if (err) {
             return res.status(500).json({
               status: 'error',
-              error: 'Internal server error',
+              message: 'Internal server error',
             });
           }
           if (results[0] === undefined) {
             console.log('inside verify', org_telephone);
-            return res.json({ redirect: `/register?mobileNumber=${org_telephone}` });
+            return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
           }
           if (results[0].is_verified === 0) {
-            return res.json({ redirect: `/register?mobileNumber=${org_telephone}` });
+            return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
           }
           // Generate JWT token after successful otp verification //
           const token = createJwtToken(org_telephone);
@@ -69,7 +69,7 @@ exports.verifyOtp = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Failed to generate OTP' });
+    return res.status(500).json({ message: 'Failed to generate OTP' });
   }
 };
 

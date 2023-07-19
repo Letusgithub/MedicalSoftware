@@ -350,23 +350,6 @@
                             }
                         })
                     }
-                    $('#file-upload').on('change', function () {
-
-                        var fileName = $(this).val().split('\\').pop();
-                        var label = $('label[for="file-upload"]');
-                        if (fileName) {
-                            label.text(fileName);
-                        } else {
-                            label.text('Choose file');
-                        }
-                    });
-                    $('#SubmitFile').click(function () {
-
-                        if ($("input[name='file']").val() == '') {
-                            alert('PLEASE SELECT A FILE');
-                            event.preventDefault();
-                        }
-                    })
 
                     // autopopulate product
                     $("input[name='productname']").autocomplete({
@@ -422,6 +405,7 @@
                         }
 
                     };
+
                     //changes in stp and tabs
                     $("select[name='primary'], select[name='secondary']").on("change", function () {
                         //var primaryUnit = $("select[name='primary']").find('option:selected').text();
@@ -444,8 +428,8 @@
                         }
                     });
 
-                    //submit process after adding batch
 
+                    //submit process after adding batch
                     $("#submitbatch").click(function () {
 
                         if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
