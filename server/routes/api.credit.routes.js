@@ -16,4 +16,9 @@ module.exports = (app) => {
 
   app.post('/api/createcreditnote', controller.createCreditNote);
   app.post('/api/creditnotecartdetails/', controller.createCreditNoteCarts);
+
+  app.get('/api/searchdatescredit/', controller.searchDates);
+  app.get('/api/searchmonthcredit/', controller.searchMonth);
+  app.get('/api/searchquartercredit/', controller.searchQuarter);
+  app.get('/api/searchyearcredit/', controller.searchYear);
 };

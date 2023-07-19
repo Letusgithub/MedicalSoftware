@@ -5,6 +5,7 @@ const { getPool } = require('../config/database');
 const { checkAuth } = require('../middlewares/checkAuth');
 const { fetchOrgId } = require('../middlewares/fetchOrgId');
 const { getPharmaData } = require('../middlewares/getPharmaData');
+const { check } = require('../../public/js/ServiceWorker');
 
 module.exports = async (app) => {
   app.use((req, res, next) => {
@@ -41,6 +42,7 @@ module.exports = async (app) => {
       orgName: req.org_name,
       ownerName: req.owner_name,
       orgId: req.org_id,
+      check,
     });
   });
 
@@ -337,5 +339,24 @@ module.exports = async (app) => {
         });
       },
     );
+  });
+
+  app.get('/grn', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      'select * from vendor where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        }
+        res.render('Notes/GRN', {
+          vendors: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+        });
+      },
+    );
+  });
+
+  app.get('/credit_report', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Notes/credit_report', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 };

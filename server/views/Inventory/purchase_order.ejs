@@ -352,7 +352,9 @@
                                       
                                        let searchTerm = request.term;
                                        let results = data.data.filter(item => item.vendor_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
-   
+
+                                        
+                                       
                                        if (results.length === 0) {
                                            results.push({ vendor_name: null }); // Add a null item for the custom message
                                        }

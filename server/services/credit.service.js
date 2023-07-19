@@ -107,4 +107,86 @@ module.exports = {
     );
   },
 
+  searchMonth: (orgId, month, callback) => {
+    getPool().query(
+      `SELECT DISTINCT * FROM credit_note cn
+      Join vendor on vendor.vendor_id = cn.vendor_id
+      where MONTH(cn.created_date_credit)=? and cn.org_id = ${orgId}
+      `,
+      [
+        month,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchQuarter: (orgId, start, end, callback) => {
+    getPool().query(
+      `SELECT DISTINCT * FROM credit_note cn
+      Join vendor on vendor.vendor_id = cn.vendor_id
+      where MONTH(cn.created_date_credit)>=? and MONTH(cn.created_date_credit)<=? and cn.org_id = ${orgId} 
+      `,
+      [
+        start,
+        end,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+  searchYear: (orgId, year, callback) => {
+    getPool().query(
+      `SELECT * FROM credit_note cn
+      JOIN vendor on vendor.vendor_id = cn.vendor_id
+      where YEAR(cn.created_date_credit)=? and cn.org_id = ${orgId} 
+      order by MONTH(cn.created_date_credit) DESC
+      `,
+      [
+        year,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  searchDates: (orgId, from, to, callback) => {
+    let querys;
+    let datas = [];
+    if (from && to) {
+      const date = new Date(to);
+      querys = 'WHERE created_date_credit >= ? AND created_date_credit < ?';
+      datas = [
+        from,
+        new Date(date.getTime() + 86400000),
+      ];
+    } else if (from) {
+      querys = 'WHERE created_date_credit >= ?';
+      datas = [from];
+    } else if (to) {
+      const date = new Date(to);
+      querys = 'WHERE created_date_credit < ?';
+      datas = [new Date(date.getTime() + 86400000)];
+    }
+
+    getPool().query(
+      `SELECT * FROM credit_note cn
+      JOIN vendor on vendor.vendor_id = cn.vendor_id
+      ${querys} and cn.org_id = ${orgId} 
+      ORDER BY created_date_credit DESC`,
+      datas,
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+
 };
