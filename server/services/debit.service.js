@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 const { getPool } = require('../config/database');
+
 const date_time = new Date();
 
 module.exports = {
@@ -42,6 +43,7 @@ module.exports = {
       },
 
     // get all inventory details in credit ejs
+
   getINVDetailsinDebitNote: (orgId, callBack) => {
     getPool().query(
       `SELECT * FROM inventory inv
@@ -81,6 +83,7 @@ module.exports = {
       },
     );
   },
+
 
   
 
@@ -177,3 +180,5 @@ module.exports = {
   
     
 };
+
+

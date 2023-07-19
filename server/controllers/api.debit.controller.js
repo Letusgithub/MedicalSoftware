@@ -72,6 +72,7 @@ exports.getDebitNoteInInvoice = (req, res) => {
   });
 };
 
+
 exports.searchDates = (req,res) => {
     const orgId = req.query.org;
     const from = req.query.from;
@@ -159,3 +160,4 @@ exports.searchQuarter = (req,res) => {
     });
 
 };
+

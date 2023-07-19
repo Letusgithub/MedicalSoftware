@@ -517,7 +517,7 @@
                               </div>
                               <div class="text-center mb-4">
                                 <a>
-                                  <div class="btn btn-primary px-5" id="submitorder">Submit</div>
+                                  <button class="btn btn-primary px-5" id="submitorder">Submit</button>
                                 </a>
                               </div>
                             </div>
@@ -807,6 +807,7 @@
                var orderDetails;
                var org = '<%=orgId%>'
                $("#submitorder").click(function () {
+                $("#submitorder").prop('disabled', true);
                 var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
 
                 
@@ -849,77 +850,143 @@
                                     data: JSON.stringify(productDetails),
                                     contentType: 'application/json',
                                     success: function (response) {
-                                        //window.location.href='/product_stock'
-                                        //add the batch to the respective product
+
+                                        var batchDetails = {
+                                            product_id: cartDetails[i].productId,
+                                            org_id: org,
+                                            batch_name: cartDetails[i].batch,
+                                            exp_date: cartDetails[i].expdate,
+                                            conversion: cartDetails[i].conversion,
+                                            batch_qty: cartDetails[i].qty,
+                                            purchase_rate: cartDetails[i].purchase,
+                                            mrp: cartDetails[i].mrp,
+                                            shelf_label: cartDetails[i].shelflabel,
+                                            grn_id:GRNid
+                                        }
+                                        //console.log(batchDetails);
+            
+                                        $.ajax({
+                                            url: `/api/addbatch/`,
+                                            type: 'POST',
+                                            data: JSON.stringify(batchDetails),
+                                            contentType: 'application/json',
+                                            success: function (response) {
+
+                                                
+                                                $.ajax({
+                                                    url: `/api/creategrncarts`,
+                                                    type: 'POST',
+                                                    data: JSON.stringify({
+                                                    grn_id: GRNid,
+                                                    product_id: cartDetails[i].productId,
+                                                    gst: cartDetails[i].gst,
+                                                    hsn: cartDetails[i].hsn,
+                                                    punit: cartDetails[i].punit,
+                                                    sunit: cartDetails[i].sunit,
+                                                    moq: cartDetails[i].moq,
+                                                    batch_name: cartDetails[i].batch,
+                                                    exp: cartDetails[i].expdate,
+                                                    conversion: cartDetails[i].conversion,
+                                                    shelf_label: cartDetails[i].shelflabel,
+                                                    purchase: cartDetails[i].purchase,
+                                                    mrp: cartDetails[i].mrp,
+                                                    qty: cartDetails[i].qty,
+                                                    
+                                                    }),
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+                                                         console.log( 'grn done',response);
+                                                    },
+                                                    error: function (error) {
+                                                        alert("not Created", error)
+                                                    console.log('error in grn', error);
+                                                    }
+                                                })
+                                                console.log(response);
+                                            },
+                                            error: function (error) {
+                                                alert("not Created", error)
+                                                console.log(error);
+                                            }
+                                        })
                                        console.log(response);
                                     },
                                     error: function (error) {
+                                        alert("not Created", error)
+                                        console.log(error);
+                                    }
+                                })
+                            } else {
+                                var batchDetails = {
+                                    product_id: cartDetails[i].productId,
+                                    org_id: org,
+                                    batch_name: cartDetails[i].batch,
+                                    exp_date: cartDetails[i].expdate,
+                                    conversion: cartDetails[i].conversion,
+                                    batch_qty: cartDetails[i].qty,
+                                    purchase_rate: cartDetails[i].purchase,
+                                    mrp: cartDetails[i].mrp,
+                                    shelf_label: cartDetails[i].shelflabel,
+                                    grn_id:GRNid
+                                }
+                                //console.log(batchDetails);
+    
+                                $.ajax({
+                                    url: `/api/addbatch/`,
+                                    type: 'POST',
+                                    data: JSON.stringify(batchDetails),
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        
+                                        $.ajax({
+                                            url: `/api/creategrncarts`,
+                                            type: 'POST',
+                                            data: JSON.stringify({
+                                            grn_id: GRNid,
+                                            product_id: cartDetails[i].productId,
+                                            gst: cartDetails[i].gst,
+                                            hsn: cartDetails[i].hsn,
+                                            punit: cartDetails[i].punit,
+                                            sunit: cartDetails[i].sunit,
+                                            moq: cartDetails[i].moq,
+                                            batch_name: cartDetails[i].batch,
+                                            exp: cartDetails[i].expdate,
+                                            conversion: cartDetails[i].conversion,
+                                            shelf_label: cartDetails[i].shelflabel,
+                                            purchase: cartDetails[i].purchase,
+                                            mrp: cartDetails[i].mrp,
+                                            qty: cartDetails[i].qty,
+                                            
+                                            }),
+                                            contentType: 'application/json',
+                                            success: function (response) {
+                                                console.log('grn done', response);
+                                            },
+                                            error: function (error) {
+                                                alert("not Created", error)
+                                                console.log('error in grn', error);
+                                            }
+                                        })
+                                        console.log(response);
+                                    },
+                                    error: function (error) {
+                                        alert("not Created", error)
                                         console.log(error);
                                     }
                                 })
                             }
-
-                            var batchDetails = {
-                                product_id: productId,
-                                org_id: org,
-                                batch_name: cartDetails[i].batch,
-                                exp_date: cartDetails[i].expdate,
-                                conversion: cartDetails[i].conversion,
-                                batch_qty: cartDetails[i].qty,
-                                purchase_rate: cartDetails[i].purchase,
-                                mrp: cartDetails[i].mrp,
-                                shelf_label: cartDetails[i].shelflabel,
-                                grn_id:GRNid
-                            }
-                            //console.log(batchDetails);
-
-                            $.ajax({
-                                url: `/api/addbatch/`,
-                                type: 'POST',
-                                data: JSON.stringify(batchDetails),
-                                contentType: 'application/json',
-                                success: function (response) {
-                                    console.log(response);
-                                },
-                                error: function (error) {
-                                    console.log(error);
-                                }
-                            })
                         })
 
-
-     
-                           $.ajax({
-                             url: `/api/creategrncarts`,
-                             type: 'POST',
-                             data: JSON.stringify({
-                                grn_id: GRNid,
-                                product_id: cartDetails[i].productId,
-                                gst: cartDetails[i].gst,
-                                hsn: cartDetails[i].hsn,
-                                punit: cartDetails[i].punit,
-                                sunit: cartDetails[i].sunit,
-                                moq: cartDetails[i].moq,
-                                batch_name: cartDetails[i].batch,
-                                exp: cartDetails[i].expdate,
-                                conversion: cartDetails[i].conversion,
-                                shelf_label: cartDetails[i].shelflabel,
-                                purchase: cartDetails[i].purchase,
-                                mrp: cartDetails[i].mrp,
-                                qty: cartDetails[i].qty,
-                             
-                             }),
-                             contentType: 'application/json',
-                             success: function (response) {
-                               console.log(response);
-                             },
-                             error: function (error) {
-                               console.log('error in updateing batch', error);
-                             }
-                           })
      
                     }
-     
+
+                    setTimeout(()=>{
+
+                        window.location.href = `/grn_receipt/${GRNid}`
+                    }, 3000);
+                    
+                    
+                    
                            
                    },
                    error: function (error) {
@@ -929,7 +996,7 @@
      
                  })
      
-     
+                 
                })
     
             });

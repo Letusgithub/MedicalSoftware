@@ -15,8 +15,10 @@ module.exports = (app) => {
     app.post('/api/createdebitnote', controller.createDebitNote);
     app.post('/api/debitnotecartdetails/', controller.createDebitNoteCarts);
 
+
     app.get('/api/searchdatesdebit/', controller.searchDates);
     app.get('/api/searchmonthdebit/', controller.searchMonth);
     app.get('/api/searchquarterdebit/', controller.searchQuarter);
     app.get('/api/searchyeardebit/', controller.searchYear);
   };   
+
