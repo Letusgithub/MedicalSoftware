@@ -323,6 +323,11 @@ module.exports = async (app) => {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
+  app.get('/debit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Receipt/debit_note_receipt', {
+      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+    });
+  });
 
   // notes
   app.get('/credit_note', checkAuth, fetchOrgId, (req, res) => {
@@ -335,6 +340,21 @@ module.exports = async (app) => {
         }
 
         res.render('Notes/credit_note', {
+          vendors: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+        });
+      },
+    );
+  });
+
+  app.get('/debit_note', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      'select * from vendor where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        }
+        res.render('Notes/debit_note', {
           vendors: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
         });
       },
