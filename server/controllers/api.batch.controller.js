@@ -2,7 +2,7 @@
 /* eslint-disable radix */
 /* eslint-disable max-len */
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics,
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatch,
 } = require('../services/batch.service');
 
 module.exports = {
@@ -20,6 +20,23 @@ module.exports = {
       return res.status(200).json({
         status: 'success',
       });
+    });
+  },
+
+  deleteBatchById: (req, res) => {
+    const id = req.params.id;
+    deleteBatch(id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: 'Record Not Found',
+        });
+      }
+      res.redirect('/product_stock');
     });
   },
 

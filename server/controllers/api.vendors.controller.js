@@ -100,3 +100,22 @@ exports.getAllVendorsById = (req, res) => {
     });
   });
 };
+
+exports.getAllVendors = (req, res) => {
+  service.getAll((err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (!results) {
+      return res.json({
+        success: 0,
+        message: 'Records Not Found',
+      });
+    }
+    return res.status(200).json({
+      success: 1,
+      data: results,
+    });
+  });
+};

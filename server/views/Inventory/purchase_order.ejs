@@ -29,14 +29,15 @@
 
 
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="vendor_name" >Distributer
+                                                <label class="col-sm-2 col-form-label" for="vendor_name">Distributor
                                                     Name<span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="col-sm-10">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-fullname2"
                                                             class="input-group-text"><i class="bx bx-user"></i></span>
                                                         <input type="text" class="form-control" id="vendor_name"
-                                                            placeholder="Type the first few letters of your distributers name" name="vendor_name">
+                                                            placeholder="Type the first few letters of your distributors name"
+                                                            name="vendor_name">
                                                     </div>
                                                 </div>
                                             </div>
@@ -46,92 +47,98 @@
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="vendor_contact">Contact
                                                     Number<span style="font-size: 15px; color: red">*</span></label>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bx-phone"></i></span>
-                                                        <input id="vendor_contact"
-                                                            class="form-control phone-mask" placeholder=" One 10 Digit Mobile Number"
-                                                            name="vendor_contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number"
-                                                            maxlength = "10">
+                                                        <input id="vendor_contact" class="form-control phone-mask"
+                                                            placeholder=" One 10 Digit Mobile Number"
+                                                            name="vendor_contact"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            type="number" maxlength="10">
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="vendor_email">Email</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group input-group-merge">
-                                                        <span class="input-group-text"><i
-                                                                class="bx bx-envelope"></i></span>
-                                                        <input type="email" id="vendor_email" class="form-control"
-                                                            placeholder="Example: distributer@gmail.com" name="vendor_email">
-                                                        
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span style="font-size: 15px; color: red">*</span></label>
-                                                <div class="col-sm-10">
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="vendor_gstin">GSTIN<span
+                                                        style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bxs-bank"></i></span>
                                                         <input type="text" id="vendor_gstin"
-                                                            class="form-control phone-mask" placeholder="Distributer's GSTIN"
-                                                            name="vendor_gstin">
+                                                            class="form-control phone-mask"
+                                                            placeholder="Distributor's GSTIN" name="vendor_gstin">
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="org_dl_no_1">DL Number 1<span style="font-size: 15px; color: red">*</span></label>
+                                                <label class="col-sm-2 col-form-label" for="org_dl_no_1">DL Number
+                                                    1<span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-fullname2"
-                                                        class="input-group-text border"><i
-                                                        class='bx bx-detail'></i></span>
-                                                        <input type="text" id="dl1_ft" value="20" style="text-align: center;"
-                                                        class="form-control border" readonly>
-                                                        <input type="text" id="dl1_st" style="text-align: center;" placeholder="State"
-                                                        class="form-control border" >
-                                                        <input type="text" id="dl1_ct" style="text-align: center;" placeholder="City"
-                                                        class="form-control border" >
-                                                        <input type="text" id="dl1_ln" style="text-align: center;" placeholder="Lic. no."
-                                                        class="form-control border" minlength="6" maxlength="6" >
+                                                            class="input-group-text border"><i
+                                                                class='bx bx-detail'></i></span>
+                                                        <input type="text" id="dl1_ft" value="20"
+                                                            style="text-align: center;" class="form-control border"
+                                                            readonly>
+                                                        <input type="text" id="dl1_st" style="text-align: center;"
+                                                            placeholder="State" class="form-control border">
+                                                        <input type="text" id="dl1_ct" style="text-align: center;"
+                                                            placeholder="City" class="form-control border">
+                                                        <input type="text" id="dl1_ln" style="text-align: center;"
+                                                            placeholder="Lic. no." class="form-control border"
+                                                            minlength="6" maxlength="6">
                                                     </div>
                                                 </div>
 
-                                                <label class="col-sm-2 col-form-label ps-4" style="text-align: center;" for="org_dl_no_2">DL Number 2<span style="font-size: 15px; color: red">*</span></label>
+                                                <label class="col-sm-2 col-form-label ps-4" for="org_dl_no_2">DL Number
+                                                    2<span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-fullname2"
-                                                        class="input-group-text border"><i
-                                                        class='bx bx-detail'></i></span>
-                                                        <input type="text" id="dl2_ft" value="21" style="text-align: center;"
-                                                        class="form-control border" readonly>
-                                                        <input type="text" id="dl2_st" style="text-align: center;" placeholder="State"
-                                                        class="form-control border" >
-                                                        <input type="text" id="dl2_ct" style="text-align: center;" placeholder="City"
-                                                        class="form-control border" >
-                                                        <input type="text" id="dl2_ln" style="text-align: center;" placeholder="Lic. no."
-                                                        class="form-control border" minlength="6" maxlength="6" >
+                                                            class="input-group-text border"><i
+                                                                class='bx bx-detail'></i></span>
+                                                        <input type="text" id="dl2_ft" value="21"
+                                                            style="text-align: center;" class="form-control border"
+                                                            readonly>
+                                                        <input type="text" id="dl2_st" style="text-align: center;"
+                                                            placeholder="State" class="form-control border">
+                                                        <input type="text" id="dl2_ct" style="text-align: center;"
+                                                            placeholder="City" class="form-control border">
+                                                        <input type="text" id="dl2_ln" style="text-align: center;"
+                                                            placeholder="Lic. no." class="form-control border"
+                                                            minlength="6" maxlength="6">
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
 
                                             <div class="row mb-0">
-                                                <label class="col-sm-2 col-form-label"
-                                                    for="vendor_address">Address<span style="font-size: 15px; color: red">*</span></label>
-                                                <div class="col-sm-10">
+                                                <label class="col-sm-2 col-form-label" for="vendor_address">Address<span
+                                                        style="font-size: 15px; color: red">*</span></label>
+                                                <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                     
+
                                                         <input type="text" id="vendor_address" class="form-control"
-                                                            placeholder=" Distributers Address" name="vendor_address">
-                                                        
+                                                            placeholder=" Distributors Address" name="vendor_address">
+
                                                     </div>
+                                                </div>
+
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="vendor_email">Email</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span class="input-group-text"><i
+                                                                class="bx bx-envelope"></i></span>
+                                                        <input type="email" id="vendor_email" class="form-control"
+                                                            placeholder="Example: distributor@gmail.com"
+                                                            name="vendor_email">
+
+                                                    </div>
+
                                                 </div>
                                             </div>
 
@@ -188,10 +195,13 @@
 
                                                     <thead>
                                                         <tr>
-                                                            <th class="col-5">Product Name</th>
-                                                            <th class="col-4">Brand Name</th>
-                                                            <th class="col-1">Quantity</th>
-                                                            <th class="col-2">Unit</th>
+                                                            <th class="col-sm-3">Product Name</th>
+                                                            <th class="col-sm-2">Brand Name</th>
+                                                            <th class="col-sm-1">QTY</th>
+                                                            <th class="col-sm-2">Unit</th>
+                                                            <th class="col-sm">PTR</th>
+                                                            <th class="col-sm">Amount</th>
+                                                            <th class="col-sm">MRP</th>
 
                                                         </tr>
                                                     </thead>
@@ -199,7 +209,8 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="text" class="form-control"
-                                                                    id="basic-default-name" placeholder="Enter product name"
+                                                                    id="basic-default-name"
+                                                                    placeholder="Enter product name"
                                                                     name="productname" />
                                                             </td>
                                                             <td>
@@ -208,12 +219,12 @@
                                                                     name="brand" />
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control"
+                                                                <input type="text" class="form-control px-1"
                                                                     id="basic-default-name" placeholder=""
                                                                     name="quantity" />
                                                             </td>
                                                             <td>
-                                                                <select class="form-select"
+                                                                <select class="form-select px-1"
                                                                     id="exampleFormControlSelect1"
                                                                     aria-label="Default select example"
                                                                     name="unitoption">
@@ -224,6 +235,19 @@
                                                                     <option value="BOTTLE">Bottle</option>
                                                                     <option value="PCS">Piece</option>
                                                                 </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control px-1"
+                                                                    id="basic-default-name" placeholder="" name="ptr" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control px-1"
+                                                                    id="basic-default-name" placeholder=""
+                                                                    name="amount" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control px-1"
+                                                                    id="basic-default-name" placeholder="" name="mrp" />
                                                             </td>
                                                         </tr>
 
@@ -236,9 +260,9 @@
                                             <btn class="btn btn-primary" style="color: white;" id="addtocart">Add</btn>
                                             <input type="reset" class="btn btn-primary" style="color: white;"
                                                 value="Clear" />
-                                                
 
-                                                
+
+
                                         </div>
                                         <!-- </form> -->
 
@@ -258,8 +282,11 @@
                                                             <th>#</th>
                                                             <th>Product name</th>
                                                             <th>Brand name</th>
-                                                            <th>Quantity</th>
+                                                            <th>QTY</th>
                                                             <th>Unit</th>
+                                                            <th>PTR</th>
+                                                            <th>Amount</th>
+                                                            <th>MRP</th>
                                                             <th class="col-1">Action</th>
 
                                                         </tr>
@@ -326,9 +353,6 @@
                 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
                 <script>
 
-       
-
-
                     var cartarray = [];
                     $(document).ready(function () {
                         $("#vendor_name");
@@ -345,33 +369,32 @@
                         var vendorId = -1;
                         //autocomplete suggestion   
                         $("#vendor_name").autocomplete({
-                            minLength: 0,
+                            minLength: 5,
                             source: function (request, response) {
-                    
-                                    $.get('/api/getallvendors?org=<%=orgId%>', function (data, status) {
-                                      
-                                       let searchTerm = request.term;
-                                       let results = data.data.filter(item => item.vendor_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
 
-                                        
-                                       
-                                       if (results.length === 0) {
-                                           results.push({ vendor_name: null }); // Add a null item for the custom message
-                                       }
+                                $.get('/api/getallvendors', function (data, status) {
 
-                                       response(results);
-                                    })
-                                
+                                    let searchTerm = request.term;
+                                    let results = data.data.filter(item => item.vendor_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+
+
+                                    if (results.length === 0) {
+                                        results.push({ vendor_name: null }); // Add a null item for the custom message
+                                    }
+
+                                    response(results);
+                                })
+
                             },
                             select: function (event, ui) {
                                 setTimeout(function () {
                                     console.log(ui.item);
                                     vendorId = ui.item.vendor_id;
-                                    
+
                                     var splitDL1;
                                     var dl_no_1 = ui.item.vendor_dl_no_1;
-                                    
-                                    if(dl_no_1 != ''){
+
+                                    if (dl_no_1 != '') {
 
                                         splitDL1 = dl_no_1.split(/-/);
                                         $("#dl1_st").val(splitDL1[1]);
@@ -381,7 +404,7 @@
 
                                     var splitDL2;
                                     var dl_no_2 = ui.item.vendor_dl_no_2;
-                                    if(dl_no_2 != ''){
+                                    if (dl_no_2 != '') {
 
                                         splitDL2 = dl_no_2.split(/-/);
                                         $("#dl2_st").val(splitDL2[1]);
@@ -394,74 +417,72 @@
                                     $("#vendor_email").val(ui.item.vendor_email);
                                     $("#vendor_address").val(ui.item.vendor_address);
                                     $("#vendor_gstin").val(ui.item.vendor_gstin);
-                                    
+
 
                                 }, 0)
                             }
                         }).data('ui-autocomplete')._renderItem = function (ul, item) {
-                            
-                                if(item.vendor_name){
-                                        $("#vendor_contact").prop('readonly', true);
-                                        $("#vendor_email").prop('readonly', true);
-                                        $("#vendor_address").prop('readonly', true);
-                                        $("#vendor_gstin").prop('readonly', true);
-                                        $("#dl1_st").prop('readonly', true);
-                                        $("#dl1_ct").prop('readonly', true);
-                                        $("#dl1_ln").prop('readonly', true);
-                                        $("#dl2_st").prop('readonly', true);
-                                        $("#dl2_ct").prop('readonly', true);
-                                        $("#dl2_ln").prop('readonly', true);
-    
-                                    return $('<li>')
-                                        .append('<div>' + item.vendor_name + '</div>')
-                                        .appendTo(ul);
-                                }
-                                else{
-                                    $("#vendor_contact").prop('readonly', false);
-                                    $("#vendor_email").prop('readonly', false);
-                                    $("#vendor_address").prop('readonly', false);
-                                    $("#vendor_gstin").prop('readonly', false);
-                                    $("#dl1_st").prop('readonly', false);
-                                    $("#dl1_ct").prop('readonly', false);
-                                    $("#dl1_ln").prop('readonly', false);
-                                    $("#dl2_st").prop('readonly', false);
-                                    $("#dl2_ct").prop('readonly', false);
-                                    $("#dl2_ln").prop('readonly', false);
-                                    return $('<li>').append('<div>No Distributer With this Name. Please Add all the details of New Vendor Down</div>').appendTo(ul);
-                                }
-                             
+
+                            if (item.vendor_name) {
+                                $("#vendor_contact").prop('readonly', true);
+                                $("#vendor_email").prop('readonly', true);
+                                $("#vendor_address").prop('readonly', true);
+                                $("#vendor_gstin").prop('readonly', true);
+                                $("#dl1_st").prop('readonly', true);
+                                $("#dl1_ct").prop('readonly', true);
+                                $("#dl1_ln").prop('readonly', true);
+                                $("#dl2_st").prop('readonly', true);
+                                $("#dl2_ct").prop('readonly', true);
+                                $("#dl2_ln").prop('readonly', true);
+
+                                return $('<li>')
+                                    .append('<div>' + item.vendor_name + '</div>')
+                                    .appendTo(ul);
+                            }
+                            else {
+                                $("#vendor_contact").prop('readonly', false);
+                                $("#vendor_email").prop('readonly', false);
+                                $("#vendor_address").prop('readonly', false);
+                                $("#vendor_gstin").prop('readonly', false);
+                                $("#dl1_st").prop('readonly', false);
+                                $("#dl1_ct").prop('readonly', false);
+                                $("#dl1_ln").prop('readonly', false);
+                                $("#dl2_st").prop('readonly', false);
+                                $("#dl2_ct").prop('readonly', false);
+                                $("#dl2_ln").prop('readonly', false);
+                                return $('<li>').append('<option disabled>No Distributer With this Name. Please Add all the details of New Vendor Down</option>').appendTo(ul);
+                            }
+
                         };
 
 
-
-
-/*
-                        $("#contact").text("Contact No :");
-                        $("#email").text("Email :");
-                        $("#dl_no").text("DL No. :");
-                        $("#gstin").text("GSTIN :");
-                        $("#address").text("Address :");
-
-                        var vendorId = -1;
-                        $('#vendorselect').change(function () {
-                            var selectedVendorId = $(this).val();
-
-                            $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
-                                var vendorDetails = data.data;
-                                console.log(vendorDetails);
-                                vendorId = vendorDetails.vendor_id;
-                                var number = `Contact: ${vendorDetails.vendor_contact}`
-                                var email = `Email : ${vendorDetails.vendor_email}`
-                                var dl_no = `DL No. : ${vendorDetails.vendor_dl_no}`
-                                var gstin = `GSTIN : ${vendorDetails.vendor_gstin}`
-                                var address = `Address : ${vendorDetails.vendor_address}`
-                                $("#contact").text(number);
-                                $("#email").text(email);
-                                $("#dl_no").text(dl_no);
-                                $("#gstin").text(gstin);
-                                $("#address").text(address);
-                            })
-                        })*/
+                        /*
+                                                $("#contact").text("Contact No :");
+                                                $("#email").text("Email :");
+                                                $("#dl_no").text("DL No. :");
+                                                $("#gstin").text("GSTIN :");
+                                                $("#address").text("Address :");
+                        
+                                                var vendorId = -1;
+                                                $('#vendorselect').change(function () {
+                                                    var selectedVendorId = $(this).val();
+                        
+                                                    $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
+                                                        var vendorDetails = data.data;
+                                                        console.log(vendorDetails);
+                                                        vendorId = vendorDetails.vendor_id;
+                                                        var number = `Contact: ${vendorDetails.vendor_contact}`
+                                                        var email = `Email : ${vendorDetails.vendor_email}`
+                                                        var dl_no = `DL No. : ${vendorDetails.vendor_dl_no}`
+                                                        var gstin = `GSTIN : ${vendorDetails.vendor_gstin}`
+                                                        var address = `Address : ${vendorDetails.vendor_address}`
+                                                        $("#contact").text(number);
+                                                        $("#email").text(email);
+                                                        $("#dl_no").text(dl_no);
+                                                        $("#gstin").text(gstin);
+                                                        $("#address").text(address);
+                                                    })
+                                                })*/
                         // caching all the products
                         if ('caches' in window) {
                             caches.keys().then(name => {
@@ -493,11 +514,11 @@
                                             })
                                         }
                                     });
-                                }else{
-                                    $.get('/api/allsample', function(data, start){
+                                } else {
+                                    $.get('/api/allsample', function (data, start) {
                                         let searchTerm = request.term;
-                                                let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
-                                                response(results);
+                                        let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                                        response(results);
                                     })
                                 }
                             },
@@ -516,6 +537,23 @@
                         };
                         //endof autocomplete
 
+                        //logic for calculating amount
+                        var qtyInput = $("input[name='quantity']");
+                        var ptrInput = $("input[name='ptr']");
+                        var amountInput = $("input[name='amount']");
+
+                        ptrInput.on("input", calculateTotal);
+                        qtyInput.on("input", calculateTotal);
+
+                        function calculateTotal() {
+                            var qty = parseInt(qtyInput.val()) || 0;
+                            var ptr = parseFloat(ptrInput.val()) || 0;
+
+                            totalAmt = qty * ptr;
+
+                            amountInput.val(totalAmt.toFixed(2));
+                        }
+
                         var setLocalData;
                         var getLocalData;
                         var htmlData;
@@ -533,18 +571,24 @@
                                 return alert('PLEASE ADD UNIT FIRST');
                             }
 
-                            var products = $("input[name='productname']").val();
+                            var product = $("input[name='productname']").val();
                             var brand = $("input[name='brand']").val();
                             var qty = $("input[name='quantity']").val();
                             var selectedUnit = $("select[name='unitoption']").val();
+                            var ptr = $("input[name='ptr']").val();
+                            var amt = $("input[name='amount']").val();
+                            var mrp = $("input[name='mrp']").val();
 
 
                             cartarray.push({
                                 productId: productId,
-                                productname: products,
+                                productname: product,
                                 brand: brand,
                                 selectedUnit: selectedUnit,
                                 qty: qty,
+                                ptr: ptr,
+                                amt: amt,
+                                mrp: mrp,
                                 timestamp: new Date().getTime()
                             })
 
@@ -564,7 +608,9 @@
                             $("input[name='brand']").val("");
                             $("input[name='quantity']").val("");
                             $("select[name='unitoption']").prop('selectedIndex', 0);
-
+                            $("input[name='ptr']").val("");
+                            $("input[name='amount']").val("");
+                            $("input[name='mrp']").val("");
                         })
 
 
@@ -600,6 +646,9 @@
                             $("input[name='brand']").val(selectedItem.brand);
                             $("input[name='quantity']").val(selectedItem.qty);
                             $("select[name='unitoption']").prop('selectedIndex', selectedItem.selectedUnit);
+                            $("input[name='ptr']").val(selectedItem.ptr);
+                            $("input[name='amount']").val(selectedItem.amt);
+                            $("input[name='mrp']").val(selectedItem.mrp);
 
                             UpdatecartItemsinStorage.splice(item_id - 1, 1);
                             cartarray = UpdatecartItemsinStorage;
@@ -622,6 +671,9 @@
                                                 <td>${items[i].brand}</td>
                                                 <td>${items[i].qty}</td>
                                                 <td>${items[i].selectedUnit}</td>
+                                                <td>${items[i].ptr}</td>
+                                                <td>${items[i].amt}</td>
+                                                <td>${items[i].mrp}</td>
                                                 <td>
                                                     <div class="action-btns">
                                                         <button type="button" class="btn p-0 mx-2 edit-button"><i
@@ -640,14 +692,21 @@
                         //submit functionality
                         console.log($(`select[name="unitoption"] option[value=1]`).text());
                         var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+
+                        $("#dl2_ln").on('input', function () {
+                            if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
+                                $("#dl2_ln").val(null);
+                                return alert(" DL Number 1  and DL Number 2 cannot be same");
+                            }
+                        });
+
+
                         $("#submitpo").click(function () {
 
-                            
+                            if (vendorId == -1) {
 
-                            if(vendorId == -1){
-
-                                var vendor_dl_no_1 = $("#dl1_ft").val().toString()+ '-' + $("#dl1_st").val().toString()+ '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
-                                var vendor_dl_no_2 = $("#dl2_ft").val().toString()+ '-' + $("#dl2_st").val().toString()+ '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
+                                var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
+                                var vendor_dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
 
                                 $.ajax({
                                     url: `/api/vendor/`,
@@ -673,7 +732,7 @@
                                             vendor_id: vendorId,
                                             org_id: '<%=orgId%>'
                                         }
-            
+
                                         $.ajax({
                                             url: '/api/createpo/',
                                             method: 'POST',
@@ -684,17 +743,20 @@
                                                 console.log(poinsertid);
                                                 var poId = response.POId;
                                                 var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
-            
+
                                                 for (let i = 0; i < POcarts.length; i++) {
                                                     var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
                                                     var POcartdetail = {
                                                         po_id_main: poId,
                                                         product_id: POcarts[i].productId,
                                                         quantity: POcarts[i].qty,
-                                                        unit: unit
+                                                        unit: unit,
+                                                        ptr: POcarts[i].ptr,
+                                                        amount: POcarts[i].amt,
+                                                        mrp: POcarts[i].mrp
                                                     }
                                                     console.log('cartdetails', POcartdetail);
-                                                    
+
                                                     $.ajax({
                                                         url: '/api/createpocarts/',
                                                         method: 'POST',
@@ -708,7 +770,7 @@
                                                         }
                                                     });
                                                 }
-            
+
                                                 localStorage.removeItem('pocartitems');
                                                 location.reload();
                                                 window.location.href = `/po_receipt/${poinsertid}`
@@ -723,62 +785,65 @@
                                     }
                                 })
                             }
-                            else{
-
-                                
-                                
+                            else {
 
 
-                            var POdetails = {
-                                pharmacyId: pharmacyDetails.pharmaId,
-                                vendor_id: vendorId,
-                                org_id: '<%=orgId%>'
-                            }
 
-                            $.ajax({
-                                url: '/api/createpo/',
-                                method: 'POST',
-                                data: JSON.stringify(POdetails),
-                                contentType: 'application/json',
-                                success: function (response) {
-                                    var poinsertid = response.result.insertId;
-                                    console.log(poinsertid);
-                                    var poId = response.POId;
-                                    var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
 
-                                    for (let i = 0; i < POcarts.length; i++) {
-                                        var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
-                                        var POcartdetail = {
-                                            po_id_main: poId,
-                                            product_id: POcarts[i].productId,
-                                            quantity: POcarts[i].qty,
-                                            unit: unit
-                                        }
-                                        console.log('cartdetails', POcartdetail);
-                                        
-                                        $.ajax({
-                                            url: '/api/createpocarts/',
-                                            method: 'POST',
-                                            data: JSON.stringify(POcartdetail),
-                                            contentType: 'application/json',
-                                            success: function (response) {
-                                                console.log(response);
-                                            },
-                                            error: function (error) {
-                                                console.log('Error:', error);
-                                            }
-                                        });
-                                    }
-                                    
-                                    localStorage.removeItem('pocartitems');
-                                    location.reload();
-                                    window.location.href = `/po_receipt/${poinsertid}`
-                                },
-                                error: function (error) {
-                                    console.log('Error:', error);
+
+                                var POdetails = {
+                                    pharmacyId: pharmacyDetails.pharmaId,
+                                    vendor_id: vendorId,
+                                    org_id: '<%=orgId%>'
                                 }
-                            });
-                        }
+
+                                $.ajax({
+                                    url: '/api/createpo/',
+                                    method: 'POST',
+                                    data: JSON.stringify(POdetails),
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        var poinsertid = response.result.insertId;
+                                        console.log(poinsertid);
+                                        var poId = response.POId;
+                                        var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
+
+                                        for (let i = 0; i < POcarts.length; i++) {
+                                            var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
+                                            var POcartdetail = {
+                                                po_id_main: poId,
+                                                product_id: POcarts[i].productId,
+                                                quantity: POcarts[i].qty,
+                                                unit: unit,
+                                                ptr: POcarts[i].ptr,
+                                                amount: POcarts[i].amt,
+                                                mrp: POcarts[i].mrp
+                                            }
+                                            console.log('cartdetails', POcartdetail);
+
+                                            $.ajax({
+                                                url: '/api/createpocarts/',
+                                                method: 'POST',
+                                                data: JSON.stringify(POcartdetail),
+                                                contentType: 'application/json',
+                                                success: function (response) {
+                                                    console.log(response);
+                                                },
+                                                error: function (error) {
+                                                    console.log('Error:', error);
+                                                }
+                                            });
+                                        }
+
+                                        localStorage.removeItem('pocartitems');
+                                        location.reload();
+                                        window.location.href = `/po_receipt/${poinsertid}`
+                                    },
+                                    error: function (error) {
+                                        console.log('Error:', error);
+                                    }
+                                });
+                            }
                         })
 
 
@@ -813,4 +878,5 @@
                     })
                 </script>
     </body>
-</html>
+
+    </html>

@@ -26,9 +26,19 @@ module.exports = {
       },
     );
   },
+  deleteBatch: (id, callback) => {
+    getPool().query(
+      'delete from batch where batch_id =?',
+      [id],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
   getBatch: (id, orgId, callback) => {
     getPool().query(
-      `select * from batch 
+      `select distinct * from batch 
       JOIN inventory inv
       ON batch.product_id =  inv.product_id
       where batch.product_id =? and batch.org_id =${orgId}`,
