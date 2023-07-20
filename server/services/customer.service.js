@@ -120,11 +120,11 @@ module.exports = {
     );
   },
 
-  deleteUser: (id, data, callback) => {
+  deleteUser: (id, callback) => {
     getPool().query(
       'delete from customer_data where customer_id =?',
       [id],
-      (error, results, fields) => {
+      (error, results) => {
         if (error) {
           return callback(error);
         }

@@ -26,13 +26,16 @@ module.exports = {
 
   createPOCarts: (data, callback) => {
     getPool().query(
-      `insert into po_items(po_id_main, product_id, quantity, unit)
-        values(?,?,?,?)`,
+      `insert into po_items(po_id_main, product_id, quantity, unit, ptr, amount, mrp)
+        values(?,?,?,?,?,?,?)`,
       [
         data.po_id_main,
         data.product_id,
         data.quantity,
         data.unit,
+        data.ptr,
+        data.amount,
+        data.mrp,
       ],
       (error, results) => {
         if (error) {
