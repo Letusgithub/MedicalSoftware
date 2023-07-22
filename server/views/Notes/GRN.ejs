@@ -385,12 +385,6 @@
                     </div>
             </div>
         </div>
-        </div>
-
-
-
-
-
 
 
 
@@ -405,7 +399,6 @@
                 var autoCompleteDataName = [];
                 var primaryUnit;
                 var secondaryUnit;
-                //var conversion;
                 var batchIdwhenSelected;
                 var availablePrimaryQty;
                 var availableSecondaryQty;
@@ -472,9 +465,9 @@
                         },
                         select: function (event, ui) {
                             productId = ui.item.sample_id;
-                            $.get(`/api/checkbyid/${productId}`, function(data, status){
+                            $.get(`/api/checkbyid/${productId}`, function (data, status) {
                                 console.log('got this data from inventory', data);
-                                if(data.data.length == 1){
+                                if (data.data.length == 1) {
 
                                     var items = data.data[0];
                                     $("select[name = 'gst']").val(items.gst);
@@ -490,8 +483,8 @@
                                 }
                             })
 
-                            
-                            
+
+
                             setTimeout(function () {
                                 console.log(ui.item);
                                 $("input[name='productname']").val(ui.item.med_name);
@@ -519,7 +512,6 @@
 
                         $("#primarypopulate").text(`1 ${primaryUnit}`);
                         $("#secondarypopulate").text(`${secondaryUnit}`);
-                        //$("#getprimaryunit").text(primaryUnit);
                     })
 
                     $("input[name='addexp']").on('input', function () {
@@ -532,52 +524,20 @@
                     });
 
 
-            $("input[name='productname']").on('input', function(){
-                $("select[name = 'gst']").val('Select option');
-                $("#hsn").val("");
-                $("select[name='primary']").val('Primary');
-                $("select[name='secondary']").val('Secondary');
-                $("input[name='threshold']").val("");
-                $("#brand").val('')
-                $("#salt").val('')
-            })
+                    $("input[name='productname']").on('input', function () {
+                        $("select[name = 'gst']").val('Select option');
+                        $("#hsn").val("");
+                        $("select[name='primary']").val('Primary');
+                        $("select[name='secondary']").val('Secondary');
+                        $("input[name='threshold']").val("");
+                        $("#brand").val('')
+                        $("#salt").val('')
+                    })
 
-          var setLocalData;
-          var getLocalData;
-          var htmlData;
-          $("#addtocart").click(function () {
+                    var setLocalData;
+                    var getLocalData;
+                    var htmlData;
 
-
-
-                    /* renderRefreshCart(cartItems);
- 
-           function renderRefreshCart(items) {
-             $('#cart').empty();
- 
-             for (var i = 0; i < items.length; i++) {
-               cartarray.push(items[i]);
- 
-               htmlData = `
-               <tr>
-                 <td class="card_id">${i + 1}</td>
-                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
-                 <td>${items[i].priQty}</td>
-                 <td>${items[i].secQty}</td>
-                 <td>${items[i].mrp}</td>
-                 <td>${items[i].disc}</td>
-                 <td>${items[i].total}</td>
-                 <td>
-                   <div class="action-btns">
-                     <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
-                     <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
-                   </div>
-                 </td>
-               </tr>
-                         `
-               $('#cart').append(htmlData);
-             }
-           }
- */
                     var setLocalData;
                     var getLocalData;
                     var htmlData;
@@ -906,4 +866,4 @@
 
     </body>
 
-    </html>
+</html>

@@ -141,6 +141,7 @@
                                             <th>#</th>
                                             <th>PO Id</th>
                                             <th>Generation Date</th>
+                                            <th>Time</th>
                                             <th>Vendor Name</th>
                                             <!-- <th>Product</th>
                                             <th>Quantity</th> -->
@@ -175,8 +176,6 @@
                     </div>
 
                     <!-- / PO List -->
-
-
 
                   </div>
                 </div>
@@ -224,6 +223,7 @@
                 <td>${i+1}</td>
                 <td><a href="/po_receipt/${items[i].po_id}" >${items[i].po_id_main}</a></td>
                 <td>${date}</td>
+                <td>${localTime}</td>
                 <th>${items[i].vendor_name}</th>
             </tr>
               
@@ -252,6 +252,7 @@
                 <td>${i+1}</td>
                 <td><a href="/po_receipt/${items[i].po_id}" >${items[i].po_id_main}</a></td>
                 <td>${date}</td>
+                <td>${localTime}</td>
                 <th>${items[i].vendor_name}</th>
             </tr>
               
@@ -280,6 +281,7 @@
                 <td>${i+1}</td>
                 <td><a href="/po_receipt/${items[i].po_id}" >${items[i].po_id_main}</a></td>
                 <td>${date}</td>
+                <td>${localTime}</td>
                 <th>${items[i].vendor_name}</th>
             </tr>
               
@@ -311,6 +313,7 @@
                 <td>${i+1}</td>
                 <td><a href="/po_receipt/${items[i].po_id}" >${items[i].po_id_main}</a></td>
                 <td>${date}</td>
+                <td>${localTime}</td>
                 <th>${items[i].vendor_name}</th>
             </tr>
               
@@ -319,19 +322,7 @@
               
             }
           })
-        })
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        })      
       })
     </script>
 

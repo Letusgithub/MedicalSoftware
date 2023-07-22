@@ -50,8 +50,10 @@ module.exports = {
                 org_dl_no_2,
                 org_pincode,
                 org_address,
+                org_city,
+                org_state,
                 is_verified)
-                values(?,?,?,?,?,?,?,true)`,
+                values(?,?,?,?,?,?,?,?,?,true)`,
       [
         data.org_telephone,
         data.org_name,
@@ -60,10 +62,12 @@ module.exports = {
         data.org_dl_no_2,
         data.org_pincode,
         data.org_address,
+        data.org_city,
+        data.org_state,
       ],
       (error, results) => {
         if (error) {
-          console.log('erro in service', error);
+          console.log('error in service', error);
           return callBack(error);
         }
         return callBack(null, results);
