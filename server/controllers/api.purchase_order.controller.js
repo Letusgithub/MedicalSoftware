@@ -174,10 +174,10 @@ exports.searchDates = (req, res) => {
   });
 };
 
-exports.getPOInInvoice = (req, res) => {
+exports.getPOReceipt = (req, res) => {
   const id = req.query.id;
 
-  service.getPOInInvoice(id, (err, results) => {
+  service.getPOReceipt(id, (err, results) => {
     if (err) {
       console.log(err);
       return;
