@@ -87,7 +87,7 @@
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="defaultCheck1" checked />
                                                 <label class="form-check-label" for="defaultCheck1">
-                                                    Disclaimer : Hereby I asure that data given here is
+                                                    Disclaimer : Hereby I assure that data given here is
                                                     validated by me and is genuine to my consiousness as this data
                                                     cannot be edited further.
                                                 </label>
@@ -95,7 +95,8 @@
                                         </div>
 
                                         <div class="col-sm-4 text-center my-4">
-                                            <button class="btn btn-primary btn-next w-100" id="submitPharmacyDetails">Confirm</button>
+                                            <button class="btn btn-primary btn-next w-100"
+                                                id="submitPharmacyDetails">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -121,6 +122,13 @@
             <script>
                 $(document).ready(function () {
 
+                    $("#dl2_ln").on('input', function () {
+                        if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
+                            $("#dl2_ln").val(null);
+                            return alert(" DL Number 1  and DL Number 2 cannot be same");
+                        }
+                    });
+
                     $("#submitPharmacyDetails").click(function () {
                         var dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
                         var dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
@@ -129,7 +137,7 @@
                             if ($("#org_pincode").val().length < 6 || $("#org_pincode").val().length > 6) {
                                 return alert("Enter correct 6-digit Pincode")
                             }
-                            $.ajax({ 
+                            $.ajax({
                                 url: `/api/auth/register`,
                                 type: 'POST',
                                 data: JSON.stringify({

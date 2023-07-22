@@ -76,8 +76,9 @@
               </div>
 
               <div class="row mx-3">
-                <h4 class="fw-bold mb-4">Add Items</h4>
-                <h5 id="message" style="color:red"></h5>
+                <h4 class="fw-bold mb-2">Add Items</h4>
+
+                <div id="message" class="d-flex justify-content-between mb-2"></div>
 
 
                 <!-- Bordered Table -->
@@ -543,7 +544,10 @@
 
                   console.log('all batches', data.data);
                   if (data.data.length == 0) {
-                    $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+                    $("#message").html(`<h5 class="my-auto" style="color:red"> ITEM NOT IN INVENTORY PLEASE ADD!!</h5>
+                                        <div class=" text-center">
+                                            <a class="btn btn-primary mx-4" style="color: white;" href="/add_product">+ Add Product</a>
+                                        </div>`);
                   } else {
                     //batch dropdown
                     $("#batchdroporinput input").remove();
@@ -828,6 +832,21 @@
             $("#message").empty();
           })
 
+          $("#medicinename").on('input', function () {
+            $("#brand").val("");
+            $("#pUnit").val("");
+            $("#sUnit").val("");
+            $("#price").val("");
+            $("#discount").val("");
+            $("#total").val("");
+            $("#shelflabel").val("");
+            $("#batchdroporinput").empty();
+            $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+            $("#expdate").val("");
+            $("#unit").empty();
+            $("#pack .unit").empty();
+            $("#message").empty();
+          })
 
           // logic for redering cart data on addtocart click 
           $("#addtocart").on('click', function () {

@@ -114,4 +114,19 @@ module.exports = {
 
     );
   },
+
+  // Get All Vendors by Org ID
+  getAll: (callBack) => {
+    getPool().query(
+      'select * from vendor',
+      [],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+
+    );
+  },
 };

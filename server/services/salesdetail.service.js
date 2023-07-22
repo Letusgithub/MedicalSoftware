@@ -356,7 +356,7 @@ module.exports = {
   //     `SELECT
   //     t1.order_date,
   //     t1.total_orders,
-  //     ((t1.total_orders - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
+  //    ((t1.total_orders - t2.prev_total_orders) / t2.prev_total_orders) * 100 AS growth_percentage
   //   FROM
   //     (SELECT DATE(od.sales_created_date) AS order_date, COUNT(*) AS total_orders
   //      FROM newdata.order_details as od
@@ -417,7 +417,7 @@ module.exports = {
   //   FROM
   //     newdata.order_details
   //   LEFT JOIN
-  //     (SELECT DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') AS prev_order_month, COUNT(*) AS prev_total_orders
+  //      (SELECT DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') AS prev_order_month, COUNT(*) AS prev_total_orders
   //      FROM newdata.order_details
   //      WHERE newdata.order_details.sales_created_date < DATE_FORMAT(NOW(), '%Y-%m-01')
   //      GROUP BY DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m')
@@ -476,7 +476,7 @@ module.exports = {
   //   ON YEAR(sales_created_date) = t2.prev_order_year
   //   WHERE sales_created_date >= DATE_FORMAT(NOW(), '%Y-01-01')
   //   GROUP BY YEAR(sales_created_date), t2.prev_total_orders
-  //   ORDER BY order_year    
+  //   ORDER BY order_year
   //   `,
   //     [],
   //     (error, results) => {
