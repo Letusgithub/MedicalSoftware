@@ -471,9 +471,29 @@
                             }
                         },
                         select: function (event, ui) {
+                            productId = ui.item.sample_id;
+                            $.get(`/api/checkbyid/${productId}`, function(data, status){
+                                console.log('got this data from inventory', data);
+                                if(data.data.length == 1){
+
+                                    var items = data.data[0];
+                                    $("select[name = 'gst']").val(items.gst);
+                                    $("#hsn").val(items.hsn);
+                                    $("select[name='primary']").val(items.primary_unit);
+                                    $("select[name='secondary']").val(items.secondary_unit);
+                                    $("input[name='threshold']").val(items.threshold);
+
+                                    var primaryUnit = $("select[name='primary']").val();
+                                    var secondaryUnit = $("select[name='secondary']").val();
+                                    $("#primarypopulate").text(`1 ${primaryUnit}`);
+                                    $("#secondarypopulate").text(`${secondaryUnit}`);
+                                }
+                            })
+
+                            
+                            
                             setTimeout(function () {
                                 console.log(ui.item);
-                                productId = ui.item.sample_id;
                                 $("input[name='productname']").val(ui.item.med_name);
                                 $("input[name='brand']").val(ui.item["mfd/mkt"]);
                                 $("input[name='salt']").val(ui.item.salt_composition);
@@ -510,6 +530,22 @@
                             return alert('PLEASE ADD CORRECT EXPDate FIRST');
                         }
                     });
+
+
+            $("input[name='productname']").on('input', function(){
+                $("select[name = 'gst']").val('Select option');
+                $("#hsn").val("");
+                $("select[name='primary']").val('Primary');
+                $("select[name='secondary']").val('Secondary');
+                $("input[name='threshold']").val("");
+                $("#brand").val('')
+                $("#salt").val('')
+            })
+
+          var setLocalData;
+          var getLocalData;
+          var htmlData;
+          $("#addtocart").click(function () {
 
 
 

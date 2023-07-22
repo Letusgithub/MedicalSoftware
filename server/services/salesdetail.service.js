@@ -509,4 +509,26 @@ module.exports = {
     );
   },
 
+  getProfitinHome: (callback) => {
+    getPool().query(
+
+      `
+      select ct.saled_mrp as mrp, ct.cart_created_date as date, (ct.saled_pri_qty_cart*batch.purchase_rate + ct.saled_sec_qty_cart*batch.purchase_rate/batch.conversion) as purchaserate
+      from cart_item ct
+      join batch on batch.batch_id  = ct.saled_batch_id
+      where ct.saled_mrp >0
+
+      `,
+      [
+    
+      ],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
 };
