@@ -278,8 +278,8 @@
 
 
                           <ul class="p-0 m-0" id="orderstatisticsunit">
-
-                            <!-- <li class="d-flex mb-4 pb-1">
+<!-- 
+                            <li class="d-flex mb-4 pb-1">
                               <div class="avatar flex-shrink-0 me-3">
                                 <span class="avatar-initial rounded bg-label-primary"><i
                                     class='bx bx-mobile-alt'></i></span>
@@ -349,62 +349,92 @@
                     <!--/ Order Statistics -->
 
                     <!-- Expense Overview -->
-                     <!-- <div class="col-md-6 col-lg-4 order-1 mb-4">
-                      <div class="card h-100">
-                        <div class="card-header">
-                          <ul class="nav nav-pills" role="tablist">
-                            <li class="nav-item">
-                              <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                data-bs-target="#navs-tabs-line-card-income" aria-controls="navs-tabs-line-card-income"
-                                aria-selected="true">
-                                Income
-                              </button>
-                            </li>
-                            <li class="nav-item">
-                              <button type="button" class="nav-link" role="tab">
-                                Expenses
-                              </button>
-                            </li>
-                            <li class="nav-item">
-                              <button type="button" class="nav-link" role="tab">
-                                Profit
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="card-body px-0">
-                          <div class="tab-content p-0">
-                            <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
-                              <div class="d-flex p-4 pt-3">
-                                <div class="avatar flex-shrink-0 me-3">
-                                  <img src="/img/icons/unicons/wallet.png" alt="User" />
-                                </div>
-                                <div>
-                                  <small class="text-muted d-block">Total Balance</small>
-                                  <div class="d-flex align-items-center">
-                                    <h6 class="mb-0 me-1">₹459.10</h6>
-                                    <small class="text-success fw-semibold">
-                                      <i class="bx bx-chevron-up"></i>
-                                      42.9%
-                                    </small>
-                                  </div>
-                                </div>
+                     <!-- Expense Overview -->
+                <div class="col-md-6 col-lg-4 order-1 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header">
+                      <ul class="nav nav-pills" role="tablist" style="justify-content: center;">
+                        <li class="nav-item" style="margin: 0 auto;">
+                          <button
+                            type="button"
+                            class="nav-link active"
+                            role="tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#navs-tabs-line-card-income"
+                            aria-controls="navs-tabs-line-card-income"
+                            aria-selected="true"
+                          >
+                            Revenue
+                          </button>
+                        </li>
+                        <!-- <li class="nav-item">
+                          <button type="button" class="nav-link active"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-tabs-line-card-income"
+                          aria-controls="navs-tabs-line-card-income"
+                          aria-selected="true">
+                            Expenses
+                          </button>
+                        </li> -->
+                        <li class="nav-item" style="margin: 0 auto;">
+                          <button type="button" class="nav-link active"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-tabs-line-card-income"
+                          aria-controls="navs-tabs-line-card-income"
+                          aria-selected="true" style="background-color: rgb(83, 186, 83); color: white">
+                            Profit
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-body px-0">
+                      <div class="tab-content p-0">
+                        <div
+                          class="tab-pane fade show active"
+                          id="navs-tabs-line-card-income"
+                          role="tabpanel"
+                        >
+                          <!-- <div class="d-flex p-4 pt-3">
+                            <div class="avatar flex-shrink-0 me-3">
+                              <img
+                                src="public/img/icons/unicons/wallet.png"
+                                alt="User"
+                              />
+                            </div> -->
+                            <!-- <div>
+                              <small class="text-muted d-block"
+                                >Total Balance</small
+                              >
+                              <div class="d-flex align-items-center">
+                                <h6 class="mb-0 me-1">$459.10</h6>
+                                <small class="text-success fw-semibold">
+                                  <i class="bx bx-chevron-up"></i>
+                                  42.9%
+                                </small>
                               </div>
-                              <div id="incomeChart"></div>
-                              <div class="d-flex justify-content-center pt-4 gap-2">
-                                <div class="flex-shrink-0">
-                                  <div id="expensesOfWeek"></div>
-                                </div>
-                                <div>
-                                  <p class="mb-n1 mt-1">Expenses This Week</p>
-                                  <small class="text-muted">₹39 less than last week</small>
-                                </div>
-                              </div>
+                            </div> -->
+                          </div>
+                          <!-- <div id="incomeChart"></div> -->
+                          <div id="profitreport"></div>
+                          <div class="d-flex justify-content-center pt-4 gap-2">
+                            <div class="flex-shrink-0">
+                              <!-- <div id="expensesOfWeek"></div> -->
                             </div>
+                            <!-- <div>
+                              <p class="mb-n1 mt-1">Expenses This Week</p>
+                              <small class="text-muted"
+                                >$39 less than last week</small
+                              >
+                            </div> -->
                           </div>
                         </div>
                       </div>
-                    </div>  -->
+                    </div>
+                  </div>
+                </div>
+                <!--/ Expense Overview -->
                     <!--/ Expense Overview -->
 
                   </div>
@@ -426,61 +456,51 @@
     <!-- / Layout wrapper -->
 
     <%- include('./partials/footercode.ejs') %>
+
+    <!-- var htmlLoader =`
+    <div class='container'>
+      <div class='loader-container'>
+        <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class='spinner-container'>
+      <div class="spinner-path">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="textshow">
+    <h1>Getting Your Products. Please Hold Tight...</h1>
+  </div>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+      <filter id="gooey">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7" result="goo" />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+    </defs>
+  </svg>
+` -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-      <script>
-        //if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
-        //console.log('yes service worker available');
-        //}
+      <script >
+      
         $(document).ready(function () {
+
+          
 
           if ('caches' in window) {
             caches.keys().then(name => {
               if (name.length == 0) {
-
-                var htmlLoader =`
-                    <div class='container'>
-                      <div class='loader-container'>
-                        <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div class='spinner-container'>
-                      <div class="spinner-path">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                      </div>
-                    </div>
-                    
-                  </div>
-                  <div class="textshow">
-                    <h1>Getting Your Products. Please Hold Tight...</h1>
-                  </div>
-                  
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                    <defs>
-                      <filter id="gooey">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7" result="goo" />
-                        <feBlend in="SourceGraphic" in2="goo" />
-                      </filter>
-                    </defs>
-                  </svg>
-                `
-                $(".loaderstyles").css({
-                  'filter': 'blur(3px)'
-                })
-                $("#loaderpage").append(htmlLoader);
-
-
-                setTimeout( function(){
-                  $("#loaderpage").fadeOut("slow");
-                  $(".loaderstyles").removeAttr('style');
-                }, 5000);
 
                 console.log('do something');
                 caches.open('productCache').then((cache) => {
@@ -674,69 +694,8 @@
             }
           };
   
-          var profileChart = new ApexCharts(document.querySelector("#profileReport"), profileReport);
+          var profileChart = new ApexCharts(document.querySelector('#profileReport'), profileReport);
           profileChart.render();
-/*
-          var profileReport = document.getElementById("profileReport");
-          new Chart(profileReport, {
-                type: "line",
-                data: {
-                  labels: sales.results.map(function (data) {
-                    return data.x;
-                  }),
-                  datasets: [
-                    {
-                      label: "Sales",
-                      data: sales.results.map(function (data) {
-                        return data.total;
-                      }),
-                      borderColor: "#fae711", // Set the line color here, for example, red color
-                      borderWidth: 7, // Adjust the line width as per your preference
-                      fill: false,
-                    
-                    }
-                  ]
-                },
-                options: {
-                  plugins: {
-                    tooltip: {
-                      enabled: true
-                    },
-                    legend: {
-                      display: false, // Set legend to false to remove it
-                    }
-                  },
-                  scales: {
-                    x: {
-                      display: false
-                    },
-                    y: {
-                      display: false
-                    }
-                  },
-                  elements: {
-                    point: {
-                      radius: 0, // Set the point radius to 0 to remove the data points
-                      hoverRadius: 0 // Set the hover radius to 0 to remove the data points on hover
-                    },
-                    line: {
-                      shadowColor: "rgba(59, 50, 50, 0.6)", // Set the shadow color
-                      shadowBlur: 10, // Adjust the shadow blur
-                      shadowOffsetY: 8,// Adjust the shadow offset
-                      tension: .4
-                    }
-                  },
-                  
-                }
-              });*/
-
-
-  
-
-
-
-
-
 
         })
 
@@ -762,14 +721,16 @@
             var prevDate = dategot.toISOString().split('T')[0];
             if(currDate != prevDate){
               console.log('not equal');
-              dayGrowth = 0;
+              let totalOrders = parseInt(data.results[0].row_count)
+              dayGrowth = totalOrders*100;
+              //dayGrowth = 0;
             }
             else {
               console.log('equal');
               let totalorderstoday = data.results[0].row_count;
               let totalordersyes = data.results[1].row_count;
               dayGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
-              dayGrowth = dayGrowth<=0? 0:dayGrowth;
+              //dayGrowth = dayGrowth<=0? 0:dayGrowth;
             }
           }
 
@@ -852,14 +813,16 @@
             var prevDate = dategot.toISOString().split('T')[0];
             if(currDate != prevDate){
               console.log('not equal');
-              dayGrowth = 0;
+              let totalOrders = parseInt(data.results[0].row_count)
+              dayGrowth = totalOrders*100;
+              //dayGrowth = 0;
             }
             else {
               console.log('equal');
               let totalorderstoday = data.results[0].row_count;
               let totalordersyes = data.results[1].row_count;
               dayGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
-              dayGrowth = dayGrowth<=0? 0:dayGrowth;
+              //dayGrowth = dayGrowth<=0? 0:dayGrowth;
             }
           }
 
@@ -940,8 +903,8 @@
               else{
                 let totalorderstoday = data.results[0].row_count;
                 let totalordersyes = data.results[1].row_count;
-                monthGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
-                monthGrowth = monthGrowth<=0? 0:monthGrowth;
+                monthGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes).toFixed(2);
+                //monthGrowth = monthGrowth<=0? 0:monthGrowth;
               }
 
               $("#textgrowthstatus").text(`${monthGrowth}% More Orders this Month`);
@@ -1022,7 +985,7 @@
                 let totalorderstoday = data.results[0].row_count;
                 let totalordersyes = data.results[1].row_count;
                 yearGrowth = parseFloat(Math.abs(totalorderstoday-totalordersyes)/totalordersyes);
-                yearGrowth = yearGrowth<=0? 0:yearGrowth;
+                //yearGrowth = yearGrowth<=0? 0:yearGrowth;
               }
 
 
@@ -1161,7 +1124,7 @@
           console.log('orderstatiscs', items);
           var pridataset =[];
           var totalqty;
-          for(let i=0;i<items.length;i++){
+          for(let i=0;i<3;i++){
             var unit = items[i].primary_unit;
             var qty = items[i].pri;
             totalqty+=items[i].pri + items[i].sec;
@@ -1194,11 +1157,12 @@
 
             $("#orderstatisticsunit").append(htmlData);
           }
-          console.log(pridataset);
+          console.log('pridataset' ,pridataset);
 
           var orderStatistics = {
             series: pridataset.map(function(data, index){
               return parseInt(data.qty);
+              
             }),
             labels: pridataset.map(function(data, index){
                return data.unit;
@@ -1251,11 +1215,55 @@
           var orderStatisticsChart = new ApexCharts(document.querySelector("#orderstatisticschart"), orderStatistics);
           orderStatisticsChart.render();
         
-        
-      
+  
+            
 
          })
-          
+
+         // profit returns
+         $.get('/api/getprofitinhome', function(data, status){
+          var items = data.result;
+          console.log(items);
+        
+                    
+              var profitReport = {
+                series: [{
+                          name: 'Revenue',
+                          data: items.map(function(revenue){
+                                  return parseFloat(revenue.mrp);
+                                })
+                          }, {
+                            name: 'Profit',
+                            data: items.map(function(revenue){
+                              return parseFloat(revenue.mrp) - parseFloat(revenue.purchaserate);
+                            })
+                          }],
+                            chart: {
+                            height: 350,
+                            type: 'area'
+                          },
+                          dataLabels: {
+                            enabled: false
+                          },
+                          stroke: {
+                            curve: 'smooth'
+                          },
+                          xaxis: {
+                            type: 'datetime',
+                            categories: items.map(function(revenue){
+                              return revenue.date;
+                            })
+                          },
+                          tooltip: {
+                            x: {
+                              format: 'dd/MM/yy HH:mm'
+                            },
+                          },
+                };
+
+              var profit = new ApexCharts(document.querySelector("#profitreport"), profitReport);
+              profit.render();
+      })
           
       
         

@@ -126,7 +126,7 @@
                               <th style="width: 5vw;">MRP / p.unit</th>
 
                               <th style="width: 8vw;">Disc %</th>
-                              <th style="width: 10vw;">Total</th>
+                              <th style="width: 10vw;">Total <span id="profit"></span></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -498,10 +498,10 @@
           var primaryUnit;
           var secondaryUnit;
           var conversion;
-          //var batchesMap=[];
           var batchIdwhenSelected;
           var availablePrimaryQty;
           var availableSecondaryQty;
+          var purchaseRate = 0;
           $('#medicinename').autocomplete({
             minLength: 3,
             source: function (request, response) {
@@ -569,11 +569,10 @@
                   primaryUnit = data.data[0].primary_unit;
                   secondaryUnit = data.data[0].secondary_unit;
                   conversion = data.data[0].conversion;
+                  purchaseRate = parseFloat(data.data[0].purchase_rate);
 
                   availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
                   availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
-
-
 
                   /*
                   $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
@@ -605,6 +604,7 @@
                     $("#expdate").val(date.toISOString().split('T')[0]);
                     $("#price").val(data.data[batchId].mrp);
                     conversion = data.data[batchId].conversion;
+                    purchaseRate = parseFloat(data.data[batchId].purchase_rate);
 
                     availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
                     availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion ? 0 : data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
@@ -667,6 +667,25 @@
             //var total = quantity * price - (quantity * price * discount);
             var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
             var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
+
+            var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty/conversion;
+
+            var profit = parseFloat(totalQtyAfterDisc - purchase);
+
+            $("#profit").text(`(Profit: ₹${profit.toFixed(2)})`);
+            if(profit<0){
+              $("#profit").css({
+                color: "red",
+              })
+            } else{
+              $("#profit").css({
+                color: "green",
+              })
+            }
+            console.log('ptr' , purchaseRate);
+            console.log('ptr' , conversion);
+            console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
+
 
             totalInput.val(totalQtyAfterDisc.toFixed(2));
           }
