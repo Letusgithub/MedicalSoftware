@@ -231,6 +231,8 @@ module.exports = {
       JOIN newdata.batch bth on bth.product_id = inv.product_id
       where inv.org_id = ?
       group by inv.primary_unit, inv.secondary_unit 
+      ORDER BY pri DESC
+
       
       `,
       [orgId],
