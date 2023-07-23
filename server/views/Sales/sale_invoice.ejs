@@ -513,7 +513,6 @@
                       let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
                       if (results.length === 0) {
                         results.push({ med_name: null }); // Add a null item for the custom message
-
                       }
 
                       response(results);
@@ -671,22 +670,22 @@
             var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
             var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
 
-            var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty/conversion;
+            var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty / conversion;
 
             var profit = parseFloat(totalQtyAfterDisc - purchase);
 
             $("#profit").text(`(Profit: ₹${profit.toFixed(2)})`);
-            if(profit<0){
+            if (profit < 0) {
               $("#profit").css({
                 color: "red",
               })
-            } else{
+            } else {
               $("#profit").css({
                 color: "green",
               })
             }
-            console.log('ptr' , purchaseRate);
-            console.log('ptr' , conversion);
+            console.log('ptr', purchaseRate);
+            console.log('ptr', conversion);
             console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
 
 
@@ -782,7 +781,6 @@
             var batch = $("#batchdroporinput #batchnumber").val();
             var exp = $("#expdate").val();
             var selectedUnit = $("#unit").val();
-
 
 
             cartarray.push({
@@ -881,7 +879,6 @@
             $("#price").val(selectedItem.mrp);
             $("#discount").val(selectedItem.disc);
             $("#total").val(selectedItem.total);
-
 
 
             //getting all data for batches
@@ -1064,8 +1061,10 @@
           var orderDetails;
           $("#submitorder").click(function () {
 
+            $("#submitorder").prop('disabled', true);
+
             if ($("#reference").val() == "") {
-              return alert("NO DOCTOR REF");
+              return alert("Add Doctor reference");
             }
             if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
               return alert("PLEASE ADD SOME ITEMS FIRST");
@@ -1136,6 +1135,7 @@
                         },
                         error: function (error) {
                           console.log('error in updateing batch', error);
+                          return alert("error in updateing batch")
                         }
                       })
 
@@ -1164,29 +1164,27 @@
                         },
                         error: function (error) {
                           console.log(error);
+                          return alert("Item not added")
                         }
                       })
                     }
 
-                    localStorage.removeItem("cartitems");
-                    localStorage.removeItem("custdata");
-                    window.location.href = `/sale_receipt/${salesId}`
+                    setTimeout(() => {
+                      localStorage.removeItem("cartitems");
+                      localStorage.removeItem("custdata");
+                      window.location.href = `/sale_receipt/${salesId}`
+                    }, 3000);
 
-                    //})
                   },
                   error: function (error) {
-                    alert("not Created", error)
+                    return alert("Not Created", error)
                   }
                 })
               },
               error: function (error) {
-                alert("not Created", error)
+                return alert("Not Created", error)
               }
-
-
             })
-
-
           })
 
           // if wanted without using local storage edit and delete button

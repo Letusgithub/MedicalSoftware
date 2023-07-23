@@ -96,8 +96,7 @@
                                                 <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                         class='bx bx-detail'></i></span>
                                                 <input type="text" id="dl2_ft" value="21" class="form-control" readonly>
-                                                <select type="text" id="dl2_st"
-                                                    class="form-control">
+                                                <select type="text" id="dl2_st" class="form-control">
                                                     <option selected> State</option>
                                                     <option value="AD">Andhra Pradesh</option>
                                                     <option value="AR"> Arunachal Pradesh</option>
@@ -146,8 +145,7 @@
                                         <div class="col-sm-10">
                                             <label class="form-label" for="org_address">Address</label>
                                             <textarea type="text" id="org_address" name="org_address"
-                                                class="form-control" required>
-                                                </textarea>
+                                                class="form-control" required></textarea>
                                         </div>
 
                                         <div class="col-sm-10">
@@ -190,6 +188,18 @@
             <script>
                 $(document).ready(function () {
 
+                    var lat;
+                    var long;
+
+                    if ("geolocation" in navigator) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            lat = position.coords.latitude;
+                            long = position.coords.longitude;
+                        });
+                    } else {
+                        console.log("Geolocation does not work in this browser");
+                    }
+
                     $("#dl2_ln").on('input', function () {
                         if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
                             $("#dl2_ln").val(null);
@@ -197,38 +207,39 @@
                         }
                     });
 
+                    
 
                     var city;
                     var state;
 
-                    $("#org_pincode").on('input', function(){
+                    $("#org_pincode").on('input', function () {
 
                         var pin = $("#org_pincode").val();
 
-                        if(pin.length > 6){
+                        if (pin.length > 6) {
                             return alert("Enter correct 6-digit Pincode")
                         }
-                        if(pin.length == 6){
-                            $.get("https://api.postalpincode.in/pincode/" + pin, function(response){
-                                if (response[0].PostOffice === null){
+                        if (pin.length == 6) {
+                            $.get("https://api.postalpincode.in/pincode/" + pin, function (response) {
+                                if (response[0].PostOffice === null) {
                                     return alert("Invalid Pincode")
                                 }
                                 city = response[0].PostOffice[0].Block;
                                 state = response[0].PostOffice[0].State
- 
+
                             })
-                            
+
                         }
-                        
+
                     })
-                                       
+
 
                     $("#submitPharmacyDetails").click(function () {
                         var dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
                         var dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
 
                         if ($("#org_name").val() && $("#owner_name").val() && dl_no_1 && dl_no_2 && $("#org_pincode").val() && $("#org_address").val()) {
-                            
+
                             $.ajax({
                                 url: `/api/auth/register`,
                                 type: 'POST',
@@ -241,7 +252,9 @@
                                     org_pincode: $("#org_pincode").val(),
                                     org_address: $("#org_address").val(),
                                     org_city: city,
-                                    org_state: state
+                                    org_state: state,
+                                    org_lat: lat,
+                                    org_long: long
                                 }),
                                 contentType: 'application/json',
                                 success: function (response) {
