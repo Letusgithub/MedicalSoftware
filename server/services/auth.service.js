@@ -52,8 +52,10 @@ module.exports = {
                 org_address,
                 org_city,
                 org_state,
+                org_lat,
+                org_long,
                 is_verified)
-                values(?,?,?,?,?,?,?,?,?,true)`,
+                values(?,?,?,?,?,?,?,?,?,?,?,true)`,
       [
         data.org_telephone,
         data.org_name,
@@ -64,6 +66,8 @@ module.exports = {
         data.org_address,
         data.org_city,
         data.org_state,
+        data.org_lat,
+        data.org_long,
       ],
       (error, results) => {
         if (error) {

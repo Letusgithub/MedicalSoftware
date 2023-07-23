@@ -543,15 +543,6 @@
                     var htmlData;
                     $("#addtocart").click(function () {
 
-
-                        /* if($("#batch").val()==''){
-                          return alert('PLEASE ADD BATCH FIRST');
-                        }
-            
-                        if($('[name="addexp"]').val() < new Date().toJSON().slice(0, 10)){
-                          return alert('PLEASE ADD CORRECT EXP Date FIRST');
-                        }
-                        */
                         var products = $("#medicinename").val();
                         var gst = $("select[name = 'gst']").val();
                         var hsn = $("#hsn").val();
@@ -600,8 +591,6 @@
                         $("input[name='threshold']").val("");
                         $("#brand").val('')
                         $("#salt").val('')
-
-
 
                         $("#batchname").val("");
                         $('[name="addexp"]').val('');
@@ -659,8 +648,6 @@
                     //end of rendereing data logic
 
                     //allchanges done for footer total;
-
-
                     var orderDetails;
                     var org = '<%=orgId%>'
                     $("#submitorder").click(function () {
@@ -755,22 +742,22 @@
                                                                     console.log('grn done', response);
                                                                 },
                                                                 error: function (error) {
-                                                                    alert("not Created", error)
                                                                     console.log('error in grn', error);
+                                                                    return alert("not Created", error)
                                                                 }
                                                             })
                                                             console.log(response);
                                                         },
                                                         error: function (error) {
-                                                            alert("not Created", error)
                                                             console.log(error);
+                                                            return alert("not Created", error)
                                                         }
                                                     })
                                                     console.log(response);
                                                 },
                                                 error: function (error) {
-                                                    alert("not Created", error)
                                                     console.log(error);
+                                                    return alert("not Created", error)
                                                 }
                                             })
                                         } else {
@@ -820,15 +807,15 @@
                                                             console.log('grn done', response);
                                                         },
                                                         error: function (error) {
-                                                            alert("not Created", error)
                                                             console.log('error in grn', error);
+                                                            return alert("Not Created", error)
                                                         }
                                                     })
                                                     console.log(response);
                                                 },
                                                 error: function (error) {
-                                                    alert("not Created", error)
                                                     console.log(error);
+                                                    return alert("Not Created", error)
                                                 }
                                             })
                                         }
