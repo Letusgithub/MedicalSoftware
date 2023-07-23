@@ -76,8 +76,9 @@
               </div>
 
               <div class="row mx-3">
-                <h4 class="fw-bold mb-4">Add Items</h4>
-                <h5 id="message" style="color:red"></h5>
+                <h4 class="fw-bold mb-2">Add Items</h4>
+
+                <div id="message" class="d-flex justify-content-between mb-2"></div>
 
 
                 <!-- Bordered Table -->
@@ -90,11 +91,10 @@
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th class="col-6">Product Name*</th>
-                              <th class="col-5">Mfg / Mkt</th>
+                              <th>Product Name<span style="font-size: 20px; color: red">*</span></th>
+                              <th>Mfg / Mkt</th>
                               <th class="col-1">Shelf Label</th>
                             </tr>
-
                           </thead>
                           <tbody>
                             <tr>
@@ -320,7 +320,7 @@
                   <div>
                     <input class="form-check-input mx-auto" type="checkbox" value="" id="defaultCheck1" checked>
                     <label class="form-check-label mx-1" for="defaultCheck1">
-                      Disclaimer : Hereby I asure that product details given here is
+                      Disclaimer : Hereby I assure that product details given here is
                       validated by this pharmacy .
                     </label>
                   </div>
@@ -519,7 +519,6 @@
                       let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
                       if (results.length === 0) {
                         results.push({ med_name: null }); // Add a null item for the custom message
-
                       }
 
                       response(results);
@@ -549,7 +548,10 @@
 
                   console.log('all batches', data.data);
                   if (data.data.length == 0) {
-                    $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
+                    $("#message").html(`<h5 class="my-auto" style="color:red"> ITEM NOT IN INVENTORY PLEASE ADD!!</h5>
+                                        <div class=" text-center">
+                                            <a class="btn btn-primary mx-4" style="color: white;" href="/add_product">+ Add Product</a>
+                                        </div>`);
                   } else {
                     //batch dropdown
                     $("#batchdroporinput input").remove();
@@ -676,6 +678,7 @@
             var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
             var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
 
+
             //calculating profit
             var mrpbeforegst = price/parseFloat(1+ gst/100);
 
@@ -684,24 +687,29 @@
 
             var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty/conversion;
 
+
             var profit = parseFloat(priceAfterDisc - purchase);
 
             profitForEachProduct = profit;
 
+
             $("#profit").text(`Profit: ₹${profit.toFixed(2)}`);
             if(profit<0){
+
               $("#profit").css({
                 color: "red",
               })
-            } else{
+            } else {
               $("#profit").css({
                 color: "green",
               })
             }
+
             console.log('ptr' , purchaseRate);
             console.log('conversionF' , conversion);
             console.log('gst' , gst);
             //console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
+
 
 
             totalInput.val(totalQtyAfterDisc.toFixed(2));
@@ -798,7 +806,6 @@
             var selectedUnit = $("#unit").val();
 
 
-
             cartarray.push({
               batchId: batchIdwhenSelected,
               productId: productId,
@@ -847,6 +854,21 @@
             $("#profit").text('');
           })
 
+          $("#medicinename").on('input', function () {
+            $("#brand").val("");
+            $("#pUnit").val("");
+            $("#sUnit").val("");
+            $("#price").val("");
+            $("#discount").val("");
+            $("#total").val("");
+            $("#shelflabel").val("");
+            $("#batchdroporinput").empty();
+            $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+            $("#expdate").val("");
+            $("#unit").empty();
+            $("#pack .unit").empty();
+            $("#message").empty();
+          })
 
           // logic for redering cart data on addtocart click 
           $("#addtocart").on('click', function () {
@@ -882,7 +904,6 @@
             $("#price").val(selectedItem.mrp);
             $("#discount").val(selectedItem.disc);
             $("#total").val(selectedItem.total);
-
 
 
             //getting all data for batches
@@ -1077,8 +1098,10 @@
           var orderDetails;
           $("#submitorder").click(function () {
 
+            $("#submitorder").prop('disabled', true);
+
             if ($("#reference").val() == "") {
-              return alert("NO DOCTOR REF");
+              return alert("Add Doctor reference");
             }
             if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
               return alert("PLEASE ADD SOME ITEMS FIRST");
@@ -1149,6 +1172,7 @@
                         },
                         error: function (error) {
                           console.log('error in updateing batch', error);
+                          return alert("error in updateing batch")
                         }
                       })
 
@@ -1177,29 +1201,27 @@
                         },
                         error: function (error) {
                           console.log(error);
+                          return alert("Item not added")
                         }
                       })
                     }
 
-                    localStorage.removeItem("cartitems");
-                    localStorage.removeItem("custdata");
-                    window.location.href = `/sale_receipt/${salesId}`
+                    setTimeout(() => {
+                      localStorage.removeItem("cartitems");
+                      localStorage.removeItem("custdata");
+                      window.location.href = `/sale_receipt/${salesId}`
+                    }, 3000);
 
-                    //})
                   },
                   error: function (error) {
-                    alert("not Created", error)
+                    return alert("Not Created", error)
                   }
                 })
               },
               error: function (error) {
-                alert("not Created", error)
+                return alert("Not Created", error)
               }
-
-
             })
-
-
           })
 
           // if wanted without using local storage edit and delete button

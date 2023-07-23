@@ -121,7 +121,7 @@
                                                             <div>Current Qty (Pri: Sec)</div>
 
                                                         </th>
-                                                        <!-- <th>Actions</th> -->
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table-border-bottom-0" id="batchcart">
@@ -211,7 +211,11 @@
                                         <td>₹${batch[i].mrp}</td>
                                         <td>${batch[i].batch_qty}</td>
                                         <td>${remPriQty} : ${remSecQty}</td>
-                                        
+                                        <td>
+                                            <div class="action-btns">
+                                                <a type="button" class="btn p-0 mx-2" href="/api/deletebatch/${batch[i].batch_id}"><i class="bx bx-trash me-1"></i></a>
+                                            </div>
+                                        </td>
                                         
                                     </tr>`
 

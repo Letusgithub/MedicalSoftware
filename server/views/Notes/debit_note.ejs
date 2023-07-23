@@ -177,7 +177,7 @@
                                     <!--/ Bordered Table -->
 
                                     <!-- PO Cart -->
-                                    <div class="card mx-3">
+                                    <div class="card">
                                         <h5 class="card-header">Item Cart</h5>
                                         <div class="card-body">
                                             <div class="table-responsive text-nowrap">
@@ -280,7 +280,7 @@
                                 
                                 var number = `Contact: ${vendorDetails.vendor_contact}`
                                 var email = `Email : ${vendorDetails.vendor_email}`
-                                var dl_no = `DL No. : ${vendorDetails.vendor_dl_no_1}`
+                                var dl_no = `DL No. : ${vendorDetails.vendor_dl_no_1}, ${vendorDetails.vendor_dl_no_2}`
                                 var gstin = `GSTIN : ${vendorDetails.vendor_gstin}`
                                 var address = `Address : ${vendorDetails.vendor_address}`
                                 $("#contact").text(number);

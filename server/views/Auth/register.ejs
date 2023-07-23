@@ -48,8 +48,42 @@
                                                 <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                         class='bx bx-detail'></i></span>
                                                 <input type="text" id="dl1_ft" value="20" class="form-control" readonly>
-                                                <input type="text" id="dl1_st" placeholder="State (eg:-MH)"
+                                                <select type="text" id="dl1_st" placeholder="State"
                                                     class="form-control">
+                                                    <option selected> State</option>
+                                                    <option value="AD">Andhra Pradesh</option>
+                                                    <option value="AR"> Arunachal Pradesh</option>
+                                                    <option value="AS"> Assam</option>
+                                                    <option value="BR"> Bihar</option>
+                                                    <option value="CG"> Chattisgarh</option>
+                                                    <option value="DL"> Delhi</option>
+                                                    <option value="GA"> Goa</option>
+                                                    <option value="GJ"> Gujarat</option>
+                                                    <option value="HR"> Haryana</option>
+                                                    <option value="HP"> Himachal Pradesh</option>
+                                                    <option value="JK"> Jammu and Kashmir</option>
+                                                    <option value="JH"> Jharkhand</option>
+                                                    <option value="KA"> Karnataka</option>
+                                                    <option value="KL"> Kerala</option>
+                                                    <option value="LD"> Lakshadweep Islands</option>
+                                                    <option value="MP"> Madhya Pradesh</option>
+                                                    <option value="MH"> Maharashtra</option>
+                                                    <option value="MN"> Manipur</option>
+                                                    <option value="ML"> Meghalaya</option>
+                                                    <option value="MZ"> Mizoram</option>
+                                                    <option value="NL"> Nagaland</option>
+                                                    <option value="OD"> Odisha</option>
+                                                    <option value="PY"> Pondicherry</option>
+                                                    <option value="PB"> Punjab</option>
+                                                    <option value="RJ"> Rajasthan</option>
+                                                    <option value="SK"> Sikkim</option>
+                                                    <option value="TN"> Tamil Nadu</option>
+                                                    <option value="TS"> Telangana</option>
+                                                    <option value="TR"> Tripura</option>
+                                                    <option value="UP"> Uttar Pradesh</option>
+                                                    <option value="UK"> Uttarakhand</option>
+                                                    <option value="WB"> West Bengal</option>
+                                                </select>
                                                 <input type="text" id="dl1_ct" placeholder="City (eg:-NG)"
                                                     class="form-control">
                                                 <input type="text" id="dl1_ln" placeholder="License No."
@@ -62,8 +96,41 @@
                                                 <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                         class='bx bx-detail'></i></span>
                                                 <input type="text" id="dl2_ft" value="21" class="form-control" readonly>
-                                                <input type="text" id="dl2_st" placeholder="State (eg:-MH)"
-                                                    class="form-control">
+                                                <select type="text" id="dl2_st" class="form-control">
+                                                    <option selected> State</option>
+                                                    <option value="AD">Andhra Pradesh</option>
+                                                    <option value="AR"> Arunachal Pradesh</option>
+                                                    <option value="AS"> Assam</option>
+                                                    <option value="BR"> Bihar</option>
+                                                    <option value="CG"> Chattisgarh</option>
+                                                    <option value="DL"> Delhi</option>
+                                                    <option value="GA"> Goa</option>
+                                                    <option value="GJ"> Gujarat</option>
+                                                    <option value="HR"> Haryana</option>
+                                                    <option value="HP"> Himachal Pradesh</option>
+                                                    <option value="JK"> Jammu and Kashmir</option>
+                                                    <option value="JH"> Jharkhand</option>
+                                                    <option value="KA"> Karnataka</option>
+                                                    <option value="KL"> Kerala</option>
+                                                    <option value="LD"> Lakshadweep Islands</option>
+                                                    <option value="MP"> Madhya Pradesh</option>
+                                                    <option value="MH"> Maharashtra</option>
+                                                    <option value="MN"> Manipur</option>
+                                                    <option value="ML"> Meghalaya</option>
+                                                    <option value="MZ"> Mizoram</option>
+                                                    <option value="NL"> Nagaland</option>
+                                                    <option value="OD"> Odisha</option>
+                                                    <option value="PY"> Pondicherry</option>
+                                                    <option value="PB"> Punjab</option>
+                                                    <option value="RJ"> Rajasthan</option>
+                                                    <option value="SK"> Sikkim</option>
+                                                    <option value="TN"> Tamil Nadu</option>
+                                                    <option value="TS"> Telangana</option>
+                                                    <option value="TR"> Tripura</option>
+                                                    <option value="UP"> Uttar Pradesh</option>
+                                                    <option value="UK"> Uttarakhand</option>
+                                                    <option value="WB"> West Bengal</option>
+                                                </select>
                                                 <input type="text" id="dl2_ct" placeholder="City (eg:-NG)"
                                                     class="form-control">
                                                 <input type="text" id="dl2_ln" placeholder="License No."
@@ -78,8 +145,7 @@
                                         <div class="col-sm-10">
                                             <label class="form-label" for="org_address">Address</label>
                                             <textarea type="text" id="org_address" name="org_address"
-                                                class="form-control" required>
-                                                </textarea>
+                                                class="form-control" required></textarea>
                                         </div>
 
                                         <div class="col-sm-10">
@@ -87,7 +153,7 @@
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="defaultCheck1" checked />
                                                 <label class="form-check-label" for="defaultCheck1">
-                                                    Disclaimer : Hereby I asure that data given here is
+                                                    Disclaimer : Hereby I assure that data given here is
                                                     validated by me and is genuine to my consiousness as this data
                                                     cannot be edited further.
                                                 </label>
@@ -95,7 +161,8 @@
                                         </div>
 
                                         <div class="col-sm-4 text-center my-4">
-                                            <button class="btn btn-primary btn-next w-100" id="submitPharmacyDetails">Confirm</button>
+                                            <button class="btn btn-primary btn-next w-100"
+                                                id="submitPharmacyDetails">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -121,15 +188,59 @@
             <script>
                 $(document).ready(function () {
 
+                    var lat;
+                    var long;
+
+                    if ("geolocation" in navigator) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            lat = position.coords.latitude;
+                            long = position.coords.longitude;
+                        });
+                    } else {
+                        console.log("Geolocation does not work in this browser");
+                    }
+
+                    $("#dl2_ln").on('input', function () {
+                        if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
+                            $("#dl2_ln").val(null);
+                            return alert(" DL Number 1  and DL Number 2 cannot be same");
+                        }
+                    });
+
+                    
+
+                    var city;
+                    var state;
+
+                    $("#org_pincode").on('input', function () {
+
+                        var pin = $("#org_pincode").val();
+
+                        if (pin.length > 6) {
+                            return alert("Enter correct 6-digit Pincode")
+                        }
+                        if (pin.length == 6) {
+                            $.get("https://api.postalpincode.in/pincode/" + pin, function (response) {
+                                if (response[0].PostOffice === null) {
+                                    return alert("Invalid Pincode")
+                                }
+                                city = response[0].PostOffice[0].Block;
+                                state = response[0].PostOffice[0].State
+
+                            })
+
+                        }
+
+                    })
+
+
                     $("#submitPharmacyDetails").click(function () {
                         var dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
                         var dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
 
                         if ($("#org_name").val() && $("#owner_name").val() && dl_no_1 && dl_no_2 && $("#org_pincode").val() && $("#org_address").val()) {
-                            if ($("#org_pincode").val().length < 6 || $("#org_pincode").val().length > 6) {
-                                return alert("Enter correct 6-digit Pincode")
-                            }
-                            $.ajax({ 
+
+                            $.ajax({
                                 url: `/api/auth/register`,
                                 type: 'POST',
                                 data: JSON.stringify({
@@ -140,6 +251,10 @@
                                     org_dl_no_2: dl_no_2,
                                     org_pincode: $("#org_pincode").val(),
                                     org_address: $("#org_address").val(),
+                                    org_city: city,
+                                    org_state: state,
+                                    org_lat: lat,
+                                    org_long: long
                                 }),
                                 contentType: 'application/json',
                                 success: function (response) {
