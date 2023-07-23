@@ -126,7 +126,7 @@
                               <th style="width: 5vw;">MRP / p.unit</th>
 
                               <th style="width: 8vw;">Disc %</th>
-                              <th style="width: 10vw;">Total <span id="profit"></span></th>
+                              <th style="width: 10vw;">Total </th>
                             </tr>
                           </thead>
                           <tbody>
@@ -166,6 +166,11 @@
                         </table>
                       </div>
                     </div>
+                    <div style="    
+                    display: flex;
+                    justify-content: end;
+                    margin-right: 5vw;
+                    margin-top: -3vh;" id=""><span id="profit"></span></div>
                     <div class="buttonBox text-center pb-3">
                       <btn class="btn btn-primary" style="color: white;" id="addtocart">Add to
                         Cart</btn>
@@ -275,7 +280,7 @@
                 <div class="col-md-3">
                   <div class="card mb-4">
                     <div class="d-flex justify-content-between m-0 p-0">
-                      <h5 class="card-header">Final Amount</h5>
+                      <h5 class="card-header">Final Amount <span id="totalprofit"></span></h5>
                     </div>
 
                     <div class="card-body pt-0">
@@ -502,6 +507,7 @@
           var availablePrimaryQty;
           var availableSecondaryQty;
           var purchaseRate = 0;
+          var gst = 0;
           $('#medicinename').autocomplete({
             minLength: 3,
             source: function (request, response) {
@@ -570,6 +576,7 @@
                   secondaryUnit = data.data[0].secondary_unit;
                   conversion = data.data[0].conversion;
                   purchaseRate = parseFloat(data.data[0].purchase_rate);
+                  gst = parseFloat(data.data[0].gst);
 
                   availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
                   availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
@@ -605,6 +612,7 @@
                     $("#price").val(data.data[batchId].mrp);
                     conversion = data.data[batchId].conversion;
                     purchaseRate = parseFloat(data.data[batchId].purchase_rate);
+                    gst = parseFloat(data.data[batchId].gst);
 
                     availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
                     availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion ? 0 : data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
@@ -656,6 +664,7 @@
           priQty.on("input", calculateTotal);
           secQty.on("input", calculateTotal);
           discInput.on("input", calculateTotal);
+          var profitForEachProduct;
 
           function calculateTotal() {
             var primaryqty = parseInt(priQty.val()) || 0;
@@ -664,15 +673,22 @@
             var discount = parseFloat(discInput.val()) || 0;
             discount = discount / 100;
 
-            //var total = quantity * price - (quantity * price * discount);
             var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
             var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
 
+            //calculating profit
+            var mrpbeforegst = price/parseFloat(1+ gst/100);
+
+            var pricebeforedisc = primaryqty * mrpbeforegst + secondaryqty * mrpbeforegst / conversion;
+            var priceAfterDisc = pricebeforedisc - (pricebeforedisc * discount);
+
             var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty/conversion;
 
-            var profit = parseFloat(totalQtyAfterDisc - purchase);
+            var profit = parseFloat(priceAfterDisc - purchase);
 
-            $("#profit").text(`(Profit: ₹${profit.toFixed(2)})`);
+            profitForEachProduct = profit;
+
+            $("#profit").text(`Profit: ₹${profit.toFixed(2)}`);
             if(profit<0){
               $("#profit").css({
                 color: "red",
@@ -683,8 +699,9 @@
               })
             }
             console.log('ptr' , purchaseRate);
-            console.log('ptr' , conversion);
-            console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
+            console.log('conversionF' , conversion);
+            console.log('gst' , gst);
+            //console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
 
 
             totalInput.val(totalQtyAfterDisc.toFixed(2));
@@ -797,6 +814,7 @@
               mrp: mrp,
               disc: disc,
               total: total,
+              profitForEachProduct: profitForEachProduct,
               timestamp: new Date().getTime()
             })
 
@@ -826,6 +844,7 @@
             $("#unit").empty();
             $("#pack .unit").empty();
             $("#message").empty();
+            $("#profit").text('');
           })
 
 
@@ -993,13 +1012,7 @@
           }
 
           checkExpiration();
-          /*
-                      setTimeout(function() {
-                        console.log("checking");
-                        checkExpiration();
-                      }, 3600000);
-          */
-          //end of this function
+
 
 
           //getting the subtotal when theres change in local storage
@@ -1012,21 +1025,39 @@
           function getSubTotal() {
 
             var subtotal = 0;
+            var totalProfit = 0;
             getAllData = JSON.parse(localStorage.getItem("cartitems")) || [];
 
             if (getAllData.length != 0) {
 
               for (let i = 0; i < getAllData.length; i++) {
                 subtotal = subtotal + parseFloat(getAllData[i].total);
+                totalProfit = totalProfit + parseFloat(getAllData[i].profitForEachProduct);
+                
               }
 
               $("#subtotal").val(subtotal.toFixed(2));
               $("#finalamount").val(subtotal.toFixed(0));
+              
+                $("#totalprofit").text(`Profit: ₹${totalProfit.toFixed(2)}`);
+                  if(totalProfit < 0){
+
+                    $("#totalprofit").css({
+                      color: "red",
+                    })
+                  }
+                  else{
+
+                    $("#totalprofit").css({
+                      color: "green",
+                    })
+                  }
             }
             else if (getAllData.length == 0) {
               // console.log("none");
               $("#subtotal").val(0);
               $("#finalamount").val(0);
+              $("#totalprofit").text('');
             }
           }
 

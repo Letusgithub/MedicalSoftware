@@ -23,7 +23,7 @@
 
                             <div class="row">
 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="card mb-4">
                                         <h5 class="card-header">Vendor Name</h5>
                                         <div class="card-body" id="vendorname">
@@ -37,6 +37,16 @@
                                                     <%});%>
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card mb-4">
+                                        <h5 class="card-header">Vendor Invoice Number</h5>
+                                        <div class="card-body" >
+                                            <input type="text" class="form-control" id="vendorinvoicenumber"
+                                    placeholder="Enter Invoice Number" />
+                                        </div>
+                                        
                                     </div>
                                 </div>
 
@@ -809,14 +819,21 @@
                $("#submitorder").click(function () {
                 $("#submitorder").prop('disabled', true);
                 var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+                var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
+                var totalPurchase=0;
 
-                
+                for (let i in cartDetails) {
+                    totalPurchase +=parseFloat(cartDetails[i].purchase * cartDetails[i].qty);
+                }
+
                  $.ajax({
                    url: `/api/creategrn/`,
                    type: 'POST',
                    data: JSON.stringify({
                      pharmacyId: pharmacyDetails.pharmaId,
                      vendor_id: vendorId,
+                     vendor_invoice: $("#vendorinvoicenumber").val(),
+                     total: totalPurchase,
                      org_id: org,
                    }),
                    contentType: 'application/json',
@@ -825,7 +842,7 @@
      
                      var GRNid = response.grn_invoice_no;
 
-                    var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
+                    
                     console.log('orderdetails of grn', cartDetails);
      
                     for (let i in cartDetails) {
