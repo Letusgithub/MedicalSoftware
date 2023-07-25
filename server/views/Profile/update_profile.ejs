@@ -242,7 +242,7 @@
                                                                 class="form-control">
                                                             <select id="dl3_st" placeholder="State (eg:-MH)"
                                                                 class="form-control" placeholder="State">
-                                                                <option selected> State</option>
+                                                                <option value="" selected> State</option>
                                                                 <option value="AD">Andhra Pradesh</option>
                                                                 <option value="AR"> Arunachal Pradesh</option>
                                                                 <option value="AS"> Assam</option>
@@ -276,7 +276,7 @@
                                                                 <option value="UK"> Uttarakhand</option>
                                                                 <option value="WB"> West Bengal</option>
                                                             </select>
-                                                            
+
                                                             <input type="text" id="dl3_ct" placeholder="City (eg:-NG)"
                                                                 class="form-control">
                                                             <input type="text" id="dl3_ln" placeholder="License No."
@@ -294,7 +294,7 @@
                                                                 class="form-control">
                                                             <select type="text" id="dl4_st" placeholder="State (eg:-MH)"
                                                                 class="form-control">
-                                                                <option selected> State</option>
+                                                                <option value="" selected> State</option>
                                                                 <option value="AD">Andhra Pradesh</option>
                                                                 <option value="AR"> Arunachal Pradesh</option>
                                                                 <option value="AS"> Assam</option>
@@ -328,7 +328,7 @@
                                                                 <option value="UK"> Uttarakhand</option>
                                                                 <option value="WB"> West Bengal</option>
                                                             </select>
-                                                            
+
                                                             <input type="text" id="dl4_ct" placeholder="City (eg:-NG)"
                                                                 class="form-control">
                                                             <input type="text" id="dl4_ln" placeholder="License No."
@@ -392,9 +392,10 @@
                                                             <span id="basic-icon-default-phone2"
                                                                 class="input-group-text"><i
                                                                     class="bx bx-phone"></i></span>
-                                                            <input type="text" id="org_alt_telephone"
-                                                                class="form-control px-2" placeholder=""
-                                                                value="<%=data[0].org_alt_telephone%>">
+                                                            <input id="org_alt_telephone" class="form-control px-2"
+                                                                placeholder="" value="<%=data[0].org_alt_telephone%>"
+                                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                                type="number" maxlength="10">
                                                         </div>
                                                     </div>
 
@@ -447,6 +448,15 @@
                 $(document).ready(function () {
                     var orgId = '<%= orgId %>'
 
+                    // Validation for email
+                    $("#org_email").change(function () {
+                        var inputvalues = $(this).val();
+                        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                        if (!regex.test(inputvalues)) {
+                            alert("invalid email id");
+                        }
+                    });
+
                     // Split DL No.1
                     var org_dl_no_1 = '<%= data[0].org_dl_no_1 %>'
                     var splitDL1 = org_dl_no_1.split(/-/);
@@ -479,10 +489,10 @@
 
 
                     $("#submitbtn").click(function () {
-                        var dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
-                        var dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
-                        var dl_no_3 = $("#dl3_ft").val().toString() + '-' + $("#dl3_st").val().toString() + '-' + $("#dl3_ct").val().toString() + '-' + $("#dl3_ln").val().toString();
-                        var dl_no_4 = $("#dl4_ft").val().toString() + '-' + $("#dl4_st").val().toString() + '-' + $("#dl4_ct").val().toString() + '-' + $("#dl4_ln").val().toString();
+                        var dl_no_1 = $("#dl1_ft").val() + '-' + $("#dl1_st").val() + '-' + $("#dl1_ct").val() + '-' + $("#dl1_ln").val();
+                        var dl_no_2 = $("#dl2_ft").val() + '-' + $("#dl2_st").val() + '-' + $("#dl2_ct").val() + '-' + $("#dl2_ln").val();
+                        var dl_no_3 = $("#dl3_ft").val() + '-' + $("#dl3_st").val() + '-' + $("#dl3_ct").val() + '-' + $("#dl3_ln").val();
+                        var dl_no_4 = $("#dl4_ft").val() + '-' + $("#dl4_st").val() + '-' + $("#dl4_ct").val() + '-' + $("#dl4_ln").val();
 
                         $.ajax({
                             url: `/api/org/update/?orgId=${orgId}`,
