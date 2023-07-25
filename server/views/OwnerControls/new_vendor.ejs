@@ -62,6 +62,7 @@
                                                                 class="bx bx-phone"></i></span>
                                                         <input id="vendor_contact" class="form-control phone-mask"
                                                             placeholder="" name="vendor_contact"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                             type="number" maxlength="10" required>
                                                     </div>
                                                 </div>
@@ -146,8 +147,7 @@
                                                     <div class="input-group input-group-merge">
                                                         <span class="input-group-text"></span>
                                                         <textarea type="text" id="vendor_address" class="form-control"
-                                                            placeholder="" name="vendor_address">
-                                                        </textarea>
+                                                            placeholder="" name="vendor_address"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
