@@ -258,11 +258,8 @@
             <button class="btn-border" onclick="CreatePDFfromHTML()">Download</button>
         </div>
         <div class="p-2 m-3">
-            <button class="btn btn-border" onclick="history.back()"> Back </button>
+            <a class="btn btn-border" href='/financials'>Back</a>
         </div>
-        <!-- <div class="p-2 m-3">
-            <a class="btn btn-border" href='/purchase_order'>Back</a>
-        </div> -->
     </div>
     
 
@@ -281,7 +278,6 @@
                             <p class="my-0" id="flno">F.L. no.:</p>
                             <p class="my-0" id="gstin">GSTIN:</p>
                             <p class="my-0" id="dlno">D.L.no.:</p>
-                            
                            
                         </div>
                     </div>
@@ -318,7 +314,6 @@
                     <p id="vendordl">
                         D.L.no.:
                     </p>
-                    <p id="invoiceno">Invoice no:</p>
                     <!-- <p id="vendorfl">
                         F.L. no.:
                     </p> -->
@@ -408,12 +403,43 @@
 
 
     </div>
+    <div class="text-center mb-4">
+        <a>
+            <button class="btn btn-primary px-5" id="paycash">Pay via Cash</button>
+        </a>
+
+        <div  style="display: flex; justify-content:center; align-items: center; color:gray"  id="paycreditclicked">
+            <div class="card-body" style="width: 15vw; display: flex; justify-content:center; align-items: center">
+              <div  style="width: 15vw; display: flex; justify-content:center; align-items: center">
+    
+                <input type="text" class="form-control" id="amountentered" 
+       placeholder="Enter Amount" maxLength="10" 
+       style="background-color: rgb(185, 176, 176); color: black;" 
+/>
+    
+              </div>
+            </div>
+    
+    </div>
+    <a><button class="btn btn-primary px-5" id="paycreditafterenteredamount">Pay via Credit</button></a>
+        <a><button class="btn btn-primary px-5" id="paycredit">Pay via Credit</button></a>
+
+        
+
+    </div>
+
+    
+
+    
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script>
         $(document).ready(function(){
+            var paidAmount;
+            $("#paycreditclicked").hide();
+            $("#paycreditafterenteredamount").hide();
             var id = '<%=id%>';
             console.log(id);
             
@@ -423,13 +449,16 @@
             var formattedDate = todayDate.toLocaleDateString('en-US', options);
             $("#orderdate").text(`Date: ${formattedDate}`)
 
+            
             $.get(`/api/getgrnreceipts/${id}`, function (data, status) {
                 var podata= data.results[0];
                 console.log('inside the po invoice', data);
+                paidAmount = podata.paid == null?0:parseFloat(podata.paid);
 
-                $("#totalcredit").text(podata.total);
-                $("#invoiceno").text(`Invoice No: ${podata.vendor_invoice}`);
+                $('#amountentered').attr('placeholder', `Remaining:${parseFloat(podata.total - podata.paid)}`);
+
                 //var podata = data.data[0];
+                $("#totalcredit").text(podata.total);
                 $("#pono").text(`GRN No:${id}`)
                 $("#vendorname").text(`Name: ${podata.vendor_name}`)
                 $("#vendormobile").text(`Mobile: ${podata.vendor_contact}`)
@@ -464,7 +493,61 @@
                     $("#cartitems").append(cartHtml);
 
                 }
-                //$("#totalcredit").text(total);
+
+                $("#paycredit").click(function(){
+                    $(this).hide();
+                    $("#paycreditafterenteredamount").show();
+                    $("#paycash").remove();
+                    $("#paycreditclicked").show();
+
+
+
+                    
+                    $("#paycreditafterenteredamount").click(function(){
+
+                        
+                        $.ajax({
+                            url: `/api/updategrnstatus/`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                grn_id: id,
+                                status: "Credit",
+                                paid: paidAmount + parseFloat($("#amountentered").val())
+                            }),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log(response);
+                                window.location.href =`/financials`;
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        }) 
+                    })
+                })
+
+                $("#paycash").click(function(){
+
+                    $.ajax({
+                        url: `/api/updategrnstatus/`,
+                        type: 'POST',
+                        data: JSON.stringify({
+                            grn_id: id,
+                            status: "Cash",
+                            paid: podata.total
+                        }),
+                        contentType: 'application/json',
+                        success: function (response) {
+                          console.log(response);
+                          window.location.href =`/financials`;
+                        },
+                        error: function (error) {
+                          console.log(error);
+                        }
+                      })    
+                })
+    
+                
 
 
         

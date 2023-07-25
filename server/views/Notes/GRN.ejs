@@ -1,44 +1,56 @@
 <%- include('../partials/headercode.ejs') %>
 
-    <body>
-        <!-- Layout wrapper -->
-        <div class="layout-wrapper layout-content-navbar  ">
-            <div class="layout-container">
 
-                <!-- sidebar imported -->
-                <%- include('../partials/sidebar.ejs') %>
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar  ">
+        <div class="layout-container">
 
-                    <!-- Layout container -->
-                    <div class="layout-page">
+            <!-- sidebar imported -->
+            <%- include('../partials/sidebar.ejs') %>
 
-                        <!-- navbar imported -->
-                        <%- include('../partials/navbar.ejs') %>
-                            <div class="content-wrapper">
+                <!-- Layout container -->
+                <div class="layout-page">
 
-                                <!-- Content -->
+                    <!-- navbar imported -->
+                    <%- include('../partials/navbar.ejs') %>
+                    <div class="content-wrapper">
 
-                                <div class="container-xxl flex-grow-1 container-p-y">
-                                    <h4 class="fw-bold py-3 mb-1">Goods Received Note</h4>
-                                    <hr class="mb-4">
+                        <!-- Content -->
 
-                                    <div class="row">
+                        <div class="container-xxl flex-grow-1 container-p-y">
+                            <h4 class="fw-bold py-3 mb-1">Goods Received Note</h4>
+                            <hr class="mb-4">
 
-                                        <div class="col-md-6">
-                                            <div class="card mb-4">
-                                                <h5 class="card-header">Vendor Name</h5>
-                                                <div class="card-body" id="vendorname">
-                                                    <select class="form-select" id="vendorselect"
-                                                        aria-label="Default select example">
-                                                        <option selected>Select Vendor</option>
-                                                        <%vendors.forEach(function(vendor) {%>
-                                                            <option value="<%= vendor.vendor_id %>">
-                                                                <%= vendor.vendor_name %>
-                                                            </option>
-                                                            <%});%>
-                                                    </select>
-                                                </div>
-                                            </div>
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="card mb-4">
+                                        <h5 class="card-header">Vendor Name</h5>
+                                        <div class="card-body" id="vendorname">
+                                            <select class="form-select" id="vendorselect"
+                                                aria-label="Default select example">
+                                                <option selected>Select Vendor</option>
+                                                <%vendors.forEach(function(vendor) {%>
+                                                    <option value="<%= vendor.vendor_id %>">
+                                                        <%= vendor.vendor_name %>
+                                                    </option>
+                                                    <%});%>
+                                            </select>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card mb-4">
+                                        <h5 class="card-header">Vendor Invoice Number</h5>
+                                        <div class="card-body" >
+                                            <input type="text" class="form-control" id="vendorinvoicenumber"
+                                    placeholder="Enter Invoice Number" />
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
 
                                         <div class="col-md-6">
                                             <div class="card mb-4 py-1">
@@ -642,51 +654,62 @@
                             </td>
                           </tr>
                           `
-                            $('#cart').append(htmlData);
-                        }
-                    }
-                    //end of rendereing data logic
 
-                    //allchanges done for footer total;
-                    var orderDetails;
-                    var org = '<%=orgId%>'
-                    $("#submitorder").click(function () {
-                        $("#submitorder").prop('disabled', true);
-                        var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+              $('#cart').append(htmlData);
+            }
+          }
+          //end of rendereing data logic
 
+//allchanges done for footer total;
+               
 
-                        $.ajax({
-                            url: `/api/creategrn/`,
-                            type: 'POST',
-                            data: JSON.stringify({
-                                pharmacyId: pharmacyDetails.pharmaId,
-                                vendor_id: vendorId,
-                                org_id: org,
-                            }),
-                            contentType: 'application/json',
-                            success: function (response) {
+               var orderDetails;
+               var org = '<%=orgId%>'
+               $("#submitorder").click(function () {
+                $("#submitorder").prop('disabled', true);
+                var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+                var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
+                var totalPurchase=0;
 
+                for (let i in cartDetails) {
+                    totalPurchase +=parseFloat(cartDetails[i].purchase * cartDetails[i].qty);
+                }
 
-                                var GRNid = response.grn_invoice_no;
+                 $.ajax({
+                   url: `/api/creategrn/`,
+                   type: 'POST',
+                   data: JSON.stringify({
+                     pharmacyId: pharmacyDetails.pharmaId,
+                     vendor_id: vendorId,
+                     vendor_invoice: $("#vendorinvoicenumber").val(),
+                     total: totalPurchase,
+                     org_id: org,
+                   }),
+                   contentType: 'application/json',
+                   success: function (response) {
+                     
+     
+                     var GRNid = response.grn_invoice_no;
 
-                                var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
-                                console.log('orderdetails of grn', cartDetails);
+                    
+                    console.log('orderdetails of grn', cartDetails);
+     
+                    for (let i in cartDetails) {
 
-                                for (let i in cartDetails) {
+                        $.get(`/api/checkbyid/${cartDetails[i].productId}`, function(data, status){
+                            console.log(data.data);
+                            if(data.data.length === 0){
 
-                                    $.get(`/api/checkbyid/${cartDetails[i].productId}`, function (data, status) {
-                                        console.log(data.data);
-                                        if (data.data.length === 0) {
+                                var productDetails = {
+                                    product_id: cartDetails[i].productId,
+                                    org_id: org,
+                                    gst: cartDetails[i].gst,
+                                    hsn: cartDetails[i].hsn,
+                                    primary_unit: cartDetails[i].punit,
+                                    secondary_unit: cartDetails[i].sunit,
+                                    threshold: cartDetails[i].moq
+                                }
 
-                                            var productDetails = {
-                                                product_id: cartDetails[i].productId,
-                                                org_id: org,
-                                                gst: cartDetails[i].gst,
-                                                hsn: cartDetails[i].hsn,
-                                                primary_unit: cartDetails[i].punit,
-                                                secondary_unit: cartDetails[i].sunit,
-                                                threshold: cartDetails[i].moq
-                                            }
 
                                             $.ajax({
                                                 url: `/api/createinventory/`,

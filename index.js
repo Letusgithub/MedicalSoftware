@@ -40,6 +40,7 @@ require('./server/routes/api.purchase_order.routes')(app);
 require('./server/routes/api.credit.routes')(app);
 require('./server/routes/api.debit.routes')(app);
 require('./server/routes/api.grn.routes')(app);
+require('./server/routes/api.financials.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);
