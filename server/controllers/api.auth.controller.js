@@ -13,7 +13,7 @@ exports.loginOrg = async (req, res) => {
   try {
     // call otp gen action >> send otp and gen otp-token //
     const otpStatus = await generateOtp(req.body.org_telephone);
-    console.log(otpStatus);
+    // console.log(otpStatus);
 
     if (otpStatus.status === 'success') {
       return res.status(200).json({
@@ -43,29 +43,30 @@ exports.verifyOtp = async (req, res) => {
         console.error('Failed to verify OTP:', otpErr);
         return res.status(500).json({ message: 'Failed to verify' });
       }
-      if (otpResult) {
-        checkIfExists(org_telephone, (err, results) => {
-          if (err) {
-            return res.status(500).json({
-              status: 'error',
-              message: 'Internal server error',
-            });
-          }
-          if (results[0] === undefined) {
-            console.log('inside verify', org_telephone);
-            return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
-          }
-          if (results[0].is_verified === 0) {
-            return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
-          }
-          // Generate JWT token after successful otp verification //
-          const token = createJwtToken(org_telephone);
-          // Set the JWT token as a cookie //
-          res.cookie('token', token, { httpOnly: true });
-
-          return res.json({ success: 1, redirect: '/' });
-        });
+      if (otpResult[0] === undefined) {
+        return res.json({ status: 'error', message: 'Invalid OTP' });
       }
+      checkIfExists(org_telephone, (err, results) => {
+        if (err) {
+          return res.status(500).json({
+            status: 'error',
+            message: 'Internal server error',
+          });
+        }
+        if (results[0] === undefined) {
+          console.log('inside verify', org_telephone);
+          return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
+        }
+        if (results[0].is_verified === 0) {
+          return res.json({ success: 1, redirect: `/register?mobileNumber=${org_telephone}` });
+        }
+        // Generate JWT token after successful otp verification //
+        const token = createJwtToken(org_telephone);
+        // Set the JWT token as a cookie //
+        res.cookie('token', token, { httpOnly: true });
+
+        return res.json({ success: 1, redirect: '/' });
+      });
     });
   } catch (error) {
     console.error(error);
