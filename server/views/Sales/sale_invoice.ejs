@@ -37,10 +37,9 @@
                               <div class="card-body">
                                 <div>
 
-                                  <input class="form-control" id="phonenumber"
-                                    placeholder="Enter 10-digit number"
+                                  <input class="form-control" id="phonenumber" placeholder="Enter 10-digit number"
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                    type="number" maxlength="10"/>
+                                    type="number" maxlength="10" />
 
                                 </div>
                               </div>
@@ -151,15 +150,15 @@
                               </td>
 
                               <td>
-                                <input type="text" class="form-control" id="price" placeholder="" min="0" />
+                                <input type="number" class="form-control" id="price" placeholder="" min="0" />
                               </td>
 
                               <td>
-                                <input type="text" class="form-control" id="discount" placeholder="" min="0" />
+                                <input type="number" class="form-control" id="discount" placeholder="" min="0" />
                               </td>
 
                               <td>
-                                <input type="text" class="form-control" id="total" placeholder="" min="0" />
+                                <input type="number" class="form-control" id="total" placeholder="" min="0" />
                               </td>
                             </tr>
 
@@ -256,7 +255,7 @@
                     <div class="card-body">
                       <div>
 
-                        <input type="text" class="form-control" id="subtotal"
+                        <input type="number" class="form-control" id="subtotal"
                           aria-describedby="defaultFormControlHelp" />
 
                       </div>
@@ -271,7 +270,7 @@
                     <div class="card-body">
                       <div>
 
-                        <input type="text" class="form-control" id="additionaldiscount"
+                        <input type="number" class="form-control" id="additionaldiscount"
                           aria-describedby="defaultFormControlHelp" />
 
                       </div>
@@ -288,7 +287,7 @@
                     <div class="card-body pt-0">
                       <div>
 
-                        <input type="text" class="form-control" id="finalamount"
+                        <input type="number" class="form-control" id="finalamount"
                           aria-describedby="defaultFormControlHelp" />
 
                       </div>
@@ -682,12 +681,12 @@
 
 
             //calculating profit
-            var mrpbeforegst = price/parseFloat(1+ gst/100);
+            var mrpbeforegst = price / parseFloat(1 + gst / 100);
 
             var pricebeforedisc = primaryqty * mrpbeforegst + secondaryqty * mrpbeforegst / conversion;
             var priceAfterDisc = pricebeforedisc - (pricebeforedisc * discount);
 
-            var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty/conversion;
+            var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty / conversion;
 
 
             var profit = parseFloat(priceAfterDisc - purchase);
@@ -696,7 +695,7 @@
 
 
             $("#profit").text(`Profit: ₹${profit.toFixed(2)}`);
-            if(profit<0){
+            if (profit < 0) {
 
               $("#profit").css({
                 color: "red",
@@ -707,9 +706,9 @@
               })
             }
 
-            console.log('ptr' , purchaseRate);
-            console.log('conversionF' , conversion);
-            console.log('gst' , gst);
+            console.log('ptr', purchaseRate);
+            console.log('conversionF', conversion);
+            console.log('gst', gst);
             //console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
 
 
@@ -767,8 +766,12 @@
           var htmlData;
           $("#addtocart").click(function () {
 
+            if ($("#phonenumber").val() == '') {
+              return alert('Please fill "Customer Phone number"');
+            }
+
             if ($("#customername").val() == '') {
-              return alert('Please fill "Customer Details"');
+              return alert('Please fill "Customer Name"');
             }
 
             if ($("#medicinename").val() == '') {
@@ -1056,25 +1059,25 @@
               for (let i = 0; i < getAllData.length; i++) {
                 subtotal = subtotal + parseFloat(getAllData[i].total);
                 totalProfit = totalProfit + parseFloat(getAllData[i].profitForEachProduct);
-                
+
               }
 
               $("#subtotal").val(subtotal.toFixed(2));
               $("#finalamount").val(subtotal.toFixed(0));
-              
-                $("#totalprofit").text(`Profit: ₹${totalProfit.toFixed(2)}`);
-                  if(totalProfit < 0){
 
-                    $("#totalprofit").css({
-                      color: "red",
-                    })
-                  }
-                  else{
+              $("#totalprofit").text(`Profit: ₹${totalProfit.toFixed(2)}`);
+              if (totalProfit < 0) {
 
-                    $("#totalprofit").css({
-                      color: "green",
-                    })
-                  }
+                $("#totalprofit").css({
+                  color: "red",
+                })
+              }
+              else {
+
+                $("#totalprofit").css({
+                  color: "green",
+                })
+              }
             }
             else if (getAllData.length == 0) {
               // console.log("none");
@@ -1108,6 +1111,13 @@
             if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
               return alert("PLEASE ADD SOME ITEMS FIRST");
             }
+
+            if (!$("#defaultCheck1").prop("checked")) {
+              return alert("Please check the disclaimer before submitting.");
+            }
+
+
+
 
 
             var subtotal = $("#subtotal").val();

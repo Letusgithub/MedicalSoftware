@@ -191,9 +191,23 @@
           $("#dl2_ct").val(splitDL2[2]);
           $("#dl2_ln").val(splitDL2[3]);
         }
+        $("#vendor_email").change(function () {
+          var inputvalues = $(this).val();
+          var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+          if (!regex.test(inputvalues)) {
+            alert("invalid email id");
+          }
+        });
 
 
         $("#submitbtn").click(function () {
+          if ($("#vendor_name").val() == '') {
+            return alert('Please fill "Vendor Name"');
+          }
+
+          if ($("#vendor_contact").val().length < 10) {
+            return alert('Please fill valid Phone number');
+          }
           var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
           var vendor_dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
 
