@@ -123,7 +123,23 @@
 
       <script>
         $(document).ready(function () {
+
+          $("#cust_email").change(function () {
+                        var inputvalues = $(this).val();
+                        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                        if (!regex.test(inputvalues)) {
+                            alert("invalid email id");
+                        }
+                    });
           $("#submitbtn").click(function () {
+
+            if ($("#cust_name").val() == '') {
+              return alert('Please fill "Customer Name"');
+            }
+
+            if ($("#cust_telephone").val().length < 10) {
+                            return alert('Please fill valid Phone number');
+                        }
 
             $.ajax({
               url: `/api/cust/`,

@@ -131,6 +131,10 @@
                 
 
                 $("#updateSubmit").click(function () {
+
+                    if ($("#emp_alt_mobile").val().length < 10) {
+                        return alert('Please fill valid Phone number');
+                    }
                     $.ajax({
                         url: `/api/emp/${empId}/update`,
                         type: 'POST',

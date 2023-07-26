@@ -42,8 +42,10 @@
                         <div class="card-body">
                           <div>
 
-                            <input type="text" class="form-control" id="phonenumber"
-                              aria-describedby="defaultFormControlHelp" />
+                            <input class="form-control" id="phonenumber"
+                                    placeholder="Enter 10-digit number"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                    type="number" maxlength="10"/>
 
                           </div>
                         </div>
