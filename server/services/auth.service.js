@@ -33,7 +33,7 @@ module.exports = {
         if (error) {
           return callBack(error);
         }
-        console.log(results);
+        console.log(results, 'service results');
         return callBack(null, results);
       },
     );
