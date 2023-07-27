@@ -340,9 +340,9 @@ module.exports = async (app) => {
     });
   });
 
-  app.get('/financials', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Sales/financials', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
-  });
+  // app.get('/financials', checkAuth, fetchOrgId, (req, res) => {
+  //   res.render('Sales/financials', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  // });
 
   app.get('/grn_receipt_pay/:id', checkAuth, fetchOrgId, (req, res) => {
     res.render('Receipt/grn_receipt_pay', {
