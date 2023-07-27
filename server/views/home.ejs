@@ -32,8 +32,8 @@
                         <div class="d-flex align-items-end row">
                           <div class="col-sm-7">
                             <div class="card-body">
-                              <h5 class="card-title text-primary" id="congratsowner">
-
+                              <h5 class="card-title text-primary" >
+                                Congratulations! <span id="congratsowner"></span> 🎉
                               </h5>
                               <p class="mb-4">
                                 You have done <span class="fw-bold" id="salesgrowth"></span> more
@@ -348,12 +348,11 @@
                     </div>
                     <!--/ Order Statistics -->
 
-                    <!-- Expense Overview -->
 
                     <!-- Expense Overview -->
                     <div class="col-md-6 col-lg-4 order-1 mb-4">
                       <div class="card h-100">
-                        <div class="card-header">
+                        <!-- <div class="card-header">
                           <ul class="nav nav-pills" role="tablist" style="justify-content: center;">
                             <li class="nav-item" style="margin: 0 auto;">
                               <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
@@ -362,16 +361,6 @@
                                 Revenue
                               </button>
                             </li>
-                            <!-- <li class="nav-item">
-                          <button type="button" class="nav-link active"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-tabs-line-card-income"
-                          aria-controls="navs-tabs-line-card-income"
-                          aria-selected="true">
-                            Expenses
-                          </button>
-                        </li> -->
                             <li class="nav-item" style="margin: 0 auto;">
                               <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-tabs-line-card-income" aria-controls="navs-tabs-line-card-income"
@@ -380,30 +369,10 @@
                               </button>
                             </li>
                           </ul>
-                        </div>
+                        </div> -->
                         <div class="card-body px-0">
                           <div class="tab-content p-0">
                             <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
-                              <!-- <div class="d-flex p-4 pt-3">
-                            <div class="avatar flex-shrink-0 me-3">
-                              <img
-                                src="public/img/icons/unicons/wallet.png"
-                                alt="User"
-                              />
-                            </div> -->
-                              <!-- <div>
-                              <small class="text-muted d-block"
-                                >Total Balance</small
-                              >
-                              <div class="d-flex align-items-center">
-                                <h6 class="mb-0 me-1">$459.10</h6>
-                                <small class="text-success fw-semibold">
-                                  <i class="bx bx-chevron-up"></i>
-                                  42.9%
-                                </small>
-
-                              </div>
-                            </div> -->
                             </div>
                             <!-- <div id="incomeChart"></div> -->
                             <div id="profitreport"></div>
@@ -1063,7 +1032,7 @@
           var check = JSON.parse(localStorage.getItem('name'));
           if (check == null) {
             console.log('no items found');
-            $("#congratsowner").text(`Congratulations! 🎉`);
+            $("#congratsowner").text(``);
             localStorage.setItem("name", JSON.stringify({
               pharmacyName: "<%= name %>",
 
@@ -1077,7 +1046,7 @@
             );
           }
           else {
-            $("#congratsowner").text(`Congratulations! 🎉`);
+            $("#congratsowner").text(`<%=ownerName%>`);
             console.log('item is found');
           }
 
