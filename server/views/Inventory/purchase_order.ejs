@@ -183,7 +183,7 @@
 
                                     <div class="card mb-4">
 
-                                        <!-- <form class="form-main"> -->
+                                        <form class="form-main">
                                         <div class="card-body form-block">
                                             <div class="table-responsive text-nowrap ">
 
@@ -197,11 +197,11 @@
                                                         <tr>
                                                             <th class="col-sm-3">Product Name</th>
                                                             <th class="col-sm-2">Brand Name</th>
+                                                            <th class="col-sm">MRP</th>
+                                                            <th class="col-sm">PTR</th>
                                                             <th class="col-sm-1">QTY</th>
                                                             <th class="col-sm-2">Unit</th>
-                                                            <th class="col-sm">PTR</th>
                                                             <th class="col-sm">Amount</th>
-                                                            <th class="col-sm">MRP</th>
 
                                                         </tr>
                                                     </thead>
@@ -219,7 +219,15 @@
                                                                     name="brand" />
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control px-1"
+                                                                <input type="number" class="form-control px-1"
+                                                                    id="basic-default-name" placeholder="" name="mrp" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control px-1"
+                                                                    id="basic-default-name" placeholder="" name="ptr" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control px-1"
                                                                     id="basic-default-name" placeholder=""
                                                                     name="quantity" />
                                                             </td>
@@ -236,19 +244,13 @@
                                                                     <option value="PCS">Piece</option>
                                                                 </select>
                                                             </td>
+                                                            
                                                             <td>
-                                                                <input type="text" class="form-control px-1"
-                                                                    id="basic-default-name" placeholder="" name="ptr" />
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control px-1"
+                                                                <input type="number" class="form-control px-1"
                                                                     id="basic-default-name" placeholder=""
-                                                                    name="amount" />
+                                                                    name="amount" readonly/>
                                                             </td>
-                                                            <td>
-                                                                <input type="text" class="form-control px-1"
-                                                                    id="basic-default-name" placeholder="" name="mrp" />
-                                                            </td>
+                                                            
                                                         </tr>
 
                                                     </tbody>
@@ -264,7 +266,7 @@
 
 
                                         </div>
-                                        <!-- </form> -->
+                                        </form>
 
 
 
@@ -282,11 +284,11 @@
                                                             <th>#</th>
                                                             <th>Product name</th>
                                                             <th>Brand name</th>
+                                                            <th>MRP</th>
+                                                            <th>PTR</th>
                                                             <th>QTY</th>
                                                             <th>Unit</th>
-                                                            <th>PTR</th>
                                                             <th>Amount</th>
-                                                            <th>MRP</th>
                                                             <th class="col-1">Action</th>
 
                                                         </tr>
@@ -669,11 +671,11 @@
                                                     <strong>${items[i].productname}</strong>
                                                 </td>
                                                 <td>${items[i].brand}</td>
+                                                <td>${items[i].mrp}</td>
+                                                <td>${items[i].ptr}</td>
                                                 <td>${items[i].qty}</td>
                                                 <td>${items[i].selectedUnit}</td>
-                                                <td>${items[i].ptr}</td>
                                                 <td>${items[i].amt}</td>
-                                                <td>${items[i].mrp}</td>
                                                 <td>
                                                     <div class="action-btns">
                                                         <button type="button" class="btn p-0 mx-2 edit-button"><i
