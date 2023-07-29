@@ -225,7 +225,9 @@
                         </tbody>
                       </table>
                     </div>
+                    <div class="p-2" id="totalprofit"></div>
                   </div>
+
                 </div>
 
                 <!-- / Product Cart -->
@@ -691,12 +693,12 @@
             var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty / conversion;
 
 
-            var profit = parseFloat(priceAfterDisc - purchase);
+            var profit = parseFloat((priceAfterDisc - purchase)*100/purchase);
 
             profitForEachProduct = profit;
 
 
-            $("#profit").text(`Profit: ₹${profit.toFixed(2)}`);
+            $("#profit").text(`Margin: ${profit.toFixed(2)}%`);
             if (profit < 0) {
 
               $("#profit").css({

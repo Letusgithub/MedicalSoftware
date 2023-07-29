@@ -15,4 +15,6 @@ module.exports = (app) => {
   app.post('/api/auth/register', controller.registerOrg);
   app.post('/api/auth/login', controller.loginOrg);
   app.get('/api/logout/', controller.logoutOrg);
+
+  app.get('/api/auth/guestLogin', controller.guestLogin);
 };

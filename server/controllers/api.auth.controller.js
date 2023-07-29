@@ -104,3 +104,12 @@ exports.logoutOrg = (req, res) => {
   res.clearCookie('gotalldata');
   res.redirect('/login');
 };
+
+exports.guestLogin = (req, res) => {
+  // Generate JWT token after successful otp verification //
+  const token = createJwtToken("1234567890");
+  // Set the JWT token as a cookie //
+  res.cookie('token', token, { httpOnly: true });
+
+  return res.json({ success: 1, redirect: '/' });
+};

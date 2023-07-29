@@ -7,7 +7,7 @@
         <div class="container-xxl">
             <div class="authentication-wrapper authentication-basic container-p-y">
                 <div class="authentication-inner" id="mobileNumberInput">
-                    <!-- Register -->
+                    <!-- Login -->
                     <div class="card">
                         <div class="card-body">
                             <!-- Logo -->
@@ -29,7 +29,8 @@
                                 <label for="org_telephone" class="form-label">Mobile No.</label>
                                 <input type="number" class="form-control" id="org_telephone" name="mobilenumber"
                                     placeholder="Enter 10-digit mobile no." autofocus>
-                                <p id="validation-message" style="display: none; color: red;">Please enter a valid 10-digit number.</p>
+                                <p id="validation-message" style="display: none; color: red;">Please enter a valid
+                                    10-digit number.</p>
                             </div>
 
                             <div class="mb-3">
@@ -37,9 +38,16 @@
                                     OTP</button>
                             </div>
 
+                            <hr class="my-4">
+
+                            <div class="mb-3 d-flex justify-content-center">
+                                <button class="btn btn-primary d-grid w-75" type="button" id="guestLogin">Login as
+                                    Guest</button>
+                            </div>
+
                         </div>
                     </div>
-                    <!-- /Register -->
+                    <!-- /Login -->
                 </div>
 
                 <div class="authentication-inner" id="otpInput" style="display: none;">
@@ -116,7 +124,7 @@
                             <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
                             <div class="mb-3">
                                 <label for="otp_value" class="form-label">Enter OTP</label>
-                                <input type="number" class="form-control" id="otp_value" >
+                                <input type="number" class="form-control" id="otp_value">
                             </div>
 
                             <button class="btn btn-primary d-grid w-100 mb-3" id="confirmOtpButton">
@@ -139,35 +147,64 @@
             <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
             <script>
                 $(document).ready(function () {
+
+                    $('#guestLogin').click(function () {
+                        $.ajax({
+                            url: `/api/auth/guestLogin`,
+                            type: 'GET',
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log('inside login', response);
+                                if (response.success === 1) {
+                                    window.location.href = response.redirect;
+                                }
+                                else {
+                                    alert(response.message);
+                                }
+                            },
+                            error: function (error) {
+                                console.log('error in ejs file', error);
+                            }
+                        })
+                    })
                     $('#sendOtpButton').prop('disabled', true);
 
                     //validate the number
                     function validateMobileNumber() {
                         console.log('object');
                         var mobileNumber = $('#org_telephone').val();
-                    
-                        if (mobileNumber.length < 10 || mobileNumber.length>10) {
-                          $('#validation-message').show();
-                          $('#sendOtpButton').prop('disabled', true);
+
+                        if (mobileNumber.length < 10 || mobileNumber.length > 10) {
+                            $('#validation-message').show();
+                            $('#sendOtpButton').prop('disabled', true);
                         } else {
-                          $('#validation-message').hide();
-                          $('#sendOtpButton').prop('disabled', false);
+                            $('#validation-message').hide();
+                            $('#sendOtpButton').prop('disabled', false);
                         }
                     }
 
-                    function handleKeyPress(event) {
+                    function handleKeyPressForOTPbtn(event) {
                         // Check if Enter key was pressed (key code 13)
                         if (event.keyCode === 13) {
-                          // Trigger a click event on the submit button
-                          if (!$("#sendOtpButton").prop("disabled")) {
                             // Trigger a click event on the submit button
+
                             $("#sendOtpButton").click();
-                          }
                         }
                     }
 
-                    $('input[name="mobilenumber"]').on("input" , validateMobileNumber);
-                    $("#org_telephone").keypress(handleKeyPress);
+                    function handleKeyPressForConfirmbtn(event) {
+                        // Check if Enter key was pressed (key code 13)
+                        if (event.keyCode === 13) {
+                            // Trigger a click event on the confirm button
+                            if (!$("#confirmOtpButton").prop("disabled")) {
+                                // Trigger a click event on the confirm button
+                                $("#confirmOtpButton").click();
+                            }
+                        }
+                    }
+
+                    $('input[name="mobilenumber"]').on("input", validateMobileNumber);
+                    $("#org_telephone").keypress(handleKeyPressForOTPbtn);
 
                     // Send OTP button click event handler
                     $("#sendOtpButton").click(function () {
@@ -191,6 +228,8 @@
                                 $("#otpInput").show();
                                 $("#otpInput #otp_value").focus();
 
+                                $("#otp_value").keypress(handleKeyPressForConfirmbtn);
+
                                 // OTP form submission event handler
                                 var OTPtoken = response.OTPtoken
                                 $("#confirmOtpButton").click(function () {
@@ -212,14 +251,14 @@
                                         contentType: 'application/json',
                                         success: function (response) {
                                             console.log('inside login', response);
-                                            if(response.success === 1){
+                                            if (response.success === 1) {
                                                 window.location.href = response.redirect;
                                             }
-                                            else{
+                                            else {
                                                 alert(response.message);
                                             }
-                                            
-                                            
+
+
                                         },
                                         error: function (error) {
                                             console.log('error in ejs file', error);
