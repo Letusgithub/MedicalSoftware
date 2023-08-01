@@ -28,12 +28,11 @@
                   <div class="row">
 
                     <div class="col-md-4">
-                      <div class="card mb-4">
-                        <h5 class="card-header">Monthly</h5>
+                      <div class="card mb-4" id="dropdown_month">
+                        <h5 class="card-header"><input type="radio" name="radio" value="monthly"> Monthly </h5>
                         <div class="card-body">
                           <div class="col-md-10">
-                            <select class="form-select" id="selectmonth"
-                              aria-label="Default select example">
+                            <select class="form-select" id="selectmonth" aria-label="Default select example">
                               <option selected>Please Select</option>
                               <option value="1">January</option>
                               <option value="2">February</option>
@@ -47,22 +46,21 @@
                               <option value="10">October</option>
                               <option value="11">November</option>
                               <option value="12">December</option>
-
                             </select>
                           </div>
                         </div>
+
                       </div>
                     </div>
 
                     <div class="col-md-4">
-                      <div class="card mb-4">
-                        <h5 class="card-header">Quarterly</h5>
+                      <div class="card mb-4" id="dropdown_quarter">
+                        <h5 class="card-header"><input type="radio" name="radio" value="quarterly"> Quarterly </h5>
                         <div class="card-body">
                           <div>
 
                             <div class="col-md-10">
-                              <select class="form-select" id="selectquarter"
-                                aria-label="Default select example">
+                              <select class="form-select" id="selectquarter" aria-label="Default select example">
                                 <option selected>Please Select</option>
                                 <option value="1">April-June</option>
                                 <option value="2">July-Sept</option>
@@ -73,23 +71,24 @@
                             </div>
                           </div>
                         </div>
+
                       </div>
                     </div>
 
                     <div class="col-md-4">
-                      <div class="card mb-4">
-                        <h5 class="card-header">Yearly</h5>
+                      <div class="card mb-4" id="dropdown_year">
+                        <h5 class="card-header"><input type="radio" name="radio" value="yearly"> Yearly </h5>
                         <div class="card-body">
                           <div class="col-md-10">
-                            <select class="form-select" id="selectyear"
-                              aria-label="Default select example">
+                            <select class="form-select" id="selectyear" aria-label="Default select example">
                               <option selected>Please Select</option>
-                              <!-- <option value="1">2022</option> -->
+                              <option value="1">2022</option>
                               <option value="1">2023</option>
 
                             </select>
                           </div>
                         </div>
+
                       </div>
                     </div>
 
@@ -103,7 +102,7 @@
                           <h5 class="card-header">From Date</h5>
                           <div class="card-body">
                             <div class="col-md-10">
-                              <input class="form-control" type="date" id="html5-date-input" name="fromdate"/>
+                              <input class="form-control" type="date" id="html5-date-input" name="fromdate" />
                             </div>
                           </div>
                         </div>
@@ -115,7 +114,7 @@
                             <div>
 
                               <div class="col-md-10">
-                                <input class="form-control" type="date" id="html5-date-input" name="todate"/>
+                                <input class="form-control" type="date" id="html5-date-input" name="todate" />
                               </div>
                             </div>
                           </div>
@@ -142,15 +141,15 @@
                                 <th>#</th>
                                 <th>Invoice No.</th>
                                 <th>Vendor Name</th>
-            
+
                                 <th>Date</th>
                                 <th>Time</th>
                                 <!-- <th class="col-1">Actions</th> -->
                               </tr>
                             </thead>
                             <tbody id="reportcart">
-                              
-  
+
+
                               <!-- <tr>
                                 <td>2</td>
                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-8481399183</strong></td>
@@ -178,7 +177,7 @@
                   </div>
                 </div>
                 <!-- / Content -->
-                
+
                 <div class="content-backdrop fade"></div>
               </div>
               <!-- Content wrapper -->
@@ -196,65 +195,82 @@
     <!-- / Layout wrapper -->
 
     <%- include('../partials/footercode.ejs') %>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-    <script>
-      var fromDate;
-      var toDate;
+      <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+      <script>
+        var fromDate;
+        var toDate;
 
-      $(document).ready(function(){
-        /*$("input[name='fromdate']").change(function(){
-          fromDate = $(this).val();
-          console.log('fromdate', fromDate);
-        })
+        $(document).ready(function () {
+          
+          /*$("input[name='fromdate']").change(function(){
+            fromDate = $(this).val();
+            console.log('fromdate', fromDate);
+          })
+  
+          $("input[name='todate']").change(function(){
+            toDate = $(this).val();
+            console.log('todate', toDate);
+          })*/
+          $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
+          $('input[name="radio"]').on('click', function () {
+            var value = $(this).val();
 
-        $("input[name='todate']").change(function(){
-          toDate = $(this).val();
-          console.log('todate', toDate);
-        })*/
-        $('#selectmonth').change(function(){
-          var month = $(this).val();
-          $.get(`/api/searchmonthgrn?org=<%=orgId%>&month=${month}`, function(data, status){
-            $("#reportcart").empty();
-            var items = data.data;
-            console.log(items);
-            for(let i=0;i<items.length;i++){
+            // Hide the card-body elements of all dropdowns
 
-                var datetime = items[i].created_date_grn; 
+            $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
+            // Show the corresponding dropdown's card-body based on the selected radio button
+            if (value === "monthly") {
+              $("#dropdown_month .card-body").show();
+            } else if (value === "quarterly") {
+              $("#dropdown_quarter .card-body").show();
+            } else if (value === "yearly") {
+              $("#dropdown_year .card-body").show();
+            }
+          });
+          $(document).on('change', '#selectmonth', function () {
+            var month = $(this).val();
+            $.get(`/api/searchmonthgrn?org=<%=orgId%>&month=${month}`, function (data, status) {
+              $("#reportcart").empty();
+              var items = data.data;
+              console.log(items);
+              for (let i = 0; i < items.length; i++) {
+
+                var datetime = items[i].created_date_grn;
                 var total = (items[i].purchase) * (items[i].qty);
                 var date = moment(datetime).format('DD MMMM YYYY');
                 var time = moment(datetime).utcOffset('+05:30');
                 var localTime = time.format('hh:mm A');
-              var htmlData = `
+                var htmlData = `
               <tr>
-                <td>${i+1}</td>
+                <td>${i + 1}</td>
                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href='/grn_receipt/${items[i].grn_id}' ><strong>${items[i].grn_id}</strong></a></td>
                 <td>${items[i].vendor_name}</td>
                 <td>${date}</td>
                 <td>${localTime}</td>
               </tr>
               `
-              $("#reportcart").append(htmlData);
-              
-            }
+                $("#reportcart").append(htmlData);
+
+              }
+            })
           })
-        })
 
-        $('#selectquarter').change(function(){
-          var quarter = $(this).val();
-          $.get(`/api/searchquartergrn?org=<%=orgId%>&quarter=${quarter}`, function(data, status){
-            $("#reportcart").empty();
-            var items = data.data;
-            console.log(items);
-            for(let i=0;i<items.length;i++){
+          $(document).on('change', '#selectquarter', function () {
+            var quarter = $(this).val();
+            $.get(`/api/searchquartergrn?org=<%=orgId%>&quarter=${quarter}`, function (data, status) {
+              $("#reportcart").empty();
+              var items = data.data;
+              console.log(items);
+              for (let i = 0; i < items.length; i++) {
 
-                var datetime = items[i].created_date_grn; 
+                var datetime = items[i].created_date_grn;
                 var total = (items[i].purchase) * (items[i].qty);
                 var date = moment(datetime).format('DD MMMM YYYY');
                 var time = moment(datetime).utcOffset('+05:30');
                 var localTime = time.format('hh:mm A');
-              var htmlData = `
+                var htmlData = `
               <tr>
-                <td>${i+1}</td>
+                <td>${i + 1}</td>
                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href='/grn_receipt/${items[i].grn_id}' > <strong>${items[i].grn_id}</strong></a></td>
                 <td>${items[i].vendor_name}</td>
             
@@ -262,29 +278,29 @@
                 <td>${localTime}</td>
               </tr>
               `
-              $("#reportcart").append(htmlData);
-              
-            }
+                $("#reportcart").append(htmlData);
+
+              }
+            })
           })
-        })
 
-        $('#selectyear').change(function(){
-          var year = $(this).find('option:selected').text();
-          console.log(year);
-          $.get(`/api/searchyeargrn?org=<%=orgId%>&year=${year}`, function(data, status){
-            $("#reportcart").empty();
-            var items = data.data;
-            console.log(items);
-            for(let i=0;i<items.length;i++){
+          $(document).on('change', '#selectyear', function () {
+            var year = $(this).find('option:selected').text();
+            console.log(year);
+            $.get(`/api/searchyeargrn?org=<%=orgId%>&year=${year}`, function (data, status) {
+              $("#reportcart").empty();
+              var items = data.data;
+              console.log(items);
+              for (let i = 0; i < items.length; i++) {
 
-                var datetime = items[i].created_date_grn; 
+                var datetime = items[i].created_date_grn;
                 var total = (items[i].purchase) * (items[i].qty);
                 var date = moment(datetime).format('DD MMMM YYYY');
                 var time = moment(datetime).utcOffset('+05:30');
                 var localTime = time.format('hh:mm A');
-              var htmlData = `
+                var htmlData = `
               <tr>
-                <td>${i+1}</td>
+                <td>${i + 1}</td>
                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href='/grn_receipt/${items[i].grn_id}' > <strong>${items[i].grn_id}</strong></a></td>
                 <td>${items[i].vendor_name}</td>
          
@@ -292,32 +308,32 @@
                 <td>${localTime}</td>
               </tr>
               `
-              $("#reportcart").append(htmlData);
-              
-            }
+                $("#reportcart").append(htmlData);
+
+              }
+            })
           })
-        })
 
 
 
-        $("#generatereport").click(function(){
-          var fromDate = $("input[name='fromdate']").val();
-          var toDate = $("input[name='todate']").val();
-          
-          $.get(`/api/searchdatesgrn?org=<%=orgId%>&from=${fromDate}&to=${toDate}`, function(data, status){
-            $("#reportcart").empty();
-            var items = data.data;
-            console.log(items);
-            for(let i=0;i<items.length;i++){
+          $("#generatereport").click(function () {
+            var fromDate = $("input[name='fromdate']").val();
+            var toDate = $("input[name='todate']").val();
 
-                var datetime = items[i].created_date_grn; 
+            $.get(`/api/searchdatesgrn?org=<%=orgId%>&from=${fromDate}&to=${toDate}`, function (data, status) {
+              $("#reportcart").empty();
+              var items = data.data;
+              console.log(items);
+              for (let i = 0; i < items.length; i++) {
+
+                var datetime = items[i].created_date_grn;
                 var total = (items[i].purchase) * (items[i].qty);
                 var date = moment(datetime).format('DD MMMM YYYY');
                 var time = moment(datetime).utcOffset('+05:30');
                 var localTime = time.format('hh:mm A');
-              var htmlData = `
+                var htmlData = `
               <tr>
-                <td>${i+1}</td>
+                <td>${i + 1}</td>
                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href='/grn_receipt/${items[i].grn_id}' > <strong>${items[i].grn_id}</strong></a></td>
                 <td>${items[i].vendor_name}</td>
             
@@ -325,12 +341,13 @@
                 <td>${localTime}</td>
               </tr>
               `
-              $("#reportcart").append(htmlData);
-              
-            }
+                $("#reportcart").append(htmlData);
+
+              }
+            })
           })
         })
-      })
-    </script>
-</body>
-</html>
+      </script>
+  </body>
+
+  </html>

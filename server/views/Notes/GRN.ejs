@@ -76,6 +76,7 @@
 
 
 
+
                                         <div class="d-flex justify-content-between m-0 p-0">
                                             <h4 class="fw-bold py-3 mb-1"> Add Product To Your Cart</h4>
 
@@ -688,9 +689,11 @@
                     var orderDetails;
                     var org = '<%=orgId%>'
                     $("#submitorder").click(function () {
-
-                        if ($("#vendorselect").val() == '') {
-                            return alert('Please add select Distributor');
+                        if ($("#vendorselect").val() === 'Select Vendor') {
+                            return alert('Please fill "Distributor Name"');
+                        }
+                        if ($("#vendorinvoicenumber").val() == '') {
+                            return alert('Please fill "Distributor Invoice number"');
                         }
                         if (!$("#defaultCheck1").prop("checked")) {
                             return alert("Please check the disclaimer before submitting.");
