@@ -339,11 +339,12 @@
                         <tr>
                             <th style="width: 2.27rem;">S.N.</th>
                             <th style="width: 11.29rem;">Item</th>
-                            <th style="width: 3.1rem;">QTY</th>
                             <th style="width: 4.59rem;">HSN</th>
                             <th style="width: 4.4rem;">Batch</th>
-                            <th style="width: 3.25rem;">Exp.</th>
+                            <th style="width: 3.25rem;">Expiry</th>
                             <th style="width: 3.62rem;">MRP</th>
+                            <th style="width: 3.1rem;">QTY</th>
+                            <th style="width: 3.62rem;">PTR</th>
                             <th style="width: 3.61rem;">GST%</th>
                             <!-- <th style="width: 4.2rem;">Total</th> -->
                         </tr>
@@ -441,20 +442,21 @@
                 var items = data.results
                 var total=0;
                 for (var i = 0; i < items.length; i++) {
-                    var datetime = items[i].exp_date; 
+                    var datetime = items[i].exp_Date; 
                     console.log(datetime);
-                    var date = moment(datetime).format('DD-MM-YY');
+                    var expDate = moment(datetime).format('DD-MM-YY');
 
                     cartHtml = `
 
                     <tr>
                         <td style="width: 2.27rem; height: 1rem;">${i + 1}</td>
                         <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
-                        <td style="width: 3.1rem; height: 1rem;">${items[i].qty}</td>
                         <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
                         <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
-                        <td style="width: 3.25rem; height: 1rem;">${date}</td>
+                        <td style="width: 3.25rem; height: 1rem;">${expDate}</td>
                         <td style="width: 3.62rem; height: 1rem;">${items[i].mrp}</td>
+                        <td style="width: 3.1rem; height: 1rem;">${items[i].qty}</td>
+                        <td style="width: 3.62rem; height: 1rem;">${items[i].purchase}</td>
                         <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
                     </tr>
                         

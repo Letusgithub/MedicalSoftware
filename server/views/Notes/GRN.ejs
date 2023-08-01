@@ -18,7 +18,7 @@
 
                                 <!-- Content -->
 
-                                <div class="container-xxl flex-grow-1 container-p-y">
+                                <di class="container-xxl flex-grow-1 container-p-y">
                                     <h4 class="fw-bold py-3 mb-1">Goods Received Note</h4>
                                     <hr class="mb-4">
 
@@ -26,11 +26,11 @@
 
                                         <div class="col-md-6">
                                             <div class="card mb-4">
-                                                <h5 class="card-header">Vendor Name</h5>
+                                                <h5 class="card-header">Distributor Name</h5>
                                                 <div class="card-body" id="vendorname">
                                                     <select class="form-select" id="vendorselect"
                                                         aria-label="Default select example">
-                                                        <option selected>Select Vendor</option>
+                                                        <option selected>Select Distributor</option>
                                                         <%vendors.forEach(function(vendor) {%>
                                                             <option value="<%= vendor.vendor_id %>">
                                                                 <%= vendor.vendor_name %>
@@ -54,7 +54,7 @@
 
                                         <div class="col-md-6">
                                             <div class="card mb-4">
-                                                <h5 class="card-header">Vendor Invoice Number</h5>
+                                                <h5 class="card-header">Distributor Invoice Number</h5>
                                                 <div class="card-body">
                                                     <input type="text" class="form-control" id="vendorinvoicenumber"
                                                         placeholder="Enter Invoice Number" />
@@ -73,6 +73,7 @@
 
                                             </div>
                                         </div>
+
 
 
 
@@ -350,42 +351,39 @@
 
                                             </div>
 
-
-
-                                        </div>
-                                        <hr class="mb-4">
-                                        <div class="row mx-3">
-                                            <div class="card mx-0">
-                                                <h5 class="card-header">Cart</h5>
-                                                <div class="card-body">
-                                                    <div class="table-responsive text-nowrap">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="col-1">#</th>
-                                                                    <th class="col-7">Product name</th>
-                                                                    <th class="col-7">Batch</th>
-                                                                    <th class="col-1">QTY</th>
-                                                                    <!-- <th class="col-1" id="secqtycart">SQty</th> -->
-
-                                                                    <th class="col-1">MRP</th>
-                                                                    <!-- <th class="col-1">Disc %</th> -->
-                                                                    <!-- <th class="col-1">Total</th> -->
-                                                                    <th class="col-1">HSN</th>
-                                                                    <th class="col-1">Action</th>
-
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="cart">
-
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
 
                                     </div>
+
+                                    <hr class="mb-4">
+
+                                    <div class="card">
+                                        <h5 class="card-header">Cart</h5>
+                                        <div class="card-body">
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Product name</th>
+                                                            <th>Brand name</th>
+                                                            <th>MRP</th>
+                                                            <th>PTR</th>
+                                                            <th>QTY</th>
+                                                            <th>Unit</th>
+                                                            <th>Amount</th>
+                                                            <th class="col-1">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="cart">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <div class="form-check mt-3">
                                         <div>
@@ -400,22 +398,22 @@
                                     </div>
 
 
-                                </div>
-                                <div class="text-center mb-4">
-                                    <a>
-                                        <button class="btn btn-primary px-5" id="submitorder">Submit</button>
-                                    </a>
-                                </div>
+                            </div>
+                            <div class="text-center mb-4">
+                                <a>
+                                    <button class="btn btn-primary px-5" id="submitorder">Submit</button>
+                                </a>
                             </div>
                     </div>
             </div>
+        </div>
         </div>
 
 
 
 
         <%- include('../partials/footercode.ejs') %>
-            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
                 var productId;
                 var orgID = '<%= orgId %>';
@@ -568,7 +566,12 @@
                     var htmlData;
                     $("#addtocart").click(function () {
 
+                        if (parseFloat($("#addpur").val()) > parseFloat($("#price").val())) {
+                            return alert("Purchase Rate can't be greater than MRP");
+                        }
+
                         var products = $("#medicinename").val();
+                        var brand = $("#brand").val();
                         var gst = $("select[name = 'gst']").val();
                         var hsn = $("#hsn").val();
                         var Punit = $("select[name='primary']").val();
@@ -584,10 +587,13 @@
                         var purchase = $("#addpur").val();
                         var quantity = $("input[name='quantity']").val();
 
+                        //logic for calculating amount
+                        var amount = (purchase * quantity).toFixed(2);
 
                         cartarray.push({
                             productId: productId,
                             productname: products,
+                            brandname: brand,
                             gst: gst,
                             hsn: hsn,
                             punit: Punit,
@@ -600,7 +606,8 @@
                             shelflabel: shelflabel,
                             mrp: mrp,
                             purchase: purchase,
-                            qty: quantity
+                            qty: quantity,
+                            amt: amount,
                         })
                         console.log('cart details', cartarray);
 
@@ -631,6 +638,7 @@
 
                     // logic for redering cart data on addtocart click 
                     $("#addtocart").on('click', function () {
+
                         cartItems = JSON.parse(localStorage.getItem('grncartdetails')) || [];
                         renderCart(cartItems);
                     });
@@ -656,10 +664,12 @@
                           <tr>
                             <td class="card_id">${i + 1}</td>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
-                            <td>${items[i].batch}</td>
-                            <td>${items[i].qty}</td>
+                            <td>${items[i].brandname}</td>
                             <td>${items[i].mrp}</td>
-                            <td>${items[i].hsn}</td>
+                            <td>${items[i].purchase}</td>
+                            <td>${items[i].qty}</td>
+                            <td>${items[i].punit}</td>
+                            <td>${items[i].amt}</td>
                             <td>
                               <div class="action-btns">
                                 <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
@@ -680,10 +690,10 @@
                     var org = '<%=orgId%>'
                     $("#submitorder").click(function () {
                         if ($("#vendorselect").val() === 'Select Vendor') {
-                            return alert('Please fill "Vendor Name"');
+                            return alert('Please fill "Distributor Name"');
                         }
                         if ($("#vendorinvoicenumber").val() == '') {
-                            return alert('Please fill "Vendor Invoice number"');
+                            return alert('Please fill "Distributor Invoice number"');
                         }
                         if (!$("#defaultCheck1").prop("checked")) {
                             return alert("Please check the disclaimer before submitting.");
