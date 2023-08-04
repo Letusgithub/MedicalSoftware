@@ -26,72 +26,31 @@
                   <hr class="mb-4">
 
                   <div class="row">
-
-                    <div class="col-md-4">
-                      <div class="card mb-4" id="dropdown_month">
-                        <h5 class="card-header"><input type="radio" name="radio" value="monthly"> Monthly</h5>
-                        <div class="card-body">
-                          <div class="col-md-10">
-                            <select class="form-select" id="selectmonth"
-                              aria-label="Default select example">
-                              <option selected>Please Select</option>
-                              <option value="1">January</option>
-                              <option value="2">February</option>
-                              <option value="3">March</option>
-                              <option value="4">April</option>
-                              <option value="5">May</option>
-                              <option value="6">June</option>
-                              <option value="7">July</option>
-                              <option value="8">August</option>
-                              <option value="9">September</option>
-                              <option value="10">October</option>
-                              <option value="11">November</option>
-                              <option value="12">December</option>
-
-                            </select>
+                    <div class="col-md-12">
+                      <div class="card mb-4">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <h5 class="card-header"><input type="radio" name="radio" value="monthly"> Monthly</h5>
+                          </div>
+                          
+                          <div class="col-md-4">
+                            <h5 class="card-header"><input type="radio" name="radio" value="quarterly"> Quarterly</h5>
+                          </div>
+                          <div class="col-md-4">
+                            <h5 class="card-header"><input type="radio" name="radio" value="yearly"> Yearly</h5>
                           </div>
                         </div>
+                          
+                          <div  id="dropdown"></div>
+                        
+                       
+                        
+                        
+                        
                       </div>
                     </div>
-
-                    <div class="col-md-4">
-                      <div class="card mb-4" id="dropdown_quarter">
-                        <h5 class="card-header"><input type="radio" name="radio" value="quarterly"> Quarterly</h5>
-                        <div class="card-body">
-                          <div>
-
-                            <div class="col-md-10">
-                              <select class="form-select" id="selectquarter"
-                                aria-label="Default select example">
-                                <option selected>Please Select</option>
-                                <option value="1">April-June</option>
-                                <option value="2">July-Sept</option>
-                                <option value="3">Oct-Dec</option>
-                                <option value="4">Jan-March</option>
-
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
 
-                    <div class="col-md-4">
-                      <div class="card mb-4" id="dropdown_year">
-                        <h5 class="card-header"><input type="radio" name="radio" value="yearly"> Yearly</h5>
-                        <div class="card-body">
-                          <div class="col-md-10">
-                            <select class="form-select" id="selectyear"
-                              aria-label="Default select example">
-                              <option selected>Please Select</option>
-                              <!-- <option value="1">2022</option> -->
-                              <option value="1">2023</option>
-
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
 
 
 
@@ -203,16 +162,67 @@
       var toDate;
 
       $(document).ready(function(){
-        /*$("input[name='fromdate']").change(function(){
-          fromDate = $(this).val();
-          console.log('fromdate', fromDate);
-        })
+        $('input[name="radio"][value="monthly"]').one('click', function() {
+      if ($(this).is(':checked')) {
+      $("#dropdown").html(`<div class="card-body">
+        <div class="col-md-10">
+          <select class="form-select" id="selectmonth" aria-label="Default select example">
+            <option selected>Please Select</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+      </div>`);
+    }
+  });
 
-        $("input[name='todate']").change(function(){
-          toDate = $(this).val();
-          console.log('todate', toDate);
-        })*/
+  $('input[name="radio"][value="quarterly"]').one('click', function() {
+      if ($(this).is(':checked')) {
+      $("#dropdown").html(`<div class="card-body">
+                          <div>
 
+                            <div class="col-md-10">
+                              <select class="form-select" id="selectquarter"
+                                aria-label="Default select example">
+                                <option selected>Please Select</option>
+                                <option value="1">April-June</option>
+                                <option value="2">July-Sept</option>
+                                <option value="3">Oct-Dec</option>
+                                <option value="4">Jan-March</option>
+
+                              </select>
+                            </div>
+                          </div>
+                        </div>`);
+    }
+  });
+
+  $('input[name="radio"][value="yearly"]').one('click', function() {
+      if ($(this).is(':checked')) {
+      $("#dropdown").html(`<div class="card-body">
+                          <div class="col-md-10">
+                            <select class="form-select" id="selectyear"
+                              aria-label="Default select example">
+                              <option selected>Please Select</option>
+                              <option value="1">2022</option>
+                              <option value="1">2023</option>
+
+                            </select>
+                          </div>
+                        </div>`);
+    }
+  });
+        
         $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
           $('input[name="radio"]').on('click', function () {
             var value = $(this).val();
@@ -221,13 +231,7 @@
 
             $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
             // Show the corresponding dropdown's card-body based on the selected radio button
-            if (value === "monthly") {
-              $("#dropdown_month .card-body").show();
-            } else if (value === "quarterly") {
-              $("#dropdown_quarter .card-body").show();
-            } else if (value === "yearly") {
-              $("#dropdown_year .card-body").show();
-            }
+            
           });
           $(document).on('change', '#selectmonth', function () {
           var month = $(this).val();
