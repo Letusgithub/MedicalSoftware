@@ -32,6 +32,7 @@
                         <div class="row">
                           <div class="col-md-5" style="margin-right: -55px;">
                             <h5 class="card-header"><input type="radio" name="radio" value="monthly"> Monthly</h5>
+                            
                           </div>
                           
                           <div class="col-md-6" style="margin-right: -80px;">
@@ -42,7 +43,14 @@
                           </div>
                         </div>
                           
-                          <div  id="dropdown"></div>
+                          <div  id="dropdown" style="margin-top:-25px">
+                            <div class="card-body">
+                              <div class="col-md-10">
+                                <select class="form-select" id="selectmonth" aria-label="Default select example">
+                                  <option selected>Please Select</option>
+                                </select>
+                                </div></div>  
+                          </div>
                         
                        
                         
@@ -54,20 +62,20 @@
                       <div class="card mb-4">
                         <div class="row">
                           <div class="col ">
-                        <h5 class="card-header mb-2 ">From Date</h5>
+                        <h5 class="card-header">From Date</h5>
                         <div class="card-body">
-                          <div class="col-md-10 mb-3 ">
+                          <div class="col-md-10 ">
                             <input class="form-control" type="date" id="html5-date-input" name="fromdate"/>
                           </div>
                         </div>
                       </div>
                       
                       <div class="col">
-                        <h5 class="card-header mb-2 ">To Date</h5>
+                        <h5 class="card-header">To Date</h5>
                         <div class="card-body">
                           <div>
 
-                            <div class="col-md-10 mb-3">
+                            <div class="col-md-10">
                               <input class="form-control" type="date" id="html5-date-input" name="todate"/>
                             </div>
                           </div>
@@ -219,10 +227,10 @@
                               <select class="form-select" id="selectquarter"
                                 aria-label="Default select example">
                                 <option selected>Please Select</option>
-                                <option value="1">April-June</option>
-                                <option value="2">July-Sept</option>
-                                <option value="3">Oct-Dec</option>
-                                <option value="4">Jan-March</option>
+                                <option value="1">Q1 (April-June)</option>
+                                <option value="2">Q2 (July-Sept)</option>
+                                <option value="3">Q3 (Oct-Dec)</option>
+                                <option value="4">Q4 (Jan-March)</option>
 
                               </select>
                             </div>
@@ -238,6 +246,16 @@
                             <select class="form-select" id="selectyear"
                               aria-label="Default select example">
                               <option selected>Please Select</option>
+                              <option value="1">2012</option>
+                              <option value="1">2013</option>
+                              <option value="1">2014</option>
+                              <option value="1">2015</option>
+                              <option value="1">2016</option>
+                              <option value="1">2017</option>
+                              <option value="1">2018</option>
+                              <option value="1">2019</option>
+                              <option value="1">2020</option>
+                              <option value="1">2021</option>
                               <option value="1">2022</option>
                               <option value="1">2023</option>
 
