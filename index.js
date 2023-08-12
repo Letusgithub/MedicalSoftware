@@ -5,7 +5,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { initialisePool } = require('./server/config/database');
-const { setCache } = require('./server/middlewares/cacheGobalProduct');
+// const { setCache } = require('./server/middlewares/cacheGobalProduct');
 
 const app = express();
 
@@ -18,8 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Cache all global products
-app.use(setCache);
-
+// app.use(setCache);
 
 // API Routes
 require('./server/routes/api.org.routes')(app);
@@ -41,6 +40,7 @@ require('./server/routes/api.credit.routes')(app);
 require('./server/routes/api.debit.routes')(app);
 require('./server/routes/api.grn.routes')(app);
 require('./server/routes/api.financials.routes')(app);
+require('./server/routes/api.itemSearch.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);
