@@ -331,6 +331,13 @@
 
 
         $(document).ready(function () {
+          $("#brand").prop('readonly', true);
+          $("#batch").prop('readonly', true);
+          $("#expdate").prop('readonly', true);
+          $("#pUnit").prop('readonly', true);
+          $("#sUnit").prop('readonly', true);
+          $("#discount").prop('readonly', true);
+          $("#price").prop('readonly', true);
 
           if ('caches' in window) {
             caches.keys().then(name => {
@@ -504,7 +511,7 @@
 
             },
             select: function (event, ui) {
-              setTimeout(function () {
+              setTimeout(function (){
                 console.log('the selected med', ui.item);
                 productId = ui.item.sample_id;
 
@@ -518,6 +525,9 @@
                                             <a class="btn btn-primary mx-4" style="color: white;" href="/add_product">+ Add Product</a>
                                         </div>`);
                   } else {
+                    $("#pUnit").prop('readonly', false);
+                    $("#sUnit").prop('readonly', false);
+                    $("#discount").prop('readonly', false);
                     //batch dropdown
                     $("#batchdroporinput input").remove();
                     $("#batchdroporinput").append(

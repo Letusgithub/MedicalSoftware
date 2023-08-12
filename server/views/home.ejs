@@ -32,7 +32,7 @@
                         <div class="d-flex align-items-end row">
                           <div class="col-sm-7">
                             <div class="card-body">
-                              <h5 class="card-title text-primary" >
+                              <h5 class="card-title text-primary">
                                 Congratulations! <span id="congratsowner"></span> 🎉
                               </h5>
                               <p class="mb-4">
@@ -453,6 +453,7 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script>
+        var reload = true;
 
         $(document).ready(function () {
 
@@ -1030,6 +1031,8 @@
 
 
           var check = JSON.parse(localStorage.getItem('name'));
+          var storedName = window.localStorage.getItem('guestName');
+          
           if (check == null) {
             console.log('no items found');
             $("#congratsowner").text(``);
@@ -1045,7 +1048,20 @@
             })
             );
           }
+
+          else if (storedName != null) {
+            reload = false
+            console.log('name found');
+            if(reload){
+              
+              location.reload();
+              
+            }
+            $('#congratsowner').text(storedName);
+            
+          }
           else {
+
             $("#congratsowner").text(`<%=ownerName%>`);
             console.log('item is found');
           }
