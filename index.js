@@ -5,7 +5,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { initialisePool } = require('./server/config/database');
-// const { setCache } = require('./server/middlewares/cacheGobalProduct');
+const { setCache } = require('./server/middlewares/cacheGobalProduct');
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Cache all global products
-// app.use(setCache);
+app.use(setCache);
 
 // API Routes
 require('./server/routes/api.org.routes')(app);
