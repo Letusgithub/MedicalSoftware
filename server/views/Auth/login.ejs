@@ -276,9 +276,9 @@
                         if (enteredName) {
                             window.localStorage.setItem('guestName', enteredName);
                             window.postMessage({ type: 'guestNameChanged', value: enteredName }, '*');
-                            
-                            
-                        } 
+
+
+                        }
                         $.ajax({
                             url: `/api/auth/guestLogin`,
                             type: 'GET',
