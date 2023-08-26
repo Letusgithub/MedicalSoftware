@@ -9,5 +9,5 @@ module.exports = (app) => {
     next();
   });
 
-  app.post('/api/autocomplete/', controller.itemSearch);
+  app.get('/api/autocomplete', controller.itemSearch);
 };

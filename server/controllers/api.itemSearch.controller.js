@@ -7,7 +7,12 @@ exports.itemSearch = async (req, res) => {
 
   try {
     const suggestions = await ElasticsearchService(query);
-    res.json(suggestions);
+    const object = suggestions.suggest.medicine_suggestion[0].options;
+
+    const data = object.map((item) => item._source);
+
+    console.log(data);
+    res.json(data);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error 1' });

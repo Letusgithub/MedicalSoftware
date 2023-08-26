@@ -32,9 +32,7 @@ module.exports = async (app) => {
 
     res.render('home', {
       name: req.app.locals.token,
-      // owner: req.app.locals.name,
       number: req.app.locals.number,
-      // gst: req.app.locals.gst,
       pharmacyId: req.app.locals.pharmaId,
       address: req.app.locals.address,
       dl1: req.app.locals.dl1,
@@ -228,7 +226,7 @@ module.exports = async (app) => {
   // });
 
   app.get('/update_addproduct/:id', checkAuth, fetchOrgId, (req, res) => {
-    console.log('herr', JSON.stringify(req.params.id));
+    console.log('here', JSON.stringify(req.params.id));
     getPool().query(
       `select * from inventory inv
       JOIN sample spl 
@@ -263,6 +261,7 @@ module.exports = async (app) => {
       JOIN sample spl 
       on spl.sample_id = inv.product_id
       where product_id= ? and org_id = ${req.org_id}`,
+
       [req.params.id],
 
       (error, results) => {

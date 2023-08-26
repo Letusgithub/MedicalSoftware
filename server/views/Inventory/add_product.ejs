@@ -337,56 +337,39 @@
                 var orgID = '<%= orgId %>';
 
                 $(document).ready(function () {
-                    if ('caches' in window) {
-                        caches.keys().then(name => {
-                            if (name.length == 0) {
-                                console.log('do something');
-                                caches.open('productCache').then((cache) => {
-                                    cache.add('/api/allsample');
-                                })
-                            }
-                            else {
-                                console.log('do nothing');
-                            }
-                        })
-                    }
 
                     // autopopulate product
                     $("input[name='productname']").autocomplete({
                         minLength: 3,
                         source: function (request, response) {
-                            if ('caches' in window) {
-                                caches.match(`/api/allsample`).then(res => {
-                                    if (res) {
-                                        res.json().then(data => {
-                                            let searchTerm = request.term;
-                                            let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                            
+                            let query = request.term;
+                            console.log(query);
 
-                                            if (results.length === 0) {
-                                                results.push({ med_name: null }); // Add a null item for the custom message
-                                            }
+                            $.ajax({
+                                url: `/api/autocomplete?query=${query}`,
+                                type: 'GET',
+                                success: function (ajaxResponse) {
+                                    // console.log(ajaxResponse);
 
-                                            response(results);
-                                        })
-                                    }
-                                });
-                            }
-                            else {
-                                $.get('/api/allsample', function (data, status) {
-                                    let searchTerm = request.term;
-                                    let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                                    let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
 
                                     if (results.length === 0) {
                                         results.push({ med_name: null }); // Add a null item for the custom message
                                     }
+                                    console.log(results);
                                     response(results);
-                                })
-                            }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            })
+                            
                         },
                         select: function (event, ui) {
                             setTimeout(function () {
                                 console.log(ui.item);
-                                productId = ui.item.sample_id;
+                                productId = ui.item.id;
                                 $("input[name='productname']").val(ui.item.med_name);
                                 $("input[name='brand']").val(ui.item["mfd/mkt"]);
                                 $("input[name='salt']").val(ui.item.salt_composition);
