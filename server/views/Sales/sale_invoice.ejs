@@ -86,7 +86,7 @@
                 <div class="card mb-4 mx-0 px-0">
 
                   <form class="form-main">
-      
+
                     <div class="card-body form-block mb-3">
 
                       <div class="row w-100 m-0 p-0">
@@ -126,14 +126,14 @@
 
                         <div class="col-md-1 col-6 pe-0">
                           <p class="mb-2 repeater-title">Total</p>
-                          <input type="text" class="form-control px-0" id="total" placeholder="" min="0" readonly/>
+                          <input type="text" class="form-control px-0" id="total" placeholder="" min="0" readonly />
                           <div style="font-size: smaller;"><span id="profit"></span></div>
                         </div>
                       </div>
 
                     </div>
 
-                    
+
                     <div class="buttonBox text-center pb-3">
                       <btn class="btn btn-primary" style="color: white;" id="addtocart">Add to
                         Cart</btn>
@@ -339,21 +339,6 @@
           $("#discount").prop('readonly', true);
           $("#price").prop('readonly', true);
 
-          if ('caches' in window) {
-            caches.keys().then(name => {
-              if (name.length == 0) {
-                console.log('do something');
-                caches.open('productCache').then((cache) => {
-                  cache.add('/api/allsample');
-                })
-              }
-              else {
-                console.log('do nothing');
-              }
-            })
-          }
-
-
           //gettin the current org id
 
           var org = "<%= orgId %>";
@@ -418,58 +403,6 @@
           //start of product cart 
           var product = [];
           var productId = -1;
-          /*
-                    $.get('/product/', function (data, status) {
-          
-                      for (let i in data.data) {
-                        product.push({
-                          label: `${data.data[i].product_id}. ${data.data[i].product_name}`,
-                          value: data.data[i].product_name
-                        })
-                      }
-          
-          
-                      $("#medicinename").autocomplete({
-                        source: product,
-                        select: function (event, ui) {
-          
-                          selectedProductName = (ui.item.label);
-                          const regex = /^(\d+)\./;
-                          const match = selectedProductName.match(regex)
-                          productId = match[1];
-          
-                          $.get(`/api/product/${productId}`, function (data, status) {
-                            var selectedProduct = data.data;
-                            $("#brand").val(selectedProduct.mfg);
-                            $("#price").val(selectedProduct.mrp);
-                            $("#discount").val(0);
-                          })
-                        }
-                      })
-                    })
-          */
-
-          /* $('#medicinename').autocomplete({
-             minLength: 3,
-             source: function(request, response) {
-               $.get(`/api/sampledetails?med=${request.term}`, function(data) {
-                 response(data.data);
-               });
-             },
-             select: function(event, ui) {
-               setTimeout(function(){
-                 console.log(ui.item);
-                 $("#medicinename").val(ui.item.med_name);
-                 $('#price').val(ui.item.mrp);
-                 $('#brand').val(ui.item["mfd/mkt"]);
-                 $("#pack .unit").text(ui.item.pack_size);
-               },0)
-             }
-           }).data('ui-autocomplete')._renderItem = function(ul, item) {
-             return $('<li>')
-               .append('<div>' + item.med_name + '</div>')
-               .appendTo(ul);
-           };*/
 
           var priceMed = -1;
           var primaryUnit;
@@ -483,37 +416,41 @@
           $('#medicinename').autocomplete({
             minLength: 3,
             source: function (request, response) {
-              if ('caches' in window) {
-                caches.match(`/api/allsample`).then(res => {
-                  if (res) {
-                    res.json().then(data => {
-                      let searchTerm = request.term;
-                      let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
-                      if (results.length === 0) {
-                        results.push({ med_name: null }); // Add a null item for the custom message
-                      }
 
-                      response(results);
-                    })
-                  }
-                });
-              }
-              else {
-                $.get('/api/allsample', function (data, status) {
-                  let searchTerm = request.term;
-                  let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+              // $.get('/api/allsample', function (data, status) {
+              //   let searchTerm = request.term;
+              //   let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+              //   if (results.length === 0) {
+              //     results.push({ med_name: null }); // Add a null item for the custom message
+              //   }
+              //   response(results);
+              // })
+
+              let query = request.term;
+
+              $.ajax({
+                url: `/api/autocomplete?query=${query}`,
+                type: 'GET',
+                success: function (ajaxResponse) {
+
+                  let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
+
                   if (results.length === 0) {
                     results.push({ med_name: null }); // Add a null item for the custom message
                   }
+                  console.log(results);
                   response(results);
-                })
-              }
+                },
+                error: function (error) {
+                  console.log(error);
+                }
+              })
 
             },
             select: function (event, ui) {
-              setTimeout(function (){
+              setTimeout(function () {
                 console.log('the selected med', ui.item);
-                productId = ui.item.sample_id;
+                productId = ui.item.id;
 
                 //getting all the batches associated with the product
                 $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {

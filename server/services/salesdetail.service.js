@@ -123,6 +123,7 @@ module.exports = {
       },
     );
   },
+
   mainId: (id, callback) => {
     getPool().query(
       'select invoice_id_main from order_details where si_invoice_id = ?',
@@ -148,8 +149,6 @@ module.exports = {
       },
     );
   },
-
-
 
   allSamples: (callback) => {
     getPool().query(
@@ -179,6 +178,7 @@ module.exports = {
       },
     );
   },
+
   invoiceSales: (salesId, orgId, callback) => {
     getPool().query(
       `select * from order_details od 

@@ -37,9 +37,9 @@
                                             <span class="input-group-text" id="basic-addon-search31"><i
                                                     class="bx bx-search"></i></span>
                                             <input type="text" class="form-control" placeholder="Search Product..."
-                                            onkeyup="var value = $(this).val().toLowerCase();$('#inventoryData tbody tr').filter(function() {$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});" >
+                                                onkeyup="var value = $(this).val().toLowerCase();$('#inventoryData tbody tr').filter(function() {$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});">
                                         </div>
-                                        
+
                                     </div>
 
 
@@ -76,7 +76,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table-border-bottom-0" id="additems">
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -100,41 +100,26 @@
 
         <%- include('../partials/footercode.ejs') %>
 
-        <script>
-            $(document).ready(function(){
-                if ('caches' in window) {
-                    caches.keys().then(name=>{
-                      if(name.length == 0){
-                        console.log('do something');
-                        caches.open('productCache').then((cache) => {
-                          cache.add('/api/allsample');
-                        })
-                      }
-                      else{
-                        console.log('do nothing');
-                      } 
-                    })    
-                }
+            <script>
+                $(document).ready(function () {
 
-                var orgId = "<%=orgId%>"
-                console.log(orgId);
+                    var orgId = "<%=orgId%>"
+                    console.log(orgId);
 
+                    //for later use
 
-                //for later use
-                //
+                    $.get(`/api/getallinventory?orgID=${orgId}`, function (data, status) {
+                        var lowHtml = `<td><span class="badge bg-label-danger me-1">LOW</span></td>`;
+                        var okHtml = `<td><span class="badge bg-label-success me-1">OK</span></td>`;
+                        var items = data.data;
+                        console.log('in product stock', items);
 
-                $.get(`/api/getallinventory?orgID=${orgId}`, function(data, status){
-                    var lowHtml = `<td><span class="badge bg-label-danger me-1">LOW</span></td>`;
-                    var okHtml = `<td><span class="badge bg-label-success me-1">OK</span></td>`;
-                    var items =data.data;
-                    console.log('in product stock', items);
-                    
-                    for(let i=0;i<items.length;i++){
-                        var inStock = items[i].batch_qty!=0?items[i].batch_qty:"ADD BATCH";
-                        //var totalCost = items[i].purchase_rate*items[i].batch_qty?'₹'+items[i].purchase_rate*items[i].batch_qty:"ADD BATCH";
-                        var status = items[i].batch_qty >= items[i].threshold?okHtml:lowHtml;
+                        for (let i = 0; i < items.length; i++) {
+                            var inStock = items[i].batch_qty != 0 ? items[i].batch_qty : "ADD BATCH";
 
-                        var html= `
+                            var status = items[i].batch_qty >= items[i].threshold ? okHtml : lowHtml;
+
+                            var html = `
                                 <tr>
                                     <td id="selectedproduct"><i
                                             class="fab fa-angular fa-lg text-danger me-3"></i><strong>${items[i].med_name}</strong></td>
@@ -163,108 +148,116 @@
                                 </tr>
                             `
 
-                        $("#additems").append(html);
-                    }
-                })
+                            $("#additems").append(html);
+                        }
+                    })
 
-                // View batch 
-                $("#additems").on('click', "#viewbatches", function(){
-                    var item = $(this).closest("tr");
-                    var  productName= item.find("#selectedproduct strong").text();
-                    var productId;
+                    // View batch 
+                    $("#additems").on('click', "#viewbatches", function () {
+                        var item = $(this).closest("tr");
+                        var productName = item.find("#selectedproduct strong").text();
+                        var productId;
 
-                    if('caches' in  window){
-                        caches.match(`/api/allsample`).then(res=>{
-                            if(res){
-                                res.json().then(data=>{
-                                    let searchTerm = productName;
-                                    let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
-                                    productId = results[0].sample_id;
-                                    console.log(productId)
-                                    localStorage.removeItem('addbatchid')
-                                    localStorage.setItem('addbatchid', JSON.stringify(productId));
-                                    window.location.href = `/product_batch/${productId}`
-                                })
+                        $.ajax({
+                            url: `/api/autocomplete?query=${productName}`,
+                            type: 'GET',
+                            success: function (ajaxResponse) {
+                                let searchTerm = productName;
+                                let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+
+                                if (results.length === 0) {
+                                    results.push({ med_name: null }); // Add a null item for the custom message
+                                }
+                                productId = results[0].id;
+                                localStorage.setItem('addbatchid', JSON.stringify(productId));
+                                window.location.href = `/product_batch/${productId}`
+                            },
+                            error: function (error) {
+                                console.log(error);
                             }
-                        });
-                    }else{
-                        $.get('/api/allsample', function(data, status){
-                            let searchTerm = productName;
-                            let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
-                            productId = results[0].sample_id;
-                            localStorage.setItem('addbatchid', JSON.stringify(productId));
-                            window.location.href = `/product_batch/${productId}`
                         })
-                      }
 
-                })
+                    })
 
-                // Add batch
-                $("#additems").on('click', "#addbatch", function(){
-                    var item = $(this).closest("tr");
-                    var  productName= item.find("#selectedproduct strong").text();
-                    var productId;
+                    // Add batch
+                    $("#additems").on('click', "#addbatch", function () {
+                        var item = $(this).closest("tr");
+                        var productName = item.find("#selectedproduct strong").text();
+                        var productId;
 
-                    if('caches' in  window){
-                        caches.match(`/api/allsample`).then(res=>{
-                            if(res){
-                                res.json().then(data=>{
-                                    let searchTerm = productName;
-                                    let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
-                                    productId = results[0].sample_id;
-                                    console.log(productId);
-                                    localStorage.setItem('addbatchid', JSON.stringify(productId));
-                                    window.location.href = `/add_batch/${productId}`
-                                })
+                        
+                        $.ajax({
+                            url: `/api/autocomplete?query=${productName}`,
+                            type: 'GET',
+                            success: function (ajaxResponse) {
+                                let searchTerm = productName;
+                                let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+
+                                if (results.length === 0) {
+                                    results.push({ med_name: null }); // Add a null item for the custom message
+                                }
+                                productId = results[0].id;
+                                console.log(productId);
+                                localStorage.setItem('addbatchid', JSON.stringify(productId));
+                                window.location.href = `/add_batch/${productId}`
+                            },
+                            error: function (error) {
+                                console.log(error);
                             }
-                            
-                        });
-                    }else{
-                        $.get('/api/allsample', function(data, status){
-                            let searchTerm = productName;
-                            let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
-                            productId = results[0].sample_id;
-                            console.log(productId);
-                            localStorage.setItem('addbatchid', JSON.stringify(productId));
-                            window.location.href = `/add_batch/${productId}`
                         })
-                      }
 
-                })
+                    })
 
-                $("#additems").on('click', "#editproduct",function(){
-                    var item = $(this).closest("tr");
-                    var  productName= item.find("#selectedproduct strong").text();
-                    console.log(productName);
-                    var productId;
+                    $("#additems").on('click', "#editproduct", function () {
+                        var item = $(this).closest("tr");
+                        var productName = item.find("#selectedproduct strong").text();
+                        console.log(productName);
+                        var productId;
 
-                    if('caches' in  window){
-                        caches.match(`/api/allsample`).then(res=>{
-                            if(res){
-                                res.json().then(data=>{
-                                    let searchTerm = productName;
-                                    let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
-                                    productId = results[0].sample_id;
-                                    window.location.href = `/update_addproduct/${productId}`;
-                                })
+                        // if ('caches' in window) {
+                        //     caches.match(`/api/allsample`).then(res => {
+                        //         if (res) {
+                        //             res.json().then(data => {
+                        //                 let searchTerm = productName;
+                        //                 let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
+                        //                 productId = results[0].sample_id;
+                        //                 window.location.href = `/update_addproduct/${productId}`;
+                        //             })
+                        //         }
+                        //     });
+                        // } else {
+                        //     $.get('/api/allsample', function (data, status) {
+                        //         let searchTerm = productName;
+                        //         let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
+                        //         productId = results[0].sample_id;
+                        //         window.location.href = `/update_addproduct/${productId}`;
+                        //     })
+                        // }
+                        $.ajax({
+                            url: `/api/autocomplete?query=${productName}`,
+                            type: 'GET',
+                            success: function (ajaxResponse) {
+                                let searchTerm = productName;
+                                let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+
+                                if (results.length === 0) {
+                                    results.push({ med_name: null }); // Add a null item for the custom message
+                                }
+                                productId = results[0].id;
+                                window.location.href = `/update_addproduct/${productId}`;
+                            },
+                            error: function (error) {
+                                console.log(error);
                             }
-                        });
-                    }else{
-                        $.get('/api/allsample', function(data, status){
-                            let searchTerm = productName;
-                                    let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase()));
-                                    productId = results[0].sample_id;
-                                    window.location.href = `/update_addproduct/${productId}`;
                         })
-                      }
+                    })
+
+
+
+
+
                 })
-
-                
-
-               
-                
-            })
-        </script>
+            </script>
     </body>
 
 

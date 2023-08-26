@@ -413,7 +413,7 @@
 
 
         <%- include('../partials/footercode.ejs') %>
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
                 var productId;
                 var orgID = '<%= orgId %>';
@@ -458,36 +458,28 @@
                     $("input[name='productname']").autocomplete({
                         minLength: 3,
                         source: function (request, response) {
-                            if ('caches' in window) {
-                                caches.match(`/api/allsample`).then(res => {
-                                    if (res) {
-                                        res.json().then(data => {
-                                            let searchTerm = request.term;
-                                            let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                            let query = request.term;
 
-                                            if (results.length === 0) {
-                                                results.push({ med_name: null }); // Add a null item for the custom message
-                                            }
+                            $.ajax({
+                                url: `/api/autocomplete?query=${query}`,
+                                type: 'GET',
+                                success: function (ajaxResponse) {
 
-                                            response(results);
-                                        })
-                                    }
-                                });
-                            }
-                            else {
-                                $.get('/api/allsample', function (data, status) {
-                                    let searchTerm = request.term;
-                                    let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+                                    let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
 
                                     if (results.length === 0) {
                                         results.push({ med_name: null }); // Add a null item for the custom message
                                     }
+                                    console.log(results);
                                     response(results);
-                                })
-                            }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            })
                         },
                         select: function (event, ui) {
-                            productId = ui.item.sample_id;
+                            productId = ui.item.id;
                             $.get(`/api/checkbyid/${productId}`, function (data, status) {
                                 console.log('got this data from inventory', data);
                                 if (data.data.length == 1) {

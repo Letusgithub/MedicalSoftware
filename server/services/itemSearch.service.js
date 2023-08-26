@@ -1,4 +1,4 @@
-const es = require('../config/elasticsearch.config');
+const { es } = require('../config/elasticsearch');
 
 module.exports = {
 
@@ -16,11 +16,18 @@ module.exports = {
       },
     };
 
+    console.log(baseQuery.suggest.medicine_suggestion);
     try {
-      const { body } = await es.search({ index: 'new_allopathy_index', body: baseQuery });
+      const { body } = await es.search({
+        index: 'new_allopathy_index',
+        body: {
+          suggest: baseQuery.suggest, // Use the suggest object directly
+        },
+      });
+      console.log(body);
       return body;
     } catch (error) {
-      throw new Error('Error fetching suggestions:', error);
+      throw new Error(`Error fetching suggestions: ${error.message}`);
     }
   },
 };
