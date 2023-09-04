@@ -15,6 +15,6 @@ exports.itemSearch = async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error 1' });
+    res.status(500).json({ error: error.message });
   }
 };
