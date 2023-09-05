@@ -17,7 +17,7 @@ Also, be sure to have `git` available in your PATH, `npm` might need it (You can
 If the installation was successful, you should be able to run the following command.
 
     $ node --version
-    v18.12.1
+    v18.17.0
 
     $ npm --version
     9.1.2
