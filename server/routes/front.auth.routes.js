@@ -8,8 +8,13 @@ module.exports = (app) => {
   });
 
   // Login Page
+  // app.get('/login', (req, res) => {
+  //   res.render('Auth/login');
+  // });
+
+  // Login Page 2
   app.get('/login', (req, res) => {
-    res.render('Auth/login');
+    res.render('Auth/login-2');
   });
 
   // Register Login
