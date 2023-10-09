@@ -1,4 +1,4 @@
-<%- include('../partials/headercode.ejs') %>
+<d%- include('../partials/headercode.ejs') %>
 
     <head>
         <link rel="stylesheet" href="/vendor/css/pages/page-login-2.css">
@@ -7,20 +7,42 @@
     <body>
         <div class="mobileview">
             <nav>
-                <img class="ms-3" src="/img/login-2/menu.png" alt="">
-                <img class="ms-2" src="/img/login-2/logomobile.png" alt="">
+                <img src="/img/login-2/menu.png" alt="">
+                <img src="/img/login-2/logomobile.png" alt="">
             </nav>
             <div class="register">
-                <form action="post">
-                    <div class="ms-5">
-                        <span>Login via mobile or guest</span>
+                <div class="form">
+                    <div id="mobileNumberInput">
+                        <div >
+                            <span class="mb-3">Login via mobile or guest</span>
+                        </div>
+                        <br>
+                        <div class="mb-3" id="validatemobile">
+                            <p for="org_telephone">Mobile No.</p>
+                            <input type="number" class="form-control" id="org_telephone" name="mobilenumber"
+                                placeholder="Enter 10-digit mobile no." autofocus>
+                            <p id="validation-message" style="display: none; color: red;">Please
+                                enter a
+                                valid
+                                10-digit number.</p>
+                        </div>
+                        <button id="sendOtpButton">Send OTP</button>
+                        <p class="or">or</p>
+                        <button id="guestLogin">Guest Login</button>
                     </div>
-                    <p>Mobile no.</p>
-                    <input class="form-control w-75"> <br>
-                    <button>Send OTP</button>
-                    <p class="or">or</p>
-                    <button>Guest Login</button>
-                </form>
+                    <div id="otpInput" style="display: none;">
+                        <div>
+                            <span>OTP Verification!</span>
+                        </div>
+                        <p>We sent a verification code to your mobile. Enter the code from the
+                            mobile in the field
+                            below.</p>
+                        <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
+                        <input type="number" class="form-control" id="otp_value" placeholder="Enter OTP" autofocus><br>
+                        <button  id="confirmOtpButton">Confirm</button>
+                    </div>
+                    
+                </div>
             </div>
 
         </div>
@@ -61,7 +83,7 @@
                         </div>
 
                         <div class="mb-3" id="validatemobile">
-                            <label for="org_telephone" class="form-label">Mobile No.</label>
+                            <p for="org_telephone" class="form-label">Mobile No.</p>
                             <input type="number" class="form-control" id="org_telephone" name="mobilenumber"
                                 placeholder="Enter 10-digit mobile no." autofocus>
                             <p id="validation-message" style="display: none; color: red;">Please

@@ -88,7 +88,7 @@
 
     margin-top: 10px;
     padding: 10px;
-    background-color: #00ACC1;
+    background-color: #7F82FF;
     border-radius: 10px;
     border: none;
     /* margin-left: 12%; */
@@ -111,7 +111,7 @@
     }
 
     .register {
-        background-image: url("./images/mbg.png");
+        background-image: url("/img/login-2/mbg.png");
         height: 550px;
         width: 100%;
         background-repeat: no-repeat;
