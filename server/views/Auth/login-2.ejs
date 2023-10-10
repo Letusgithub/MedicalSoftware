@@ -10,27 +10,27 @@
                 <img src="/img/login-2/menu.png" alt="">
                 <img src="/img/login-2/logomobile.png" alt="">
             </nav>
-            <div class="register">
+            <div class="login-mv">
                 <div class="form">
-                    <div id="mobileNumberInput">
-                        <div >
+                    <div id="mobileNumberInput1">
+                        <div>
                             <span class="mb-3">Login via mobile or guest</span>
                         </div>
                         <br>
-                        <div class="mb-3" id="validatemobile">
-                            <p for="org_telephone">Mobile No.</p>
-                            <input type="number" class="form-control" id="org_telephone" name="mobilenumber"
+                        <div class="mb-3" id="validatemobile1">
+                            <p for="org_telephone1">Mobile No.</p>
+                            <input type="number" class="form-control" id="org_telephone1" name="mobilenumber1"
                                 placeholder="Enter 10-digit mobile no." autofocus>
-                            <p id="validation-message" style="display: none; color: red;">Please
+                            <p id="validation-message1" style="display: none; color: red;">Please
                                 enter a
                                 valid
                                 10-digit number.</p>
                         </div>
-                        <button id="sendOtpButton">Send OTP</button>
+                        <button id="sendOtpButton1">Send OTP</button>
                         <p class="or">or</p>
-                        <button id="guestLogin">Guest Login</button>
+                        <button id="guestLogin1">Guest Login</button>
                     </div>
-                    <div id="otpInput" style="display: none;">
+                    <div id="otpInput1" style="display: none;">
                         <div>
                             <span>OTP Verification!</span>
                         </div>
@@ -38,10 +38,10 @@
                             mobile in the field
                             below.</p>
                         <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
-                        <input type="number" class="form-control" id="otp_value" placeholder="Enter OTP" autofocus><br>
-                        <button  id="confirmOtpButton">Confirm</button>
+                        <input type="number" class="form-control" id="otp_value1" placeholder="Enter OTP" autofocus><br>
+                        <button id="confirmOtpButton1">Confirm</button>
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -116,7 +116,7 @@
                             Confirm
                         </button>
 
-                        
+
                     </div>
                 </div>
 
@@ -126,6 +126,7 @@
 
         <%- include('../partials/footercode.ejs') %>
 
+            <!-- For Desktop View -->
             <script>
                 $(document).ready(function () {
 
@@ -233,6 +234,144 @@
                                         mobileNumber: mobileNumber,
                                         OTPtoken: OTPtoken,
                                         otp_value: otp
+                                    };
+
+                                    $.ajax({
+                                        url: `/api/auth/verifyOTP`,
+                                        type: 'POST',
+                                        data: JSON.stringify(details),
+                                        contentType: 'application/json',
+                                        success: function (response) {
+                                            console.log('inside login', response);
+                                            if (response.success === 1) {
+                                                window.location.href = response.redirect;
+                                            }
+                                            else {
+                                                alert(response.message);
+                                            }
+
+
+                                        },
+                                        error: function (error) {
+                                            console.log('error in ejs file', error);
+                                        }
+                                    })
+                                });
+                            },
+                            error: function (error) {
+                                console.log('error', error);
+                            }
+                        })
+                    });
+                })
+            </script>
+
+            <!-- For Mobile View -->
+            <script>
+                $(document).ready(function () {
+
+                    $('#guestLogin1').click(function () {
+                        const enteredName = $('#org_name').val();
+                        if (enteredName) {
+                            window.localStorage.setItem('guestName', enteredName);
+                            window.postMessage({ type: 'guestNameChanged', value: enteredName }, '*');
+
+
+                        }
+                        $.ajax({
+                            url: `/api/auth/guestLogin`,
+                            type: 'GET',
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log('inside login', response);
+                                if (response.success === 1) {
+                                    window.location.href = response.redirect;
+                                }
+                                else {
+                                    alert(response.message);
+                                }
+                            },
+                            error: function (error) {
+                                console.log('error in ejs file', error);
+                            }
+                        })
+                    })
+                    $('#sendOtpButton1').prop('disabled', true);
+
+                    //validate the number
+                    function validateMobileNumber1() {
+                        console.log('object');
+                        var mobileNumber = $('#org_telephone1').val();
+
+                        if (mobileNumber.length < 10 || mobileNumber.length > 10) {
+                            $('#validation-message1').show();
+                            $('#sendOtpButton1').prop('disabled', true);
+                        } else {
+                            $('#validation-message1').hide();
+                            $('#sendOtpButton1').prop('disabled', false);
+                        }
+                    }
+
+                    function handleKeyPressForOTPbtn1(event) {
+                        // Check if Enter key was pressed (key code 13)
+                        if (event.keyCode === 13) {
+                            // Trigger a click event on the submit button
+
+                            $("#sendOtpButton1").click();
+                        }
+                    }
+
+                    function handleKeyPressForConfirmbtn1(event) {
+                        // Check if Enter key was pressed (key code 13)
+                        if (event.keyCode === 13) {
+                            // Trigger a click event on the confirm button
+                            if (!$("#confirmOtpButton1").prop("disabled")) {
+                                // Trigger a click event on the confirm button
+                                $("#confirmOtpButton1").click();
+                            }
+                        }
+                    }
+
+                    $('input[name="mobilenumber1"]').on("input", validateMobileNumber1);
+                    $("#org_telephone1").keypress(handleKeyPressForOTPbtn1);
+
+                    // Send OTP button click event handler
+                    $("#sendOtpButton1").click(function () {
+                        $('#sendOtpButton1').prop('disabled', true);
+                        // Get the mobile number entered by the user
+                        var mobileNumber1 = $('#org_telephone1').val();
+                        console.log(mobileNumber1);
+
+                        $.ajax({
+                            url: `/api/auth/login`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                org_telephone: mobileNumber1
+                            }),
+                            contentType: 'application/json',
+                            success: function (response) {
+
+                                // Hide the mobile number input and send OTP button
+                                $("#mobileNumberInput1").hide();
+
+                                // Display the OTP input field and verify button
+                                $("#otpInput1").show();
+                                $("#otpInput1 #otp_value1").focus();
+
+                                $("#otp_value1").keypress(handleKeyPressForConfirmbtn1);
+
+                                // OTP form submission event handler
+                                var OTPtoken = response.OTPtoken
+                                $("#confirmOtpButton1").click(function () {
+
+                                    //$('#confirmOtpButton').prop('disabled', true);
+
+                                    var otp1 = $("#otp_value1").val();
+
+                                    var details = {
+                                        mobileNumber: mobileNumber1,
+                                        OTPtoken: OTPtoken,
+                                        otp_value: otp1
                                     };
 
                                     $.ajax({
