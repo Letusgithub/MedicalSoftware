@@ -6,8 +6,8 @@ module.exports = {
   create: (data, callback) => {
     getPool().query(
 
-      `insert into cart_item(product_id, saled_pri_qty_cart, saled_sec_qty_cart, main_invoice_id, sales_invoice_id, saled_batch_id, unit_discount, saled_mrp)
-        values(?,?,?,?,?,?,?,?)`,
+      `insert into cart_item(product_id, saled_pri_qty_cart, saled_sec_qty_cart, main_invoice_id, sales_invoice_id, saled_batch_id, unit_discount, saled_mrp, product_name, batch_name, hsn, exp_date, gst, unit_mrp)
+        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.product_id,
         data.saled_pri_qty,
@@ -17,6 +17,12 @@ module.exports = {
         data.saled_batch_id,
         data.unit_discount === '' ? 0 : data.unit_discount,
         data.saled_mrp,
+        data.product_name,
+        data.batch_name,
+        data.hsn,
+        data.exp_date,
+        data.gst,
+        data.mrp,
       ],
       (error, results) => {
         if (error) {
@@ -84,6 +90,22 @@ module.exports = {
       [id],
       (error, results) => {
         if (error) return callback(error);
+        console.log('results', results);
+        return callback(null, results);
+      },
+    );
+  },
+
+  getCartItemsInInvoice: (id, callback) => {
+    getPool().query(
+      `select * from cart_item ci
+      JOIN sample spl
+      on ci.product_id = spl.sample_id
+      where sales_invoice_id =?`,
+      [id],
+      (error, results) => {
+        if (error) return callback(error);
+        console.log('results', results);
         return callback(null, results);
       },
     );
