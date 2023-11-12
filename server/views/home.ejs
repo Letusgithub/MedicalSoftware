@@ -673,6 +673,7 @@
             else if (data.results.length == 1) {
               let totalOrders = parseInt(data.results[0].row_count)
               dayGrowth = totalOrders * 100;
+              dayGrowth = parseFloat(dayGrowth).toFixed(2);
             }
             else {
               var todaydate = new Date();
@@ -684,6 +685,7 @@
                 console.log('not equal');
                 let totalOrders = parseInt(data.results[0].row_count)
                 dayGrowth = totalOrders * 100;
+                dayGrowth = parseFloat(dayGrowth).toFixed(2);
                 //dayGrowth = 0;
               }
               else {
@@ -691,6 +693,7 @@
                 let totalorderstoday = data.results[0].row_count;
                 let totalordersyes = data.results[1].row_count;
                 dayGrowth = parseFloat(Math.abs(totalorderstoday - totalordersyes) / totalordersyes);
+                dayGrowth = parseFloat(dayGrowth).toFixed(2);
                 //dayGrowth = dayGrowth<=0? 0:dayGrowth;
               }
             }
@@ -765,6 +768,7 @@
               else if (data.results.length == 1) {
                 let totalOrders = parseInt(data.results[0].row_count)
                 dayGrowth = totalOrders * 100;
+                dayGrowth = parseFloat(dayGrowth).toFixed(2)
               }
               else {
                 var todaydate = new Date();
@@ -776,6 +780,7 @@
                   console.log('not equal');
                   let totalOrders = parseInt(data.results[0].row_count)
                   dayGrowth = totalOrders * 100;
+                  dayGrowth = parseFloat(dayGrowth).toFixed(2)
                   //dayGrowth = 0;
                 }
                 else {
@@ -783,6 +788,7 @@
                   let totalorderstoday = data.results[0].row_count;
                   let totalordersyes = data.results[1].row_count;
                   dayGrowth = parseFloat(Math.abs(totalorderstoday - totalordersyes) / totalordersyes);
+                  dayGrowth = parseFloat(dayGrowth).toFixed(2);
                   //dayGrowth = dayGrowth<=0? 0:dayGrowth;
                 }
               }
