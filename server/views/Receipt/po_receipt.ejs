@@ -337,8 +337,8 @@
                         <th style="width: 6.82rem;">QTY</th>
                         <th style="width: 6.75rem;">Unit</th>
                         <th style="width: 5.98rem;">PTR</th>
-                        <th style="width: 6.21rem;">Amount</th>
                         <th style="width: 5.98rem;">MRP</th>
+                        <th style="width: 6.21rem;">Amount</th>
                     </tr>
                 </thead>
                 <tbody id="cartitems">
@@ -430,28 +430,21 @@
                     
 
                     //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
-                    cartHtml = `
-                    <tr>
+                    cartHtml = 
+                    `<tr>
                         <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
                         <td style="width: 12.8rem; height: 1rem;">${items[i].med_name}</td>
                         <td style="width: 14.8rem; height: 1rem;">${items[i]['mfd/mkt']}</td>
                         <td style="width: 6.82rem; height: 1rem;">${items[i].quantity}</td>
                         <td style="width: 6.75rem; height: 1rem;">${items[i].unit}</td>
                         <td style="width: 5.98rem; height: 1rem;">${items[i].ptr}</td>
-                        <td style="width: 6.21rem; height: 1rem;">${items[i].amount}</td>
                         <td style="width: 5.98rem; height: 1rem;">${items[i].mrp}</td>
-                    </tr>
-
-                    
-                        
-                        `
+                        <td style="width: 6.21rem; height: 1rem;">${items[i].amount}</td>
+                    </tr>`
 
                     $("#cartitems").append(cartHtml);
 
                 }
-
-
-        
 
             })
 
@@ -462,9 +455,7 @@
                 var orgAdd = org.org_address;
 
                 $("#orgname").html(`${orgName}`);
-                
-                
-                        
+                   
 
                 $("#orgaddress").html(`
                     ${orgAdd}</br>
@@ -489,43 +480,8 @@
                 <td class="text-center">₹ 10.99</td>
                 <td class="text-center">${items[i].unit_discount}</td>
                 <td class="text-right">${total}</td>
-            </tr>*/
+              </tr>*/
             var product = [];
-            $.get(`/api/getordercartininvoice/${id}`, function (data, status) {
-
-                var items = data.data;
-                console.log("items in data", items);
-
-                for (var i = 0; i < items.length; i++) {
-                    var datetime = items[i].exp_date; 
-                    console.log(datetime);
-                    var date = moment(datetime).format('DD-MM-YY');
-                    
-
-                    //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
-                    cartHtml = `
-
-                    <tr>
-                        <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
-                        <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
-                        <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
-                        <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
-                        <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
-                        <td style="width: 3.25rem; height: 1rem;">${date}</td>
-                        <td style="width: 3.62rem; height: 1rem;">${items[i].mrp}</td>
-                        <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
-                        <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
-                        <td style="width: 4.2rem; height: 1rem;">${items[i].saled_mrp}</td>
-                    </tr>
-                        
-                        `
-
-                    $("#cartitems").append(cartHtml);
-
-                }
-
-               
-            }) 
         })
     </script>
 
