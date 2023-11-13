@@ -108,7 +108,7 @@
                             <input type="number" class="form-control px-1" id="pUnit" min="0" />
                           </div>
                         </div>
-                        <div class="col-md-1 col-6 mb-md-0 mb-3">
+                        <div class="col-md-1 col-6 mb-md-0 mb-3" id="sUnit_input">
                           <div>
                             <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
                             <input type="number" class="form-control px-1" id="sUnit" min="0" />
@@ -118,8 +118,12 @@
                           <p class="mb-2 repeater-title">MRP / P.Unit</p>
                           <input type="number" class="form-control" id="price" placeholder="" min="0" />
                         </div>
+                        <div class="col-md-1 col-12 mb-md-0 mb-3" style="display: none;" id="gst_input">
+                          <p class="mb-2 repeater-title">GST%</p>
+                          <input type="number" class="form-control" id="gst" placeholder="" min="0" />
+                        </div>
                         <div class="col-md-1 col-12 mb-md-0 mb-3">
-                          <p class="mb-2 repeater-title">Disc %</p>
+                          <p class="mb-2 repeater-title">Disc%</p>
                           <input type="number" class="form-control" id="discount" placeholder="" min="0" />
                         </div>
 
@@ -412,7 +416,9 @@
           var availablePrimaryQty;
           var availableSecondaryQty;
           var purchaseRate = 0;
-          var gst = 0;
+          var hsn = 0;
+          var gst_percent = 0;
+          var productInInventory;
           $('#medicinename').autocomplete({
             minLength: 3,
             source: function (request, response) {
@@ -456,12 +462,32 @@
                 $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
 
                   console.log('all batches', data.data);
+
                   if (data.data.length == 0) {
+
                     $("#message").html(`<h5 class="my-auto" style="color:red"> ITEM NOT IN INVENTORY PLEASE ADD!!</h5>
                                         <div class=" text-center">
                                             <a class="btn btn-primary mx-4" style="color: white;" href="/add_product">+ Add Product</a>
                                         </div>`);
+
+                    productInInventory = false;
+                    batchIdwhenSelected = null;
+                    console.log('productInInventory', productInInventory);
+
+                    $("#pUnit").prop('readonly', false);
+                    $("#discount").prop('readonly', false);
+                    $("#batch").prop('readonly', false);
+                    $("#expdate").prop('readonly', false);
+                    $("#sUnit_input").hide();
+                    $("#gst_input").show();
+                    $("#price").prop('readonly', false);
+
+                    calculateTotal();
+
                   } else {
+                    productInInventory = true;
+                    console.log('productInInventory', productInInventory);
+
                     $("#pUnit").prop('readonly', false);
                     $("#sUnit").prop('readonly', false);
                     $("#discount").prop('readonly', false);
@@ -479,60 +505,62 @@
                       var remPriQty = value.batch_qty - value.saled_pri_qty;
                       var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion ? 0 : value.conversion - value.saled_sec_qty;
                       $("#batchdroporinput #batchnumber").append(
-                        `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
+                        `<option value=${value.batch_name}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
                       )
                     })
-                    //console.log(batchesMap);
-                  }
-                  //populate the first qty to the product cart
-                  batchIdwhenSelected = data.data[0].batch_id;
-                  primaryUnit = data.data[0].primary_unit;
-                  secondaryUnit = data.data[0].secondary_unit;
-                  conversion = data.data[0].conversion;
-                  purchaseRate = parseFloat(data.data[0].purchase_rate);
-                  gst = parseFloat(data.data[0].gst);
 
-                  availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
-                  availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
+                    //populate the first qty to the product cart
+                    batchIdwhenSelected = data.data[0].batch_id;
+                    primaryUnit = data.data[0].primary_unit;
+                    secondaryUnit = data.data[0].secondary_unit;
+                    conversion = data.data[0].conversion;
+                    purchaseRate = parseFloat(data.data[0].purchase_rate);
+                    gst_percent = parseFloat(data.data[0].gst);
+                    hsn = data.data[0].hsn;
 
-                  /*
-                  $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
-                  $("#unit").append("<option>"+data.data[0].secondary_unit + "</option>");
-                  $("#pack .unit")
-                  .text(`1 ${data.data[0].primary_unit} of ${data.data[0].conversion} ${data.data[0].secondary_unit}`);
-                  */
+                    availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
+                    availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
 
-                  $("#primaryunitname span").text(` (${primaryUnit})`);
-                  $("#secondaryunitname span").text(` (${secondaryUnit})`);
+                    /*
+                    $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
+                    $("#unit").append("<option>"+data.data[0].secondary_unit + "</option>");
+                    $("#pack .unit")
+                    .text(`1 ${data.data[0].primary_unit} of ${data.data[0].conversion} ${data.data[0].secondary_unit}`);
+                    */
 
-                  //exp date populate and shelf label
-                  var date = new Date(data.data[0].exp_date);
-                  $("#expdate").val(date.toISOString().split('T')[0]);
-                  $("#shelflabel").val(data.data[0].shelf_label);
+                    $("#primaryunitname span").text(` (${primaryUnit})`);
+                    $("#secondaryunitname span").text(` (${secondaryUnit})`);
 
-                  $("#batch").val(data.data[0].batch_id);
-                  priceMed = data.data[0].mrp;
-                  $("#price").val(priceMed);
-                  //var batchId = $("#batchdroporinput #batchnumber").val();
-                  //$("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
-
-                  $("#batchdroporinput").on("change", "#batchnumber", function () {
-                    var batchId = $("#batchdroporinput #batchnumber").val();
-                    batchIdwhenSelected = data.data[batchId].batch_id;
-
-                    $("#shelflabel").val(data.data[batchId].shelf_label);
-                    var date = new Date(data.data[batchId].exp_date);
+                    //exp date populate and shelf label
+                    var date = new Date(data.data[0].exp_date);
                     $("#expdate").val(date.toISOString().split('T')[0]);
-                    $("#price").val(data.data[batchId].mrp);
-                    conversion = data.data[batchId].conversion;
-                    purchaseRate = parseFloat(data.data[batchId].purchase_rate);
-                    gst = parseFloat(data.data[batchId].gst);
+                    $("#shelflabel").val(data.data[0].shelf_label);
 
-                    availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
-                    availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion ? 0 : data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
+                    $("#batch").val(data.data[0].batch_id);
+                    priceMed = data.data[0].mrp;
+                    $("#price").val(priceMed);
+                    //var batchId = $("#batchdroporinput #batchnumber").val();
+                    //$("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
 
-                    calculateTotal();
-                  })
+                    $("#batchdroporinput").on("change", "#batchnumber", function () {
+                      var batchId = $("#batchdroporinput #batchnumber").val();
+                      batchIdwhenSelected = data.data[batchId].batch_id;
+
+                      $("#shelflabel").val(data.data[batchId].shelf_label);
+                      var date = new Date(data.data[batchId].exp_date);
+                      $("#expdate").val(date.toISOString().split('T')[0]);
+                      $("#price").val(data.data[batchId].mrp);
+                      conversion = data.data[batchId].conversion;
+                      purchaseRate = parseFloat(data.data[batchId].purchase_rate);
+                      gst_percent = parseFloat(data.data[batchId].gst);
+
+                      availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
+                      availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion ? 0 : data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
+
+                      calculateTotal();
+                    })
+                  }
+
 
                 })
 
@@ -557,23 +585,23 @@
 
           //logic for selected units (discontinued)
           /*
-        $("#unit").change(function(){
-          var getUnit = $(this).val();
-          if(getUnit === primaryUnit){
-            $("#price").val(priceMed);
-            calculateTotal();
-          }
-          else{
-            $("#price").val(priceMed/conversion);
-            calculateTotal();
-          }
-        })*/
+          $("#unit").change(function(){
+            var getUnit = $(this).val();
+            if(getUnit === primaryUnit){
+              $("#price").val(priceMed);
+              calculateTotal();
+            }
+            else{
+              $("#price").val(priceMed/conversion);
+              calculateTotal();
+            }
+          })*/
 
           //logic for calculating total
-          var priQty = $("#pUnit");
-          var secQty = $("#sUnit");
-          var priceInput = $("#price");
-          var discInput = $("#discount");
+          var priQty = $("#pUnit") || 0;
+          var secQty = $("#sUnit") || 0;
+          var priceInput = $("#price") || 0;
+          var discInput = $("#discount") || 0;
           var totalInput = $("#total");
 
           priQty.on("input", calculateTotal);
@@ -589,39 +617,50 @@
             var discount = parseFloat(discInput.val()) || 0;
             discount = discount / 100;
 
-            var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
-            var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
+
+            //Calculate Profit if product is in inventory
+            if (productInInventory) {
+
+              var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
+              var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
+
+              var mrpbeforegst = price / parseFloat(1 + gst_percent / 100);
+
+              var pricebeforedisc = primaryqty * mrpbeforegst + secondaryqty * mrpbeforegst / conversion;
+              var priceAfterDisc = pricebeforedisc - (pricebeforedisc * discount);
+
+              var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty / conversion;
 
 
-            //calculating profit
-            var mrpbeforegst = price / parseFloat(1 + gst / 100);
+              var profit = parseFloat((priceAfterDisc - purchase) * 100 / purchase);
 
-            var pricebeforedisc = primaryqty * mrpbeforegst + secondaryqty * mrpbeforegst / conversion;
-            var priceAfterDisc = pricebeforedisc - (pricebeforedisc * discount);
+              profitForEachProduct = profit;
 
-            var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty / conversion;
+              $("#profit").text(`Margin: ${profit.toFixed(2)}%`);
+              if (profit < 0) {
+
+                $("#profit").css({
+                  color: "red",
+                })
+              } else {
+                $("#profit").css({
+                  color: "green",
+                })
+              }
 
 
-            var profit = parseFloat((priceAfterDisc - purchase) * 100 / purchase);
-
-            profitForEachProduct = profit;
-
-
-            $("#profit").text(`Margin: ${profit.toFixed(2)}%`);
-            if (profit < 0) {
-
-              $("#profit").css({
-                color: "red",
-              })
             } else {
-              $("#profit").css({
-                color: "green",
-              })
+              profitForEachProduct = 0;
+
+              var totalQtyBeforeDisc = primaryqty * price || 0;
+              var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount) || 0;
             }
+
+
 
             console.log('ptr', purchaseRate);
             console.log('conversionF', conversion);
-            console.log('gst', gst);
+            console.log('gst', gst_percent);
             //console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
 
 
@@ -714,12 +753,13 @@
             var products = $("#medicinename").val();
             var brand = $("#brand").val();
             var priCartQty = priQty.val();
-            var secCartQty = secQty.val();
+            var secCartQty = secQty.val() || 0;
             var mrp = priceInput.val();
+            var gst = gst_percent;
             var disc = discInput.val();
             var total = totalInput.val();
             var shelflabel = $("#shelflabel").val();
-            var batch = $("#batchdroporinput #batchnumber").val();
+            var batch = $("#batchdroporinput #batchnumber").val() || $("#batch").val();
             var exp = $("#expdate").val();
             var selectedUnit = $("#unit").val();
 
@@ -730,13 +770,14 @@
               productname: products,
               brand: brand,
               shelflabel: shelflabel,
-              batch: batch,
+              batch_name: batch,
               expdate: exp,
               priQty: priCartQty,
               secQty: secCartQty,
               conversion: conversion,
               selectedUnit: selectedUnit,
               mrp: mrp,
+              gst: gst,
               disc: disc,
               total: total,
               profitForEachProduct: profitForEachProduct,
@@ -744,6 +785,8 @@
             })
 
             setLocalData = JSON.stringify(cartarray);
+
+            console.log(cartarray);
 
             localStorage.setItem("cartitems", setLocalData);
 
@@ -755,12 +798,18 @@
 
             localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
 
+            // Reset item input fields
             $("#medicinename").val("");
             $("#brand").val("");
-            $("#pUnit").val("");
-            $("#sUnit").val("");
-            $("#price").val("");
-            $("#discount").val("");
+            $("#pUnit").val("").prop('readonly', true);
+            $("#sUnit").val("").prop('readonly', true);
+            $("#price").val("").prop('readonly', true);
+            $("#discount").val("").prop('readonly', true);
+
+            $("#gst").val("")
+            $("#gst_input").hide();
+            $("#sUnit_input").show();
+
             $("#total").val("");
             $("#shelflabel").val("");
             $("#batchdroporinput").empty();
@@ -772,6 +821,7 @@
             $("#profit").text('');
           })
 
+          // On input medicine name clear all the fields
           $("#medicinename").on('input', function () {
             $("#brand").val("");
             $("#pUnit").val("");
@@ -817,14 +867,16 @@
             productId = selectedItem.productId;
             $("#medicinename").val(selectedItem.productname);
             $("#brand").val(selectedItem.brand);
-            $("#pUnit").val(selectedItem.priQty);
-            $("#sUnit").val(selectedItem.secQty);
-            $("#price").val(selectedItem.mrp);
-            $("#discount").val(selectedItem.disc);
-            $("#total").val(selectedItem.total);
+            $("#pUnit").val(selectedItem.priQty).prop('readonly', false);
+            $("#sUnit").val(selectedItem.secQty).prop('readonly', false);
+            $("#price").val(selectedItem.mrp).prop('readonly', false);
+            $("#discount").val(selectedItem.disc).prop('readonly', false);
+            $("expdate").val(selectedItem.expdate);
+            $("#gst").val(selectedItem.gst).prop('readonly', false);
+            $("#total").val(selectedItem.total).prop('readonly', false);
 
 
-            //getting all data for batches
+            //getting all data for batches dropdown
             $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
               console.log('on edit of the product', data.data);
               if (data.data.length == 0) {
@@ -842,7 +894,7 @@
                 data.data.map(function (value, key) {
                   //batchesMap.push(`${value.batch_id} ( ${value.batch_qty} )`);
                   $("#batchdroporinput #batchnumber").append(
-                    `<option value=${key}> ${value.batch_name} ( ${value.batch_qty} ) </option>`
+                    `<option value=${value.batch_name}> ${value.batch_name} ( ${value.batch_qty} ) </option>`
                   )
                 })
                 //console.log(batchesMap);
@@ -1030,9 +1082,6 @@
             }
 
 
-
-
-
             var subtotal = $("#subtotal").val();
             var total_dist = $("#additionaldiscount").val() || 0;
             var grand_total = $("#finalamount").val();
@@ -1082,29 +1131,37 @@
 
                     for (let i in orderDetails) {
 
-                      $.ajax({
-                        url: `/api/updatebatchwhensale/`,
-                        type: 'POST',
-                        data: JSON.stringify({
-                          batch_id: orderDetails[i].batchId,
-                          org_id: org,
-                          saled_pri_qty: orderDetails[i].priQty,
-                          saled_sec_qty: orderDetails[i].secQty
-                        }),
-                        contentType: 'application/json',
-                        success: function (response) {
-                          console.log(response);
-                        },
-                        error: function (error) {
-                          console.log('error in updateing batch', error);
-                          return alert("error in updateing batch")
-                        }
-                      })
-
-
+                      if (productInInventory) {
+                        $.ajax({
+                          url: `/api/updatebatchwhensale/`,
+                          type: 'POST',
+                          data: JSON.stringify({
+                            batch_id: orderDetails[i].batchId,
+                            org_id: org,
+                            saled_pri_qty: orderDetails[i].priQty,
+                            saled_sec_qty: orderDetails[i].secQty
+                          }),
+                          contentType: 'application/json',
+                          success: function (response) {
+                            console.log(response);
+                          },
+                          error: function (error) {
+                            console.log('error in updateing batch', error);
+                            return alert("error in updateing batch")
+                          }
+                        })
+                      }
 
                       var cartDetails = ({
                         product_id: orderDetails[i].productId,
+
+                        product_name: orderDetails[i].productname,
+                        batch_name: orderDetails[i].batch_name,
+                        hsn: orderDetails[i].hsn,
+                        exp_date: orderDetails[i].expdate,
+                        mrp: orderDetails[i].mrp,
+                        gst: orderDetails[i].gst,
+
                         saled_pri_qty: orderDetails[i].priQty,
                         saled_sec_qty: orderDetails[i].secQty,
                         main_invoice_id: mainInvoiceId,
@@ -1171,9 +1228,6 @@
                           newRow.append(index, productName, qtys,mrps, discs, totals, $("<script>").append(actionButtons));
                           $("#cart").append(newRow);
           */
-
-
-
 
           //deleting an item
 

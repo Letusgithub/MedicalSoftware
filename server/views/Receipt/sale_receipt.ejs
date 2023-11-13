@@ -474,10 +474,11 @@
             var formattedDate = todayDate.toLocaleDateString('en-US', options);
             $("#orderdate").text(`Date: ${formattedDate}`)
 
-            var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
-            $("#pharmacyname").text(pharmacyDetails.pharmacyName);
-            //$("#gstin").text(`GSTIN: ${pharmacyDetails.gst}`);
-            $("#contact").text(pharmacyDetails.number);
+            // { Get Pharamcy Details from local storage}
+            // var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
+            // $("#pharmacyname").text(pharmacyDetails.pharmacyName);
+            // $("#gstin").text(`GSTIN: ${pharmacyDetails.gst}`);
+            // $("#contact").text(pharmacyDetails.number);
 
             $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
                 var customer = data.result[0];
@@ -504,6 +505,9 @@
             $.get(`/api/org/<%=orgId%>`, function (data, status) {
                 console.log(data);
 
+                $("#pharmacyname").text(data.data.org_name);
+                $("#contact").text(data.data.org_telephone);
+
                 $("#shopaddress").html(`
                     ${data.data.org_address}</br>
                     ${data.data.org_city}( ${data.data.org_state} ), ${data.data.org_pincode}</br>
@@ -529,7 +533,7 @@
                 <td class="text-right">${total}</td>
             </tr>*/
             var product = [];
-            $.get(`/api/getordercartininvoice/${id}`, function (data, status) {
+            $.get(`/api/getcartitemsininvoice/${id}`, function (data, status) {
 
                 var items = data.data;
                 console.log("items in data", items);
@@ -539,8 +543,6 @@
                     console.log(datetime);
                     var date = moment(datetime).format('DD-MM-YY');
 
-
-                    //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
                     cartHtml = `
 
                     <tr>
