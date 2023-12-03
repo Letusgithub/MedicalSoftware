@@ -96,7 +96,7 @@
                           <input type="text" class="form-control" id="brand" placeholder="Brand Name" />
                         </div>
                         <div class="col-md-2 col-12 mb-md-0 mb-3">
-                          <p class="mb-2 repeater-title">Batch</p>
+                          <p class="mb-2 repeater-title">Batch & Expiry</p>
                           <div class="mb-2" id="batchdroporinput">
                             <input type="text" class="form-control" id="batch" placeholder="" />
                           </div>
@@ -116,15 +116,15 @@
                         </div>
                         <div class="col-md-2 col-12 mb-md-0 mb-3">
                           <p class="mb-2 repeater-title">MRP / P.Unit</p>
-                          <input type="number" class="form-control" id="price" placeholder="" min="0" />
+                          <input type="number" class="form-control px-1" id="price" placeholder="" min="0" />
                         </div>
                         <div class="col-md-1 col-12 mb-md-0 mb-3" style="display: none;" id="gst_input">
                           <p class="mb-2 repeater-title">GST%</p>
-                          <input type="number" class="form-control" id="gst" placeholder="" min="0" />
+                          <input type="number" class="form-control px-1" id="gst" placeholder="" min="0" />
                         </div>
                         <div class="col-md-1 col-12 mb-md-0 mb-3">
                           <p class="mb-2 repeater-title">Disc%</p>
-                          <input type="number" class="form-control" id="discount" placeholder="" min="0" />
+                          <input type="number" class="form-control px-1" id="discount" placeholder="" min="0" />
                         </div>
 
 
@@ -554,14 +554,13 @@
                       purchaseRate = parseFloat(data.data[batchId].purchase_rate);
                       gst_percent = parseFloat(data.data[batchId].gst);
 
+
                       availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
                       availableSecondaryQty = (data.data[batchId].conversion - data.data[batchId].saled_sec_qty) == data.data[batchId].conversion ? 0 : data.data[batchId].conversion - data.data[batchId].saled_sec_qty;
 
                       calculateTotal();
                     })
                   }
-
-
                 })
 
                 $("#medicinename").val(ui.item.med_name);
@@ -624,9 +623,9 @@
               var totalQtyBeforeDisc = primaryqty * price + secondaryqty * price / conversion;
               var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount);
 
-              var mrpbeforegst = price / parseFloat(1 + gst_percent / 100);
+              // var mrpbeforegst = price / parseFloat(1 + gst_percent / 100);
 
-              var pricebeforedisc = primaryqty * mrpbeforegst + secondaryqty * mrpbeforegst / conversion;
+              var pricebeforedisc = primaryqty * price + secondaryqty * price / conversion;
               var priceAfterDisc = pricebeforedisc - (pricebeforedisc * discount);
 
               var purchase = purchaseRate * primaryqty + purchaseRate * secondaryqty / conversion;
@@ -652,6 +651,7 @@
             } else {
               profitForEachProduct = 0;
 
+              gst_percent = parseFloat($("#gst").val()) || 0;
               var totalQtyBeforeDisc = primaryqty * price || 0;
               var totalQtyAfterDisc = totalQtyBeforeDisc - (totalQtyBeforeDisc * discount) || 0;
             }
