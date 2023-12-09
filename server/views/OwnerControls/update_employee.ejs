@@ -32,7 +32,7 @@
 
                                     <hr class="mb-4">
 
-                                    <div class="card mb-4 mx-auto col-md-10">
+                                    <div class="card mb-4 mx-auto col-md-8">
 
                                         <div class="pt-4 text-center">
                                             <h4 class="mb-0">Edit Employee Details</h4>
@@ -50,6 +50,17 @@
                                                             class="bx bx-user"></i></span>
                                                     <input type="text" class="form-control" id="emp_name" placeholder=""
                                                         name="emp_name" value="<%=data[0].emp_name %>">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_reg_no"> Registration No.
+                                                    <span style="font-size: 15px; color: red">*</span></label></label>
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                                            class="bx bx-detail"></i></span>
+                                                    <input type="text" class="form-control" id="emp_reg_no" placeholder=""
+                                                        name="emp_reg_no" value="<%=data[0].emp_reg_no %>" required>
                                                 </div>
                                             </div>
 
@@ -93,7 +104,7 @@
                                                     <span id="basic-icon-default-message2" class="input-group-text"><i
                                                             class="bx bx-address"></i></span>
                                                     <textarea id="emp_address" class="form-control" placeholder=""
-                                                        name="emp_address" value="<%=data[0].emp_address %>"></textarea>
+                                                        name="emp_address"><%=data[0].emp_address %></textarea>
                                                 </div>
                                             </div>
 

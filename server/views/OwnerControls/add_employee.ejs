@@ -32,7 +32,7 @@
 
                                     <hr class="mb-4">
 
-                                    <div class="card mb-4 mx-auto col-md-10">
+                                    <div class="card mb-4 mx-auto col-md-8">
 
                                         <div class="pt-4 text-center">
                                             <h4 class="mb-0">Employee Details</h4>
@@ -50,6 +50,17 @@
                                                             class="bx bx-user"></i></span>
                                                     <input type="text" class="form-control" id="emp_name" placeholder=""
                                                         name="emp_name" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_reg_no"> Registration No.
+                                                    <span style="font-size: 15px; color: red">*</span></label></label>
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                                            class="bx bx-detail"></i></span>
+                                                    <input type="text" class="form-control" id="emp_reg_no" placeholder=""
+                                                        name="emp_reg_no" required>
                                                 </div>
                                             </div>
 
@@ -80,6 +91,7 @@
                                                         type="number" maxlength="10">
                                                 </div>
                                             </div>
+
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_email">Email</label>
                                                 <div class="input-group input-group-merge">
@@ -89,6 +101,7 @@
 
                                                 </div>
                                             </div>
+
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_address">Address</label>
                                                 <div class="input-group input-group-merge">
@@ -152,6 +165,7 @@
                         data: JSON.stringify({
                             org_id: "<%= orgId %>",
                             emp_name: $("#emp_name").val(),
+                            emp_reg_no: $("#emp_reg_no").val(),
                             emp_mobile: $("#emp_mobile").val(),
                             emp_email: $("#emp_email").val(),
                             emp_address: $("#emp_address").val()

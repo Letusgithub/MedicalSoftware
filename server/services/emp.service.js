@@ -21,16 +21,18 @@ module.exports = {
       `insert into employee(
                 org_id,
                 emp_name,
+                emp_reg_no,
                 emp_mobile,
                 emp_alt_mobile,
                 emp_email,
                 emp_address,
                 emp_created,
                 emp_lastUpdated)
-                value(?,?,?,?,?,?,?,?)`,
+                value(?,?,?,?,?,?,?,?,?)`,
       [
         data.org_id,
         data.emp_name,
+        data.emp_reg_no,
         data.emp_mobile,
         data.emp_alt_mobile,
         data.emp_email,
@@ -63,6 +65,7 @@ module.exports = {
     getPool().query(
       `update employee set
                 emp_name = ?,
+                emp_reg_no = ?,
                 emp_mobile = ?,
                 emp_alt_mobile = ?,
                 emp_email = ?,
@@ -71,6 +74,7 @@ module.exports = {
                 where emp_id = ?`,
       [
         data.emp_name,
+        data.emp_reg_no,
         data.emp_mobile,
         data.emp_alt_mobile,
         data.emp_email,
