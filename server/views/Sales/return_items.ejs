@@ -263,6 +263,14 @@
       <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
       <script>
         $(document).ready(function () {
+          $("#brand").prop('readonly', true);
+          $("#batch").prop('readonly', true);
+          $("#expdate").prop('readonly', true);
+          $("#pUnit").prop('readonly', true);
+          $("#sUnit").prop('readonly', true);
+          $("#discount").prop('readonly', true);
+          $("#price").prop('readonly', true);
+
           var cartarray = [];
 
           var returnItem = JSON.parse(localStorage.getItem("selectedreturnitem"));
@@ -323,6 +331,9 @@
 
                   console.log('batch data', data.data);
 
+                  $("#pUnit").prop('readonly', false);
+                  $("#sUnit").prop('readonly', false);
+
                   primaryUnit = data.data[0].primary_unit;
                   secondaryUnit = data.data[0].secondary_unit;
                   conversion = data.data[0].conversion;
@@ -359,6 +370,18 @@
               .appendTo(ul);
           };
 
+          // -ve inputs for inline item cant be entered
+          $('#pUnit').on('keypress', function (e) {
+            if (e.which == 45) {
+              return false;
+            }
+          });
+          $('#sUnit').on('keypress', function (e) {
+            if (e.which == 45) {
+              return false;
+            }
+          });
+
           //logic for calculating total
           var priQty = $("#pUnit");
           var secQty = $("#sUnit");
@@ -391,8 +414,8 @@
           $("#addtoreturncart").click(function () {
             var products = $("#medicinename").val();
             var brand = $("#brand").val();
-            var priQty = $("#pUnit").val();
-            var secQty = $("#sUnit").val();
+            var priQty = $("#pUnit").val() || 0;
+            var secQty = $("#sUnit").val() || 0;
             var mrp = $("#price").val();
             var disc = $("#discount").val();
             var total = $("#total").val();
@@ -630,94 +653,10 @@
               }
             })
           })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         })
 
-
       </script>
-
-
-
-
-
-
-
-
-
 
   </body>
 
-
   </html>
-
-
-
-
-
-  <!-- <script>
-        $('.add-more-btn').click(function () {
-          var clone = $('.form-main:first').clone('');
-          clone.find('input').val('');
-          $(".buttonBox").before(clone);
-        });
-
-        $('.remove').click(function () {
-          $('.form-main:last').remove();
-        });
-      </script>
-
-      <script>
-        $(function () {
-          var dtToday = new Date();
-
-          var month = dtToday.getMonth() + 1;
-          var day = dtToday.getDate();
-          var year = dtToday.getFullYear();
-          if (month < 10)
-            month = '0' + month.toString();
-          if (day < 10)
-            day = '0' + day.toString();
-
-          var maxDate = year + '-' + month + '-' + day;
-
-          // or instead:
-          // var maxDate = dtToday.toISOString().substr(0, 10);
-
-
-          $('#txtDate').attr('min', maxDate);
-        });
-      </script> -->
