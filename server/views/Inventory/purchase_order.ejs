@@ -23,10 +23,18 @@
                                     <h4 class="fw-bold py-3 mb-1"> Purchase Order</h4>
                                     <hr class="mb-2">
 
+                                    <!-- Loader GIF -->
+                                    <div id="loader"
+                                        style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status"
+                                            style="position: absolute; top: 50%; left: 50%;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+
                                     <!-- New Vendor -->
                                     <div class="card mb-2 mx-auto col-md-12">
                                         <div class="card-body ">
-
 
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="vendor_name">Distributor
@@ -703,6 +711,8 @@
 
                         $("#submitpo").click(function () {
 
+                            $('#loader').show();
+
                             if (vendorId == -1) {
 
                                 var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
@@ -733,6 +743,7 @@
                                             org_id: '<%=orgId%>'
                                         }
 
+
                                         $.ajax({
                                             url: '/api/createpo/',
                                             method: 'POST',
@@ -743,6 +754,9 @@
                                                 console.log(poinsertid);
                                                 var poId = response.POId;
                                                 var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
+
+                                                // Array to hold all AJAX requests
+                                                var ajaxRequests = [];
 
                                                 for (let i = 0; i < POcarts.length; i++) {
                                                     var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
@@ -757,39 +771,44 @@
                                                     }
                                                     console.log('cartdetails', POcartdetail);
 
-                                                    $.ajax({
-                                                        url: '/api/createpocarts/',
-                                                        method: 'POST',
-                                                        data: JSON.stringify(POcartdetail),
-                                                        contentType: 'application/json',
-                                                        success: function (response) {
-                                                            console.log(response);
-                                                        },
-                                                        error: function (error) {
-                                                            console.log('Error:', error);
-                                                        }
-                                                    });
+                                                    // Push the AJAX request for creating PO to the array
+                                                    ajaxRequests.push(
+                                                        $.ajax({
+                                                            url: '/api/createpocarts/',
+                                                            method: 'POST',
+                                                            data: JSON.stringify(POcartdetail),
+                                                            contentType: 'application/json',
+                                                            success: function (response) {
+                                                                console.log(response);
+                                                            },
+                                                            error: function (error) {
+                                                                console.log('Error:', error);
+                                                            }
+                                                        })
+                                                    )
+
                                                 }
 
-                                                localStorage.removeItem('pocartitems');
-                                                location.reload();
-                                                window.location.href = `/po_receipt/${poinsertid}`
+                                                $.when.apply($, ajaxRequests).done(function () {
+                                                    $('#loader').hide();
+                                                    localStorage.removeItem('pocartitems');
+                                                    location.reload();
+                                                    window.location.href = `/po_receipt/${poinsertid}`
+                                                });
                                             },
                                             error: function (error) {
+                                                $('#loader').hide();
                                                 console.log('Error:', error);
                                             }
                                         });
                                     },
                                     error: function (error) {
+                                        $('#loader').hide();
                                         console.log(error);
                                     }
                                 })
                             }
                             else {
-
-
-
-
 
                                 var POdetails = {
                                     pharmacyId: pharmacyDetails.pharmaId,
@@ -808,6 +827,9 @@
                                         var poId = response.POId;
                                         var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
 
+                                        // Array to hold all AJAX requests
+                                        var ajaxRequests = [];
+
                                         for (let i = 0; i < POcarts.length; i++) {
                                             var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
                                             var POcartdetail = {
@@ -821,25 +843,33 @@
                                             }
                                             console.log('cartdetails', POcartdetail);
 
-                                            $.ajax({
-                                                url: '/api/createpocarts/',
-                                                method: 'POST',
-                                                data: JSON.stringify(POcartdetail),
-                                                contentType: 'application/json',
-                                                success: function (response) {
-                                                    console.log(response);
-                                                },
-                                                error: function (error) {
-                                                    console.log('Error:', error);
-                                                }
-                                            });
+                                            // Push the AJAX request for creating PO to the array
+                                            ajaxRequests.push(
+                                                $.ajax({
+                                                    url: '/api/createpocarts/',
+                                                    method: 'POST',
+                                                    data: JSON.stringify(POcartdetail),
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+                                                        console.log(response);
+                                                    },
+                                                    error: function (error) {
+                                                        console.log('Error:', error);
+                                                    }
+                                                })
+                                            )
                                         }
 
-                                        localStorage.removeItem('pocartitems');
-                                        location.reload();
-                                        window.location.href = `/po_receipt/${poinsertid}`
+                                        $.when.apply($, ajaxRequests).done(function () {
+                                            $('#loader').hide();
+                                            localStorage.removeItem('pocartitems');
+                                            location.reload();
+                                            window.location.href = `/po_receipt/${poinsertid}`
+                                        });
+
                                     },
                                     error: function (error) {
+                                        $('#loader').hide();
                                         console.log('Error:', error);
                                     }
                                 });

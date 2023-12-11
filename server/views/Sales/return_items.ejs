@@ -25,6 +25,15 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
                   <h4 class="fw-bold py-3 mb-1"> Create Return Invoice</h4>
                   <hr class="mb-4">
+
+                  <!-- Loader GIF -->
+                  <div id="loader" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                    <div class="spinner-border spinner-border-lg text-primary" role="status" style="position: absolute; top: 50%; left: 50%;">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+
+                  <!-- Return Items Form -->
                   <form>
                     <div class="card mb-4">
                       <div class=" row">
@@ -225,13 +234,8 @@
 
                   </div>
 
-
-
-
                 </div>
                 <!-- / Content -->
-
-
 
                 <div class="text-center mb-4">
                   <!-- <a href="/invoice_template"> -->
@@ -239,16 +243,12 @@
                   <!-- </a> -->
                 </div>
 
-
-
-
                 <div class="content-backdrop fade"></div>
               </div>
               <!-- Content wrapper -->
           </div>
           <!-- / Layout page -->
       </div>
-
 
 
       <!-- Overlay -->
@@ -580,8 +580,12 @@
 
           })
           //allchanges done for footer total;
+
           var org = "<%= orgId %>";
           $("#submitreturn").click(function () {
+
+            $('#loader').show();
+
             if ($("#returnamount").val() == "" || 0) {
               return alert("NO ITEMS");
             }
@@ -600,9 +604,11 @@
               contentType: 'application/json',
               success: function (response) {
                 var returninsertid = response.results.insertId;
-                var returninsertid = response.results.insertId;
                 var returnInvoiceId = response.return_invoice_id;
                 var localCartStored = JSON.parse(localStorage.getItem('returncartitems'));
+
+                // Array to hold all AJAX requests
+                var ajaxRequests = [];
 
                 for (let i = 0; i < localCartStored.length; i++) {
                   var updateCartdetails = {
@@ -615,7 +621,9 @@
                     return_total_cart: localCartStored[i].total
                   }
 
-                  $.ajax({
+                  // Push each AJAX request into the array
+                  ajaxRequests.push(
+                    $.ajax({
                     url: `/api/updatebatchwhenreturn/`,
                     type: 'POST',
                     data: JSON.stringify({
@@ -632,23 +640,35 @@
                       console.log('error in updateing batch', error);
                     }
                   })
-
+                  );
+                  
+                  // Push each AJAX request into the array
+                  ajaxRequests.push(
                   $.ajax({
                     url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}&batch=${localCartStored[i].batchIdReturned}`,
                     type: 'POST',
                     data: JSON.stringify(updateCartdetails),
                     contentType: 'application/json',
                     success: function (response) {
-                      localStorage.removeItem('returncartitems');
-                      window.location.href = `/return_receipt/${returninsertid}`;
+                      console.log(response);
                     },
                     error: function (error) {
                       console.log(error);
                     }
                   })
+                  );
                 }
+
+                // Use $.when.apply() to wait for all AJAX requests to complete
+                $.when.apply($, ajaxRequests).done(function () {
+                      $('#loader').hide();
+                      localStorage.removeItem('returncartitems');
+                      window.location.href = `/return_receipt/${returninsertid}`;
+                });
+                
               },
               error: function (error) {
+                $('#loader').hide();
                 console.log(error);
               }
             })

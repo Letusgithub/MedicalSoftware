@@ -25,6 +25,17 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
                   <h4 class="fw-bold py-3 mb-1"> Sale Invoice</h4>
                   <hr class="mb-4">
+
+                  <!-- Loader GIF -->
+                  <div id="loader"
+                    style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                    <div class="spinner-border spinner-border-lg text-primary" role="status"
+                      style="position: absolute; top: 50%; left: 50%;">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+
+                  <!-- Sales Invoice Form -->
                   <form>
                     <div class="row">
 
@@ -1143,6 +1154,9 @@
             var customerNumber = $("#phonenumber").val();
             var customerName = $("#customername").val();
 
+            // Show loader
+            $('#loader').show();
+
             $.ajax({
               url: `/api/custnumber/`,
               type: 'POST',
@@ -1182,27 +1196,32 @@
                     var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
                     console.log('orderdetails of sales', orderDetails);
 
+                    // Array to hold all AJAX requests
+                    var ajaxRequests = [];
+
                     for (let i in orderDetails) {
 
                       if (productInInventory) {
-                        $.ajax({
-                          url: `/api/updatebatchwhensale/`,
-                          type: 'POST',
-                          data: JSON.stringify({
-                            batch_id: orderDetails[i].batchId,
-                            org_id: org,
-                            saled_pri_qty: orderDetails[i].priQty,
-                            saled_sec_qty: orderDetails[i].secQty
-                          }),
-                          contentType: 'application/json',
-                          success: function (response) {
-                            console.log(response);
-                          },
-                          error: function (error) {
-                            console.log('error in updateing batch', error);
-                            return alert("error in updateing batch")
-                          }
-                        })
+                        ajaxRequests.push(
+                          $.ajax({
+                            url: `/api/updatebatchwhensale/`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                              batch_id: orderDetails[i].batchId,
+                              org_id: org,
+                              saled_pri_qty: orderDetails[i].priQty,
+                              saled_sec_qty: orderDetails[i].secQty
+                            }),
+                            contentType: 'application/json',
+                            success: function (response) {
+                              console.log(response);
+                            },
+                            error: function (error) {
+                              console.log('error in updateing batch', error);
+                              return alert("error in updateing batch")
+                            }
+                          })
+                        )
                       }
 
                       var cartDetails = ({
@@ -1226,85 +1245,46 @@
 
                       console.log('cartDetail for the saled product', cartDetails);
 
-                      $.ajax({
-                        url: `/api/cartitems/`,
-                        type: 'POST',
-                        data: JSON.stringify(cartDetails),
-                        contentType: 'application/json',
-                        success: function (response) {
-                          console.log(response);
-                        },
-                        error: function (error) {
-                          console.log(error);
-                          return alert("Item not added")
-                        }
-                      })
+                      // Push each AJAX request into the array
+                      ajaxRequests.push(
+                        $.ajax({
+                          url: `/api/cartitems/`,
+                          type: 'POST',
+                          data: JSON.stringify(cartDetails),
+                          contentType: 'application/json',
+                          success: function (response) {
+                            console.log(response);
+                          },
+                          error: function (error) {
+                            console.log(error);
+                            return alert("Item not added")
+                          }
+                        })
+                      );
                     }
 
-                    setTimeout(() => {
+                    // Use $.when.apply() to wait for all AJAX requests to complete
+                    $.when.apply($, ajaxRequests).done(function () {
+                      $('#loader').hide();
+
                       localStorage.removeItem("cartitems");
                       localStorage.removeItem("custdata");
                       window.location.href = `/sale_receipt/${salesId}`
-                    }, 3000);
+                    });
 
                   },
                   error: function (error) {
+                    $('#loader').hide();
                     return alert("Not Created", error)
                   }
                 })
               },
               error: function (error) {
+                $('#loader').hide();
                 return alert("Not Created", error)
               }
             })
           })
-
-          // if wanted without using local storage edit and delete button
-          /*
-                        var newRow = $("<tr>");
-                        newRow.addClass("cart-item");
-          
-                          var index = $("<td>").addClass("index").text(i);
-                          var productName = $("<td>").addClass("updateproduct").text(products);
-                            var qtys = $("<td>").addClass("updateqty").text(qty);
-                            var mrps = $("<td>").addClass("updateprice").text(mrp);
-                            var discs = $("<td>").addClass("updatedisc").text(disc);
-                            var totals = $("<td>").addClass("updatetotal").text(total);
-                           
-                         
-                            var actionButtons = $("<div>").addClass("action-btns");
-                            var editButton = $("<button>").addClass("edit-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bxs-edit'></i>");
-                            var deleteButton = $("<button>").addClass("delete-button btn p-0 mx-2").attr("type", "button").html("<i class='bx bx-trash me-1'></i>");
-          
-                            actionButtons.append(editButton, deleteButton);
-          
-                          newRow.append(index, productName, qtys,mrps, discs, totals, $("<script>").append(actionButtons));
-                          $("#cart").append(newRow);
-          */
-
-          //deleting an item
-
-
-          //item.remove();
-          /*
-                          $("#cart").on("click", ".edit-button", function(){
-                              var updateElement = $(this).closest("tr")
-                              var productName = updateElement.find(".updateproduct").text().trim();
-                              var qtyUpdate = updateElement.find(".updateqty").text().trim();
-                              var priceUpdate = updateElement.find(".updateprice").text().trim();
-                              var discUpdate = updateElement.find(".updatedisc").text().trim();
-                              var totalUpdate = updateElement.find(".updatetotal").text().trim();
-                              
-                          $("#medicinename").val(productName);
-                          $("#qty").val(qtyUpdate);
-                          $("#price").val(priceUpdate);
-                          $("#discount").val(discUpdate);
-                          $("#total").val(totalUpdate);
-                          
-                          
-                          updateElement.remove();
-                        }) 
-                        */
         })
 
       </script>

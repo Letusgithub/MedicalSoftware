@@ -44,7 +44,7 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_name">Employee
-                                                    Name</label>
+                                                    Name<span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="input-group input-group-merge">
                                                     <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                             class="bx bx-user"></i></span>
@@ -55,7 +55,7 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_reg_no"> Registration No.
-                                                    <span style="font-size: 15px; color: red">*</span></label></label>
+                                                    <span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="input-group input-group-merge">
                                                     <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                             class="bx bx-detail"></i></span>
@@ -66,11 +66,12 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_mobile">Contact
-                                                    No</label>
+                                                    No<span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="input-group input-group-merge">
                                                     <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                             class="bx bx-phone"></i></span>
                                                     <input type="text" id="emp_mobile" class="form-control phone-mask"
+                                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10"
                                                         placeholder="" name="emp_mobile" value="<%=data[0].emp_mobile %>">
                                                 </div>
                                             </div>
@@ -84,6 +85,7 @@
                                                             class="bx bx-phone"></i></span>
                                                     <input type="text" id="emp_alt_mobile"
                                                         class="form-control phone-mask" placeholder=""
+                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10"
                                                         name="emp_alt_mobile" value="<%=data[0].emp_alt_mobile %>" >
                                                 </div>
                                             </div>
@@ -139,18 +141,33 @@
             <script>
                 var empId = '<%= data[0].emp_id %>'
 
-                
+                $("#emp_email").change(function () {
+                    var inputvalues = $(this).val();
+                    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if (!regex.test(inputvalues)) {
+                        alert("Invalid email id");
+                    }
+                });
 
                 $("#updateSubmit").click(function () {
 
-                    if ($("#emp_alt_mobile").val().length < 10) {
+                    if ($("#emp_name").val() == '') {
+                        return alert('Please fill "Employee Name"');
+                    }
+
+                    if ($("#emp_mobile").val().length < 10) {
                         return alert('Please fill valid Phone number');
+                    }
+
+                    if ($("#emp_alt_mobile").val().length < 10 && $("#emp_alt_mobile").val().length > 0) {
+                        return alert('Please fill valid Alternet Phone number');
                     }
                     $.ajax({
                         url: `/api/emp/${empId}/update`,
                         type: 'POST',
                         data: JSON.stringify({
                             emp_name: $("#emp_name").val(),
+                            emp_reg_no: $("#emp_reg_no").val(),
                             emp_mobile: $("#emp_mobile").val(),
                             emp_alt_mobile: $("#emp_alt_mobile").val(),
                             emp_email: $("#emp_email").val(),

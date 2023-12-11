@@ -23,6 +23,15 @@
 
                                 <div class="container-xxl flex-grow-1 container-p-y">
 
+                                    <!-- Loader GIF -->
+                                    <div id="loader"
+                                        style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status"
+                                            style="position: absolute; top: 50%; left: 50%;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+
 
                                     <div class="d-flex justify-content-between m-0 p-0">
                                         <h4 class="fw-bold py-3 mb-1"> Add Batches</h4>
@@ -289,8 +298,9 @@
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
                 console.log('<%=data[0].sample_id%>');
-                //var productId = ;
+
                 var orgID = '<%= orgId %>';
+                var productId = '<%=data[0].sample_id%>';
                 /*
                 $(document).ready(function(){
                     if ('caches' in window) {
@@ -361,6 +371,9 @@
                 //submit process after adding batch
 
                 $("#submitbatch").click(function () {
+
+                    $('#loader').show();
+
                     if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
                         return alert("Purchase Rate can't be greater than MRP");
                     }
@@ -384,18 +397,22 @@
                         data: JSON.stringify(batchDetails),
                         contentType: 'application/json',
                         success: function (response) {
-                            // window.location.href='/product_stock'          
+
+                            $('#loader').hide();
+
+                            window.location.href=`/product_batch/${productId}`          
                             console.log(response);
-                            $("#batchname").val("");
-                            $("input[name='addexp']").val("");
-                            $("#conversion").val("");
-                            $("input[name='addqty']").val("");
-                            $("input[name='addpur']").val("");
-                            $("input[name='addmrp']").val("");
-                            $("input[name='addshelf']").val("");
+                            // $("#batchname").val("");
+                            // $("input[name='addexp']").val("");
+                            // $("#conversion").val("");
+                            // $("input[name='addqty']").val("");
+                            // $("input[name='addpur']").val("");
+                            // $("input[name='addmrp']").val("");
+                            // $("input[name='addshelf']").val("");
 
                         },
                         error: function (error) {
+                            $('#loader').hide();
                             console.log(error);
                         }
                     })
