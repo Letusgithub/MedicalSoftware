@@ -41,6 +41,7 @@ require('./server/routes/api.debit.routes')(app);
 require('./server/routes/api.grn.routes')(app);
 require('./server/routes/api.financials.routes')(app);
 require('./server/routes/api.itemSearch.routes')(app);
+require('./server/routes/api.whatsappMsg.route')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);

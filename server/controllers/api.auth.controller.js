@@ -5,14 +5,16 @@
 
 const { createJwtToken } = require('../utils/token.util');
 const { generateOtp } = require('../actions/generateOtp.action');
-const { checkIfExists, verify, register } = require('../services/auth.service');
+const {
+  checkIfOrgExists, checkIfEmpValid, verify, register, getOrgTel,
+} = require('../services/auth.service');
 
-exports.loginOrg = async (req, res) => {
+exports.loginUser = async (req, res) => {
   // const data = req.body;
-  console.log('number', req.body.org_telephone);
+  console.log('number', req.body.mobileNumber);
   try {
     // call otp gen action >> send otp and gen otp-token //
-    const otpStatus = await generateOtp(req.body.org_telephone);
+    const otpStatus = await generateOtp(req.body.mobileNumber);
     // console.log(otpStatus);
 
     if (otpStatus.status === 'success') {
@@ -28,11 +30,66 @@ exports.loginOrg = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to login user' });
+    return res.status(500).json({ error: 'Failed to login user' });
   }
 };
 
-exports.verifyOtp = async (req, res) => {
+exports.verifyEmpOtp = async (req, res) => {
+  const otp_value = req.body.otp_value;
+  const OTPtoken = req.body.OTPtoken;
+  const emp_mobile = req.body.mobileNumber;
+
+  try {
+    verify(OTPtoken, otp_value, (otpErr, otpResult) => {
+      if (otpErr) {
+        console.error('Failed to verify OTP:', otpErr);
+        return res.status(500).json({ status: 'failed', message: 'Failed to verify' });
+      }
+      if (otpResult[0] === undefined) {
+        return res.json({ status: 'error', message: 'Invalid OTP' });
+      }
+      checkIfEmpValid(emp_mobile, (err, results) => {
+        if (err) {
+          return res.status(500).json({
+            status: 'error',
+            message: 'Internal server error',
+          });
+        }
+        if (results[0] === undefined) {
+          return res.json({ status: 'failed', message: 'Employee not found' });
+        }
+        if (results[0].emp_access === 0) {
+          return res.json({ status: 'failed', message: 'Access Denied' });
+        }
+        if (results[0].emp_access === 1) {
+          const org_id = results[0].org_id;
+          getOrgTel(org_id, (orgTelErr, orgTelResults) => {
+            if (orgTelErr) {
+              return res.status(500).json({
+                status: 'error',
+                message: 'Internal server error',
+              });
+            }
+            if (orgTelResults[0] === undefined) {
+              return res.json({ status: 'failed', message: 'Organisation not found' });
+            }
+            const org_telephone = orgTelResults[0].org_telephone;
+            // Generate JWT token after successful otp verification //
+            const token = createJwtToken(org_telephone);
+            // Set the JWT token as a cookie //
+            res.cookie('token', token, { httpOnly: true });
+
+            return res.json({ success: 1, redirect: '/' });
+          });
+        }
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Failed to verify OTP' });
+  }
+};
+exports.verifyOrgOtp = async (req, res) => {
   const otp_value = req.body.otp_value;
   const OTPtoken = req.body.OTPtoken;
   const org_telephone = req.body.mobileNumber;
@@ -46,7 +103,7 @@ exports.verifyOtp = async (req, res) => {
       if (otpResult[0] === undefined) {
         return res.json({ status: 'error', message: 'Invalid OTP' });
       }
-      checkIfExists(org_telephone, (err, results) => {
+      checkIfOrgExists(org_telephone, (err, results) => {
         if (err) {
           return res.status(500).json({
             status: 'error',
@@ -70,7 +127,7 @@ exports.verifyOtp = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Failed to generate OTP' });
+    return res.status(500).json({ message: 'Failed to verify OTP' });
   }
 };
 
@@ -99,7 +156,7 @@ exports.registerOrg = (req, res) => {
   }
 };
 
-exports.logoutOrg = (req, res) => {
+exports.logoutUser = (req, res) => {
   res.clearCookie('token');
   res.clearCookie('gotalldata');
   res.redirect('/login');

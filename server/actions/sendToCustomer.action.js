@@ -3,10 +3,10 @@ const fast2sms = require('fast-two-sms');
 require('dotenv').config();
 
 exports.sendToCustomer = (contactNumber, receiptType, receiptID, pharmacyName) => new Promise(
-  async (res) => {
+  (res) => {
     try {
-      // Send ReceiptDetails
-      const sms = await fast2sms.sendMessage({
+    // Send ReceiptDetails
+      const sms = fast2sms.sendMessage({
         authorization: process.env.F2S_AUTH,
         message: `Receipt Type: ${receiptType},
                   Receipt ID: ${receiptID},

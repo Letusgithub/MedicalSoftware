@@ -7,12 +7,42 @@ const { getPool } = require('../config/database');
 module.exports = {
 
   // Check if organisation exists
-  checkIfExists: (org_telephone, callBack) => {
+  checkIfOrgExists: (org_telephone, callBack) => {
     getPool().query(
       'select * from organisation where org_telephone = ?',
       [org_telephone],
       (error, results) => {
         // console.log('get by tel', results);
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  // Check if employee exists for organisation
+  checkIfEmpValid: (emp_mobile, callBack) => {
+    getPool().query(
+      'select * from employee where emp_mobile = ?',
+      [emp_mobile],
+      (error, results) => {
+        // console.log('get by mobile', results);
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  // Fecth org_telephone from org_id
+  getOrgTel: (org_id, callBack) => {
+    getPool().query(
+      'select org_telephone from organisation where org_id = ?',
+      [org_id],
+      (error, results) => {
+        // console.log('get by mobile', results);
         if (error) {
           return callBack(error);
         }

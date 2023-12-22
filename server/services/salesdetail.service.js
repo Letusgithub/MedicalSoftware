@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable no-sequences */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
@@ -19,8 +20,8 @@ module.exports = {
     const order_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
 
     getPool().query(
-      `insert into order_details(customer_id, invoice_id_main, subtotal, total_dist, grand_total, mop, current_total, sales_created_date, doctor_name) 
-                                    values(?,?,?,?,?,?,?,?,?)`,
+      `insert into order_details(customer_id, invoice_id_main, subtotal, total_dist, grand_total, mop, current_total, sales_created_date, updated_date, doctor_name) 
+                                    values(?,?,?,?,?,?,?,?,?,?)`,
       [
         data.customer_id,
         invoiceId,
@@ -30,6 +31,7 @@ module.exports = {
         data.mop,
         data.current_total,
         order_created_date,
+        order_updated_date,
         data.doctor_name,
       ],
       (error, results) => {
@@ -150,18 +152,18 @@ module.exports = {
     );
   },
 
-  allSamples: (callback) => {
-    getPool().query(
-      'select * from sample',
-      [],
-      (error, results) => {
-        if (error) {
-          return callback(error);
-        }
-        return callback(null, results);
-      },
-    );
-  },
+  // allSamples: (callback) => {
+  //   getPool().query(
+  //     'select * from sample',
+  //     [],
+  //     (error, results) => {
+  //       if (error) {
+  //         return callback(error);
+  //       }
+  //       return callback(null, results);
+  //     },
+  //   );
+  // },
 
   getInvoiceOrder: (salesId, orgId, callback) => {
     getPool().query(
@@ -520,7 +522,7 @@ module.exports = {
 
       `,
       [
-    
+
       ],
       (error, results) => {
         if (error) {

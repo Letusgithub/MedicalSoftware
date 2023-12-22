@@ -28,7 +28,7 @@ module.exports = (app) => {
   app.get('/api/searchyear/', searchYear);
 
   app.get('/api/sampledetails', autoComplete);
-  app.get('/api/allsample', allSamples);
+  // app.get('/api/allsample', allSamples);
   app.get('/api/totalsumfromsales', getTotalSumfromSales);
   app.get('/api/salesmadeprevday', salesMadePrevDay);
   app.get('/api/salesmadeprevmonth', salesMadePrevMonth);

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, allSamples, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter,searchYear, getSalesIdforReport, getProfitinHome,
+  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -140,22 +140,22 @@ module.exports = {
     });
   },
 
-  allSamples: (req, res) => {
-    const id = req.params.id;
-    allSamples((error, results) => {
-      if (error) {
-        console.log(error);
-        return res.status(500).json({
-          success: 0,
-          message: 'No Orders Found',
-        });
-      }
-      // console.log(results);
-      res.status(200).json({
-        result: results,
-      });
-    });
-  },
+  // allSamples: (req, res) => {
+  //   const id = req.params.id;
+  //   allSamples((error, results) => {
+  //     if (error) {
+  //       console.log(error);
+  //       return res.status(500).json({
+  //         success: 0,
+  //         message: 'No Orders Found',
+  //       });
+  //     }
+  //     // console.log(results);
+  //     res.status(200).json({
+  //       result: results,
+  //     });
+  //   });
+  // },
 
   getInvoiceOrder: (req, res) => {
     const salesId = req.query.invoiceid;
@@ -188,7 +188,7 @@ module.exports = {
       }
       // console.log(results);
       res.status(200).json({
-        success: 'here',
+        success: 1,
         result: results,
       });
     });
