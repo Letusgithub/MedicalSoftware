@@ -91,6 +91,34 @@ module.exports = {
     );
   },
 
+  // Enable Employee Access
+  enableAccess: (emp_id, callBack) => {
+    getPool().query(
+      'update employee set emp_access = 1 where emp_id = ?',
+      [emp_id],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  // Disable Employee Access
+  disableAccess: (emp_id, callBack) => {
+    getPool().query(
+      'update employee set emp_access = 0 where emp_id = ?',
+      [emp_id],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
   // Delete Employee
   delete: (emp_id, callBack) => {
     getPool().query(
