@@ -39,6 +39,46 @@ exports.updateEmp = (req, res) => {
   });
 };
 
+exports.enableEmpAccess = (req, res) => {
+  const id = req.params.id;
+  service.enableAccess(id, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (!results) {
+      return res.json({
+        ssuccess: 0,
+        message: 'Record Not Found',
+      });
+    }
+    return res.status(200).json({
+      success: 1,
+      message: 'Enabled successfully',
+    });
+  });
+};
+
+exports.disableEmpAccess = (req, res) => {
+  const id = req.params.id;
+  service.disableAccess(id, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (!results) {
+      return res.json({
+        ssuccess: 0,
+        message: 'Record Not Found',
+      });
+    }
+    return res.status(200).json({
+      success: 1,
+      message: 'Disabled successfully',
+    });
+  });
+};
+
 exports.deleteEmp = (req, res) => {
   const id = req.params.id;
   service.delete(id, (err, results) => {
