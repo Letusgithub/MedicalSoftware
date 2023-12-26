@@ -1,11 +1,6 @@
 <%- include('../partials/headercode.ejs') %>
 
-
   <body>
-
-
-
-
 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar  ">
@@ -20,12 +15,8 @@
             <!-- navbar imported -->
             <%- include('../partials/navbar.ejs') %>
 
-
-
               <!-- Content wrapper -->
               <div class="content-wrapper">
-
-
 
 
                 <!-- Content -->
@@ -139,7 +130,7 @@
         var customerId;
 
         $(document).ready(function(){
-//using customer number to see the sales
+          //using customer number to see the sales
           $.get('/api/custorg/<%= orgId %>', function (data, status) {
 
             for (let i in data.data) {
@@ -165,9 +156,9 @@
               }
             })
           })
-// end of the number logic
+          // end of the number logic
 
-//using invoice number to see the sales
+          //using invoice number to see the sales
 
           $("#searchcart").click(function(){
             var invoiceId = $("#invoicenumber").val();
@@ -257,9 +248,9 @@
             }
           }
         
-//end of both search functionalities
+          //end of both search functionalities
 
-// edit functionality of return invoice
+          // edit functionality of return invoice
           $("#cart").on("click",".return-item", function(){
             var item = $(this).closest("tr");
             var invoiceId = item.find("#selectedinvoiceid strong").text();
@@ -282,45 +273,6 @@
         
         })
       </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <script>
           $('.add-more-btn').click(function () {
@@ -358,12 +310,6 @@
           });
         </script>
 
-
-
-
-
-
   </body>
 
-
-  </html>
+</html>

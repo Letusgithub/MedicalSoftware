@@ -38,9 +38,10 @@ module.exports = {
             });
           }
           const pharmacyName = orgDetailsResults[0].org_name;
+          const pharmacyMobile = `91${orgDetailsResults[0].org_telephone}`;
 
           // eslint-disable-next-line max-len
-          const data = salesInvoiceTemplatePharmacy(process.env.RECIPIENT_WAID, pharmacyName, customerName, amount, paymentMode, receiptLink);
+          const data = salesInvoiceTemplatePharmacy(pharmacyMobile, pharmacyName, customerName, amount, paymentMode, receiptLink);
           sendMessage(data)
             .then((response) => {
               console.log(response);
