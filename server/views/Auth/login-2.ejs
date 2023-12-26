@@ -373,7 +373,7 @@
 
                         // Get the mobile number entered by the user
                         var mobileNumber1 = $('#org_telephone1').val();
-                        console.log(mobileNumber1);
+                        console.log('mobileno.', mobileNumber1);
 
                         // Get the user role selected by the user
                         var userRole = $('#user_role1').val();
@@ -382,7 +382,7 @@
                             url: `/api/auth/login`,
                             type: 'POST',
                             data: JSON.stringify({
-                                org_telephone: mobileNumber1
+                                mobileNumber: mobileNumber1
                             }),
                             contentType: 'application/json',
                             success: function (response) {
