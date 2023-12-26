@@ -23,7 +23,7 @@ module.exports = {
 
   getOrgDetails: (orgId, callback) => {
     getPool().query(
-      'select org_name from organisation where org_id = ?',
+      'select org_name, org_telephone from organisation where org_id = ?',
       [orgId],
       (error, results) => {
         if (error) return callback(error);
