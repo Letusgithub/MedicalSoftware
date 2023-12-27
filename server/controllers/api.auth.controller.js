@@ -9,6 +9,41 @@ const {
   checkIfOrgExists, checkIfEmpValid, verify, register, getOrgTel,
 } = require('../services/auth.service');
 
+exports.chkUserRole = (req, res) => {
+  const mobileNumber = req.body.mobileNumber;
+  console.log(mobileNumber);
+  try {
+    checkIfOrgExists(mobileNumber, (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          status: 'error',
+          message: 'Internal server error',
+        });
+      }
+      if (results[0] === undefined) {
+        checkIfEmpValid(mobileNumber, (empErr, empResults) => {
+          if (empErr) {
+            return res.status(500).json({
+              status: 'error',
+              message: 'Internal server error',
+            });
+          }
+          if (empResults[0] === undefined) {
+            return res.json({ role: 'owner' });
+          }
+          if (empResults[0]) {
+            return res.json({ role: 'employee' });
+          }
+        });
+      } else if (results[0]) {
+        return res.json({ role: 'owner' });
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to check user role' });
+  }
+};
+
 exports.loginUser = async (req, res) => {
   // const data = req.body;
   console.log('number', req.body.mobileNumber);
@@ -56,10 +91,10 @@ exports.verifyEmpOtp = async (req, res) => {
           });
         }
         if (results[0] === undefined) {
-          return res.json({ status: 'failed', message: 'Employee not found' });
+          return res.json({ status: 'failed', message: 'Employee not found', redirect: `/login` });
         }
         if (results[0].emp_access === 0) {
-          return res.json({ status: 'failed', message: 'Access Denied' });
+          return res.json({ status: 'failed', message: 'Access Denied', redirect: `/login` });
         }
         if (results[0].emp_access === 1) {
           const org_id = results[0].org_id;
@@ -89,6 +124,7 @@ exports.verifyEmpOtp = async (req, res) => {
     return res.status(500).json({ message: 'Failed to verify OTP' });
   }
 };
+
 exports.verifyOrgOtp = async (req, res) => {
   const otp_value = req.body.otp_value;
   const OTPtoken = req.body.OTPtoken;
