@@ -11,6 +11,7 @@ module.exports = (app) => {
     next();
   });
 
+  app.post('/api/auth/chkUserRole', controller.chkUserRole);
   app.post('/api/auth/verifyOrgOTP', controller.verifyOrgOtp);
   app.post('/api/auth/verifyEmpOTP', controller.verifyEmpOtp);
   app.post('/api/auth/register', controller.registerOrg);

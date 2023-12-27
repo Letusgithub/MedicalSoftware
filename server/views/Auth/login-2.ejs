@@ -20,12 +20,12 @@
                         <div class="mb-3" id="validatemobile1">
                             <div class="d-flex justify-content-between">
                                 <p for="org_telephone1">Mobile No.</p>
-                                <div class="mt-1 me-2">
+                                <!-- <div class="mt-1 me-2">
                                     <select class="form-select form-select-sm w-100" id="user_role1">
                                         <option value="owner" selected>Owner</option>
                                         <option value="employee">Employee</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
 
                             <input type="number" class="form-control" id="org_telephone1" name="mobilenumber1"
@@ -95,12 +95,12 @@
                         <div class="mb-3" id="validatemobile">
                             <div class="d-flex justify-content-between">
                                 <p for="org_telephone" class="form-label">Mobile No.</p>
-                                <div class="mt-3">
+                                <!-- <div class="mt-3">
                                     <select class="form-select form-select-sm" id="user_role">
                                         <option value="owner" selected>Owner</option>
                                         <option value="employee">Employee</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
 
                             <input type="number" class="form-control" id="org_telephone" name="mobilenumber"
@@ -215,24 +215,7 @@
                     $('input[name="mobilenumber"]').on("input", validateMobileNumber);
                     $("#org_telephone").keypress(handleKeyPressForOTPbtn);
 
-                    // Send OTP button click event handler
-                    $("#sendOtpButton").click(function () {
-                        $('#sendOtpButton').prop('disabled', true);
-
-                        // Get the mobile number entered by the user
-                        var mobileNumber = $('#org_telephone').val();
-                        console.log(mobileNumber);
-
-                        // Get the user role selected by the user
-                        var userRole = $('#user_role').val();
-
-                        if (userRole === 'owner') {
-                            var url = `/api/auth/verifyOrgOTP`;
-                        }
-                        if (userRole === 'employee') {
-                            var url = `/api/auth/verifyEmpOTP`;
-                        }
-
+                    function loginFunctionDW( mobileNumber, url) {
                         $.ajax({
                             url: `/api/auth/login`,
                             type: 'POST',
@@ -293,6 +276,39 @@
                                 console.log('error', error);
                             }
                         })
+                    }
+
+                    // Send OTP button click event handler
+                    $("#sendOtpButton").click(function () {
+                        $('#sendOtpButton').prop('disabled', true);
+
+                        // Get the mobile number entered by the user
+                        var mobileNumber = $('#org_telephone').val();
+                        console.log(mobileNumber);
+
+                        $.ajax({
+                            url: `/api/auth/chkUserRole`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                mobileNumber: mobileNumber
+                            }),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log('check user role', response);
+                                if (response.role === 'employee') {
+                                    var url = `/api/auth/verifyEmpOTP`;
+                                    loginFunctionDW(mobileNumber, url);
+                                }
+                                else {
+                                    var url = `/api/auth/verifyOrgOTP`;
+                                    loginFunctionDW(mobileNumber, url);
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        })
+
                     });
                 })
             </script>
@@ -366,18 +382,7 @@
                     $('input[name="mobilenumber1"]').on("input", validateMobileNumber1);
                     $("#org_telephone1").keypress(handleKeyPressForOTPbtn1);
 
-
-                    // Send OTP button click event handler
-                    $("#sendOtpButton1").click(function () {
-                        $('#sendOtpButton1').prop('disabled', true);
-
-                        // Get the mobile number entered by the user
-                        var mobileNumber1 = $('#org_telephone1').val();
-                        console.log('mobileno.', mobileNumber1);
-
-                        // Get the user role selected by the user
-                        var userRole = $('#user_role1').val();
-
+                    function loginFunctionMW( mobileNumber1, url) {
                         $.ajax({
                             url: `/api/auth/login`,
                             type: 'POST',
@@ -399,13 +404,6 @@
                                 // OTP form submission event handler
                                 var OTPtoken = response.OTPtoken
                                 $("#confirmOtpButton1").click(function () {
-
-                                    if (userRole === 'owner') {
-                                        var url = `/api/auth/verifyOrgOTP`;
-                                    }
-                                    if (userRole === 'employee') {
-                                        var url = `/api/auth/verifyEmpOTP`;
-                                    }
 
                                     //$('#confirmOtpButton').prop('disabled', true);
 
@@ -441,6 +439,40 @@
                                 console.log('error', error);
                             }
                         })
+                    }
+
+
+                    // Send OTP button click event handler
+                    $("#sendOtpButton1").click(function () {
+                        $('#sendOtpButton1').prop('disabled', true);
+
+                        // Get the mobile number entered by the user
+                        var mobileNumber1 = $('#org_telephone1').val();
+                        console.log('mobileno.', mobileNumber1);
+
+                        $.ajax({
+                            url: `/api/auth/chkUserRole`,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                mobileNumber: mobileNumber1
+                            }),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log('check user role', response);
+                                if (response.role === 'employee') {
+                                    var url = `/api/auth/verifyEmpOTP`;
+                                    loginFunctionMW(mobileNumber1, url);
+                                }
+                                else {
+                                    var url = `/api/auth/verifyOrgOTP`;
+                                    loginFunctionMW(mobileNumber1, url);
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        })
+
                     });
                 })
             </script>
