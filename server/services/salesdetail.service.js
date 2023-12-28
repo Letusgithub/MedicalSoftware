@@ -20,9 +20,10 @@ module.exports = {
     const order_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
 
     getPool().query(
-      `insert into order_details(customer_id, invoice_id_main, subtotal, total_dist, grand_total, mop, current_total, sales_created_date, updated_date, doctor_name) 
-                                    values(?,?,?,?,?,?,?,?,?,?)`,
+      `insert into order_details(org_id, customer_id, invoice_id_main, subtotal, total_dist, grand_total, mop, current_total, sales_created_date, updated_date, doctor_name) 
+                                    values(?,?,?,?,?,?,?,?,?,?,?)`,
       [
+        data.org_id,
         data.customer_id,
         invoiceId,
         data.subtotal,
@@ -298,18 +299,19 @@ module.exports = {
     );
   },
 
-  autoComplete: (querys, callback) => {
-    const queries = querys.toLowerCase();
-    getPool().query(
-      'select * from sample where lower(med_name) like ? limit 10',
-      [`%${queries}%`],
-      (error, results) => {
-        if (error) return callback(error);
-        return callback(null, results);
-      },
+  // autoComplete: (querys, callback) => {
+  //   const queries = querys.toLowerCase();
+  //   getPool().query(
+  //     'select * from sample where lower(med_name) like ? limit 10',
+  //     [`%${queries}%`],
+  //     (error, results) => {
+  //       if (error) return callback(error);
+  //       return callback(null, results);
+  //     },
 
-    );
-  },
+  //   );
+  // },
+
   // LEFT JOIN
   // customer_data AS cd ON cd.customer_id = od.customer_id
   // where cd.org_id = ?
@@ -419,6 +421,7 @@ module.exports = {
   //   FROM
   //     newdata.order_details
   //   LEFT JOIN
+  // eslint-disable-next-line max-len
   //      (SELECT DATE_FORMAT(newdata.order_details.sales_created_date, '%Y-%m') AS prev_order_month, COUNT(*) AS prev_total_orders
   //      FROM newdata.order_details
   //      WHERE newdata.order_details.sales_created_date < DATE_FORMAT(NOW(), '%Y-%m-01')

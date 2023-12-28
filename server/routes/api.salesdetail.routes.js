@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, allSamples, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  getAllOrders, getInvoiceOrder, getRevenue, searchDates, autoComplete, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
 } = require('../controllers/api.salesdetail.controller');
 
 module.exports = (app) => {
