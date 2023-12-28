@@ -255,7 +255,7 @@
     <div>
         <div class="col-6 d-flex justify-content-between">
             <div class="p-2 m-3">
-                <button class="btn-border" onclick="CreatePDFfromHTML()" >Download</button>
+                <button class="btn-border" onclick="CreatePDFfromHTML()">Download</button>
             </div>
             <!-- <div class="p-2 m-3">
                 <button class="btn-border" type="button" id="sendInvoice">Send Invoice</button>
@@ -263,6 +263,9 @@
             <div class="p-2 m-3">
                 <button class="btn-border" type="button" id="sendInvoiceToCustomer">Send To Customer</button>
             </div> -->
+            <div class="p-2 m-3">
+                <button class="btn btn-success btn-border" type="button" id="whatsappLink">Whatsapp</button>
+            </div>
             <div class="p-2 m-3">
                 <button class="btn-border" onclick="history.back()"> Back </button>
             </div>
@@ -459,7 +462,9 @@
         $(document).ready(function () {
 
             var id = '<%=id%>';
-
+            let customerName;
+            let customerNumber;
+            let customerAdd;
 
             var todayDate = new Date();
             var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -477,9 +482,9 @@
                 console.log('inside the invoice template', customer);
                 $("#mop").text(customer.mop.toUpperCase());
 
-                var customerName = customer.cust_name;
-                var customerNumber = customer.cust_telephone;
-                var customerAdd = customer.cust_address;
+                customerName = customer.cust_name;
+                customerNumber = customer.cust_telephone;
+                customerAdd = customer.cust_address;
 
                 $("#customername").text(`Patient Name: ${customerName}`);
                 $("#mobilenumber").text(`Mobile: ${customerNumber}`);
@@ -510,7 +515,6 @@
                 $("#dlno").text(`D.L.no.: ${data.data.org_dl_no_1}, ${data.data.org_dl_no_2}`)
                 $("#flno").text(`F.L. no.: ${data.data.org_fssai_no}`)
 
-
             })
 
             var product = [];
@@ -540,6 +544,14 @@
                     $("#cartitems").append(cartHtml);
 
                 }
+            })
+
+            console.log(`https://wa.me/91${customerNumber}`);
+
+            // Whatsapp Chat with customer
+            // $("#whatsappLink").attr('href', `https://wa.me/91${customerNumber}?text=Hi ${customerName}, Your order is confirmed. Your order will be delivered soon. Thank you for shopping with us.`);
+            $("#whatsappLink").click(function () {
+                window.location.href = `https://wa.me/91${customerNumber}`;
             })
 
             // Send Invoice functionality
