@@ -20,12 +20,6 @@
                         <div class="mb-3" id="validatemobile1">
                             <div class="d-flex justify-content-between">
                                 <p for="org_telephone1">Mobile No.</p>
-                                <!-- <div class="mt-1 me-2">
-                                    <select class="form-select form-select-sm w-100" id="user_role1">
-                                        <option value="owner" selected>Owner</option>
-                                        <option value="employee">Employee</option>
-                                    </select>
-                                </div> -->
                             </div>
 
                             <input type="number" class="form-control" id="org_telephone1" name="mobilenumber1"
@@ -50,6 +44,12 @@
                         <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
                         <input type="number" class="form-control" id="otp_value1" placeholder="Enter OTP" autofocus><br>
                         <button id="confirmOtpButton1">Confirm</button>
+
+                        <div id="resendOption1">
+                            <p class="or">or</p>
+                            <button id="resendOTP1" style="display: none;">Resend OTP</button>
+                            <p class="text-center">You can resend OTP after <span id="timer1">30</span> sec</p>    
+                        </div>
                     </div>
 
                 </div>
@@ -95,12 +95,6 @@
                         <div class="mb-3" id="validatemobile">
                             <div class="d-flex justify-content-between">
                                 <p for="org_telephone" class="form-label">Mobile No.</p>
-                                <!-- <div class="mt-3">
-                                    <select class="form-select form-select-sm" id="user_role">
-                                        <option value="owner" selected>Owner</option>
-                                        <option value="employee">Employee</option>
-                                    </select>
-                                </div> -->
                             </div>
 
                             <input type="number" class="form-control" id="org_telephone" name="mobilenumber"
@@ -135,7 +129,12 @@
                         <button class="btn btn-primary d-grid w-100 mb-3" id="confirmOtpButton">
                             Confirm
                         </button>
-
+                        
+                        <div id="resendOption">
+                            <p class="or">or</p>
+                            <button id="resendOTP" style="display: none;">Resend OTP</button>
+                            <p class="text-center">You can resend OTP after <span id="timer">30</span> sec</p>    
+                        </div>
 
                     </div>
                 </div>
@@ -215,7 +214,7 @@
                     $('input[name="mobilenumber"]').on("input", validateMobileNumber);
                     $("#org_telephone").keypress(handleKeyPressForOTPbtn);
 
-                    function loginFunctionDW( mobileNumber, url) {
+                    function loginFunctionDW(mobileNumber, url) {
                         $.ajax({
                             url: `/api/auth/login`,
                             type: 'POST',
@@ -224,6 +223,8 @@
                             }),
                             contentType: 'application/json',
                             success: function (response) {
+
+                                var OTPtoken = response.OTPtoken
 
                                 // Hide the mobile number input and send OTP button
                                 $("#mobileNumberInput").hide();
@@ -236,10 +237,35 @@
 
                                 $("#otp_value").keypress(handleKeyPressForConfirmbtn);
 
-                                console.log(url);
+                                var timeLeft = 30;
+                                var timerId = setInterval(function () {
+                                    if (timeLeft == 0) {
+                                        clearTimeout(timerId);
+                                        $('#resendOTP').show();
+                                        $('#timer').text('0');
+                                    } else {
+                                        $('#timer').text(timeLeft);
+                                        timeLeft--;
+                                    }
+                                }, 1000);
 
-                                // OTP form submission event handler
-                                var OTPtoken = response.OTPtoken
+                                $("#resendOTP").click(function () {
+                                    $('#resendOption').hide();
+                                    $('#resendOTP').hide();
+                                    $.ajax({
+                                        url: `/api/auth/login`,
+                                        type: 'POST',
+                                        data: JSON.stringify({
+                                            mobileNumber: mobileNumber
+                                        }),
+                                        contentType: 'application/json',
+                                        success: function (resendOTPresponse) {
+                                            OTPtoken = resendOTPresponse.OTPtoken
+                                        },
+                                    });
+                                })
+
+
                                 $("#confirmOtpButton").click(function () {
 
                                     //$('#confirmOtpButton').prop('disabled', true);
@@ -382,7 +408,7 @@
                     $('input[name="mobilenumber1"]').on("input", validateMobileNumber1);
                     $("#org_telephone1").keypress(handleKeyPressForOTPbtn1);
 
-                    function loginFunctionMW( mobileNumber1, url) {
+                    function loginFunctionMW(mobileNumber1, url) {
                         $.ajax({
                             url: `/api/auth/login`,
                             type: 'POST',
@@ -391,6 +417,8 @@
                             }),
                             contentType: 'application/json',
                             success: function (response) {
+
+                                var OTPtoken = response.OTPtoken;
 
                                 // Hide the mobile number input and send OTP button
                                 $("#mobileNumberInput1").hide();
@@ -401,8 +429,36 @@
 
                                 $("#otp_value1").keypress(handleKeyPressForConfirmbtn1);
 
+                                var timeLeft = 30;
+                                var timerId = setInterval(function () {
+                                    if (timeLeft == 0) {
+                                        clearTimeout(timerId);
+                                        $('#resendOTP1').show();
+                                        $('#timer1').text('0');
+                                    } else {
+                                        $('#timer1').text(timeLeft);
+                                        timeLeft--;
+                                    }
+                                }, 1000);
+
+                                $("#resendOTP1").click(function () {
+                                    $('#resendOption1').hide();
+                                    $('#resendOTP1').hide();
+                                    $.ajax({
+                                        url: `/api/auth/login`,
+                                        type: 'POST',
+                                        data: JSON.stringify({
+                                            mobileNumber: mobileNumber1
+                                        }),
+                                        contentType: 'application/json',
+                                        success: function (resendOTPresponse) {
+                                            OTPtoken = resendOTPresponse.OTPtoken
+                                        },
+                                    });
+                                })
+
+
                                 // OTP form submission event handler
-                                var OTPtoken = response.OTPtoken
                                 $("#confirmOtpButton1").click(function () {
 
                                     //$('#confirmOtpButton').prop('disabled', true);
