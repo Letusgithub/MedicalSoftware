@@ -549,9 +549,8 @@
             console.log(`https://wa.me/91${customerNumber}`);
 
             // Whatsapp Chat with customer
-            // $("#whatsappLink").attr('href', `https://wa.me/91${customerNumber}?text=Hi ${customerName}, Your order is confirmed. Your order will be delivered soon. Thank you for shopping with us.`);
             $("#whatsappLink").click(function () {
-                window.location.href = `https://wa.me/91${customerNumber}`;
+                window.open(`https://wa.me/91${customerNumber}`, '_blank');
             })
 
             // Send Invoice functionality
