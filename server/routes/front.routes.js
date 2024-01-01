@@ -306,14 +306,6 @@ module.exports = async (app) => {
     });
   });
 
-  app.get('/sale_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    console.log('got the id', req.params.id);
-    console.log(req.org_id);
-    res.render('Receipt/sale_receipt', {
-      id: req.params.id, orgId: req.org_id,
-    });
-  });
-
   app.get('/sales_invoice', (req, res) => {
     res.render('Receipt/sale_receipt', {
       id: req.query.invoice_id, orgId: req.query.org_id,
