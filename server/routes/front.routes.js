@@ -298,7 +298,7 @@ module.exports = async (app) => {
 
   // Receipt
 
-  app.get('/new_sale_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+  app.get('/sale_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
     console.log('got the id', req.params.id);
     console.log(req.org_id);
     res.render('Receipt/new_sales_receipt', {
