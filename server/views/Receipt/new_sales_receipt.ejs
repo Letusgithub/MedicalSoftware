@@ -1,6 +1,7 @@
 <%- include('../partials/headercode.ejs') %>
 
     <head>
+
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
         <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
@@ -9,10 +10,15 @@
                 width: 46.875rem;
                 height: 39rem;
                 background: #FFF;
-                background-image: 'C:\ATHARV\StartUp\Development\Pharmacy Module\pharmacy-module-v1\erp_green\public\images\Group 33050.png';
+                padding: 15px;
             }
 
             .receipt-container {
+                background-image: url("/images/receipt-bg3.png");
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
                 position: relative;
                 width: 44.2365rem;
                 height: 35.97663rem;
@@ -27,9 +33,6 @@
                 height: 1.2455rem;
                 flex-direction: column;
                 flex-shrink: 0;
-
-                /* top: 0.05rem;
-            left: 0.98rem; */
 
                 color: #1E1E1E;
                 font-size: 1.25rem;
@@ -138,11 +141,10 @@
 
             .cart-table {
                 position: relative;
-                left: -1.69rem;
                 width: 44.23000rem;
                 height: 14.56863rem;
                 border: 0.05rem solid #1E1E1E;
-
+                left: -1rem;
                 margin-top: 0.75rem;
             }
 
@@ -177,7 +179,7 @@
                 left: -1rem;
                 top: -0.05rem;
                 width: 28.9rem;
-                height: 10.15rem;
+                height: 10.10rem;
                 border: 0.05rem solid #1E1E1E;
 
                 color: #000;
@@ -260,7 +262,7 @@
                     <!-- Layout container -->
                     <div class="layout-page">
                         <!-- navbar imported -->
-                        <button%- include('../partials/navbar.ejs') %>
+                        <%- include('../partials/navbar.ejs') %>
 
                             <!-- Content wrapper -->
                             <div class="content-wrapper">
@@ -272,22 +274,18 @@
 
                                         <div class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4">
                                             <div class="frame1 " id="html-content">
-                                                <div class="receipt-container container">
+                                                <div class="receipt-container">
                                                     <div class="d-flex justify-content-between">
                                                         <div>
-                                                            <div class="shop-name" id="pharmacyname">
-                                                            </div>
+                                                            <div class="shop-name" id="pharmacyName"></div>
                                                             <div class="shop-info d-flex justify-content-between">
-                                                                <div class="shop-info-child1" id="shopaddress">
-
-                                                                </div>
+                                                                <div class="shop-info-child1" id="shopaddress"></div>
                                                                 <div class="shop-info-child2">
                                                                     <p class="my-0" id="gstin">GSTIN:</p>
                                                                     <p class="my-0" id="dlno">D.L.no.:</p>
                                                                     <p class="my-0" id="flno">F.L. no.:</p>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <div class="logo-container">
                                                             <img src="/images/logo.svg"></img>
@@ -320,9 +318,6 @@
                                                             <p id="invoicenumber">
                                                                 Invoice no.:
                                                             </p>
-                                                            <!-- <p>
-                                Cart id.:
-                            </p> -->
                                                         </div>
 
                                                     </div>
@@ -343,54 +338,7 @@
                                                         </thead>
                                                         <tbody id="cartitems">
 
-                                                            <tr>
-                                                                <td style="width: 2.27rem; height: 1rem;"></td>
-                                                                <td style="width: 11.29rem; height: 1rem;">items[i].med_name/items[i].med_name/items[i].med_name</td>
-                                                                <td style="width: 3.1rem; height: 1rem;"></td>
-                                                                <td style="width: 4.59rem; height: 1rem;"></td>
-                                                                <td style="width: 4.4rem; height: 1rem;"></td>
-                                                                <td style="width: 3.25rem; height: 1rem;">${date}</td>
-                                                                <td style="width: 3.62rem; height: 1rem;"></td>
-                                                                <td style="width: 3.61rem; height: 1rem;"></td>
-                                                                <td style="width: 3.91rem; height: 1rem;"></td>
-                                                                <td style="width: 4.2rem; height: 1rem;"></td>
-                                                            </tr>
-                                                            <!-- <tr>
-                                <td style="width: 2.27rem; height: 1rem;">1</td>
-                                <td style="width: 11.29rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.1rem; height: 1rem;">wyx</td>
-                                <td style="width: 4.59rem; height: 1rem;">wyx</td>
-                                <td style="width: 4.4rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.25rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                                <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 2.27rem; height: 1rem;">1</td>
-                                <td style="width: 11.29rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.1rem; height: 1rem;">wyx</td>
-                                <td style="width: 4.59rem; height: 1rem;">wyx</td>
-                                <td style="width: 4.4rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.25rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                                <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                                <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 2.27rem;">3</td>
-                                <td style="width: 11.29rem;">wyx</td>
-                                <td style="width: 3.1rem;">wyx</td>
-                                <td style="width: 4.59rem;">wyx</td>
-                                <td style="width: 4.4rem;">wyx</td>
-                                <td style="width: 3.25rem;">wyx</td>
-                                <td style="width: 3.62rem;">wyx</td>
-                                <td style="width: 3.61rem;">wyx</td>
-                                <td style="width: 3.91rem;">wyx</td>
-                                <td style="width: 4.2rem;">wyx</td>
-                            </tr> -->
+
 
                                                         </tbody>
                                                     </table>
@@ -441,22 +389,7 @@
 
                                                                     </div>
                                                                 </div>
-                                                                <!-- <div class="d-flex justify-content-between">
-                                    <div class="label">
-                                        Total Discount:
-                                    </div>
-                                    <div>
-                                        0.00 
-                                    </div>
-                                </div> -->
-                                                                <!-- <div class="d-flex justify-content-between">
-                                    <div class="label">
-                                        Shipping:
-                                    </div>
-                                    <div>
-                                        50.00 
-                                    </div>
-                                </div> -->
+
                                                                 <div class="d-flex justify-content-between my-2">
                                                                     <div class="label">
                                                                         Payment:
@@ -484,9 +417,6 @@
 
                                                 </div>
 
-
-
-
                                             </div>
                                         </div>
 
@@ -497,32 +427,20 @@
                                         <div class="col-xl-3 col-md-4 col-12 invoice-actions">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <form method="post" action="/api/whatsapp">
-                                                        <button class="btn btn-primary btn-label-primary d-grid w-100 mb-3" type="submit">
-                                                        Send Invoice </button>
-                                                    </form>
-                                                    
-                                                    <button class="btn btn-label-secondary d-grid w-100 mb-3">
-                                                        Download
-                                                    </button>
-                                                    <a class="btn btn-label-secondary d-grid w-100 mb-3" target="_blank"
-                                                        href="app-invoice-print.html">
-                                                        Print
-                                                    </a>
-                                                    <a href="app-invoice-edit.html"
-                                                        class="btn btn-label-secondary d-grid w-100 mb-3">
-                                                        Edit Invoice
-                                                    </a>
-                                                    <button class="btn btn-primary d-grid w-100"
-                                                        data-bs-toggle="offcanvas"
-                                                        data-bs-target="#addPaymentOffcanvas">
-                                                        <span
-                                                            class="d-flex align-items-center justify-content-center text-nowrap"><i
-                                                                class="bx bx-dollar bx-xs me-1"></i>Add
-                                                            Payment</span>
-                                                    </button>
+                                                  <!-- <button class="btn btn-primary d-grid w-100 mb-3" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+                                                    <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
+                                                  </button> -->
+                                                  <button class="btn btn-primary btn-label-secondary d-grid w-100 mb-3" type="button" onclick="CreatePDFfromHTML()">
+                                                    Download
+                                                  </button>
+                                                  <button class="btn btn-success d-grid w-100 mb-3" type="button" id="whatsappLink">
+                                                    WhatsApp
+                                                  </button>
+                                                  <button class="btn btn-label-secondary d-grid w-100" type="button" onclick="history.back()">
+                                                    Back
+                                                  </button>
                                                 </div>
-                                            </div>
+                                              </div>
                                         </div>
                                         <!-- /Invoice Actions -->
                                     </div>
@@ -534,5 +452,236 @@
             </div>
         </div>
 
-        <%- include('../partials/footercode.ejs') %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>    
+
+            <script>
+
+                $(document).ready(function () {
+
+                    var id = '<%=id%>';
+                    let customerName;
+                    let customerNumber;
+                    let customerAdd;
+
+                    var todayDate = new Date();
+                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    var formattedDate = todayDate.toLocaleDateString('en-US', options);
+                    $("#orderdate").text(`Date: ${formattedDate}`);
+
+                    $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
+                        var customer = data.result[0];
+                        console.log('inside the invoice template', customer);
+                        $("#mop").text(customer.mop.toUpperCase());
+
+                        customerName = customer.cust_name;
+                        customerNumber = customer.cust_telephone;
+                        customerAdd = customer.cust_address;
+
+                        $("#customername").text(`Patient Name: ${customerName}`);
+                        $("#mobilenumber").text(`Mobile: ${customerNumber}`);
+
+                        $("#shippingadd").text(`Shipping Address: ${customerAdd}`);
+                        $("#shippedcustomerdetails .shippedcustomernumber").html(`${customerNumber} <br> `);
+                        $("#invoicenumber").text(`Invoice no: ${customer.invoice_id_main}`);
+                        $("#subtotal").text(customer.subtotal);
+                        $("#additionaldisc").text(customer.total_dist);
+                        $("#grandtotal").text(customer.grand_total);
+                        $("#doctorname").text(`Dr name: ${customer.doctor_name}`);
+                    })
+
+                    $.get(`/api/org/<%=orgId%>`, function (data, status) {
+                        console.log(data);
+
+                        $("#pharmacyName").text(data.data.org_name);
+                        $("#contact").text(data.data.org_telephone);
+
+                        $("#shopaddress").html(`
+                        ${data.data.org_address}</br>
+                        ${data.data.org_city}( ${data.data.org_state} ), ${data.data.org_pincode}</br>
+                        ${data.data.org_telephone}
+                    `)
+
+                        $("#gstin").text(`GSTIN: ${data.data.org_gstin}`);
+                        $("#dlno").text(`D.L.no.: ${data.data.org_dl_no_1}, ${data.data.org_dl_no_2}`)
+                        $("#flno").text(`F.L. no.: ${data.data.org_fssai_no}`)
+
+                    })
+
+                    var product = [];
+                    $.get(`/api/getcartitemsininvoice/${id}`, function (data, status) {
+
+                        var items = data.data;
+                        console.log("items in data", items);
+
+                        for (var i = 0; i < items.length; i++) {
+                            var datetime = items[i].exp_date;
+                            console.log(datetime);
+                            var date = moment(datetime).format('DD-MM-YY');
+
+                            cartHtml =
+                                `<tr>
+                            <td style="width: 2.27rem; height: 1rem;">${i + 1}</td>
+                            <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                            <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
+                            <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
+                            <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
+                            <td style="width: 3.25rem; height: 1rem;">${date}</td>
+                            <td style="width: 3.62rem; height: 1rem;">${items[i].unit_mrp}</td>
+                            <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
+                            <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
+                            <td style="width: 4.2rem; height: 1rem;">${items[i].saled_mrp}</td>
+                        </tr>`
+                            $("#cartitems").append(cartHtml);
+
+                        }
+                    })
+
+                    // Whatsapp Chat with customer
+                    $("#whatsappLink").click(function () {
+                        window.open(`https://wa.me/91${customerNumber}`, '_blank');
+                    })
+
+                    // Send Invoice functionality
+                    $('#sendInvoice').click(function () {
+                        $.ajax({
+                            url: `/api/whatsapp/pharmacy?invoiceid=${id}&org=<%= orgId %>`,
+                            type: 'POST',
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log('Invoice sent', response)
+                            },
+                            error: function (error) {
+                                console.log('error in sending invoice', error);
+                            }
+                        })
+                    })
+
+                    $('#sendInvoiceToCustomer').on('click', function () {
+
+                        // Get the element you want to convert to PDF
+                        var element = document.getElementById('html-content');
+
+                        // Use html2pdf to convert it
+                        html2pdf().from(element).outputPdf('blob').then(function (pdfData) {
+
+                            // Convert the Uint8Array to a Blob
+                            var pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
+
+                            var formData = new FormData();
+                            formData.append('file', pdfBlob);
+
+                            console.log(formData);
+
+                            $.ajax({
+                                url: `/api/whatsapp/customer?invoiceid=${id}&org=<%= orgId %>`,
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    console.log(response);
+                                },
+                                error: function (error) {
+                                    console.error(error);
+                                }
+                            });
+
+                        });
+                    });
+
+
+
+                    //Create PDf from HTML...
+                    // $("#download").click(function () {
+                    //     CreatePDFfromHTML();
+                    // });
+
+                    // function CreatePDFfromHTML() {
+                    //     var HTML_Width = $("#html-content").width();
+                    //     var HTML_Height = $("#html-content").height();
+                    //     var top_left_margin = 30;
+                    //     var PDF_Width = HTML_Width + (top_left_margin * 2);
+                    //     var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+                    //     var canvas_image_width = HTML_Width;
+                    //     var canvas_image_height = HTML_Height;
+
+                    //     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+                    //     html2canvas($("#html-content")[0]).then(function (canvas) {
+                    //         var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                    //         var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                    //         pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                    //         for (var i = 1; i <= totalPDFPages; i++) {
+                    //             pdf.addPage(PDF_Width, PDF_Height);
+                    //             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                    //         }
+                    //         pdf.save("HTML-Document.pdf");
+
+                    //         // Convert the Uint8Array to a Blob
+                    //         var pdfBlob = new Blob([pdf], { type: 'application/pdf' });
+
+                    //         var formData = new FormData();
+                    //         formData.append('file', pdfBlob);
+
+                    //         console.log(pdf);
+                    //         console.log(pdfBlob);
+                    //         console.log(formData);
+
+                    //         $.ajax({
+                    //             url: `/api/whatsapp/customer?invoiceid=${id}&org=<%= orgId %>`,
+                    //             type: 'POST',
+                    //             data: formData,
+                    //             contentType: false,
+                    //             processData: false,
+                    //             success: function (response) {
+                    //                 console.log(response);
+                    //             },
+                    //             error: function (error) {
+                    //                 console.error(error);
+                    //             }
+                    //         });
+                    //     });
+                    // }
+                })
+
+                // Function to create PDF using html2pdf
+                function createPDF() {
+                    // Get the HTML element you want to convert
+                    var element = document.getElementById('html-content');
+
+                    // Use html2pdf to generate the PDF
+                    return html2pdf(element)
+                        .from(element)
+                        .outputPdf();
+                }
+
+            </script>
+            <script>
+                function CreatePDFfromHTML() {
+                    var HTML_Width = $("#html-content").width();
+                    var HTML_Height = $("#html-content").height();
+                    var top_left_margin = 30;
+                    var PDF_Width = HTML_Width + (top_left_margin * 2);
+                    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+                    var canvas_image_width = HTML_Width;
+                    var canvas_image_height = HTML_Height;
+
+                    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+                    html2canvas($("#html-content")[0]).then(function (canvas) {
+                        var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                        var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                        for (var i = 1; i <= totalPDFPages; i++) {
+                            pdf.addPage(PDF_Width, PDF_Height);
+                            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                        }
+                        pdf.save("Invoice.pdf");
+                    });
+                }
+            </script>
+
     </body>
+
+    </html>

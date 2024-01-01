@@ -3002,6 +3002,44 @@ fieldset:disabled .btn {
   border-radius: .25rem
 }
 
+/* Added from Sneat 1-1-24 */
+.btn-label-secondary {
+  color: #8592a3;
+  border-color: rgba(0,0,0,0);
+  background: #ebeef0
+}
+
+.btn-label-secondary:hover {
+  border-color: rgba(0,0,0,0) !important;
+  background: #788393 !important;
+  color: #fff !important;
+  box-shadow: 0 .125rem .25rem 0 rgba(133,146,163,.4) !important;
+  transform: translateY(-1px) !important
+}
+
+.btn-label-secondary:focus,.btn-label-secondary.focus {
+  color: #fff;
+  background: #788393;
+  box-shadow: none !important;
+  transform: translateY(0)
+}
+
+.btn-label-secondary:active,.btn-label-secondary.active,.btn-label-secondary.show.dropdown-toggle,.show>.btn-label-secondary.dropdown-toggle {
+  color: #fff !important;
+  background-color: #717c8b !important;
+  border-color: rgba(0,0,0,0) !important
+}
+
+.btn-label-secondary:active:focus,.btn-label-secondary.active:focus,.btn-label-secondary.show.dropdown-toggle:focus,.show>.btn-label-secondary.dropdown-toggle:focus {
+  box-shadow: none
+}
+
+.btn-label-secondary.disabled,.btn-label-secondary:disabled {
+  color: #8592a3 !important;
+  background-color: #ebeef0 !important;
+  border-color: rgba(0,0,0,0) !important
+}
+
 .fade {
   transition: opacity .15s linear
 }
