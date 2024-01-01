@@ -945,6 +945,12 @@ progress {
 .gy-5 {
   --bs-gutter-y: 3rem
 }
+@media(min-width: 300px) {
+  .col-xs-6 {
+    flex: 0 0 auto;
+    width: 50%
+  }
+}
 
 @media(min-width: 576px) {
   .col-sm {
