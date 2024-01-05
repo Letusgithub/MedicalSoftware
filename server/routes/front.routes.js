@@ -306,6 +306,12 @@ module.exports = async (app) => {
     });
   });
 
+  app.get('/sales_invoice', (req, res) => {
+    res.render('Receipt/sale_receipt', {
+      id: req.query.invoice_id, orgId: req.query.org_id,
+    });
+  });
+
   app.get('/return_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
     res.render('Receipt/return_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
