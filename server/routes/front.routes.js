@@ -5,6 +5,7 @@ const { getPool } = require('../config/database');
 const { checkAuth } = require('../middlewares/checkAuth');
 const { fetchOrgId } = require('../middlewares/fetchOrgId');
 const { getPharmaData } = require('../middlewares/getPharmaData');
+const { lastVisit } = require('../middlewares/userActivity');
 const { check } = require('../../public/js/ServiceWorker');
 
 module.exports = async (app) => {
@@ -23,7 +24,7 @@ module.exports = async (app) => {
   });
 
   // Home Page
-  app.get('/', checkAuth, fetchOrgId, getPharmaData, (req, res) => {
+  app.get('/', checkAuth, fetchOrgId, getPharmaData, lastVisit, (req, res) => {
     console.log('insdie the req statement', req.app.locals.token);
     console.log('insdie the req statement', req.app.locals.name);
     console.log('insdie the req statement', req.app.locals.number);
