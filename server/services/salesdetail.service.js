@@ -237,7 +237,7 @@ module.exports = {
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      ${querys} and org_id = ${orgId} 
+      ${querys} and cd.org_id = ${orgId} 
       ORDER BY sales_created_date DESC`,
       datas,
       (error, results) => {
@@ -252,11 +252,8 @@ module.exports = {
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      where MONTH(od.sales_created_date)=? and org_id = ${orgId} 
+      where MONTH(od.sales_created_date) = ${month} and cd.org_id = ${orgId} 
       `,
-      [
-        month,
-      ],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -269,12 +266,8 @@ module.exports = {
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      where MONTH(od.sales_created_date)>=? and MONTH(od.sales_created_date)<=? and org_id = ${orgId} 
+      where MONTH(od.sales_created_date)>= ${start} and MONTH(od.sales_created_date)<= ${end} and cd.org_id = ${orgId} 
       `,
-      [
-        start,
-        end,
-      ],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -286,12 +279,9 @@ module.exports = {
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      where YEAR(od.sales_created_date)=? and org_id = ${orgId} 
+      where YEAR(od.sales_created_date)= ${year} and cd.org_id = ${orgId} 
       order by MONTH(od.sales_created_date) DESC
       `,
-      [
-        year,
-      ],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);

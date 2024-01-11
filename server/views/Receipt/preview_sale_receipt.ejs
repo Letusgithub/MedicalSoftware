@@ -257,18 +257,6 @@
             <div class="p-2 m-3">
                 <button class="btn-border" onclick="CreatePDFfromHTML()">Download</button>
             </div>
-            <!-- <div class="p-2 m-3">
-                <button class="btn-border" type="button" id="sendInvoice">Send Invoice</button>
-            </div>
-            <div class="p-2 m-3">
-                <button class="btn-border" type="button" id="sendInvoiceToCustomer">Send To Customer</button>
-            </div> -->
-            <div class="p-2 m-3">
-                <button class="btn btn-success btn-border" type="button" id="whatsappLink">Whatsapp</button>
-            </div>
-            <div class="p-2 m-3">
-                <button class="btn-border" onclick="history.back()"> Back </button>
-            </div>
         </div>
 
         <div class="frame1 mt-2" id="html-content">
@@ -342,42 +330,6 @@
                         </tr>
                     </thead>
                     <tbody id="cartitems">
-                        <!-- <tr>
-                        <td style="width: 2.27rem; height: 1rem;">1</td>
-                        <td style="width: 11.29rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.1rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.59rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.4rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.25rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 2.27rem; height: 1rem;">1</td>
-                        <td style="width: 11.29rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.1rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.59rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.4rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.25rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.62rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.61rem; height: 1rem;">wyx</td>
-                        <td style="width: 3.91rem; height: 1rem;">wyx</td>
-                        <td style="width: 4.2rem; height: 1rem;">wyx</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 2.27rem;">3</td>
-                        <td style="width: 11.29rem;">wyx</td>
-                        <td style="width: 3.1rem;">wyx</td>
-                        <td style="width: 4.59rem;">wyx</td>
-                        <td style="width: 4.4rem;">wyx</td>
-                        <td style="width: 3.25rem;">wyx</td>
-                        <td style="width: 3.62rem;">wyx</td>
-                        <td style="width: 3.61rem;">wyx</td>
-                        <td style="width: 3.91rem;">wyx</td>
-                        <td style="width: 4.2rem;">wyx</td>
-                    </tr> -->
 
                     </tbody>
                 </table>
@@ -462,6 +414,7 @@
         $(document).ready(function () {
 
             var id = '<%=id%>';
+            var orgId= '<%=orgId%>';
             let customerName;
             let customerNumber;
             let customerAdd;
@@ -471,13 +424,7 @@
             var formattedDate = todayDate.toLocaleDateString('en-US', options);
             $("#orderdate").text(`Date: ${formattedDate}`)
 
-            // { Get Pharamcy Details from local storage}
-            // var pharmacyDetails = JSON.parse(localStorage.getItem("name"));
-            // $("#pharmacyname").text(pharmacyDetails.pharmacyName);
-            // $("#gstin").text(`GSTIN: ${pharmacyDetails.gst}`);
-            // $("#contact").text(pharmacyDetails.number);
-
-            $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
+            $.get(`/api/invoice?invoiceid=${id}&org=${orgId}`, function (data, status) {
                 var customer = data.result[0];
                 console.log('inside the invoice template', customer);
                 $("#mop").text(customer.mop.toUpperCase());
@@ -499,7 +446,7 @@
 
             })
 
-            $.get(`/api/org/<%=orgId%>`, function (data, status) {
+            $.get(`/api/org/${orgId}`, function (data, status) {
                 console.log(data);
 
                 $("#pharmacyname").text(data.data.org_name);
@@ -545,126 +492,8 @@
 
                 }
             })
-
-            // Whatsapp Chat with customer
-            $("#whatsappLink").click(function () {
-                window.open(`https://wa.me/91${customerNumber}`, '_blank');
-            })
-
-            // Send Invoice functionality
-            $('#sendInvoice').click(function () {
-                $.ajax({
-                    url: `/api/whatsapp/pharmacy?invoiceid=${id}&org=<%= orgId %>`,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (response) {
-                        console.log('Invoice sent', response)
-                    },
-                    error: function (error) {
-                        console.log('error in sending invoice', error);
-                    }
-                })
-            })
-
-            $('#sendInvoiceToCustomer').on('click', function () {
-
-                // Get the element you want to convert to PDF
-                var element = document.getElementById('html-content');
-
-                // Use html2pdf to convert it
-                html2pdf().from(element).outputPdf('blob').then(function (pdfData) {
-
-                    // Convert the Uint8Array to a Blob
-                    var pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
-
-                    var formData = new FormData();
-                    formData.append('file', pdfBlob);
-
-                    console.log(formData);
-
-                    $.ajax({
-                        url: `/api/whatsapp/customer?invoiceid=${id}&org=<%= orgId %>`,
-                        type: 'POST',
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function (response) {
-                            console.log(response);
-                        },
-                        error: function (error) {
-                            console.error(error);
-                        }
-                    });
-
-                });
-            });
-
-
-
-            //Create PDf from HTML...
-            // $("#download").click(function () {
-            //     CreatePDFfromHTML();
-            // });
-
-            // function CreatePDFfromHTML() {
-            //     var HTML_Width = $("#html-content").width();
-            //     var HTML_Height = $("#html-content").height();
-            //     var top_left_margin = 30;
-            //     var PDF_Width = HTML_Width + (top_left_margin * 2);
-            //     var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
-            //     var canvas_image_width = HTML_Width;
-            //     var canvas_image_height = HTML_Height;
-
-            //     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-
-            //     html2canvas($("#html-content")[0]).then(function (canvas) {
-            //         var imgData = canvas.toDataURL("image/jpeg", 1.0);
-            //         var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-            //         pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
-            //         for (var i = 1; i <= totalPDFPages; i++) {
-            //             pdf.addPage(PDF_Width, PDF_Height);
-            //             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
-            //         }
-            //         pdf.save("HTML-Document.pdf");
-
-            //         // Convert the Uint8Array to a Blob
-            //         var pdfBlob = new Blob([pdf], { type: 'application/pdf' });
-
-            //         var formData = new FormData();
-            //         formData.append('file', pdfBlob);
-
-            //         console.log(pdf);
-            //         console.log(pdfBlob);
-            //         console.log(formData);
-
-            //         $.ajax({
-            //             url: `/api/whatsapp/customer?invoiceid=${id}&org=<%= orgId %>`,
-            //             type: 'POST',
-            //             data: formData,
-            //             contentType: false,
-            //             processData: false,
-            //             success: function (response) {
-            //                 console.log(response);
-            //             },
-            //             error: function (error) {
-            //                 console.error(error);
-            //             }
-            //         });
-            //     });
-            // }
+        
         })
-
-        // Function to create PDF using html2pdf
-        function createPDF() {
-            // Get the HTML element you want to convert
-            var element = document.getElementById('html-content');
-
-            // Use html2pdf to generate the PDF
-            return html2pdf(element)
-                .from(element)
-                .outputPdf();
-        }
-
     </script>
     <script>
         function CreatePDFfromHTML() {

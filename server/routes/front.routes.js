@@ -308,7 +308,7 @@ module.exports = async (app) => {
   });
 
   app.get('/sales_invoice', (req, res) => {
-    res.render('Receipt/sale_receipt', {
+    res.render('Receipt/preview_sale_receipt', {
       id: req.query.invoice_id, orgId: req.query.org_id,
     });
   });

@@ -452,6 +452,8 @@
             </div>
         </div>
 
+        <%- include('../partials/footercode.ejs') %>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>    
 
@@ -460,6 +462,7 @@
                 $(document).ready(function () {
 
                     var id = '<%=id%>';
+                    var orgId= '<%=orgId%>'
                     let customerName;
                     let customerNumber;
                     let customerAdd;
@@ -539,7 +542,9 @@
 
                     // Whatsapp Chat with customer
                     $("#whatsappLink").click(function () {
-                        window.open(`https://wa.me/91${customerNumber}`, '_blank');
+                        var protocol = window.location.protocol;
+                        var host = window.location.host;
+                        window.open(`https://api.whatsapp.com/send/?phone=91${customerNumber}&text=Thanks%20for%20your%20purchase%21%21%0AFind%20your%20sales%20invoice%20here%3A${protocol}%2F%2F${host}%2Fsales_invoice%3Finvoice_id%3D${id}%26org_id%3D${orgId}`, '_blank');
                     })
 
                     // Send Invoice functionality

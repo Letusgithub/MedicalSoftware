@@ -49,8 +49,8 @@ exports.deleteProduct = (req, res) => {
 };
 
 exports.getProductById = (req, res) => {
-  const productId = req.params.id;
-  service.getById(productId, (err, results) => {
+  const data = req.body;
+  service.getById(data, (err, results) => {
     if (err) {
       console.log(err);
       return;

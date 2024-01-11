@@ -1,6 +1,5 @@
 const { getPool } = require('../config/database');
 
-
 module.exports = {
 
   // Create product
@@ -8,31 +7,16 @@ module.exports = {
     getPool().query(
       `insert into product(
                 product_name,
-                mfg,
-                mkt,
+                mfd/mkt,
                 salt,
-                gst,
-                hsn,
-                primary_unit,
-                secondary_unit,
-                conversion,
-                shelf_label,
-                addedBy,
-                verified)
-                values(?,?,?,?,?,?,?,?,?,?,?,?)`,
+                addedBy)
+                values(?,?,?,?)`,
       [
         data.product_name,
-        data.brand,
+        data.pack_size,
         data.brand,
         data.salt,
-        data.gst,
-        data.hsn,
-        data.primary_unit,
-        data.secondary_unit,
-        data.conversion,
-        data.shelf_label,
-        data.addedBy,
-        data.verified,
+        data.org_id,
       ],
       (error, results) => {
         if (error) {
@@ -48,30 +32,29 @@ module.exports = {
     getPool().query(
       `update product set
             product_name = ?,
-            mfg = ?,
-            mkt = ?,
+            pack_size = ?,
+            conversion = ?,
+            mfd/mkt = ?,
             salt = ?,
             hsn = ?,
+            gst = ?,
             primary_unit = ?,
             secondary_unit = ?,
-            conversion = ?,
-            mrp = ?,
             addedBy = ?,
             verified = ?
             where product_id = ?`,
       [
         data.product_name,
-        data.mfg,
-        data.mkt,
+        data.pack_size,
+        data.conversion,
+        data.brand,
         data.salt,
+        data.type,
+        data.gst,
         data.hsn,
-        data.category,
         data.primary_unit,
         data.secondary_unit,
-        data.conversion,
-        data.mrp,
-        data.addedBy,
-        data.verified,
+        data.verfied,
         id,
       ],
       (error, results) => {
@@ -97,26 +80,14 @@ module.exports = {
     );
   },
 
-  // Get All Products
-  getAll: (callBack) => {
-    getPool().query(
-      'select * from product',
-      [],
-      (error, results) => {
-        if (error) {
-          return callBack(error);
-        }
-        return callBack(null, results);
-      },
-
-    );
-  },
-
   // Get product by product ID
-  getById: (id, callBack) => {
+  getById: (data, callBack) => {
     getPool().query(
-      'select * from product where product_id = ?',
-      [id],
+      'select * from product where product_id = ? and addedBy = ?',
+      [
+        data.product_id,
+        data.org_id,
+      ],
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -127,4 +98,3 @@ module.exports = {
     );
   },
 };
-

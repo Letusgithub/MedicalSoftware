@@ -58,7 +58,7 @@ module.exports = {
       ON od.invoice_id_main = rd.sales_invoice_id
       JOIN customer_data cd
       on cd.customer_id = od.customer_id
-      ${querys} and org_id = ${orgId} 
+      ${querys} and cd.org_id = ${orgId} 
       ORDER BY return_created_date DESC`,
       datas,
       (error, results) => {
@@ -75,7 +75,7 @@ module.exports = {
       ON od.invoice_id_main = rd.sales_invoice_id
       JOIN customer_data cd
       on cd.customer_id = od.customer_id
-      where MONTH(rd.return_created_date) =? and org_id = ${orgId} 
+      where MONTH(rd.return_created_date) =? and cd.org_id = ${orgId} 
       `,
       [
         month,
@@ -94,7 +94,7 @@ module.exports = {
       ON od.invoice_id_main = rd.sales_invoice_id
       JOIN customer_data cd
       on cd.customer_id = od.customer_id
-      where MONTH(rd.return_created_date)>=? and MONTH(rd.return_created_date)<=? and org_id = ${orgId} 
+      where MONTH(rd.return_created_date)>=? and MONTH(rd.return_created_date)<=? and cd.org_id = ${orgId} 
       `,
       [
         start,
@@ -113,7 +113,7 @@ module.exports = {
       ON od.invoice_id_main = rd.sales_invoice_id
       JOIN customer_data cd
       on cd.customer_id = od.customer_id
-      where YEAR(rd.return_created_date)=? and org_id = ${orgId} 
+      where YEAR(rd.return_created_date)=? and cd.org_id = ${orgId} 
       order by MONTH(rd.return_created_date) DESC
       `,
       [
