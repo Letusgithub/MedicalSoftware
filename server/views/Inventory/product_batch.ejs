@@ -73,14 +73,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <!-- <img class="w-100"alt="Calpol 500mg Tablet" src="https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/dpsh8z3rldqlg33kavbh.jpg" title="Calpol 500mg Tablet"> -->
+                                                    <img class="w-75" id="product_img">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <hr class="mb-4">
+                                <hr class="mb-3">
 
                                 <div class="card">
                                     <div class="d-flex justify-content-between m-0 p-0">
@@ -179,6 +179,7 @@
                         $("#brand").text(items['mfd/mkt']);
                         $("#salt").text(items.salt_composition);
                         $("#gst").text(items.gst + '%');
+                        $("#product_img").attr('src', items.img_url);
 
 
 
