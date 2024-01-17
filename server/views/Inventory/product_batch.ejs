@@ -176,7 +176,7 @@
                         console.log('in view batches', items);
                         $("#productname").text(items.med_name);
                         $("#hsncode").text(items.hsn);
-                        $("#brand").text(items['mfd/mkt']);
+                        $("#brand").text(items.mfd_mkt);
                         $("#salt").text(items.salt_composition);
                         $("#gst").text(items.gst + '%');
                         $("#product_img").attr('src', items.img_url);

@@ -2,7 +2,7 @@ const { es } = require('../config/elasticsearch');
 
 module.exports = {
 
-  ElasticsearchService: async (query) => {
+  ESitemSearchService: async (query) => {
     const baseQuery = {
       _source: false,
       suggest: {

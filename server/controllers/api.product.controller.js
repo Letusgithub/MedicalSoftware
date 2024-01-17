@@ -2,7 +2,7 @@ const service = require('../services/product.service');
 
 exports.createProduct = (req, res) => {
   const data = req.body;
-  service.create(data, (err) => {
+  service.create(data, (err, results) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -13,6 +13,7 @@ exports.createProduct = (req, res) => {
 
     return res.status(200).json({
       status: 'success',
+      result: results,
     });
   });
 };

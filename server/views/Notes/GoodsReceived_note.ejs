@@ -602,7 +602,7 @@
                                 console.log(ui.item);
                                 productId = ui.item.sample_id;
                                 $("input[name='productname']").val(ui.item.med_name);
-                                $("input[name='brand']").val(ui.item["mfd/mkt"]);
+                                $("input[name='brand']").val(ui.item.mfd_mkt);
                                 $("input[name='salt']").val(ui.item.salt_composition);
                             }, 0)
                         }

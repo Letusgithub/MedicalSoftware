@@ -69,7 +69,7 @@
                                                             id="basic-icon-default-fullname" placeholder=""
                                                             aria-label="John Doe"
                                                             aria-describedby="basic-icon-default-fullname2" name="brand"
-                                                            disabled value="<%=data[0]['mfd/mkt']%>">
+                                                            disabled value="<%=data[0].mfd_mkt%>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -337,7 +337,7 @@
                                     console.log(ui.item);
                                     productId=ui.item.sample_id;
                                     $("input[name='productname']").val(ui.item.med_name);
-                                    $("input[name='brand']").val(ui.item["mfd/mkt"]);
+                                    $("input[name='brand']").val(ui.item["mfd_mkt"]);
                                     $("input[name='salt']").val(ui.item.salt_composition);
                                 },0)
                             }
@@ -365,7 +365,7 @@
                     var exp_date = input.val();
                     if (exp_date < new Date().toJSON().slice(0, 10)) {
                         $("input[name='addexp']").val(null);
-                        return alert('PLEASE ADD CORRECT EXPDate FIRST');
+                        return alert('PLEASE ADD CORRECT EXP Date FIRST');
                     }
                 });
                 //submit process after adding batch
@@ -402,13 +402,6 @@
 
                             window.location.href=`/product_batch/${productId}`          
                             console.log(response);
-                            // $("#batchname").val("");
-                            // $("input[name='addexp']").val("");
-                            // $("#conversion").val("");
-                            // $("input[name='addqty']").val("");
-                            // $("input[name='addpur']").val("");
-                            // $("input[name='addmrp']").val("");
-                            // $("input[name='addshelf']").val("");
 
                         },
                         error: function (error) {

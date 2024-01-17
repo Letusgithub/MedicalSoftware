@@ -399,7 +399,7 @@ module.exports = async (app) => {
         if (error) {
           console.log(error);
         }
-        res.render('Notes/GRN', {
+        res.render('Notes/grn', {
           vendors: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
         });
       },

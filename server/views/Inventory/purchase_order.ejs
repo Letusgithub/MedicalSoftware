@@ -527,7 +527,7 @@
                                     console.log(ui.item);
                                     productId = ui.item.id;
                                     $("input[name='productname']").val(ui.item.med_name);
-                                    $("input[name='brand']").val(ui.item["mfd/mkt"]);
+                                    $("input[name='brand']").val(ui.item.mfd_mkt);
                                 }, 0)
                             }
                         }).data('ui-autocomplete')._renderItem = function (ul, item) {

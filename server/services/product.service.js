@@ -5,17 +5,18 @@ module.exports = {
   // Create product
   create: (data, callBack) => {
     getPool().query(
-      `insert into product(
-                product_name,
-                mfd/mkt,
-                salt,
-                addedBy)
-                values(?,?,?,?)`,
+      `insert into sample(
+                med_name,
+                mfd_mkt,
+                salt_composition,
+                conversion,
+                added_by)
+                values(?,?,?,?,?)`,
       [
-        data.product_name,
-        data.pack_size,
-        data.brand,
+        data.med_name,
+        data.mfd_mkt,
         data.salt,
+        data.conversion,
         data.org_id,
       ],
       (error, results) => {
@@ -34,7 +35,7 @@ module.exports = {
             product_name = ?,
             pack_size = ?,
             conversion = ?,
-            mfd/mkt = ?,
+            mfd_mkt = ?,
             salt = ?,
             hsn = ?,
             gst = ?,
@@ -83,7 +84,7 @@ module.exports = {
   // Get product by product ID
   getById: (data, callBack) => {
     getPool().query(
-      'select * from product where product_id = ? and addedBy = ?',
+      'select * from product where product_id = ? and added_by = ?',
       [
         data.product_id,
         data.org_id,

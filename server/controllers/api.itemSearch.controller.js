@@ -1,4 +1,4 @@
-const { ElasticsearchService } = require('../services/itemSearch.service');
+const { ESitemSearchService } = require('../services/itemSearch.service');
 
 exports.itemSearch = async (req, res) => {
   const query = req.query.query;
@@ -6,7 +6,7 @@ exports.itemSearch = async (req, res) => {
   console.log(query);
 
   try {
-    const suggestions = await ElasticsearchService(query);
+    const suggestions = await ESitemSearchService(query);
     const object = suggestions.suggest.medicine_suggestion[0].options;
 
     const data = object.map((item) => item._source);
