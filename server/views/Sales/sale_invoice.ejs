@@ -258,7 +258,7 @@
                 <div class="col-md-3">
                   <div class="card mb-4">
                     <div class="d-flex justify-content-between m-0 p-0">
-                      <h5 class="card-header">Final Amount (₹)<span id="totalprofit"></span></h5>
+                      <h5 class="card-header">Final Amount (₹)</h5>
                     </div>
 
                     <div class="card-body pt-0">
@@ -443,7 +443,7 @@
               let query = request.term;
 
               $.ajax({
-                url: `/api/autocomplete?query=${query}`,
+                url: `/api/autocomplete?query=${query}&orgId=<%=orgId%>`,
                 type: 'GET',
                 success: function (ajaxResponse) {
 

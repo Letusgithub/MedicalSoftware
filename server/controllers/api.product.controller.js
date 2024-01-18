@@ -2,18 +2,31 @@ const service = require('../services/product.service');
 
 exports.createProduct = (req, res) => {
   const data = req.body;
-  service.create(data, (err, results) => {
-    if (err) {
-      console.log(err);
+  service.createProductMYSQL(data, (insertErr, insertResult) => {
+    if (insertErr) {
+      console.log(insertErr);
       return res.status(500).json({
         success: 0,
         message: 'Database connection error',
       });
     }
 
+    const productId = insertResult.insertId;
+
+    service.createProductES(data, productId, (error, result) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'Elasticsearch connection error',
+        });
+      }
+      console.log(result);
+    });
+
     return res.status(200).json({
       status: 'success',
-      result: results,
+      result: insertResult,
     });
   });
 };
@@ -21,7 +34,7 @@ exports.createProduct = (req, res) => {
 exports.updateProduct = (req, res) => {
   const data = req.body;
   const id = req.params.id;
-  service.update(id, data, (err) => {
+  service.updateProductMYSQL(id, data, (err) => {
     if (err) {
       console.log(err);
       return;
