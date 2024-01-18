@@ -1,23 +1,50 @@
 const { getPool } = require('../config/database');
+const { es } = require('../config/elasticsearch');
 
 module.exports = {
 
+  // Create product in Elasticsearch index
+  createProductES: async (data, productId, callBack) => {
+    const body = {
+      id: productId,
+      med_name: data.med_name,
+      mfd_mkt: data.mfd_mkt,
+      salt_composition: data.salt,
+      selling_unit: data.conversion,
+      added_by: data.org_id,
+      is_verified: false,
+    };
+
+    try {
+      const result = await es.index({
+        index: 'product_search_index',
+        body,
+      });
+      console.log(result);
+      return callBack(null, result);
+    } catch (error) {
+      return callBack(error);
+    }
+  },
+
   // Create product
-  create: (data, callBack) => {
+  createProductMYSQL: (data, callBack) => {
     getPool().query(
       `insert into sample(
                 med_name,
                 mfd_mkt,
                 salt_composition,
                 conversion,
-                added_by)
-                values(?,?,?,?,?)`,
+                added_by,
+                is_verified)
+                values(?,?,?,?,?,?)`,
       [
         data.med_name,
         data.mfd_mkt,
         data.salt,
         data.conversion,
         data.org_id,
+        false,
       ],
       (error, results) => {
         if (error) {
@@ -29,7 +56,7 @@ module.exports = {
   },
 
   // Update product
-  update: (id, data, callBack) => {
+  updateProductMYSQL: (id, data, callBack) => {
     getPool().query(
       `update product set
             product_name = ?,

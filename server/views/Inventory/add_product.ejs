@@ -356,7 +356,7 @@
                             console.log(query);
 
                             $.ajax({
-                                url: `/api/autocomplete?query=${query}`,
+                                url: `/api/autocomplete?query=${query}&orgId=${orgID}`,
                                 type: 'GET',
                                 success: function (ajaxResponse) {
                                     // console.log(ajaxResponse);

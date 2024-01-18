@@ -19,7 +19,7 @@ module.exports = {
     console.log(baseQuery.suggest.medicine_suggestion);
     try {
       const { body } = await es.search({
-        index: 'new_allopathy_index',
+        index: 'product_search_index',
         body: {
           suggest: baseQuery.suggest, // Use the suggest object directly
         },
