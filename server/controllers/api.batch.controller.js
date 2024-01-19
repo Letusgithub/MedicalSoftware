@@ -49,7 +49,7 @@ module.exports = {
         return;
       }
       return res.status(200).json({
-        success: 'gotorders',
+        success: 1,
         data: results,
       });
     });

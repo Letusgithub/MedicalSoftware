@@ -424,21 +424,12 @@
           var availablePrimaryQty;
           var availableSecondaryQty;
           var purchaseRate = 0;
-          var hsn = 0;
+          var hsn_number = 0;
           var gst_percent = 0;
           var productInInventory;
           $('#medicinename').autocomplete({
             minLength: 3,
             source: function (request, response) {
-
-              // $.get('/api/allsample', function (data, status) {
-              //   let searchTerm = request.term;
-              //   let results = data.result.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
-              //   if (results.length === 0) {
-              //     results.push({ med_name: null }); // Add a null item for the custom message
-              //   }
-              //   response(results);
-              // })
 
               let query = request.term;
 
@@ -514,18 +505,19 @@
                       var remPriQty = value.batch_qty - value.saled_pri_qty;
                       var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion ? 0 : value.conversion - value.saled_sec_qty;
                       $("#batchdroporinput #batchnumber").append(
-                        `<option value=${value.batch_name}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
+                        `<option value=${value.batch_name} id=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
                       )
                     })
 
                     //populate the first qty to the product cart
                     batchIdwhenSelected = data.data[0].batch_id;
+                    console.log('batchIdwhenSelected', batchIdwhenSelected)
                     primaryUnit = data.data[0].primary_unit;
                     secondaryUnit = data.data[0].secondary_unit;
                     conversion = data.data[0].conversion;
                     purchaseRate = parseFloat(data.data[0].purchase_rate);
                     gst_percent = parseFloat(data.data[0].gst);
-                    hsn = data.data[0].hsn;
+                    hsn_number = data.data[0].hsn;
 
                     availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
                     availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
@@ -552,7 +544,8 @@
                     //$("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
 
                     $("#batchdroporinput").on("change", "#batchnumber", function () {
-                      var batchId = $("#batchdroporinput #batchnumber").val();
+                      var batchId = $("#batchdroporinput #batchnumber option:selected").attr('id');
+                      console.log('batchId', batchId)
                       batchIdwhenSelected = data.data[batchId].batch_id;
 
                       $("#shelflabel").val(data.data[batchId].shelf_label);
@@ -798,6 +791,7 @@
             var priCartQty = priQty.val();
             var secCartQty = secQty.val() || 0;
             var mrp = priceInput.val();
+            var hsn = hsn_number;
             var gst = gst_percent;
             var disc = discInput.val();
             var total = totalInput.val();
@@ -820,6 +814,7 @@
               conversion: conversion,
               selectedUnit: selectedUnit,
               mrp: mrp,
+              hsn:hsn,
               gst: gst,
               disc: disc,
               total: total,
@@ -937,7 +932,7 @@
                 data.data.map(function (value, key) {
                   //batchesMap.push(`${value.batch_id} ( ${value.batch_qty} )`);
                   $("#batchdroporinput #batchnumber").append(
-                    `<option value=${value.batch_name}> ${value.batch_name} ( ${value.batch_qty} ) </option>`
+                    `<option value=${value.batch_name} id=${key}> ${value.batch_name} ( ${value.batch_qty} ) </option>`
                   )
                 })
                 //console.log(batchesMap);
@@ -963,7 +958,7 @@
               $("#price").val(priceMed);
 
               $("#batchdroporinput").on("change", "#batchnumber", function () {
-                var batchId = $("#batchdroporinput #batchnumber").val();
+                var batchId = $("#batchdroporinput #batchnumber option:selected").attr('id');
                 batchIdwhenSelected = data.data[batchId].batch_id;
 
                 $("#shelflabel").val(data.data[batchId].shelf_label);
