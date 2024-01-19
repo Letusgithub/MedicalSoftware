@@ -26,6 +26,7 @@ exports.createProduct = (req, res) => {
 
     return res.status(200).json({
       status: 'success',
+      product_id: productId,
       result: insertResult,
     });
   });

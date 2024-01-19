@@ -5,7 +5,7 @@ exports.lastVisit = (req, res, next) => {
   const userId = req.org_id;
 
   getPool().query(
-    'insert into user_activity(activity_time, user_id) values(NOW(), ?)',
+    'insert into user_activity(user_id) values(?)',
     [userId],
     (error) => {
       if (error) {
