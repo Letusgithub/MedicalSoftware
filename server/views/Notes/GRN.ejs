@@ -155,12 +155,7 @@
                                                         for="basic-icon-default-companyname">HSN Code</label>
                                                     <div class="col-sm-4">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control" id="hsn"
-                                                                placeholder="" aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2"
-                                                                name="hsn">
+                                                            <input type="text" class="form-control" id="hsn" name="hsn">
                                                         </div>
                                                     </div>
 
@@ -231,12 +226,7 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-companyname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2"
+                                                            <input type="text" class="form-control" placeholder=""
                                                                 name="threshold">
                                                         </div>
                                                     </div>
@@ -258,8 +248,6 @@
                                                         for="basic-icon-default-companyname">Batch No.</label>
                                                     <div class="col-sm-4">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
                                                             <input type="text" class="form-control" placeholder=""
                                                                 aria-label="" id="batchname" />
                                                         </div>
@@ -480,16 +468,16 @@
                         },
                         select: function (event, ui) {
                             productId = ui.item.id;
-                            $.get(`/api/checkbyid/${productId}`, function (data, status) {
+                            $.get(`/api/checkbyid?product=${productId}&org=${orgID}`, function (data, status) {
                                 console.log('got this data from inventory', data);
                                 if (data.data.length == 1) {
 
                                     var items = data.data[0];
-                                    $("select[name = 'gst']").val(items.gst);
-                                    $("#hsn").val(items.hsn);
-                                    $("select[name='primary']").val(items.primary_unit);
-                                    $("select[name='secondary']").val(items.secondary_unit);
-                                    $("input[name='threshold']").val(items.threshold);
+                                    $("select[name = 'gst']").val(items.gst).prop('disabled', true);
+                                    $("#hsn").val(items.hsn).prop('disabled', true);
+                                    $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
+                                    $("select[name='secondary']").val(items.secondary_unit).prop('disabled', true);
+                                    $("input[name='threshold']").val(items.threshold).prop('disabled', true);
 
                                     var primaryUnit = $("select[name='primary']").val();
                                     var secondaryUnit = $("select[name='secondary']").val();
@@ -561,6 +549,12 @@
                         if (parseFloat($("#addpur").val()) > parseFloat($("#price").val())) {
                             return alert("Purchase Rate can't be greater than MRP");
                         }
+
+                        $("select[name = 'gst']").prop('disabled', false);
+                        $("#hsn").prop('disabled', false);
+                        $("select[name='primary']").prop('disabled', false);
+                        $("select[name='secondary']").prop('disabled', false);
+                        $("input[name='threshold']").prop('disabled', false);
 
                         var products = $("#medicinename").val();
                         var brand = $("#brand").val();
@@ -720,7 +714,7 @@
 
                                 for (let i in cartDetails) {
 
-                                    $.get(`/api/checkbyid/${cartDetails[i].productId}`, function (data, status) {
+                                    $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
                                         console.log(data.data);
                                         if (data.data.length === 0) {
 

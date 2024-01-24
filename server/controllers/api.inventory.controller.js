@@ -4,18 +4,32 @@ const service = require('../services/inventory.service');
 exports.createInventory = (req, res) => {
   const data = req.body;
   console.log(data);
-  service.create(data, (err, results) => {
+  // Check if product already exists in Inventory
+  service.checkById(data.product_id, data.org_id, (err, results) => {
     if (err) {
       console.log(err);
-      return res.status(500).json({
+      return;
+    }
+    if (results.length > 0) {
+      console.log('product already exists');
+      return res.status(200).json({
         success: 0,
-        message: 'Database connection error',
+        message: 'Product already exists in Inventory',
       });
     }
+    service.create(data, (createErr, createResults) => {
+      if (createErr) {
+        console.log(createErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Database connection error',
+        });
+      }
 
-    return res.status(200).json({
-      success: 1,
-      data: results,
+      return res.status(200).json({
+        success: 1,
+        data: createResults,
+      });
     });
   });
 };
@@ -119,8 +133,9 @@ exports.getAllInventory = (req, res) => {
   });
 };
 exports.checkById = (req, res) => {
-  const productId = req.params.id;
-  service.checkById(productId, (err, results) => {
+  const productId = req.query.product;
+  const orgId = req.query.org;
+  service.checkById(productId, orgId, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -131,16 +146,17 @@ exports.checkById = (req, res) => {
       data: results,
     });
   });
-  // exports.getTotalStock = (req, res) => {
-  //   const orgID = req.query.orgID;
-  //   console.log('orgID', orgID);
-  //   service.getAllInventory(orgID, (allError, allResult) => {
-  //     if (allError) {
-  //       console.log(allError);
-  //     }
-  //     return res.status(200).json({
-  //       status: 'success',
-  //       data: allResult,
-  //     });
-  //   });
 };
+
+// exports.getTotalStock = (req, res) => {
+//   const orgID = req.query.orgID;
+//   console.log('orgID', orgID);
+//   service.getAllInventory(orgID, (allError, allResult) => {
+//     if (allError) {
+//       console.log(allError);
+//     }
+//     return res.status(200).json({
+//       status: 'success',
+//       data: allResult,
+//     });
+//   });

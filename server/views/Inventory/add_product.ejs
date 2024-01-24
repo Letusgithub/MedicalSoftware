@@ -106,7 +106,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <input type="text" class="form-control"
-                                                            id="basic-icon-default-companyname" placeholder=""
+                                                            id="hsn" placeholder=""
                                                             name="hsn">
                                                     </div>
                                                 </div>
@@ -347,12 +347,30 @@
 
                         },
                         select: function (event, ui) {
+                            productId = ui.item.id;
+                            $.get(`/api/checkbyid?product=${productId}&org=${orgID}`, function (data, status) {
+                                console.log('got this data from inventory', data);
+                                if (data.data.length == 1) {
+                                    var items = data.data[0];
+                                    $("select[name = 'gst']").val(items.gst).prop('disabled', true);
+                                    $("#hsn").val(items.hsn).prop('disabled', true);
+                                    $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
+                                    $("select[name='secondary']").val(items.secondary_unit).prop('disabled', true);
+                                    $("input[name='threshold']").val(items.threshold).prop('disabled', true);
+
+                                    var primaryUnit = $("select[name='primary']").val();
+                                    var secondaryUnit = $("select[name='secondary']").val();
+                                    $("#primarypopulate").text(`1 ${primaryUnit}`);
+                                    $("#secondarypopulate").text(`${secondaryUnit}`);
+                                }
+                            })
+                            
                             setTimeout(function () {
                                 console.log(ui.item);
                                 productId = ui.item.id;
-                                $("input[name='productname']").val(ui.item.med_name);
-                                $("input[name='brand']").val(ui.item.mfd_mkt);
-                                $("input[name='salt']").val(ui.item.salt_composition);
+                                $("input[name='productname']").val(ui.item.med_name).prop('disabled', true);
+                                $("input[name='brand']").val(ui.item.mfd_mkt).prop('disabled', true);
+                                $("input[name='salt']").val(ui.item.salt_composition).prop('disabled', true);
                             }, 0)
                         }
                     }).data('ui-autocomplete')._renderItem = function (ul, item) {
@@ -498,7 +516,6 @@
                                 data: JSON.stringify(productDetails),
                                 contentType: 'application/json',
                                 success: function (response) {
-                                    //window.location.href='/product_stock'
                                     //add the batch to the respective product
                                     var batchDetails = {
                                         product_id: productId,

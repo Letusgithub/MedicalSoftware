@@ -121,12 +121,12 @@ module.exports = {
     );
   },
 
-  // check if inventory exists
-  checkById: (productId, callBack) => {
+  // Check if product exists in Inventory
+  checkById: (productId, orgId, callBack) => {
     getPool().query(
       `select * from inventory inv
-      where product_id = ? `,
-      [productId],
+      where product_id = ? and org_id =?`,
+      [productId, orgId],
       (error, results) => {
         if (error) {
           return callBack(error);
