@@ -132,9 +132,8 @@ module.exports = {
           message: 'No Orders Found',
         });
       }
-      // console.log(results);
       res.status(200).json({
-        success: 'here',
+        success: 1,
         result: results,
       });
     });

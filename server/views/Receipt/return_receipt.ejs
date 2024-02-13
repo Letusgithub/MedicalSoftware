@@ -419,27 +419,11 @@
     <script>
         $(document).ready(function(){
             var id = '<%=id%>';
-            
 
             var todayDate = new Date();
             var options = { year: 'numeric', month: 'long', day: 'numeric' };
             var formattedDate = todayDate.toLocaleDateString('en-US', options);
             $("#orderdate").text(`Date: ${formattedDate}`);
-
-            $.get(`/api/org/<%=orgId%>`, function(data, status){
-                console.log(data);
-                
-                $("#shopaddress").html(`
-                    ${data.data.org_address}</br>
-                    ${data.data.org_city}( ${data.data.org_state} ), ${data.data.org_pincode}</br>
-                    ${data.data.org_telephone}
-                `)
-
-                $("#gstin").text(`GSTIN: ${data.data.org_gstin}`);
-                $("#dlno").text(`D.L.no.: ${data.data.org_dl_no_1}, ${data.data.org_dl_no_2}`)
-                $("#flno").text(`F.L. no.: ${data.data.org_fssai_no}`)
-            })
-
 
             $.get(`/api/org/<%=orgId%>`, function(data, status){
                 var org = data.data
@@ -449,10 +433,10 @@
 
                 $("#orgname").html(`${orgName}`);
 
-                $("#orgaddress").html(`
-                    ${orgAdd}</br>
-                    ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
-                    ${org.org_telephone}
+                $("#shopaddress").html(`
+                    ${data.data.org_address}</br>
+                    ${data.data.org_city}( ${data.data.org_state} ), ${data.data.org_pincode}</br>
+                    ${data.data.org_telephone}
                 `)
 
                 $("#gstin").text(`GSTIN: ${org.org_gstin}`);
@@ -464,7 +448,6 @@
                 console.log(data);
                 var customer = data.result[0]; 
               
-
                 var customerName = customer.cust_name;
                 var customerNumber = customer.cust_telephone;
                 var customerAdd = customer.cust_address;
@@ -481,7 +464,6 @@
              
                 $("#doctorname").text(`Dr name: ${customer.doctor_name}`)
 
-
                 var items = data.result;
 
                 for (var i = 0; i < items.length; i++) {
@@ -490,7 +472,6 @@
                     var date = moment(datetime).format('DD-MM-YY');
 
                     cartHtml = `
-
                     <tr>
                         <td style="width: 2.27rem; height: 1rem;">${i+1}</td>
                         <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
@@ -502,14 +483,9 @@
                         <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
                         <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
                         <td style="width: 4.2rem; height: 1rem;">${items[i].return_total_cart}</td>
-                    </tr>
-
-
-                        
-                        `
+                    </tr>`
 
                     $("#cartitems").append(cartHtml);
-
                 }
 
 

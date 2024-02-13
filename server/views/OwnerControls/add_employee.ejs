@@ -53,7 +53,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="mb-3">
+                                            <!-- <div class="mb-3">
                                                 <label class="form-label" for="emp_reg_no"> Registration No.
                                                     <span style="font-size: 15px; color: red">*</span></label></label>
                                                 <div class="input-group input-group-merge">
@@ -62,7 +62,55 @@
                                                     <input type="text" class="form-control" id="emp_reg_no" placeholder=""
                                                         name="emp_reg_no" required>
                                                 </div>
+                                            </div> -->
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="emp_reg_no">Registration No.</label>
+                                                <div class="input-group">
+                                                    <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                                            class='bx bx-detail'></i></span>
+                                                    <select type="text" id="emp_reg_st" class="form-select">
+                                                        <option selected> State</option>
+                                                        <option value="AD">Andhra Pradesh</option>
+                                                        <option value="AR"> Arunachal Pradesh</option>
+                                                        <option value="AS"> Assam</option>
+                                                        <option value="BR"> Bihar</option>
+                                                        <option value="CG"> Chattisgarh</option>
+                                                        <option value="DL"> Delhi</option>
+                                                        <option value="GA"> Goa</option>
+                                                        <option value="GJ"> Gujarat</option>
+                                                        <option value="HR"> Haryana</option>
+                                                        <option value="HP"> Himachal Pradesh</option>
+                                                        <option value="JK"> Jammu and Kashmir</option>
+                                                        <option value="JH"> Jharkhand</option>
+                                                        <option value="KA"> Karnataka</option>
+                                                        <option value="KL"> Kerala</option>
+                                                        <option value="LD"> Lakshadweep Islands</option>
+                                                        <option value="MP"> Madhya Pradesh</option>
+                                                        <option value="MH"> Maharashtra</option>
+                                                        <option value="MN"> Manipur</option>
+                                                        <option value="ML"> Meghalaya</option>
+                                                        <option value="MZ"> Mizoram</option>
+                                                        <option value="NL"> Nagaland</option>
+                                                        <option value="OD"> Odisha</option>
+                                                        <option value="PY"> Pondicherry</option>
+                                                        <option value="PB"> Punjab</option>
+                                                        <option value="RJ"> Rajasthan</option>
+                                                        <option value="SK"> Sikkim</option>
+                                                        <option value="TN"> Tamil Nadu</option>
+                                                        <option value="TS"> Telangana</option>
+                                                        <option value="TR"> Tripura</option>
+                                                        <option value="UP"> Uttar Pradesh</option>
+                                                        <option value="UK"> Uttarakhand</option>
+                                                        <option value="WB"> West Bengal</option>
+                                                    </select>
+                                                    <input type="text" id="emp_reg_ct" placeholder="Zone"
+                                                        class="form-control">
+                                                    <input type="text" id="emp_reg_ln" placeholder="License No."
+                                                        class="form-control" minlength="6" maxlength="6">
+                                                </div>
                                             </div>
+    
 
                                             <div class="mb-3">
                                                 <label class="form-label" for="emp_mobile">Contact
@@ -159,13 +207,16 @@
                         return alert('Please fill valid Alternet Phone number');
                     }
 
+                    var emp_reg_no = $("#emp_reg_st").val().toString() + '-' + $("#emp_reg_ct").val().toString() + '-' + $("#emp_reg_ln").val().toString();
+
+
                     $.ajax({
                         url: `/api/emp/`,
                         type: 'POST',
                         data: JSON.stringify({
                             org_id: "<%= orgId %>",
                             emp_name: $("#emp_name").val(),
-                            emp_reg_no: $("#emp_reg_no").val(),
+                            emp_reg_no: emp_reg_no,
                             emp_mobile: $("#emp_mobile").val(),
                             emp_alt_mobile: $("#emp_alt_mobile").val(),
                             emp_email: $("#emp_email").val(),

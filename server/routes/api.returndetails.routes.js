@@ -1,4 +1,6 @@
-const { createReturnOrder, searchDates, searchMonth, searchQuarter, searchYear, getInvoiceOrder } = require('../controllers/api.returndetails.controller');
+const {
+  createReturnOrder, searchDates, searchMonth, searchQuarter, searchYear, getInvoiceOrder,
+} = require('../controllers/api.returndetails.controller');
 
 module.exports = (app) => {
   app.use((req, res, next) => {

@@ -153,19 +153,6 @@ module.exports = {
     );
   },
 
-  // allSamples: (callback) => {
-  //   getPool().query(
-  //     'select * from sample',
-  //     [],
-  //     (error, results) => {
-  //       if (error) {
-  //         return callback(error);
-  //       }
-  //       return callback(null, results);
-  //     },
-  //   );
-  // },
-
   getInvoiceOrder: (salesId, orgId, callback) => {
     getPool().query(
       `select * from order_details od 
