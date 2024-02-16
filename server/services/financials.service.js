@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars8 */
 const { getPool } = require('../config/database');
 
 module.exports = {

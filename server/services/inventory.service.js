@@ -91,7 +91,7 @@ module.exports = {
     getPool().query(
       `select * from inventory inv
       JOIN sample 
-      ON sample.sample_id = inv.product_id
+      ON sample.product_id = inv.product_id
       where product_id = ? `,
       [productId],
       (error, results) => {
@@ -108,7 +108,7 @@ module.exports = {
     getPool().query(
       `SELECT inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold, spl.*, COALESCE(SUM(bth.batch_qty-bth.saled_pri_qty), 0) AS batch_qty
       FROM inventory AS inv
-      JOIN sample AS spl ON inv.product_id = spl.sample_id
+      JOIN sample AS spl ON inv.product_id = spl.product_id
       LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
       where inv.org_id=${orgID}
       GROUP BY inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold

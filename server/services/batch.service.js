@@ -101,12 +101,12 @@ module.exports = {
         coalesce(sum(cart.saled_sec_qty),0) as sec,
         inv.primary_unit as punit,
         inv.secondary_unit as sunit
-        from newdata.cart_item cart
+        from cart_item cart
 
-        RIGHT JOIN newdata.batch bth
-        ON bth.batch_id = cart.saled_batch_id
+        RIGHT JOIN batch bth
+        ON bth.batch_id = cart.batch_id
         LEFT JOIN
-            newdata.inventory inv ON inv.product_id = bth.product_id AND inv.org_id = bth.org_id
+            inventory inv ON inv.product_id = bth.product_id AND inv.org_id = bth.org_id
         where bth.org_id = ${orgId} and bth.product_id = ${prodId}
         group by bth.batch_id, punit,sunit ;
       `,
@@ -227,13 +227,11 @@ module.exports = {
 
   getOrderStatistics: (orgId, callback) => {
     getPool().query(
-      `SELECT inv.primary_unit, inv.secondary_unit, sum(bth.saled_pri_qty) as pri, sum(bth.saled_sec_qty) as sec from newdata.inventory inv
-      JOIN newdata.batch bth on bth.product_id = inv.product_id
+      `SELECT inv.primary_unit, inv.secondary_unit, sum(bth.saled_pri_qty) as pri, sum(bth.saled_sec_qty) as sec from inventory inv
+      JOIN batch bth on bth.product_id = inv.product_id
       where inv.org_id = ?
       group by inv.primary_unit, inv.secondary_unit 
       ORDER BY pri DESC
-
-      
       `,
       [orgId],
       (error, results) => {

@@ -4,30 +4,29 @@ const { getPool } = require('../config/database');
 
 module.exports = {
   create: (data, callback) => {
-    const date_time = new Date();
-    const date = (`0${date_time.getDate()}`).slice(-2);
-    const month = (`0${date_time.getMonth() + 1}`).slice(-2);
-    const year = date_time.getFullYear();
+    // const date_time = new Date();
+    // const date = (`0${date_time.getDate()}`).slice(-2);
+    // const month = (`0${date_time.getMonth() + 1}`).slice(-2);
+    // const year = date_time.getFullYear();
 
-    const hours = date_time.getHours();
-    const minutes = date_time.getMinutes();
-    const seconds = date_time.getSeconds();
+    // const hours = date_time.getHours();
+    // const minutes = date_time.getMinutes();
+    // const seconds = date_time.getSeconds();
 
-    const cust_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-    const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+    // const cust_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+    // const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
 
     getPool().query(
-      `insert into customer_data(cust_name, org_id, cust_telephone, cust_address, cust_email, created_date)
-                    values(?,?,?,?,?,?)`,
+      `insert into customer_data(cust_name, org_id, cust_telephone, cust_address, cust_email)
+                    values(?,?,?,?,?)`,
       [
         data.cust_name,
         data.org_id,
         data.cust_telephone,
         data.cust_address,
         data.cust_email,
-        cust_created_date,
       ],
-      (error, results, fields) => {
+      (error, results) => {
         if (error) {
           return callback(error);
         }

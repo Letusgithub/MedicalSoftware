@@ -58,7 +58,7 @@ module.exports = {
   // Update product
   updateProductMYSQL: (id, data, callBack) => {
     getPool().query(
-      `update product set
+      `update sample set
             product_name = ?,
             pack_size = ?,
             conversion = ?,
@@ -97,7 +97,7 @@ module.exports = {
   // Delete product
   delete: (data, callBack) => {
     getPool().query(
-      'delete from product where product_id = ?',
+      'delete from sample where product_id = ?',
       [data],
       (error, results) => {
         if (error) {
@@ -111,7 +111,7 @@ module.exports = {
   // Get product by product ID
   getById: (data, callBack) => {
     getPool().query(
-      'select * from product where product_id = ? and added_by = ?',
+      'select * from sample where product_id = ? and added_by = ?',
       [
         data.product_id,
         data.org_id,

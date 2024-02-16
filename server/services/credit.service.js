@@ -29,7 +29,7 @@ module.exports = {
     getPool().query(
       `insert into credit_note_cart_details(
                   
-                  credit_invoice_no,
+                  credit_invoice_id,
                   product_id,
                   batch_id_credit,
                   pri_unit_credit,
@@ -69,7 +69,7 @@ module.exports = {
   getINVDetailsinCreditNote: (orgId, callBack) => {
     getPool().query(
       `SELECT * FROM inventory inv
-      JOIN sample spl ON inv.product_id = spl.sample_id
+      JOIN sample spl ON inv.product_id = spl.product_id
       where inv.org_id= ?
       `,
       [
@@ -87,9 +87,9 @@ module.exports = {
   getCreditNoteinInvoice: (id, callBack) => {
     getPool().query(
       `SELECT DISTINCT vendor.*, crdetails.*, inv.hsn, inv.gst, batch.batch_name, batch.exp_date, batch.mrp,  sample.med_name FROM credit_note cr
-      JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_no
+      JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_id
       Join vendor on cr.vendor_id = vendor.vendor_id
-      Join sample on crdetails.product_id = sample.sample_id
+      Join sample on crdetails.product_id = sample.product_id
       Join batch on batch.batch_id = crdetails.batch_id_credit 
       Join inventory inv on inv.product_id = crdetails.product_id
       where cr.credit_invoice_id = ?
@@ -187,6 +187,4 @@ module.exports = {
       },
     );
   },
-
-
 };

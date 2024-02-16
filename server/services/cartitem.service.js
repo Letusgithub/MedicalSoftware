@@ -6,7 +6,7 @@ module.exports = {
   create: (data, callback) => {
     getPool().query(
 
-      `insert into cart_item(product_id, saled_pri_qty_cart, saled_sec_qty_cart, main_invoice_id, sales_invoice_id, saled_batch_id, unit_discount, saled_mrp, product_name, batch_name, hsn, exp_date, gst, unit_mrp)
+      `insert into cart_item(product_id, saled_pri_qty_cart, saled_sec_qty_cart, main_invoice_id, order_id, batch_id, unit_discount, saled_mrp, product_name, batch_name, hsn, exp_date, gst, unit_mrp)
         values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.product_id,
@@ -35,7 +35,7 @@ module.exports = {
 
   getOrdersById: (id, callback) => {
     getPool().query(
-      'select * from cart_item where sales_invoice_id =?',
+      'select * from cart_item where order_id =?',
       [id],
       (error, results) => {
         if (error) return callback(error);
@@ -47,7 +47,7 @@ module.exports = {
     getPool().query(
       `select * from cart_item cart
       JOIN sample spl
-      on cart.product_id = spl.sample_id
+      on cart.product_id = spl.product_id
       where main_invoice_id =?`,
       [id],
       (error, results) => {
@@ -58,7 +58,7 @@ module.exports = {
   },
   updateOrders: (data, salesInvoiceId, batchId, productId, callback) => {
     getPool().query(
-      'update cart_item set return_invoice_id=?, return_pri_qty=?, return_sec_qty=?, return_dis=?, return_mrp=?, return_total_cart=? where main_invoice_id =? and product_id=? and saled_batch_id=?',
+      'update cart_item set return_invoice_id=?, return_pri_qty=?, return_sec_qty=?, return_dis=?, return_mrp=?, return_total_cart=? where main_invoice_id =? and product_id=? and batch_id=?',
       [
         data.return_invoice_id,
         data.return_pri_qty,
@@ -81,12 +81,12 @@ module.exports = {
     getPool().query(
       `select * from cart_item ci
       JOIN sample spl 
-      on ci.product_id = spl.sample_id
+      on ci.product_id = spl.product_id
       JOIN inventory inv
       on inv.product_id = ci.product_id
       JOIN batch bth
-      on ci.saled_batch_id = bth.batch_id
-      where sales_invoice_id =?`,
+      on ci.batch_id = bth.batch_id
+      where order_id =?`,
       [id],
       (error, results) => {
         if (error) return callback(error);
@@ -100,8 +100,8 @@ module.exports = {
     getPool().query(
       `select * from cart_item ci
       JOIN sample spl
-      on ci.product_id = spl.sample_id
-      where sales_invoice_id =?`,
+      on ci.product_id = spl.product_id
+      where order_id =?`,
       [id],
       (error, results) => {
         if (error) return callback(error);

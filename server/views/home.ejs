@@ -412,26 +412,6 @@
 
         $(document).ready(function () {
 
-
-
-          if ('caches' in window) {
-            caches.keys().then(name => {
-              if (name.length == 0) {
-
-                console.log('do something');
-                caches.open('productCache').then((cache) => {
-                  cache.add('/api/allsample').then(
-
-                  );
-                })
-              }
-              else {
-                console.log('do nothing');
-              }
-            })
-          }
-
-
           var result;
           const ctx = $("#myChart");
           $.get(`/api/totalsumfromsales?org=<%=orgId%>`, function (sales, status) {
