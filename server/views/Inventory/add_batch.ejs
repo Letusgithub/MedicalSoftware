@@ -145,6 +145,15 @@
                                             </div>
 
                                             <div class="row mb-3">
+
+                                                <label class="col-sm-2 col-form-label" for="category">Category</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="category" disabled
+                                                            value="<%=data[0].category_name%>">
+                                                    </div>
+                                                </div>
+
                                                 <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">Reorder Level</label>
 
@@ -221,27 +230,25 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-3  ">
+                                            <div class="row mb-3">
 
                                                 <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">MRP</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
                                                         <input type="text" class="form-control" name="addmrp">
                                                     </div>
                                                 </div>
-
-
 
                                                 <label class="col-sm-2 col-form-label ps-4"
                                                     for="basic-icon-default-companyname">PTR</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
                                                         <input type="text" class="form-control" name="addpur">
+                                                    </div>
+                                                    <div style="font-size: smaller; color:blue; margin-top: 5px; display: none;"
+                                                        id="r_margin">
+                                                        Retailer Margin: <span id="retailer_margin">20</span>%
                                                     </div>
                                                 </div>
 
@@ -301,64 +308,6 @@
 
                 var orgID = '<%= orgId %>';
                 var productId = '<%=data[0].sample_id%>';
-                /*
-                $(document).ready(function(){
-                    if ('caches' in window) {
-                        caches.keys().then(name=>{
-                          if(name.length == 0){
-                            console.log('do something');
-                            caches.open('productCache').then((cache) => {
-                              cache.add('/api/allsample');
-                            })
-                          }
-                          else{
-                            console.log('do nothing');
-                          } 
-                        })    
-                    }
-    // autopopulate product
-                        $("input[name='productname']").autocomplete({
-                            minLength: 3,
-                            source: function(request, response) {
-                                if('caches' in  window){
-                                    caches.match(`/api/allsample`).then(res=>{
-                                        if(res){
-                                            res.json().then(data=>{
-                                                let searchTerm = request.term;
-                                                let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
-                                                response(results);
-                                            })
-                                        }
-                                    });
-                                }
-                            },
-                            select: function(event, ui) {
-                                setTimeout(function(){
-                                    console.log(ui.item);
-                                    productId=ui.item.sample_id;
-                                    $("input[name='productname']").val(ui.item.med_name);
-                                    $("input[name='brand']").val(ui.item["mfd_mkt"]);
-                                    $("input[name='salt']").val(ui.item.salt_composition);
-                                },0)
-                            }
-                        }).data('ui-autocomplete')._renderItem = function(ul, item) {
-                            return $('<li>')
-                            .append('<div>' + item.med_name + '</div>')
-                            .appendTo(ul);
-                        };
-    //changes in stp and tabs
-                        $("select[name='primary'], select[name='secondary']").on("change", function(){
-                            //var primaryUnit = $("select[name='primary']").find('option:selected').text();
-                            //var secondaryUnit = $("select[name='secondary']").find('option:selected').text();
-                            var primaryUnit = $("select[name='primary']").val();
-                            var secondaryUnit = $("select[name='secondary']").val();
-    
-    
-                            $("#primarypopulate").text(`1 ${primaryUnit}`);
-                            $("#secondarypopulate").text(`${secondaryUnit}`);
-                            $("#getprimaryunit").text(primaryUnit);
-                        })
-    */
 
                 $("input[name='addexp']").on('input', function () {
                     var input = $(this);
@@ -368,8 +317,32 @@
                         return alert('PLEASE ADD CORRECT EXP Date FIRST');
                     }
                 });
-                //submit process after adding batch
 
+                $("input[name='addmrp']").on("keyup", function () {
+                    $("#r_margin").show();
+
+                    var mrp = parseFloat($("input[name='addmrp']").val());
+                    var gst = parseFloat($("input[name='gst']").val());
+                    var retailerMargin = parseFloat($("#retailer_margin").text());
+
+                    // Corrected PTR formula
+                    var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+
+                    $("input[name='addpur']").val(ptr.toFixed(2))
+                });
+
+                $("input[name='addpur']").on("keyup", function () {
+                    var mrp = parseFloat($("input[name='addmrp']").val());
+                    var gst = parseFloat($("input[name='gst']").val());
+                    var ptr = parseFloat($("input[name='addpur']").val());
+
+                    var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
+
+                    $("#retailer_margin").text(retailerMargin.toFixed(2));
+                })
+
+
+                //submit process after adding batch
                 $("#submitbatch").click(function () {
 
                     $('#loader').show();
@@ -400,7 +373,7 @@
 
                             $('#loader').hide();
 
-                            window.location.href=`/product_batch/${productId}`          
+                            window.location.href = `/product_batch/${productId}`
                             console.log(response);
 
                         },

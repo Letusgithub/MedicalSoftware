@@ -35,103 +35,92 @@
 
                                     <div class="card mb-4 mx-auto col-md-8">
                                         <!-- <form> -->
-                                            <div class="card-body ">
+                                        <div class="card-body ">
 
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-fullname">Product Name</label>
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-fullname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-fullname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2"
-                                                                name="productname"
-                                                                value="<%=data[0].med_name%>"
-                                                                disabled
-                                                                >
-                                                        </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-fullname">Product Name</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-fullname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-fullname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-fullname2"
+                                                            name="productname" value="<%=data[0].med_name%>" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-fullname">Mfg/Mkt</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-fullname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-fullname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-fullname2" name="brand"
+                                                            value="<%= data[0].mfd_mkt%>" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-fullname">Salt Comp.</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-fullname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-fullname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-fullname2" name="salt"
+                                                            value="<%=data[0].salt_composition%>" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-companyname">GST (%)</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-companyname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-companyname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-companyname2"
+                                                            name="gst" value="<%=data[0].gst%>">
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-fullname">Mfg/Mkt</label>
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-fullname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-fullname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2"
-                                                                name="brand"
-                                                                value="<%= data[0].mfd_mkt%>"
-                                                                disabled
-                                                                >
-                                                        </div>
+
+
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="basic-icon-default-companyname">HSN Code</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-companyname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-companyname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-companyname2"
+                                                            name="hsn" value="<%=data[0].hsn%>">
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-fullname">Salt Comp.</label>
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-fullname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-fullname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2"
-                                                                name="salt"
-                                                                value="<%=data[0].salt_composition%>"
-                                                                disabled>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-3">
-
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">GST (%)</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-companyname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2"
-                                                                name="gst"
-                                                                value="<%=data[0].gst%>">
-                                                        </div>
-                                                    </div>
+                                            </div>
 
 
-
-                                                    <label class="col-sm-2 col-form-label ps-4"
-                                                        for="basic-icon-default-companyname">HSN Code</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-companyname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2"
-                                                                name="hsn"
-                                                                value="<%=data[0].hsn%>">
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-
-
-                                                <!-- <div class="row mb-2">
+                                            <!-- <div class="row mb-2">
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-address">Unit</label>
                                                     <div class="col-sm-4 me-0">
@@ -195,7 +184,7 @@
                                                     </div>
                                                 </div> -->
 
-                                                <!-- <div class="row mb-3">
+                                            <!-- <div class="row mb-3">
 
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">Conversion</label>
@@ -212,45 +201,39 @@
 
                                                 </div> -->
 
-                                                <div class="row mb-3">
+                                            <div class="row mb-3">
 
-                                                    <!-- <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">Shelf Label</label>
-
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-companyname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2"
-                                                                name="shelflabel">
-                                                        </div>
-                                                    </div> -->
-
-                                                    <label class="col-sm-2 col-form-label ps-4"
-                                                        for="basic-icon-default-companyname">Threshold</label>
-
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-companyname" placeholder=""
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-companyname2"
-                                                                name="threshold"
-                                                                value="<%=data[0].threshold%>">
-                                                        </div>
+                                                <label class="col-sm-2 col-form-label" for="category">Category</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <select class="form-select" name="category" id="categorySelect">
+                                                        </select>
                                                     </div>
+                                                </div>
 
-                                                    
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="basic-icon-default-companyname">Threshold</label>
+
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-companyname2"
+                                                            class="input-group-text"></span>
+                                                        <input type="text" class="form-control"
+                                                            id="basic-icon-default-companyname" placeholder=""
+                                                            aria-label="John Doe"
+                                                            aria-describedby="basic-icon-default-companyname2"
+                                                            name="threshold" value="<%=data[0].threshold%>">
+                                                    </div>
                                                 </div>
-                                                <div class="text-center mx-auto">
-                                                    <button type="submit" class="btn btn-primary" id="submitproduct">Update</button>
-                                                </div>
+
+
                                             </div>
+
+                                            <div class="text-center mx-auto">
+                                                <button type="submit" class="btn btn-primary"
+                                                    id="submitproduct">Update</button>
+                                            </div>
+                                        </div>
 
                                         <!-- </form> -->
                                     </div>
@@ -276,38 +259,63 @@
         <!-- / Layout wrapper -->
 
         <%- include('../partials/footercode.ejs') %>
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-        <script>
-            $(document).ready(function(){
-                productId = '<%=data[0].product_id%>';
-                orgID = '<%=orgId%>';
-                $("#submitproduct").click(function(){
-                    var productDetails ={
-                         product_id: productId,
-                         org_id: orgID,
-                         gst : $("input[name='gst']").val(),
-                         hsn : $("input[name='hsn']").val(),
-                         threshold: $("input[name='threshold']").val()
-                    }
-                    console.log(productDetails);
-                    $.ajax({
-                        url: `/api/updateinventory/${productId}`,
-                        type: 'POST',
-                        data: JSON.stringify(productDetails),
-                        contentType: 'application/json',
-                        success: function(response){
-                            console.log('inside stock', response);
-                            window.location.href='/product_stock'                  
-                        },
-                        error: function(error){
-                            console.log(error);
+            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+            <script>
+                $(document).ready(function () {
+                    productId = '<%=data[0].product_id%>';
+                    orgID = '<%=orgId%>';
+
+                    categoryId = '<%=data[0].category_id%>';
+                    categoryName = '<%=data[0].category_name%>';
+                    $("#categorySelect").append(`<option selected value="${categoryId}">${categoryName}</option>`);
+
+                    // Fetch categories from the API using jQuery
+                    $.get("/api/all-category", function (response) {
+                        // Get the select element
+                        var categorySelect = $("#categorySelect");
+
+                        // Populate the dropdown with options
+                        $.each(response.data, function (index, category) {
+                            if(category.category_id != categoryId){
+                                categorySelect.append($('<option>', {
+                                    value: category.category_id,
+                                    text: category.category_name
+                                }));
+                            }
+                        });
+                    })
+                    .fail(function (error) {
+                        console.error("Error fetching categories:", error);
+                    });
+
+                    $("#submitproduct").click(function () {
+                        var productDetails = {
+                            product_id: productId,
+                            org_id: orgID,
+                            category_id: $("select[name='category']").val(),
+                            gst: $("input[name='gst']").val(),
+                            hsn: $("input[name='hsn']").val(),
+                            threshold: $("input[name='threshold']").val()
                         }
+                        console.log(productDetails);
+                        $.ajax({
+                            url: `/api/updateinventory/${productId}`,
+                            type: 'POST',
+                            data: JSON.stringify(productDetails),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log('inside stock', response);
+                                window.location.href = '/product_stock'
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        })
                     })
                 })
-            })
-        </script>
-        
-            
+            </script>
+
+
 
     </body>
 

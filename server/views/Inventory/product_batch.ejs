@@ -53,7 +53,7 @@
 
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Salt</label>
+                                                            for="salt">Salt</label>
                                                         <p class="fw-bold pb-0" id="salt">
                                                         </p>
                                                     </div>
@@ -62,14 +62,21 @@
                                                 <div class="col-md-3">
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">HSN Code</label>
+                                                            for="hsn">HSN Code</label>
                                                         <p class="fw-bold pb-0" id="hsncode"></p>
                                                     </div>
 
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">GST</label>
+                                                            for="gst">GST</label>
                                                         <p class="fw-bold pb-0" id="gst"></p>
+                                                    </div>
+
+                                                    <div>
+                                                        <label class="col-form-label"
+                                                            for="category">Category</label>
+                                                        <p class="fw-bold pb-0" id="category">
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -179,6 +186,7 @@
                         $("#brand").text(items.mfd_mkt);
                         $("#salt").text(items.salt_composition);
                         $("#gst").text(items.gst + '%');
+                        $("#category").text(items.category_name);
                         $("#product_img").attr('src', items.img_url);
 
 

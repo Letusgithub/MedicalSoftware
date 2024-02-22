@@ -8,16 +8,18 @@ module.exports = {
       `insert into inventory(
             product_id,
             org_id,
+            category_id,
             primary_unit,
             secondary_unit,
             hsn,
             gst, 
             threshold
             )
-            values(?,?,?,?,?,?,?)`,
+            values(?,?,?,?,?,?,?,?)`,
       [
         data.product_id,
         data.org_id,
+        data.category_id,
         data.primary_unit,
         data.secondary_unit,
         data.hsn,
@@ -37,11 +39,13 @@ module.exports = {
   update: (data, id, callBack) => {
     getPool().query(
       `update inventory set
+            category_id = ?,
             hsn =?,
             gst=?, 
             threshold=? 
             where product_id = ? and org_id =?`,
       [
+        data.category_id,
         data.hsn,
         data.gst,
         data.threshold,
@@ -90,9 +94,9 @@ module.exports = {
   getById: (productId, callBack) => {
     getPool().query(
       `select * from inventory inv
-      JOIN sample 
-      ON sample.product_id = inv.product_id
-      where product_id = ? `,
+      JOIN sample spl ON spl.product_id = inv.product_id
+      LEFT JOIN category cat on cat.category_id = inv.category_id
+      where spl.product_id = ? `,
       [productId],
       (error, results) => {
         if (error) {

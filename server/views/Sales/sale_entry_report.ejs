@@ -238,7 +238,7 @@
                 var htmlData = `
               <tr>
                 <td>${i + 1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].order_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
                 <td>${items[i].cust_name}</td>
                 <td>${items[i].grand_total}</td>
                 <td>${date}</td>
@@ -268,7 +268,7 @@
                 var htmlData = `
               <tr>
                 <td>${i + 1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].order_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
                 <td>${items[i].cust_name}</td>
                 <td>${items[i].grand_total}</td>
                 <td>${date}</td>
@@ -299,7 +299,7 @@
                 var htmlData = `
               <tr>
                 <td>${i + 1}</td>
-                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].order_id}" > <strong>${items[i].invoice_id_main}</strong></a></td>
                 <td>${items[i].cust_name}</td>
                 <td>${items[i].grand_total}</td>
                 <td>${date}</td>
@@ -332,7 +332,7 @@
                 var htmlData = `
                 <tr>
                   <td>${i + 1}</td>
-                  <td id="selectedinvoiceid"><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].si_invoice_id}" ><strong>${items[i].invoice_id_main}</strong></a></td>
+                  <td id="selectedinvoiceid"><i class="fab fa-angular fa-lg text-danger me-3"></i><a href="/sale_receipt/${items[i].order_id}" ><strong>${items[i].invoice_id_main}</strong></a></td>
                   <td>${items[i].cust_name}</td>
                   <td>${items[i].grand_total}</td>
                   <td>${date}</td>
@@ -367,7 +367,7 @@
             var invoiceId = item.find("#selectedinvoiceid strong").text();
             console.log(invoiceId);
             $.get(`/api/getsalesidforreport/${invoiceId}`, function (data, status) {
-              var id = data.result[0].si_invoice_id;
+              var id = data.result[0].order_id;
               window.location.href = `/sale_receipt/${id}`
             })
           })

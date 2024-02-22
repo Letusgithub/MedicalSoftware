@@ -211,28 +211,12 @@ module.exports = async (app) => {
     res.render('Inventory/product_stock', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
-  // app.get('/update_product/:id', checkAuth, fetchOrgId, (req, res) => {
-  //   console.log('herr', JSON.stringify(req.params.id));
-  //   getPool().query(
-  //     `select * from inventory where product_id= ? and org_id = ${req.org_id}`,
-  //     [req.params.id],
-
-  //     (error, results) => {
-  //       if (error) {
-  //         return res.send({ status: 'error', error });
-  //       }
-  //       res.render('Inventory/update_product', { data: results });
-  //     },
-  //   );
-  // });
-
   app.get('/update_addproduct/:id', checkAuth, fetchOrgId, (req, res) => {
-    console.log('here', JSON.stringify(req.params.id));
     getPool().query(
       `select * from inventory inv
-      JOIN sample spl 
-      on spl.sample_id = inv.product_id
-      where product_id= ? and org_id = ${req.org_id}`,
+      JOIN sample spl on spl.product_id = inv.product_id
+      LEFT JOIN category cat on cat.category_id = inv.category_id
+      where spl.product_id= ? and org_id = ${req.org_id}`,
       [req.params.id],
 
       (error, results) => {
@@ -259,9 +243,9 @@ module.exports = async (app) => {
   app.get('/add_batch/:id', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
       `select * from inventory inv
-      JOIN sample spl 
-      on spl.sample_id = inv.product_id
-      where product_id= ? and org_id = ${req.org_id}`,
+      JOIN sample spl on spl.product_id = inv.product_id
+      LEFT JOIN category cat on cat.category_id = inv.category_id
+      where spl.product_id= ? and org_id = ${req.org_id}`,
 
       [req.params.id],
 

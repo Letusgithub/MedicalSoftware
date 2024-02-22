@@ -27,6 +27,7 @@ require('./server/routes/api.owner.routes')(app);
 require('./server/routes/api.ref.routes')(app);
 require('./server/routes/api.inventory.routes')(app);
 require('./server/routes/api.product.routes')(app);
+require('./server/routes/api.category.routes')(app);
 require('./server/routes/api.vendor.routes')(app);
 require('./server/routes/api.order.routes')(app);
 require('./server/routes/api.customer.routes')(app);

@@ -274,19 +274,6 @@ module.exports = {
     );
   },
 
-  // autoComplete: (querys, callback) => {
-  //   const queries = querys.toLowerCase();
-  //   getPool().query(
-  //     'select * from sample where lower(med_name) like ? limit 10',
-  //     [`%${queries}%`],
-  //     (error, results) => {
-  //       if (error) return callback(error);
-  //       return callback(null, results);
-  //     },
-
-  //   );
-  // },
-
   // LEFT JOIN
   // customer_data AS cd ON cd.customer_id = od.customer_id
   // where cd.org_id = ?

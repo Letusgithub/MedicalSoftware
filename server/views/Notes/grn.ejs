@@ -18,8 +18,18 @@
 
                                 <!-- Content -->
 
-                                <di class="container-xxl flex-grow-1 container-p-y">
-                                    <h4 class="fw-bold py-3 mb-1">Goods Received Note</h4>
+                                <div class="container-xxl flex-grow-1 container-p-y">
+                                    
+                                    
+
+                                    <div class="d-flex justify-content-between m-0 p-0">
+                                        <h4 class="fw-bold py-3 mb-1">Purchase Bill</h4>
+                                        <div class=" text-center mt-3 ">
+                                            <a class="btn btn-primary mx-4" style="color: white;" href="/new_vendor">+
+                                                Add Distributor</a>
+                                        </div>
+                                    </div>
+
                                     <hr class="mb-4">
 
                                     <div class="row">
@@ -311,6 +321,10 @@
                                                                 class="input-group-text"></span>
                                                             <input type="text" class="form-control" id="addpur">
                                                         </div>
+                                                        <div style="font-size: smaller; color: blue; margin-top: 5px; display: none;"
+                                                            id="r_margin">
+                                                            Retailer Margin: <span id="retailer_margin">20</span>%
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -384,7 +398,7 @@
                                         </div>
 
                                     </div>
-
+                                </div>
 
                             </div>
                             <div class="text-center mb-4">
@@ -423,6 +437,7 @@
                     $("#address").text("Address :");
                     var vendorId = -1;
                     $('#vendorselect').change(function () {
+
                         var selectedVendorId = $(this).val();
 
                         $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
@@ -522,9 +537,47 @@
                         var exp_date = input.val();
                         if (exp_date < new Date().toJSON().slice(0, 10)) {
                             $("input[name='addexp']").val(null);
-                            return alert('PLEASE ADD CORRECT EXPDate FIRST');
+                            return alert('Please add correct Expiry Date');
                         }
                     });
+
+
+                    $("select[name='gst']").on("change", function () {
+                        $("#price").val(0)
+
+                        var mrp = parseFloat($("#price").val());
+                        var gst = parseFloat($("select[name='gst']").val());
+                        var retailerMargin = parseFloat($("#retailer_margin").text());
+
+                        // Corrected PTR formula
+                        var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+
+                        $("#addpur").val(ptr.toFixed(2))
+                    });
+
+                    $("#price").on("keyup", function () {
+                        $("#r_margin").show();
+
+                        var mrp = parseFloat($("#price").val());
+                        var gst = parseFloat($("select[name='gst']").val());
+                        var retailerMargin = parseFloat($("#retailer_margin").text());
+
+                        // Corrected PTR formula
+                        var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+
+                        $("#addpur").val(ptr.toFixed(2))
+                    });
+
+                    $("#addpur").on("keyup", function () {
+                        var mrp = parseFloat($("#price").val());
+                        var gst = parseFloat($("select[name='gst']").val());
+                        var ptr = parseFloat($("#addpur").val());
+
+                        var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
+
+                        $("#retailer_margin").text(retailerMargin.toFixed(2));
+                    })
+
 
 
                     $("input[name='productname']").on('input', function () {
@@ -549,7 +602,7 @@
                         if (parseFloat($("#addpur").val()) > parseFloat($("#price").val())) {
                             return alert("Purchase Rate can't be greater than MRP");
                         }
-
+                        $("#r_margin").hide();
                         $("select[name = 'gst']").prop('disabled', false);
                         $("#hsn").prop('disabled', false);
                         $("select[name='primary']").prop('disabled', false);
