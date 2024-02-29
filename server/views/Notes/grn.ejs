@@ -19,8 +19,8 @@
                                 <!-- Content -->
 
                                 <div class="container-xxl flex-grow-1 container-p-y">
-                                    
-                                    
+
+
 
                                     <div class="d-flex justify-content-between m-0 p-0">
                                         <h4 class="fw-bold py-3 mb-1">Purchase Bill</h4>
@@ -231,16 +231,27 @@
 
                                                 <div class="row mb-3">
 
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">Reorder Level</label>
-
+                                                    <label class="col-sm-2 col-form-label" for="category">Category</label>
                                                     <div class="col-sm-4">
                                                         <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control" placeholder=""
+                                                            <select class="form-select" name="category" id="categorySelect">
+                                                                <option selected>Select Category</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+    
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-companyname">Reorder Level</label>
+    
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="text" class="form-control"
+                                                                id="basic-icon-default-companyname" placeholder=""
                                                                 name="threshold">
                                                         </div>
                                                     </div>
-
+    
+    
                                                 </div>
 
                                             </div>
@@ -300,7 +311,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3  ">
+                                                <div class="row mb-3">
 
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">MRP</label>
@@ -330,6 +341,33 @@
                                                 </div>
 
                                                 <div class="row mb-3">
+
+                                                    <label class="col-sm-2 col-form-label" for="free_scheme">Free
+                                                        Scheme</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control" name="free_scheme"
+                                                                id="free_scheme">
+                                                        </div>
+                                                    </div>
+
+                                                    <label class="col-sm-2 col-form-label ps-4" for="bulk_discount">Bulk
+                                                        Discount</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-companyname2"
+                                                                class="input-group-text"></span>
+                                                            <input type="text" class="form-control" name="bulk_discount"
+                                                                id="bulk_discount">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <!-- Temporarily Disabled -->
+                                                <!-- <div class="row mb-3">
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">Shelf Label</label>
                                                     <div class="col-sm-4">
@@ -341,65 +379,70 @@
                                                             <span class="input-group-text" id="getshelfnumber"></span>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
 
 
 
                                                 <div class="col-sm-12 text-center">
                                                     <button type="submit" class="btn btn-primary" id="addtocart">Add to
                                                         Cart</button>
+                                                    <div>
+                                                        <div style=" color: blue; margin-top: 5px; display: none;"
+                                                            id="b_price">
+                                                            Base price: <span id="base_price"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-
                                             </div>
+
 
                                         </div>
 
                                     </div>
 
-                                    <hr class="mb-4">
+                                </div>
 
-                                    <div class="card">
-                                        <h5 class="card-header">Cart</h5>
-                                        <div class="card-body">
-                                            <div class="table-responsive text-nowrap">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Product name</th>
-                                                            <th>Brand name</th>
-                                                            <th>MRP</th>
-                                                            <th>PTR</th>
-                                                            <th>QTY</th>
-                                                            <th>Unit</th>
-                                                            <th>Amount</th>
-                                                            <th class="col-1">Action</th>
+                                <hr class="mb-4">
 
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="cart">
+                                <div class="card">
+                                    <h5 class="card-header">Cart</h5>
+                                    <div class="card-body">
+                                        <div class="table-responsive text-nowrap">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Product name</th>
+                                                        <th>Brand name</th>
+                                                        <th>MRP</th>
+                                                        <th>PTR</th>
+                                                        <th>QTY</th>
+                                                        <th>Unit</th>
+                                                        <th>Amount</th>
+                                                        <th class="col-1">Action</th>
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="cart">
+
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div>
-
-
-                                    <div class="form-check mt-3">
-                                        <div>
-                                            <input class="form-check-input mx-auto" type="checkbox" value=""
-                                                id="defaultCheck1" checked>
-                                            <label class="form-check-label mx-1" for="defaultCheck1">
-                                                Disclaimer : Hereby I assure that product details given here is
-                                                validated by this pharmacy .
-                                            </label>
-                                        </div>
-
                                     </div>
                                 </div>
 
+
+                                <div class="form-check mt-3">
+                                    <div>
+                                        <input class="form-check-input mx-auto" type="checkbox" value=""
+                                            id="defaultCheck1" checked>
+                                        <label class="form-check-label mx-1" for="defaultCheck1">
+                                            Disclaimer : Hereby I assure that product details given here is
+                                            validated by this pharmacy .
+                                        </label>
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="text-center mb-4">
                                 <a>
@@ -409,9 +452,6 @@
                     </div>
             </div>
         </div>
-        </div>
-
-
 
 
         <%- include('../partials/footercode.ejs') %>
@@ -523,6 +563,26 @@
                         }
 
                     };
+
+                    // Fetch categories from the API using jQuery
+                    $.get("/api/all-category", function (response) {
+                        // Get the select element
+                        var categorySelect = $("#categorySelect");
+
+                        // Populate the dropdown with options
+                        $.each(response.data, function (index, category) {
+                            console.log(category)
+                            categorySelect.append($('<option>', {
+                                value: category.category_id, 
+                                text: category.category_name 
+                            }));
+                        });
+                    })
+                    .fail(function (error) {
+                        console.error("Error fetching categories:", error);
+                    });
+
+                    //changes in stp and tabs
                     $("select[name='primary'], select[name='secondary']").on("change", function () {
                         var primaryUnit = $("select[name='primary']").val();
                         var secondaryUnit = $("select[name='secondary']").val();
@@ -541,16 +601,33 @@
                         }
                     });
 
+                    // Calculate PTR
+                    function calcuatePTR(mrp, gst, retailerMargin) {
+                        return (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+                    }
 
+                    // Calcuate Base Price
+                    function calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis) {
+                        var free_cf = 1 - (1 / ((1 + (gst / 100)) * (qty + free)));
+                        var bulkDis_cf = 1 - (bulkDis / ((1 + (gst / 100)) * 100));
+
+                        if (free == 0) { // Boundary condition
+                            return ptr * bulkDis_cf;
+                        }
+                        return ptr * free_cf * bulkDis_cf;;
+                    }
+
+                    // logic for calculating PTR
                     $("select[name='gst']").on("change", function () {
-                        $("#price").val(0)
+                        $("#price").val(0);
+                        $("#free_scheme").val(0);
+                        $("#bulk_discount").val(0);
 
                         var mrp = parseFloat($("#price").val());
                         var gst = parseFloat($("select[name='gst']").val());
                         var retailerMargin = parseFloat($("#retailer_margin").text());
 
-                        // Corrected PTR formula
-                        var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+                        var ptr = calcuatePTR(mrp, gst, retailerMargin);
 
                         $("#addpur").val(ptr.toFixed(2))
                     });
@@ -562,8 +639,7 @@
                         var gst = parseFloat($("select[name='gst']").val());
                         var retailerMargin = parseFloat($("#retailer_margin").text());
 
-                        // Corrected PTR formula
-                        var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+                        var ptr = calcuatePTR(mrp, gst, retailerMargin);
 
                         $("#addpur").val(ptr.toFixed(2))
                     });
@@ -572,14 +648,35 @@
                         var mrp = parseFloat($("#price").val());
                         var gst = parseFloat($("select[name='gst']").val());
                         var ptr = parseFloat($("#addpur").val());
+                        var qty = parseFloat($("input[name='quantity']").val());
+                        var free = parseFloat($("#free_scheme").val());
+                        var bulkDis = parseFloat($("#bulk_discount").val());
 
                         var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
 
+                        var basePrice = calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis);
+
                         $("#retailer_margin").text(retailerMargin.toFixed(2));
+                        $("#b_price").show();
+                        $("#base_price").text(basePrice.toFixed(2));
                     })
 
+                    // Compute base price on change
+                    $("#free_scheme, #bulk_discount, input[name='quantity']").on("keyup", function () {
+                        var mrp = parseFloat($("#price").val());
+                        var gst = parseFloat($("select[name='gst']").val());
+                        var ptr = parseFloat($("#addpur").val());
+                        var qty = parseFloat($("input[name='quantity']").val());
+                        var free = parseFloat($("#free_scheme").val());
+                        var bulkDis = parseFloat($("#bulk_discount").val());
 
+                        var basePrice = calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis);
 
+                        $("#b_price").show();
+                        $("#base_price").text(basePrice.toFixed(2));
+                    })
+
+                    //  Clear input fields on product name change
                     $("input[name='productname']").on('input', function () {
                         $("select[name = 'gst']").val('Select option');
                         $("#hsn").val("");
@@ -611,6 +708,7 @@
 
                         var products = $("#medicinename").val();
                         var brand = $("#brand").val();
+                        var category_id = $("select[name='category']").val();
                         var gst = $("select[name = 'gst']").val();
                         var hsn = $("#hsn").val();
                         var Punit = $("select[name='primary']").val();
@@ -624,7 +722,10 @@
                         var shelflabel = $("#shelflabel").val();
                         var mrp = $("#price").val();
                         var purchase = $("#addpur").val();
-                        var quantity = $("input[name='quantity']").val();
+                        var free = parseFloat($("#free_scheme").val());
+                        var bulk_discount = $("#bulk_discount").val();
+                        var base_price = $("#base_price").text();
+                        var quantity = parseFloat(("input[name='quantity']").val());
 
                         //logic for calculating amount
                         var amount = (purchase * quantity).toFixed(2);
@@ -633,6 +734,7 @@
                             productId: productId,
                             productname: products,
                             brandname: brand,
+                            category_id: category_id,
                             gst: gst,
                             hsn: hsn,
                             punit: Punit,
@@ -645,7 +747,10 @@
                             shelflabel: shelflabel,
                             mrp: mrp,
                             purchase: purchase,
-                            qty: quantity,
+                            free: free,
+                            bulk_discount: bulk_discount,
+                            base_price: base_price,
+                            qty: quantity + free,
                             amt: amount,
                         })
                         console.log('cart details', cartarray);
@@ -671,6 +776,9 @@
                         $("#shelflabel").val("");
                         $("#price").val("");
                         $("#addpur").val("");
+                        $("#free_scheme").val("");
+                        $("#bulk_discount").val("");
+                        $("#base_price").text("");
                         $("input[name='quantity']").val("");
 
                     })
@@ -774,6 +882,7 @@
                                             var productDetails = {
                                                 product_id: cartDetails[i].productId,
                                                 org_id: org,
+                                                category_id: cartDetails[i].category_id,
                                                 gst: cartDetails[i].gst,
                                                 hsn: cartDetails[i].hsn,
                                                 primary_unit: cartDetails[i].punit,
@@ -798,6 +907,9 @@
                                                         batch_qty: cartDetails[i].qty,
                                                         purchase_rate: cartDetails[i].purchase,
                                                         mrp: cartDetails[i].mrp,
+                                                        free: cartDetails[i].free,
+                                                        bulk_discount: cartDetails[i].bulk_discount,
+                                                        base_price: cartDetails[i].base_price,
                                                         shelf_label: cartDetails[i].shelflabel,
                                                         grn_id: GRNid
                                                     }
@@ -818,6 +930,7 @@
                                                                     grn_id: GRNid,
                                                                     product_id: cartDetails[i].productId,
                                                                     gst: cartDetails[i].gst,
+                                                                    category_id: cartDetails[i].category_id,
                                                                     hsn: cartDetails[i].hsn,
                                                                     punit: cartDetails[i].punit,
                                                                     sunit: cartDetails[i].sunit,
@@ -828,6 +941,9 @@
                                                                     shelf_label: cartDetails[i].shelflabel,
                                                                     purchase: cartDetails[i].purchase,
                                                                     mrp: cartDetails[i].mrp,
+                                                                    free: cartDetails[i].free,
+                                                                    bulk_discount: cartDetails[i].bulk_discount,
+                                                                    base_price: cartDetails[i].base_price,
                                                                     qty: cartDetails[i].qty,
 
                                                                 }),
@@ -864,6 +980,9 @@
                                                 batch_qty: cartDetails[i].qty,
                                                 purchase_rate: cartDetails[i].purchase,
                                                 mrp: cartDetails[i].mrp,
+                                                free: cartDetails[i].free,
+                                                bulk_discount: cartDetails[i].bulk_discount,
+                                                base_price: cartDetails[i].base_price,
                                                 shelf_label: cartDetails[i].shelflabel,
                                                 grn_id: GRNid
                                             }
@@ -893,6 +1012,9 @@
                                                             shelf_label: cartDetails[i].shelflabel,
                                                             purchase: cartDetails[i].purchase,
                                                             mrp: cartDetails[i].mrp,
+                                                            free: cartDetails[i].free,
+                                                            bulk_discount: cartDetails[i].bulk_discount,
+                                                            base_price: cartDetails[i].base_price,
                                                             qty: cartDetails[i].qty,
 
                                                         }),

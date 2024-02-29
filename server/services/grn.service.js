@@ -162,7 +162,7 @@ module.exports = {
       `SELECT sample.med_name, grncd.*, vendor.*, grn.vendor_invoice, grn.total, grn.paid FROM grn
       Join grn_cart_details grncd on grncd.grn_id = grn.grn_id
       Join vendor on vendor.vendor_id = grn.vendor_id
-      Join sample on grncd.product_id = sample.sample_id
+      Join sample on grncd.product_id = sample.product_id
       where grn.grn_id = ?
       `,
       [id],
