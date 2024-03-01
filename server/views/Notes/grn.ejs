@@ -533,6 +533,7 @@
                                     $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
                                     $("select[name='secondary']").val(items.secondary_unit).prop('disabled', true);
                                     $("input[name='threshold']").val(items.threshold).prop('disabled', true);
+                                    $("select[name='category']").val(items.category_id).prop('disabled', true);
 
                                     var primaryUnit = $("select[name='primary']").val();
                                     var secondaryUnit = $("select[name='secondary']").val();
@@ -571,7 +572,6 @@
 
                         // Populate the dropdown with options
                         $.each(response.data, function (index, category) {
-                            console.log(category)
                             categorySelect.append($('<option>', {
                                 value: category.category_id, 
                                 text: category.category_name 
@@ -586,7 +586,6 @@
                     $("select[name='primary'], select[name='secondary']").on("change", function () {
                         var primaryUnit = $("select[name='primary']").val();
                         var secondaryUnit = $("select[name='secondary']").val();
-
 
                         $("#primarypopulate").text(`1 ${primaryUnit}`);
                         $("#secondarypopulate").text(`${secondaryUnit}`);
@@ -725,7 +724,7 @@
                         var free = parseFloat($("#free_scheme").val());
                         var bulk_discount = $("#bulk_discount").val();
                         var base_price = $("#base_price").text();
-                        var quantity = parseFloat(("input[name='quantity']").val());
+                        var quantity = parseFloat($("input[name='quantity']").val());
 
                         //logic for calculating amount
                         var amount = (purchase * quantity).toFixed(2);
@@ -767,6 +766,7 @@
                         $("input[name='threshold']").val("");
                         $("#brand").val('')
                         $("#salt").val('')
+                        $("select[name='category']").val('Select Category');
 
                         $("#batchname").val("");
                         $('[name="addexp"]').val('');
