@@ -9,13 +9,17 @@ module.exports = {
                   vendor_id,
                   vendor_invoice,
                   total,
+                  invoice_date,
+                  credit_period,
                   org_id)
-                  value(?,?,?,?,?)`,
+                  value(?,?,?,?,?,?,?)`,
       [
         GRN,
         data.vendor_id,
         data.vendor_invoice,
         data.total,
+        data.invoice_date,
+        data.credit_period,
         data.org_id,
       ],
       (error, results) => {
@@ -42,8 +46,8 @@ module.exports = {
   createGRNcarts: (data, callback) => {
     getPool().query(
 
-      `insert into grn_cart_details(grn_id, product_id, gst, hsn, punit, sunit, moq, batch_name, exp_Date, conversion, shelf_label, mrp, purchase, qty)
-        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into grn_cart_details(grn_id, product_id, gst, hsn, punit, sunit, moq, batch_name, exp_Date, conversion, shelf_label, mrp, purchase, qty, free, bulk_discount, base_price)
+        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.grn_id,
         data.product_id,
@@ -59,7 +63,9 @@ module.exports = {
         data.mrp,
         data.purchase,
         data.qty,
-
+        data.free,
+        data.bulk_discount,
+        data.base_price,
       ],
       (error, results) => {
         if (error) {
