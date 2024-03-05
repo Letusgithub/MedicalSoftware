@@ -11,8 +11,9 @@ module.exports = {
                   total,
                   invoice_date,
                   credit_period,
+                  less_discount,
                   org_id)
-                  value(?,?,?,?,?,?,?)`,
+                  value(?,?,?,?,?,?,?,?)`,
       [
         GRN,
         data.vendor_id,
@@ -20,6 +21,7 @@ module.exports = {
         data.total,
         data.invoice_date,
         data.credit_period,
+        data.less_discount,
         data.org_id,
       ],
       (error, results) => {
@@ -165,7 +167,7 @@ module.exports = {
 
   getGRNreceipt: (id, callback) => {
     getPool().query(
-      `SELECT sample.med_name, grncd.*, vendor.*, grn.vendor_invoice, grn.total, grn.paid FROM grn
+      `SELECT sample.med_name, grncd.*, vendor.*, grn.vendor_invoice, grn.total, grn.paid, grn.invoice_date, grn.credit_period, grn.less_discount FROM grn
       Join grn_cart_details grncd on grncd.grn_id = grn.grn_id
       Join vendor on vendor.vendor_id = grn.vendor_id
       Join sample on grncd.product_id = sample.product_id

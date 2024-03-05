@@ -325,8 +325,10 @@
                     <p id="orderdate">
                         Date: 
                     </p>
-                    <p id="pono">
-                        P.O. No.:
+                    <p id="credit_period">
+                    </p>
+                    <p id="grnno">
+                        GRN No.:
                     </p>
                 </div>
 
@@ -345,10 +347,10 @@
                             <th style="width: 3.1rem;">Free</th>
                             <th style="width: 3.62rem;">PTR(₹)</th>
                             <th style="width: 3.61rem;">Dis%</th>
-                            <th style="width: 3.61rem;">Gross Value</th>
+                            <th style="width: 3.61rem;">Gross Value(₹)</th>
                             <th style="width: 3.61rem;">GST%</th>
-                            <th style="width: 3.61rem;">GST Value</th>
-                            <th style="width: 3.61rem;">Amount</th>
+                            <th style="width: 3.61rem;">GST Value(₹)</th>
+                            <th style="width: 3.61rem;">Amount(₹)</th>
                         </tr>
                     </tr>
                 </thead>
@@ -380,6 +382,12 @@
                             </div>
                             <div id="totalGross">
                             </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="label">
+                                Less Discount(₹):
+                            </div>
+                            <div id="lessDiscount"></div>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="label">
@@ -428,19 +436,26 @@
             console.log(id);
             
 
-            var todayDate = new Date();
-            var options = { year: 'numeric', month: 'long', day: 'numeric' };
-            var formattedDate = todayDate.toLocaleDateString('en-US', options);
-            $("#orderdate").text(`Date: ${formattedDate}`)
+            // var todayDate = new Date();
+            // var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            // var formattedDate = todayDate.toLocaleDateString('en-US', options);
+            // $("#orderdate").text(`Date: ${formattedDate}`)
 
             $.get(`/api/getgrnreceipts/${id}`, function (data, status) {
                 var grnData= data.results[0];
-                console.log('inside the po invoice', data);
+                console.log('inside the grn details', data);
 
+                var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                var invoiceDate = new Date(grnData.invoice_date);
+                var formattedDate = invoiceDate.toLocaleDateString('en-US', options);
+                $("#orderdate").text(`Invoice Date: ${formattedDate}`);
+
+                if (grnData.credit_period != null) {
+                    $("#credit_period").text(`Credit Period: ${grnData.credit_period}`);
+                }
                 // $("#totalcredit").text(grnData.total);
                 $("#invoiceno").text(`Invoice No: ${grnData.vendor_invoice}`);
-                //var grnData = data.data[0];
-                $("#pono").text(`GRN No:${id}`)
+                $("#grnno").text(`GRN No:${id}`)
                 $("#vendorname").text(`Distributor Name: ${grnData.vendor_name}`)
                 $("#vendormobile").text(`Mobile: ${grnData.vendor_contact}`)
                 $("#vendoremail").text(`Email: ${grnData.vendor_email}`)
@@ -453,6 +468,7 @@
                 var totalGross = 0;
                 var totalGST = 0;
                 var totalAmount = 0;
+                var lessDiscount = grnData.less_discount;
 
                 for (var i = 0; i < items.length; i++) {
                     var datetime = items[i].exp_Date; 
@@ -487,6 +503,8 @@
                     totalAmount += amount;
                 }
 
+                totalAmount = totalAmount - lessDiscount;
+                $("#lessDiscount").text(lessDiscount.toFixed(2));
                 $("#totalGross").text(totalGross.toFixed(2));
                 $("#cgst").text((totalGST / 2).toFixed(2));
                 $("#sgst").text((totalGST / 2).toFixed(2));

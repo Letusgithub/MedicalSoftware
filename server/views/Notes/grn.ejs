@@ -89,17 +89,21 @@
                                             <div class="card mb-4">
                                                 <div class="card-header d-flex justify-content-between">
                                                     <h5 class="mb-0">Invoice Date </h5>
-                                                    <div class="d-flex align-items-center" >
-                                                        <select  class="form-select form-select-sm me-2 mb-0"  id="creditPeriodInput" style="display: none;">
+                                                    <div class="d-flex align-items-center">
+                                                        <select class="form-select form-select-sm me-2 mb-0"
+                                                            id="creditPeriodInput" style="display: none;">
                                                             <option>Credit Period</option>
                                                             <option value="10">10D</option>
                                                             <option value="15">15D</option>
                                                             <option value="30">30D</option>
                                                         </select>
+                                                        <input type="number" class="form-control" id="lessDiscount"
+                                                            name="lessDiscount" placeholder="Less Discount in (₹)"/>
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
-                                                    <input class="form-control" type="date" id="html5-date-input" name="invoiceDate" />
+                                                    <input class="form-control" type="date" id="html5-date-input"
+                                                        id="invoiceDate" name="invoiceDate" />
                                                 </div>
                                             </div>
                                         </div>
@@ -361,7 +365,8 @@
                                                             <span id="basic-icon-default-companyname2"
                                                                 class="input-group-text"></span>
                                                             <input type="number" class="form-control"
-                                                                name="bulk_discount" id="bulk_discount" placeholder="Eg- 5%">
+                                                                name="bulk_discount" id="bulk_discount"
+                                                                placeholder="Eg- 5%">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -478,6 +483,8 @@
                     $("#dl_no").text("DL No. :");
                     $("#gstin").text("GSTIN :");
                     $("#address").text("Address :");
+
+                    // Event listener for changes in the vendor dropdown
                     var vendorId = -1;
                     $('#vendorselect').change(function () {
 
@@ -507,9 +514,11 @@
                         if ($('#creditRadio').is(':checked')) {
                             // Show the credit period input field
                             $('#creditPeriodInput').show();
+                            $('#lessDiscount').hide();
                         } else {
                             // Hide the credit period input field
                             $('#creditPeriodInput').hide();
+                            $('#lessDiscount').show();
                             // Clear the credit period input field value
                             $('#creditPeriodInput').val('');
                         }
@@ -651,6 +660,10 @@
                         return (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
                     }
 
+                    function calculateRetailerMargin(mrp, ptr, gst) {
+                        return ((((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst));
+                    }
+
                     // Calcuate Base Price
                     function calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis) {
                         var free_cf = 1 - (1 / ((1 + (gst / 100)) * (qty + free)));
@@ -679,13 +692,17 @@
                         $("#addpur").val(ptr.toFixed(2))
                     });
 
-                    // Not in use currently
+
                     $("#price").on("keyup", function () {
                         $("#r_margin").show();
 
                         var mrp = parseFloat($("#price").val());
                         var gst = parseFloat($("select[name='gst']").val());
-                        var retailerMargin = parseFloat($("#retailer_margin").text());
+                        var ptr = parseFloat($("#addpur").val());
+
+                        var retailerMargin = calculateRetailerMargin(mrp, ptr, gst);
+
+                        $("#retailer_margin").text(retailerMargin.toFixed(2));
                     });
 
                     $("#addpur").on("keyup", function () {
@@ -696,7 +713,7 @@
                         var free = parseFloat($("#free_scheme").val());
                         var bulkDis = parseFloat($("#bulk_discount").val());
 
-                        var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
+                        var retailerMargin = calculateRetailerMargin(mrp, ptr, gst);
 
                         var basePrice = calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis);
 
@@ -749,6 +766,7 @@
                         $("select[name='primary']").prop('disabled', false);
                         $("select[name='secondary']").prop('disabled', false);
                         $("input[name='threshold']").prop('disabled', false);
+                        $("select[name='category']").prop('disabled', false);
 
                         var products = $("#medicinename").val();
                         var brand = $("#brand").val();
@@ -775,7 +793,7 @@
                         var grossValue = purchase * quantity * (1 - (bulk_discount / 100));
                         var gstValue = grossValue * (gst / 100);
                         var amount = (grossValue + gstValue).toFixed(2);
-         
+
                         cartarray.push({
                             productId: productId,
                             productname: products,
@@ -898,11 +916,14 @@
                         $("#submitorder").prop('disabled', true);
                         var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
                         var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
+                        var lessDiscount = $("#lessDiscount").val() || 0;
                         var totalPurchase = 0;
 
                         for (let i in cartDetails) {
                             totalPurchase += parseFloat(cartDetails[i].amt);
                         }
+
+                        totalPurchase = totalPurchase - lessDiscount;
 
                         $.ajax({
                             url: `/api/creategrn/`,
@@ -913,8 +934,9 @@
                                 vendor_invoice: $("#vendorinvoicenumber").val(),
                                 total: totalPurchase,
                                 org_id: org,
-                                invoice_date: $("#invoiceDate").val(),
+                                invoice_date: $("input[name='invoiceDate']").val(),
                                 credit_period: $("#creditPeriodInput").val(),
+                                less_discount: lessDiscount,
                             }),
                             contentType: 'application/json',
                             success: function (response) {
