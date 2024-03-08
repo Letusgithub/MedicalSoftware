@@ -507,18 +507,21 @@
                     });
 
                     // Event listener for changes in the payment method radio buttons
+                    var paymentMethod;
                     $('input[name="paymentMethod"]').change(function () {
                         // Check if the "Credit" radio button is selected
                         if ($('#creditRadio').is(':checked')) {
                             // Show the credit period input field
                             $('#creditPeriodInput').show();
                             $('#lessDiscount').hide();
+                            paymentMethod = 'CREDIT';
                         } else {
                             // Hide the credit period input field
                             $('#creditPeriodInput').hide();
                             $('#lessDiscount').show();
                             // Clear the credit period input field value
                             $('#creditPeriodInput').val('');
+                            paymentMethod = 'CASH';
                         }
                     });
 
@@ -976,6 +979,7 @@
                                 invoice_date: $("input[name='invoiceDate']").val(),
                                 credit_period: $("#creditPeriodInput").val(),
                                 less_discount: lessDiscount,
+                                payment_method: paymentMethod,
                             }),
                             contentType: 'application/json',
                             success: function (response) {

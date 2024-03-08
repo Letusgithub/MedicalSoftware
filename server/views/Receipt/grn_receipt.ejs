@@ -301,9 +301,6 @@
         <div class="p-2 m-3">
             <button class="btn btn-border" onclick="history.back()"> Back </button>
         </div>
-        <!-- <div class="p-2 m-3">
-            <a class="btn btn-border" href='/purchase_order'>Back</a>
-        </div> -->
     </div>
 
 
@@ -548,9 +545,7 @@
                 var formattedDate = invoiceDate.toLocaleDateString('en-US', options);
                 $("#orderdate").text(`Invoice Date: ${formattedDate}`);
 
-                if (grnData.credit_period != null) {
-                    $("#credit_period").text(`Credit Period: ${grnData.credit_period}`);
-                }
+                $("#paymentMethod").text(`Payment Mode: ${grnData.payment_method}`);
                 // $("#totalcredit").text(grnData.total);
                 $("#invoiceno").text(`Invoice No: ${grnData.vendor_invoice}`);
                 $("#grnno").text(`GRN No:${id}`)
