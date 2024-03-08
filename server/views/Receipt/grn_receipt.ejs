@@ -85,7 +85,6 @@
             font-style: normal;
             font-weight: 500;
             line-height: normal;
-
         }
 
         .customer-details p {
@@ -122,7 +121,7 @@
             flex-shrink: 0;
 
             color: #1E1E1E;
-            font-size: 0.75rem;
+            font-size: 0.625rem;
             font-family: Poppins;
             font-style: normal;
             font-weight: 400;
@@ -138,6 +137,7 @@
             margin-top: 0.2rem;
             margin-bottom: 0;
         }
+
 
         .cart-table {
             position: relative;
@@ -208,14 +208,6 @@
             text-transform: uppercase;
             padding-right: 0rem;
         }
-
-        /* .gst-table {
-            position: relative;
-            left: -1rem;
-            width: 25.03875rem;
-            height: 10.15rem;
-            border: 0.05rem solid #1E1E1E;
-        } */
 
         .footer-1 {
             position: relative;
@@ -580,7 +572,7 @@
 
                 for (var i = 0; i < items.length; i++) {
                     $("#NumberOfItems").text(`No of Items: ${items.length}`);
-                    
+
                     var datetime = items[i].exp_Date;
                     var expDate = moment(datetime).format('MM-YY');
                     var grossValue = (items[i].qty - items[i].free) * items[i].purchase * (1 - items[i].bulk_discount / 100);
