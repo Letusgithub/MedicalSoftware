@@ -98,7 +98,7 @@
                                                             <option value="30">30D</option>
                                                         </select>
                                                         <input type="number" class="form-control" id="lessDiscount"
-                                                            name="lessDiscount" placeholder="Less Discount in (₹)"/>
+                                                            name="lessDiscount" placeholder="Less Discount in (₹)" />
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
@@ -129,8 +129,6 @@
                                                                 class="input-group-text"></span>
                                                             <input type="text" class="form-control" id="medicinename"
                                                                 placeholder="Type some letters of the medicine name"
-                                                                aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2"
                                                                 name="productname">
                                                         </div>
                                                     </div>
@@ -533,7 +531,7 @@
                                 url: `/api/autocomplete?query=${query}`,
                                 type: 'GET',
                                 success: function (ajaxResponse) {
-
+                                    console.log(ajaxResponse)
                                     let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
 
                                     if (results.length === 0) {
@@ -557,6 +555,7 @@
                                     $("select[name = 'gst']").val(items.gst).prop('disabled', true);
                                     $("#hsn").val(items.hsn).prop('disabled', true);
                                     $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
+                                    populateSecondaryDropdown();
                                     $("select[name='secondary']").val(items.secondary_unit).prop('disabled', true);
                                     $("input[name='threshold']").val(items.threshold).prop('disabled', true);
                                     $("select[name='category']").val(items.category_id).prop('disabled', true);
@@ -567,8 +566,6 @@
                                     $("#secondarypopulate").text(`${secondaryUnit}`);
                                 }
                             })
-
-
 
                             setTimeout(function () {
                                 console.log(ui.item);
@@ -590,6 +587,45 @@
                         }
 
                     };
+
+                    //HSN-GST autocomplete
+                    $("input[name='hsn']").autocomplete({
+                        minLength: 3,
+                        source: function (request, response) {
+                            let query = request.term;
+
+                            $.ajax({
+                                url: `/api/search-hsn-gst?query=${query}`,
+                                type: 'GET',
+                                success: function (ajaxResponse) {
+                                    let results = ajaxResponse['data'].filter(item => item.hsn_code);
+
+                                    if (results.length === 0) {
+                                        results.push({ hsn_code: null }); // Add a null item for the custom message
+                                    }
+                                    console.log(results);
+                                    response(results);
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            })
+                        },
+                        select: function (event, ui) {
+                            setTimeout(function () {
+                                console.log(ui.item);
+                                $("input[name='hsn']").val(ui.item.hsn_code);
+                                $("select[name='gst']").val(ui.item.gst_rate);
+                            }, 0)
+                        }
+
+                    }).data('ui-autocomplete')._renderItem = function (ul, item) {
+                        if (item.hsn_code) {
+                            return $('<li>')
+                                .append('<div>' + item.hsn_code + '</div>')
+                                .appendTo(ul);
+                        }
+                    }
 
                     // Fetch categories from the API using jQuery
                     $.get("/api/all-category", function (response) {
@@ -622,13 +658,12 @@
                         INH: ['INH', 'PCS']
                     };
 
-                    // Event listener for changes in the primary dropdown
-                    $('#primaryDropdown').change(function () {
+                    function populateSecondaryDropdown() {
                         // Clear existing options in the secondary dropdown
                         $('#secondaryDropdown').html('<option selected disabled>Select Secondary</option>');
 
                         // Get the selected value from the primary dropdown
-                        var selectedValue = $(this).val();
+                        var selectedValue = $('#primaryDropdown').val();
 
                         // Populate the secondary dropdown with options based on the selected value
                         if (selectedValue in secondaryOptions) {
@@ -636,7 +671,11 @@
                                 $('#secondaryDropdown').append('<option value="' + option + '">' + option + '</option>');
                             });
                         }
-                    });
+                    }
+
+                    // Event listener for changes in the primary dropdown
+                    $('#primaryDropdown').change(populateSecondaryDropdown);
+
                     //changes in stp and tabs
                     $("select[name='primary'], select[name='secondary']").on("change", function () {
                         var primaryUnit = $("select[name='primary']").val();

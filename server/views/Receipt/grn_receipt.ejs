@@ -71,6 +71,7 @@
             width: 13.933rem;
             height: 2.86188rem;
             flex-shrink: 0;
+            margin-left: 55px;
         }
 
         .customer-details {
@@ -174,11 +175,53 @@
             text-transform: uppercase;
         }
 
+        .footer-gst-distribution {
+            position: relative;
+            left: -1rem;
+            width: 25.03875rem;
+            height: 10.15rem;
+
+            color: #000;
+            font-size: 0.625rem;
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .footer-gst-distribution thead th {
+            color: #000;
+            line-height: normal;
+            margin: auto;
+            border: 0.05rem solid #1E1E1E;
+        }
+
+        .footer-gst-distribution tbody td {
+            border: 1px solid #000;
+            color: #000;
+            font-size: 0.625rem;
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 0.875rem;
+            text-transform: uppercase;
+            padding-right: 0rem;
+        }
+
+        /* .gst-table {
+            position: relative;
+            left: -1rem;
+            width: 25.03875rem;
+            height: 10.15rem;
+            border: 0.05rem solid #1E1E1E;
+        } */
+
         .footer-1 {
             position: relative;
             left: -1rem;
             top: -0.05rem;
-            width: 28.9rem;
+            width: 20.9rem;
             height: 10.15rem;
             border: 0.05rem solid #1E1E1E;
 
@@ -190,9 +233,14 @@
 
         .receipt-msg {
             border-bottom: 0.05rem solid #1E1E1E;
-            height: 1.76rem;
+            height: 1.5rem;
             font-weight: 300;
             line-height: normal;
+            margin-bottom: 0rem;
+        }
+
+        .receipt-msg p {
+            margin-left: 0.47rem;
         }
 
         .receipt-tnc {
@@ -265,25 +313,25 @@
             <a class="btn btn-border" href='/purchase_order'>Back</a>
         </div> -->
     </div>
-    
+
 
     <div class="frame1" id="html-content">
         <div class="container">
             <div class="d-flex justify-content-between">
                 <div>
                     <div class="shop-name" id="orgname">
-                       
+
                     </div>
                     <div class="shop-info d-flex justify-content-between">
                         <div class="shop-info-child1" id="orgaddress">
-                            
+
                         </div>
                         <div class="shop-info-child2" style="width: 41vw;">
                             <p class="my-0" id="flno">F.L. no.:</p>
                             <p class="my-0" id="gstin">GSTIN:</p>
                             <p class="my-0" id="dlno">D.L.no.:</p>
-                            
-                           
+
+
                         </div>
                     </div>
 
@@ -299,13 +347,13 @@
             <div class="d-flex justify-content-between">
                 <div class="customer-details">
                     <p style="font-weight: 600;" id="vendorname">
-                        Distributor Name: 
+                        Distributor Name:
                     </p>
                     <p id="vendormobile">
-                        Mobile: 
+                        Mobile:
                     </p>
                     <p id="vendoremail">
-                        Email: 
+                        Email:
                     </p>
                     <p id="vendoradd">
                         Address:
@@ -319,13 +367,17 @@
                     <p id="vendordl">
                         D.L.no.:
                     </p>
-                    <p id="invoiceno">Invoice no:</p>
+                    <p id="fssai">
+                        FSSAI:
+                    </p>
+                    <p id="paymentMethod">
+                        Payment Mode:
+                    </p>
                 </div>
                 <div class="receipt-details">
+                    <p id="invoiceno">Invoice no:</p>
                     <p id="orderdate">
-                        Date: 
-                    </p>
-                    <p id="credit_period">
+                        Invoice Date:
                     </p>
                     <p id="grnno">
                         GRN No.:
@@ -336,37 +388,87 @@
             <table class="cart-table">
                 <thead>
                     <tr>
-                        <tr>
-                            <th style="width: 2.27rem;">S.N.</th>
-                            <th style="width: 11.29rem;">Item</th>
-                            <th style="width: 4.59rem;">HSN</th>
-                            <th style="width: 4.4rem;">Batch</th>
-                            <th style="width: 3.25rem;">Expiry</th>
-                            <th style="width: 3.62rem;">MRP(₹)</th>
-                            <th style="width: 3.1rem;">QTY</th>
-                            <th style="width: 3.1rem;">Free</th>
-                            <th style="width: 3.62rem;">PTR(₹)</th>
-                            <th style="width: 3.61rem;">Dis%</th>
-                            <th style="width: 3.61rem;">Gross Value(₹)</th>
-                            <th style="width: 3.61rem;">GST%</th>
-                            <th style="width: 3.61rem;">GST Value(₹)</th>
-                            <th style="width: 3.61rem;">Amount(₹)</th>
-                        </tr>
+                        <th style="width: 2.27rem;">S.N.</th>
+                        <th style="width: 11.29rem;">Item</th>
+                        <th style="width: 4.59rem;">HSN</th>
+                        <th style="width: 4.4rem;">Batch</th>
+                        <th style="width: 3.25rem;">Expiry</th>
+                        <th style="width: 3.62rem;">MRP(₹)</th>
+                        <th style="width: 3.1rem;">QTY</th>
+                        <th style="width: 3.1rem;">Free</th>
+                        <th style="width: 3.62rem;">PTR(₹)</th>
+                        <th style="width: 3.61rem;">Dis%</th>
+                        <th style="width: 3.61rem;">Gross Value(₹)</th>
+                        <th style="width: 3.61rem;">GST%</th>
+                        <th style="width: 3.61rem;">GST Value(₹)</th>
+                        <th style="width: 3.61rem;">Amount(₹)</th>
                     </tr>
                 </thead>
                 <tbody id="cartitems">
                 </tbody>
             </table>
             <div class="d-flex flex-row">
+                <table class="footer-gst-distribution">
+                    <thead>
+                        <tr>
+                            <th>GST%</th>
+                            <th>Taxable Amt</th>
+                            <th>CGST</th>
+                            <th>SGST</th>
+                            <th>Total GST</th>
+                        </tr>
+                    </thead>
+                    <tbody class="p-0">
+                        <tr>
+                            <td>0%</td>
+                            <td id="taxAmt0"></td>
+                            <td id="cgst-0"></td>
+                            <td id="sgst-0">
+                                </tdid>
+                            <td id="totalGst0"></td>
+                        </tr>
+                        <tr>
+                            <td>5%</td>
+                            <td id="taxAmt5"></td>
+                            <td id="cgst-5"></td>
+                            <td id="sgst-5">
+                                </tdid>
+                            <td id="totalGst5"></td>
+                        </tr>
+                        <tr>
+                            <td>12%</td>
+                            <td id="taxAmt12"></td>
+                            <td id="cgst-12"></td>
+                            <td id="sgst-12">
+                                </tdid>
+                            <td id="totalGst12"></td>
+                        </tr>
+                        <tr>
+                            <td>18%</td>
+                            <td id="taxAmt18"></td>
+                            <td id="cgst-18"></td>
+                            <td id="sgst-18">
+                                </tdid>
+                            <td id="totalGst18"></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td id="taxAmtTotal"></td>
+                            <td id="cgstTotal"></td>
+                            <td id="sgstTotal"></td>
+                            <td id="totalGst"></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div class="footer-1">
                     <div class="receipt-msg">
-                        <p>
-                            GRN generated by DAWA.AI
+                        <p id="NumberOfItems">
+                            No of Items
                         </p>
                     </div>
                     <div class="receipt-info">
                         <div class="receipt-tnc">
-                            <p>Terms & Conditions</p>
+
                         </div>
                         <div class="receipt-sign">
                             Authorised Signature
@@ -391,16 +493,21 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="label">
-                                CGST:
+                                Add CGST:
                             </div>
                             <div id="cgst">
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="label">
-                                SGST:
+                                Add SGST:
                             </div>
                             <div id="sgst">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="label">
+                                CR/DR:
                             </div>
                         </div>
 
@@ -411,7 +518,6 @@
                                 Total Amount(₹):
                             </div>
                             <div id="totalcredit">
-                                
                             </div>
                         </div>
                     </div>
@@ -431,10 +537,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             var id = '<%=id%>';
             console.log(id);
-            
+
 
             // var todayDate = new Date();
             // var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -442,7 +548,7 @@
             // $("#orderdate").text(`Date: ${formattedDate}`)
 
             $.get(`/api/getgrnreceipts/${id}`, function (data, status) {
-                var grnData= data.results[0];
+                var grnData = data.results[0];
                 console.log('inside the grn details', data);
 
                 var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -462,20 +568,32 @@
                 $("#vendoradd").text(`Address: ${grnData.vendor_address}`)
                 $("#vendorgst").text(`GSTIN: ${grnData.vendor_gstin}`)
                 $("#vendordl").text(`DL.no: ${grnData.vendor_dl_no_1}`)
-                
-                var items = data.results
+
+                var items = data.results;
 
                 var totalGross = 0;
                 var totalGST = 0;
                 var totalAmount = 0;
                 var lessDiscount = grnData.less_discount;
 
+                var transactions = [];
+
                 for (var i = 0; i < items.length; i++) {
-                    var datetime = items[i].exp_Date; 
+                    $("#NumberOfItems").text(`No of Items: ${items.length}`);
+                    
+                    var datetime = items[i].exp_Date;
                     var expDate = moment(datetime).format('MM-YY');
                     var grossValue = (items[i].qty - items[i].free) * items[i].purchase * (1 - items[i].bulk_discount / 100);
                     var gstValue = grossValue * items[i].gst / 100;
                     var amount = grossValue + gstValue;
+
+                    var transaction = {
+                        grossAmount: grossValue,
+                        gstRate: items[i].gst,
+                    }
+
+                    // Append the object to the transactions array
+                    transactions.push(transaction);
 
                     cartHtml = `
 
@@ -503,6 +621,8 @@
                     totalAmount += amount;
                 }
 
+                console.log(transactions);
+
                 totalAmount = totalAmount - lessDiscount;
                 $("#lessDiscount").text(lessDiscount);
                 $("#totalGross").text(totalGross.toFixed(2));
@@ -510,16 +630,67 @@
                 $("#sgst").text((totalGST / 2).toFixed(2));
                 $("#totalcredit").text(totalAmount.toFixed(2));
 
+                // Initialize totals
+                var totals = {
+                    0: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                    5: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                    12: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                    18: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                    total: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                    grandTotal: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 }
+                };
+
+                // Calculate totals
+                transactions.forEach(function (transaction) {
+                    // If this GST rate hasn't been seen before, add it to totals
+                    if (!(transaction.gstRate in totals)) {
+                        totals[transaction.gstRate] = { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 };
+                    }
+
+                    var gstAmount = transaction.grossAmount * transaction.gstRate / 100;
+                    var cgst = gstAmount / 2;
+                    var sgst = gstAmount / 2;
+
+                    totals[transaction.gstRate].taxAmt += transaction.grossAmount;
+                    totals[transaction.gstRate].cgst += cgst;
+                    totals[transaction.gstRate].sgst += sgst;
+                    totals[transaction.gstRate].totalGst += gstAmount;
+
+                    totals.total.taxAmt += transaction.grossAmount;
+                    totals.total.cgst += cgst;
+                    totals.total.sgst += sgst;
+                    totals.total.totalGst += gstAmount;
+
+                    totals.grandTotal.taxAmt += transaction.grossAmount;
+                    totals.grandTotal.cgst += cgst;
+                    totals.grandTotal.sgst += sgst;
+                    totals.grandTotal.totalGst += gstAmount;
+                });
+
+                // Display totals
+                for (var gstRate in totals) {
+                    $('#taxAmt' + gstRate).text(totals[gstRate].taxAmt);
+                    $('#cgst-' + gstRate).text(totals[gstRate].cgst);
+                    $('#sgst-' + gstRate).text(totals[gstRate].sgst);
+                    $('#totalGst' + gstRate).text(totals[gstRate].totalGst);
+                }
+
+                // Display grand totals
+                $('#taxAmtTotal').text(totals.grandTotal.taxAmt);
+                $('#cgstTotal').text(totals.grandTotal.cgst);
+                $('#sgstTotal').text(totals.grandTotal.sgst);
+                $('#totalGst').text(totals.grandTotal.totalGst);
+
             })
 
-            $.get(`/api/org/<%=orgId%>`, function(data, status){
+            $.get(`/api/org/<%=orgId%>`, function (data, status) {
                 var org = data.data
                 var orgName = org.org_name;
                 var orgNumber = org.org_telephone;
                 var orgAdd = org.org_address;
 
                 $("#orgname").html(`${orgName}`);
-                
+
                 $("#orgaddress").html(`
                     ${orgAdd}</br>
                     ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
@@ -532,7 +703,7 @@
 
 
             })
-            
+
         })
     </script>
 
