@@ -507,7 +507,7 @@
                     });
 
                     // Event listener for changes in the payment method radio buttons
-                    var paymentMethod;
+                    var paymentMethod = 'CASH';
                     $('input[name="paymentMethod"]').change(function () {
                         // Check if the "Credit" radio button is selected
                         if ($('#creditRadio').is(':checked')) {
