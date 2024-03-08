@@ -195,13 +195,24 @@
 
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN</label>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
                                                                 class="bx bxs-bank"></i></span>
                                                         <input type="text" id="vendor_gstin"
                                                             class="form-control phone-mask" placeholder=""
                                                             name="vendor_gstin">
+                                                    </div>
+                                                </div>
+
+                                                <label class="col-sm-2 col-form-label ps-4" for="vendor_fssai">FSSAI</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                                                class="bx bxs-bank"></i></span>
+                                                        <input type="text" id="vendor_fssai"
+                                                            class="form-control phone-mask" placeholder=""
+                                                            name="vendor_fssai">
                                                     </div>
                                                 </div>
                                             </div>
@@ -292,6 +303,7 @@
                                 vendor_contact: $("#vendor_contact").val(),
                                 vendor_gstin: $("#vendor_gstin").val(),
                                 vendor_email: $("#vendor_email").val(),
+                                vendor_fssai: $("#vendor_fssai").val(),
                                 vendor_dl_no_1: vendor_dl_no_1,
                                 vendor_dl_no_2: vendor_dl_no_2
                             }),

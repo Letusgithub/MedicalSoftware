@@ -356,7 +356,7 @@
                     <p id="vendordl">
                         D.L.no.:
                     </p>
-                    <p id="fssai">
+                    <p id="vendorFssai">
                         FSSAI:
                     </p>
                     <p id="paymentMethod">
@@ -555,6 +555,7 @@
                 $("#vendoradd").text(`Address: ${grnData.vendor_address}`)
                 $("#vendorgst").text(`GSTIN: ${grnData.vendor_gstin}`)
                 $("#vendordl").text(`DL.no: ${grnData.vendor_dl_no_1}`)
+                $("#vendorFssai").text(`FSSAI: ${grnData.vendor_fssai}`)
 
                 var items = data.results;
 
@@ -656,17 +657,17 @@
 
                 // Display totals
                 for (var gstRate in totals) {
-                    $('#taxAmt' + gstRate).text(totals[gstRate].taxAmt);
-                    $('#cgst-' + gstRate).text(totals[gstRate].cgst);
-                    $('#sgst-' + gstRate).text(totals[gstRate].sgst);
-                    $('#totalGst' + gstRate).text(totals[gstRate].totalGst);
+                    $('#taxAmt' + gstRate).text((totals[gstRate].taxAmt).toFixed(2));
+                    $('#cgst-' + gstRate).text((totals[gstRate].cgst).toFixed(2));
+                    $('#sgst-' + gstRate).text((totals[gstRate].sgst).toFixed(2));
+                    $('#totalGst' + gstRate).text((totals[gstRate].totalGst).toFixed(2));
                 }
 
                 // Display grand totals
-                $('#taxAmtTotal').text(totals.grandTotal.taxAmt);
-                $('#cgstTotal').text(totals.grandTotal.cgst);
-                $('#sgstTotal').text(totals.grandTotal.sgst);
-                $('#totalGst').text(totals.grandTotal.totalGst);
+                $('#taxAmtTotal').text((totals.grandTotal.taxAmt).toFixed(2));
+                $('#cgstTotal').text((totals.grandTotal.cgst).toFixed(2));
+                $('#sgstTotal').text((totals.grandTotal.sgst).toFixed(2));
+                $('#totalGst').text((totals.grandTotal.totalGst).toFixed(2));
 
             })
 
