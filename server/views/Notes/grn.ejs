@@ -142,9 +142,7 @@
                                                             <span id="basic-icon-default-fullname2"
                                                                 class="input-group-text"></span>
                                                             <input type="text" class="form-control" id="brand"
-                                                                placeholder="" aria-label="John Doe"
-                                                                aria-describedby="basic-icon-default-fullname2"
-                                                                name="brand">
+                                                                placeholder="" name="brand">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,7 +166,7 @@
                                                         for="basic-icon-default-companyname">HSN Code</label>
                                                     <div class="col-sm-4">
                                                         <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control"
+                                                            <input type="number" class="form-control"
                                                                 placeholder="Eg- 30049047" id="hsn" name="hsn">
                                                         </div>
                                                     </div>
@@ -201,7 +199,6 @@
                                                                 <option value="AMP">AMP</option>
                                                                 <option value="BOX">BOX</option>
                                                                 <option value="BTL">BTL</option>
-                                                                <option value="CAPS">CAP</option>
                                                                 <option value="PCS">PCS</option>
                                                                 <option value="TUBE">TUBE</option>
                                                                 <option value="DROP">DROP</option>
@@ -273,8 +270,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="input-group input-group-merge">
                                                             <input type="text" class="form-control"
-                                                                placeholder="Eg- B6AEW8852" aria-label=""
-                                                                id="batchname" />
+                                                                placeholder="Eg- B6AEW8852" id="batchname" />
                                                         </div>
                                                     </div>
 
@@ -504,7 +500,7 @@
                             $("#dl_no").text(dl_no);
                             $("#gstin").text(gstin);
                             $("#address").text(address);
-                            
+
                         });
                     });
 
@@ -638,10 +634,9 @@
                                 text: category.category_name
                             }));
                         });
-                    })
-                        .fail(function (error) {
-                            console.error("Error fetching categories:", error);
-                        });
+                    }).fail(function (error) {
+                        console.error("Error fetching categories:", error);
+                    });
 
                     var secondaryOptions = {
                         STP: ['TAB', 'CAP'],
@@ -808,6 +803,7 @@
 
                         var products = $("#medicinename").val();
                         var brand = $("#brand").val();
+                        var salt = $("#salt").val();
                         var category_id = $("select[name='category']").val();
                         var gst = parseFloat($("select[name = 'gst']").val());
                         var hsn = $("#hsn").val();
@@ -836,6 +832,7 @@
                             productId: productId,
                             productname: products,
                             brandname: brand,
+                            salt: salt,
                             category_id: category_id,
                             gst: gst,
                             hsn: hsn,
@@ -987,168 +984,281 @@
 
                                 for (let i in cartDetails) {
 
-                                    $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
-                                        console.log(data.data);
-                                        if (data.data.length === 0) {
+                                    if (cartDetails[i].productId == null) {
+                                        var customProductDetails = {
+                                            org_id: org,
+                                            med_name: cartDetails[i].productname,
+                                            mfd_mkt: cartDetails[i].brandname,
+                                            salt: cartDetails[i].salt,
+                                            conversion: cartDetails[i].conversion,
+                                        }
 
-                                            var productDetails = {
-                                                product_id: cartDetails[i].productId,
-                                                org_id: org,
-                                                category_id: cartDetails[i].category_id,
-                                                gst: cartDetails[i].gst,
-                                                hsn: cartDetails[i].hsn,
-                                                primary_unit: cartDetails[i].punit,
-                                                secondary_unit: cartDetails[i].sunit,
-                                                threshold: cartDetails[i].moq
-                                            }
+                                        $.ajax({
+                                            url: '/api/createproduct',
+                                            type: 'POST',
+                                            data: JSON.stringify(customProductDetails),
+                                            contentType: 'application/json',
+                                            success: function (response) {
+                                                console.log(response);
+                                                cartDetails[i].productId = response.product_id;
 
-
-                                            $.ajax({
-                                                url: `/api/createinventory/`,
-                                                type: 'POST',
-                                                data: JSON.stringify(productDetails),
-                                                contentType: 'application/json',
-                                                success: function (response) {
-
-                                                    var batchDetails = {
-                                                        product_id: cartDetails[i].productId,
-                                                        org_id: org,
-                                                        batch_name: cartDetails[i].batch,
-                                                        exp_date: cartDetails[i].expdate,
-                                                        conversion: cartDetails[i].conversion,
-                                                        batch_qty: cartDetails[i].qty,
-                                                        purchase_rate: cartDetails[i].purchase,
-                                                        mrp: cartDetails[i].mrp,
-                                                        free: cartDetails[i].free,
-                                                        bulk_discount: cartDetails[i].bulk_discount,
-                                                        base_price: cartDetails[i].base_price,
-                                                        shelf_label: cartDetails[i].shelflabel,
-                                                        grn_id: GRNid
-                                                    }
-                                                    //console.log(batchDetails);
-
-                                                    $.ajax({
-                                                        url: `/api/addbatch/`,
-                                                        type: 'POST',
-                                                        data: JSON.stringify(batchDetails),
-                                                        contentType: 'application/json',
-                                                        success: function (response) {
-
-
-                                                            $.ajax({
-                                                                url: `/api/creategrncarts`,
-                                                                type: 'POST',
-                                                                data: JSON.stringify({
-                                                                    grn_id: GRNid,
-                                                                    product_id: cartDetails[i].productId,
-                                                                    gst: cartDetails[i].gst,
-                                                                    category_id: cartDetails[i].category_id,
-                                                                    hsn: cartDetails[i].hsn,
-                                                                    punit: cartDetails[i].punit,
-                                                                    sunit: cartDetails[i].sunit,
-                                                                    moq: cartDetails[i].moq,
-                                                                    batch_name: cartDetails[i].batch,
-                                                                    exp: cartDetails[i].expdate,
-                                                                    conversion: cartDetails[i].conversion,
-                                                                    shelf_label: cartDetails[i].shelflabel,
-                                                                    purchase: cartDetails[i].purchase,
-                                                                    mrp: cartDetails[i].mrp,
-                                                                    free: cartDetails[i].free,
-                                                                    bulk_discount: cartDetails[i].bulk_discount,
-                                                                    base_price: cartDetails[i].base_price,
-                                                                    qty: cartDetails[i].qty,
-
-                                                                }),
-                                                                contentType: 'application/json',
-                                                                success: function (response) {
-                                                                    console.log('grn done', response);
-                                                                },
-                                                                error: function (error) {
-                                                                    console.log('error in grn', error);
-                                                                    return alert("not Created", error)
-                                                                }
-                                                            })
-                                                            console.log(response);
-                                                        },
-                                                        error: function (error) {
-                                                            console.log(error);
-                                                            return alert("not Created", error)
-                                                        }
-                                                    })
-                                                    console.log(response);
-                                                },
-                                                error: function (error) {
-                                                    console.log(error);
-                                                    return alert("not Created", error)
+                                                var productDetails = {
+                                                    product_id: cartDetails[i].productId,
+                                                    org_id: org,
+                                                    category_id: cartDetails[i].category_id,
+                                                    gst: cartDetails[i].gst,
+                                                    hsn: cartDetails[i].hsn,
+                                                    primary_unit: cartDetails[i].punit,
+                                                    secondary_unit: cartDetails[i].sunit,
+                                                    threshold: cartDetails[i].moq
                                                 }
-                                            })
-                                        } else {
-                                            var batchDetails = {
-                                                product_id: cartDetails[i].productId,
-                                                org_id: org,
-                                                batch_name: cartDetails[i].batch,
-                                                exp_date: cartDetails[i].expdate,
-                                                conversion: cartDetails[i].conversion,
-                                                batch_qty: cartDetails[i].qty,
-                                                purchase_rate: cartDetails[i].purchase,
-                                                mrp: cartDetails[i].mrp,
-                                                free: cartDetails[i].free,
-                                                bulk_discount: cartDetails[i].bulk_discount,
-                                                base_price: cartDetails[i].base_price,
-                                                shelf_label: cartDetails[i].shelflabel,
-                                                grn_id: GRNid
-                                            }
-                                            //console.log(batchDetails);
 
-                                            $.ajax({
-                                                url: `/api/addbatch/`,
-                                                type: 'POST',
-                                                data: JSON.stringify(batchDetails),
-                                                contentType: 'application/json',
-                                                success: function (response) {
-
-                                                    $.ajax({
-                                                        url: `/api/creategrncarts`,
-                                                        type: 'POST',
-                                                        data: JSON.stringify({
-                                                            grn_id: GRNid,
+                                                console.log('product details', productDetails);
+                                                $.ajax({
+                                                    url: `/api/createinventory/`,
+                                                    type: 'POST',
+                                                    data: JSON.stringify(productDetails),
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+                                                        var batchDetails = {
                                                             product_id: cartDetails[i].productId,
-                                                            gst: cartDetails[i].gst,
-                                                            hsn: cartDetails[i].hsn,
-                                                            punit: cartDetails[i].punit,
-                                                            sunit: cartDetails[i].sunit,
-                                                            moq: cartDetails[i].moq,
+                                                            org_id: org,
                                                             batch_name: cartDetails[i].batch,
-                                                            exp: cartDetails[i].expdate,
+                                                            exp_date: cartDetails[i].expdate,
                                                             conversion: cartDetails[i].conversion,
-                                                            shelf_label: cartDetails[i].shelflabel,
-                                                            purchase: cartDetails[i].purchase,
+                                                            batch_qty: cartDetails[i].qty,
+                                                            purchase_rate: cartDetails[i].purchase,
                                                             mrp: cartDetails[i].mrp,
                                                             free: cartDetails[i].free,
                                                             bulk_discount: cartDetails[i].bulk_discount,
                                                             base_price: cartDetails[i].base_price,
-                                                            qty: cartDetails[i].qty,
-
-                                                        }),
-                                                        contentType: 'application/json',
-                                                        success: function (response) {
-                                                            console.log('grn done', response);
-                                                        },
-                                                        error: function (error) {
-                                                            console.log('error in grn', error);
-                                                            return alert("Not Created", error)
+                                                            shelf_label: cartDetails[i].shelflabel,
+                                                            grn_id: GRNid
                                                         }
-                                                    })
-                                                    console.log(response);
-                                                },
-                                                error: function (error) {
-                                                    console.log(error);
-                                                    return alert("Not Created", error)
-                                                }
-                                            })
-                                        }
-                                    })
 
+                                                        $.ajax({
+                                                            url: `/api/addbatch/`,
+                                                            type: 'POST',
+                                                            data: JSON.stringify(batchDetails),
+                                                            contentType: 'application/json',
+                                                            success: function (response) {
+                                                                $.ajax({
+                                                                    url: `/api/creategrncarts`,
+                                                                    type: 'POST',
+                                                                    data: JSON.stringify({
+                                                                        grn_id: GRNid,
+                                                                        product_id: cartDetails[i].productId,
+                                                                        gst: cartDetails[i].gst,
+                                                                        category_id: cartDetails[i].category_id,
+                                                                        hsn: cartDetails[i].hsn,
+                                                                        punit: cartDetails[i].punit,
+                                                                        sunit: cartDetails[i].sunit,
+                                                                        moq: cartDetails[i].moq,
+                                                                        batch_name: cartDetails[i].batch,
+                                                                        exp: cartDetails[i].expdate,
+                                                                        conversion: cartDetails[i].conversion,
+                                                                        shelf_label: cartDetails[i].shelflabel,
+                                                                        purchase: cartDetails[i].purchase,
+                                                                        mrp: cartDetails[i].mrp,
+                                                                        free: cartDetails[i].free,
+                                                                        bulk_discount: cartDetails[i].bulk_discount,
+                                                                        base_price: cartDetails[i].base_price,
+                                                                        qty: cartDetails[i].qty,
+
+                                                                    }),
+                                                                    contentType: 'application/json',
+                                                                    success: function (response) {
+                                                                        console.log('grn done', response);
+                                                                    },
+                                                                    error: function (error) {
+                                                                        console.log('error in grn', error);
+                                                                        return alert("not Created", error)
+                                                                    }
+                                                                })
+                                                                console.log(response);
+
+                                                            },
+                                                            error: function (error) {
+                                                                console.log(error);
+                                                                return alert("not Created", error)
+                                                            }
+                                                        })
+                                                    },
+                                                    error: function (error) {
+                                                        console.log(error);
+                                                        return alert("not Created", error)
+                                                    }
+                                                })
+
+                                            },
+                                        })
+                                    }
+
+                                    else {
+                                        // If productId fetched (Product is in Master Database)
+                                        $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
+                                            console.log(data.data);
+                                            if (data.data.length === 0) {
+
+                                                var productDetails = {
+                                                    product_id: cartDetails[i].productId,
+                                                    org_id: org,
+                                                    category_id: cartDetails[i].category_id,
+                                                    gst: cartDetails[i].gst,
+                                                    hsn: cartDetails[i].hsn,
+                                                    primary_unit: cartDetails[i].punit,
+                                                    secondary_unit: cartDetails[i].sunit,
+                                                    threshold: cartDetails[i].moq
+                                                }
+
+
+                                                $.ajax({
+                                                    url: `/api/createinventory/`,
+                                                    type: 'POST',
+                                                    data: JSON.stringify(productDetails),
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+
+                                                        var batchDetails = {
+                                                            product_id: cartDetails[i].productId,
+                                                            org_id: org,
+                                                            batch_name: cartDetails[i].batch,
+                                                            exp_date: cartDetails[i].expdate,
+                                                            conversion: cartDetails[i].conversion,
+                                                            batch_qty: cartDetails[i].qty,
+                                                            purchase_rate: cartDetails[i].purchase,
+                                                            mrp: cartDetails[i].mrp,
+                                                            free: cartDetails[i].free,
+                                                            bulk_discount: cartDetails[i].bulk_discount,
+                                                            base_price: cartDetails[i].base_price,
+                                                            shelf_label: cartDetails[i].shelflabel,
+                                                            grn_id: GRNid
+                                                        }
+                                                        //console.log(batchDetails);
+
+                                                        $.ajax({
+                                                            url: `/api/addbatch/`,
+                                                            type: 'POST',
+                                                            data: JSON.stringify(batchDetails),
+                                                            contentType: 'application/json',
+                                                            success: function (response) {
+
+
+                                                                $.ajax({
+                                                                    url: `/api/creategrncarts`,
+                                                                    type: 'POST',
+                                                                    data: JSON.stringify({
+                                                                        grn_id: GRNid,
+                                                                        product_id: cartDetails[i].productId,
+                                                                        gst: cartDetails[i].gst,
+                                                                        category_id: cartDetails[i].category_id,
+                                                                        hsn: cartDetails[i].hsn,
+                                                                        punit: cartDetails[i].punit,
+                                                                        sunit: cartDetails[i].sunit,
+                                                                        moq: cartDetails[i].moq,
+                                                                        batch_name: cartDetails[i].batch,
+                                                                        exp: cartDetails[i].expdate,
+                                                                        conversion: cartDetails[i].conversion,
+                                                                        shelf_label: cartDetails[i].shelflabel,
+                                                                        purchase: cartDetails[i].purchase,
+                                                                        mrp: cartDetails[i].mrp,
+                                                                        free: cartDetails[i].free,
+                                                                        bulk_discount: cartDetails[i].bulk_discount,
+                                                                        base_price: cartDetails[i].base_price,
+                                                                        qty: cartDetails[i].qty,
+
+                                                                    }),
+                                                                    contentType: 'application/json',
+                                                                    success: function (response) {
+                                                                        console.log('grn done', response);
+                                                                    },
+                                                                    error: function (error) {
+                                                                        console.log('error in grn', error);
+                                                                        return alert("not Created", error)
+                                                                    }
+                                                                })
+                                                                console.log(response);
+                                                            },
+                                                            error: function (error) {
+                                                                console.log(error);
+                                                                return alert("not Created", error)
+                                                            }
+                                                        })
+                                                        console.log(response);
+                                                    },
+                                                    error: function (error) {
+                                                        console.log(error);
+                                                        return alert("not Created", error)
+                                                    }
+                                                })
+                                            } else {
+                                                var batchDetails = {
+                                                    product_id: cartDetails[i].productId,
+                                                    org_id: org,
+                                                    batch_name: cartDetails[i].batch,
+                                                    exp_date: cartDetails[i].expdate,
+                                                    conversion: cartDetails[i].conversion,
+                                                    batch_qty: cartDetails[i].qty,
+                                                    purchase_rate: cartDetails[i].purchase,
+                                                    mrp: cartDetails[i].mrp,
+                                                    free: cartDetails[i].free,
+                                                    bulk_discount: cartDetails[i].bulk_discount,
+                                                    base_price: cartDetails[i].base_price,
+                                                    shelf_label: cartDetails[i].shelflabel,
+                                                    grn_id: GRNid
+                                                }
+                                                //console.log(batchDetails);
+
+                                                $.ajax({
+                                                    url: `/api/addbatch/`,
+                                                    type: 'POST',
+                                                    data: JSON.stringify(batchDetails),
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+
+                                                        $.ajax({
+                                                            url: `/api/creategrncarts`,
+                                                            type: 'POST',
+                                                            data: JSON.stringify({
+                                                                grn_id: GRNid,
+                                                                product_id: cartDetails[i].productId,
+                                                                gst: cartDetails[i].gst,
+                                                                hsn: cartDetails[i].hsn,
+                                                                punit: cartDetails[i].punit,
+                                                                sunit: cartDetails[i].sunit,
+                                                                moq: cartDetails[i].moq,
+                                                                batch_name: cartDetails[i].batch,
+                                                                exp: cartDetails[i].expdate,
+                                                                conversion: cartDetails[i].conversion,
+                                                                shelf_label: cartDetails[i].shelflabel,
+                                                                purchase: cartDetails[i].purchase,
+                                                                mrp: cartDetails[i].mrp,
+                                                                free: cartDetails[i].free,
+                                                                bulk_discount: cartDetails[i].bulk_discount,
+                                                                base_price: cartDetails[i].base_price,
+                                                                qty: cartDetails[i].qty,
+
+                                                            }),
+                                                            contentType: 'application/json',
+                                                            success: function (response) {
+                                                                console.log('grn done', response);
+                                                            },
+                                                            error: function (error) {
+                                                                console.log('error in grn', error);
+                                                                return alert("Not Created", error)
+                                                            }
+                                                        })
+                                                        console.log(response);
+                                                    },
+                                                    error: function (error) {
+                                                        console.log(error);
+                                                        return alert("Not Created", error)
+                                                    }
+                                                })
+                                            }
+                                        })
+
+                                    }
 
                                 }
 
@@ -1157,12 +1267,9 @@
                                     window.location.href = `/grn_receipt/${GRNid}`
                                 }, 3000);
 
-
-
-
                             },
                             error: function (error) {
-                                alert("not Created", error)
+                                alert("Not Created", error)
                             }
 
 
