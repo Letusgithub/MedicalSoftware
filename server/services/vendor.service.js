@@ -14,7 +14,7 @@ module.exports = {
                 vendor_gstin,
                 vendor_dl_no_1,
                 vendor_dl_no_2,
-                vendor_fssai,
+                vendor_fssai
                 )
                 values(?,?,?,?,?,?,?,?,?)`,
       [
