@@ -506,14 +506,14 @@
 
                     // Event listener for changes in the payment method radio buttons
                     $('input[name="paymentMethod"]').change(function () {
-                        // Check if the "Credit" radio button is selected
-                        if ($('#creditRadio').is(':checked')) {
-                            $('#creditPeriodInput').show();
-                            $('#lessDiscount').hide();
-                        } else {
+                        // Check if the "Cash" radio button is selected
+                        if ($('#cashRadio').is(':checked')) {
                             $('#creditPeriodInput').hide();
                             $('#lessDiscount').show();
                             $('#creditPeriodInput').val('');
+                        } else {
+                            $('#creditPeriodInput').show();
+                            $('#lessDiscount').hide();
                         }
                     });
 
