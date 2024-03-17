@@ -49,6 +49,9 @@ require('./server/routes/api.hsn_gst.routes')(app);
 require('./server/routes/front.routes')(app);
 require('./server/routes/front.auth.routes')(app);
 
+// CRON Jobs
+require('./server/cron-jobs/monthlyTask');
+
 initialisePool().then(() => {
   app.listen(process.env.PORT || 4800, () => {
     console.log('Server is live!');

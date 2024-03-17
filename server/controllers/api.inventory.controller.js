@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ExcelJS = require('exceljs');
 const service = require('../services/inventory.service');
+const mailer = require('../utils/mailer.util');
 
 exports.createInventory = (req, res) => {
   const data = req.body;
@@ -144,6 +147,47 @@ exports.checkById = (req, res) => {
     return res.status(200).json({
       success: 1,
       data: results,
+    });
+  });
+};
+
+exports.createNearExpiryReport = (req) => {
+  const orgId = req.query.orgID;
+  const currentDate = new Date();
+  const futureDate = new Date();
+  console.log(orgId);
+  futureDate.setDate(currentDate.getDate() + 30);
+
+  service.getNearExpiryProducts(orgId, currentDate, futureDate, (err, results) => {
+    if (err) {
+      console.log(err);
+    }
+    service.getOrgEmail(orgId, (orgErr, orgResults) => {
+      if (orgErr) {
+        console.log(orgErr);
+      }
+      const orgEmail = orgResults[0].org_email;
+
+      // Create workbook and worksheet
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Near Expiry Products');
+
+      // Add headers
+      const headers = Object.keys(results[0]);
+      worksheet.addRow(headers);
+
+      // Add data rows
+      results.forEach((row) => {
+        worksheet.addRow(Object.values(row));
+      });
+
+      // Generate Excel file
+      const excelFileName = 'near_expiry_products.xlsx';
+      workbook.xlsx.writeFile(excelFileName)
+        .then(() => {
+        // Send email with attachment
+          mailer.sendAttachmentEmail(orgEmail, excelFileName);
+        });
     });
   });
 };

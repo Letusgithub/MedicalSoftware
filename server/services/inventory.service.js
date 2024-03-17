@@ -140,4 +140,34 @@ module.exports = {
 
     );
   },
+
+  getNearExpiryProducts: (orgId, currentDate, futureDate, callBack) => {
+    getPool().query(
+      `SELECT inv.primary_unit, inv.secondary_unit, 
+      spl.med_name, 
+      bth.batch_name, bth.exp_date, COALESCE(SUM(bth.batch_qty-bth.saled_pri_qty), 0) AS batch_qty
+      FROM inventory AS inv
+      JOIN sample AS spl ON inv.product_id = spl.product_id
+      LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
+      WHERE inv.org_id=${orgId} AND bth.exp_date BETWEEN ? AND ?
+      GROUP BY inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold, spl.med_name, bth.batch_name, bth.exp_date
+      `,
+      [currentDate, futureDate],
+      (error, results) => {
+        if (error) return callBack(error);
+        return callBack(null, results);
+      },
+    );
+  },
+
+  getOrgEmail: (orgId, callBack) => {
+    getPool().query(
+      'SELECT org_email FROM organisation WHERE org_id = ?',
+      [orgId],
+      (error, results) => {
+        if (error) return callBack(error);
+        return callBack(null, results);
+      },
+    );
+  },
 };

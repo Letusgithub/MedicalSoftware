@@ -18,4 +18,6 @@ module.exports = (app) => {
   app.get('/inventory/:id', controller.getAllInventorysById);
 
   app.get('/api/checkbyid', controller.checkById);
+
+  app.get('/api/getNearExpiryProducts', controller.createNearExpiryReport);
 };
