@@ -10,12 +10,14 @@ module.exports = {
       `insert into credit_note(
                   credit_invoice_id,
                   vendor_id,
-                  org_id)
-                  value(?,?,?)`,
+                  org_id,
+                  credit_amt)
+                  value(?,?,?,?)`,
       [
         creditInvoice,
         data.vendor_id,
         data.org_id,
+        data.credit_amt,
       ],
       (error, results) => {
         if (error) {
@@ -86,7 +88,7 @@ module.exports = {
 
   getCreditNoteinInvoice: (id, callBack) => {
     getPool().query(
-      `SELECT DISTINCT vendor.*, crdetails.*, inv.hsn, inv.gst, batch.batch_name, batch.exp_date, batch.mrp,  sample.med_name FROM credit_note cr
+      `SELECT DISTINCT vendor.*, crdetails.*, inv.*, batch.*,  sample.med_name FROM credit_note cr
       JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_id
       Join vendor on cr.vendor_id = vendor.vendor_id
       Join sample on crdetails.product_id = sample.product_id
@@ -184,6 +186,33 @@ module.exports = {
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
+      },
+    );
+  },
+
+  creditDetailsToTransactions: (data, creditInvoiceId, callBack) => {
+    getPool().query(
+      `insert into transactions(
+                  org_id,
+                  vendor_id,
+                  note_id,
+                  transaction_type,
+                  adjustment_amt,
+                  balance_amt)
+                  value(?,?,?,?,?,?)`,
+      [
+        data.org_id,
+        data.vendor_id,
+        creditInvoiceId,
+        'credit',
+        data.credit_amt,
+        data.credit_amt,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
       },
     );
   },

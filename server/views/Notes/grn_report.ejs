@@ -32,91 +32,73 @@
                           <div class="col-md-5" style="margin-right: -55px;">
                             <h5 class="card-header"><input type="radio" name="radio" value="monthly"> Monthly</h5>
                           </div>
-                          
+
                           <div class="col-md-6" style="margin-right: -80px;">
                             <h5 class="card-header"><input type="radio" name="radio" value="quarterly"> Quarterly</h5>
                           </div>
-                          <div class="col-md-5" >
+                          <div class="col-md-5">
                             <h5 class="card-header"><input type="radio" name="radio" value="yearly"> Yearly</h5>
                           </div>
                         </div>
-                          
-                          <div  id="dropdown"></div>
-                        
-                       
-                        
-                        
-                        
+
+                        <div id="dropdown"></div>
+
                       </div>
                     </div>
                     <div class="col-md-7">
                       <div class="card mb-4">
                         <div class="row">
                           <div class="col ">
-                        <h5 class="card-header mb-2 ">From Date</h5>
-                        <div class="card-body">
-                          <div class="col-md-10 mb-3 ">
-                            <input class="form-control" type="date" id="html5-date-input" name="fromdate"/>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="col">
-                        <h5 class="card-header mb-2 ">To Date</h5>
-                        <div class="card-body">
-                          <div>
-
-                            <div class="col-md-10 mb-3">
-                              <input class="form-control" type="date" id="html5-date-input" name="todate"/>
+                            <h5 class="card-header mb-2 ">From Date</h5>
+                            <div class="card-body">
+                              <div class="col-md-10 mb-3 ">
+                                <input class="form-control" type="date" id="html5-date-input" name="fromdate" />
+                              </div>
                             </div>
                           </div>
+
+                          <div class="col">
+                            <h5 class="card-header mb-2 ">To Date</h5>
+                            <div class="card-body">
+                              <div>
+
+                                <div class="col-md-10 mb-3">
+                                  <input class="form-control" type="date" id="html5-date-input" name="todate" />
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
                         </div>
-
-                      </div>
-
-
-
-
                       </div>
                     </div>
-                    </div>
+                  </div>
 
-                    
+                  <div class="text-center mb-4">
+                    <button type="button" class="btn btn-primary" id="generatereport">Generate Report</button>
+                  </div>
 
+                  <!-- Report List -->
 
-
-
-                    </div>
-
-
-
-
-                    <div class="text-center mb-4">
-                      <button type="button" class="btn btn-primary" id="generatereport">Generate Report</button>
-                    </div>
-
-                    <!-- Report List -->
-
-                    <div class="card">
-                      <h5 class="card-header">Report</h5>
-                      <div class="card-body">
-                        <div class="table-responsive text-nowrap">
-                          <table class="table table-bordered">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Invoice No.</th>
-                                <th>Vendor Name</th>
-
-                                <th>Date</th>
-                                <th>Time</th>
-                                <!-- <th class="col-1">Actions</th> -->
-                              </tr>
-                            </thead>
-                            <tbody id="reportcart">
+                  <div class="card">
+                    <h5 class="card-header">Report</h5>
+                    <div class="card-body">
+                      <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Invoice No.</th>
+                              <th>Vendor Name</th>
+                              <th>Date</th>
+                              <th>Time</th>
+                              <!-- <th class="col-1">Actions</th> -->
+                            </tr>
+                          </thead>
+                          <tbody id="reportcart">
 
 
-                              <!-- <tr>
+                            <!-- <tr>
                                 <td>2</td>
                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>SE-8481399183</strong></td>
                                 <td>Jaikishan Shah</td>
@@ -131,30 +113,30 @@
                                 </td>
                               </tr>
                                -->
-                            </tbody>
-                          </table>
-                        </div>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
-
-                    <!-- / Report List -->
-
-
                   </div>
+
+                  <!-- / Report List -->
+
+
                 </div>
-                <!-- / Content -->
-
-                <div class="content-backdrop fade"></div>
               </div>
-              <!-- Content wrapper -->
+              <!-- / Content -->
+
+              <div class="content-backdrop fade"></div>
           </div>
-          <!-- / Layout page -->
+          <!-- Content wrapper -->
       </div>
+      <!-- / Layout page -->
+    </div>
 
 
 
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
 
 
     </div>
@@ -167,34 +149,34 @@
         var toDate;
 
         $(document).ready(function () {
-          
-          $('input[name="radio"][value="monthly"]').one('click', function() {
-      if ($(this).is(':checked')) {
-      $("#dropdown").html(`<div class="card-body">
-        <div class="col-md-10">
-          <select class="form-select" id="selectmonth" aria-label="Default select example">
-            <option selected>Please Select</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
-        </div>
-      </div>`);
-    }
-  });
 
-  $('input[name="radio"][value="quarterly"]').one('click', function() {
-      if ($(this).is(':checked')) {
-      $("#dropdown").html(`<div class="card-body">
+          $('input[name="radio"][value="monthly"]').one('click', function () {
+            if ($(this).is(':checked')) {
+              $("#dropdown").html(`<div class="card-body">
+                <div class="col-md-10">
+                  <select class="form-select" id="selectmonth" aria-label="Default select example">
+                    <option selected>Please Select</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                </div>
+              </div>`);
+            }
+          });
+
+          $('input[name="radio"][value="quarterly"]').one('click', function () {
+            if ($(this).is(':checked')) {
+              $("#dropdown").html(`<div class="card-body">
                           <div>
 
                             <div class="col-md-10">
@@ -210,12 +192,12 @@
                             </div>
                           </div>
                         </div>`);
-    }
-  });
+            }
+          });
 
-  $('input[name="radio"][value="yearly"]').one('click', function() {
-      if ($(this).is(':checked')) {
-      $("#dropdown").html(`<div class="card-body">
+          $('input[name="radio"][value="yearly"]').one('click', function () {
+            if ($(this).is(':checked')) {
+              $("#dropdown").html(`<div class="card-body">
                           <div class="col-md-10">
                             <select class="form-select" id="selectyear"
                               aria-label="Default select example">
@@ -226,10 +208,10 @@
                             </select>
                           </div>
                         </div>`);
-    }
-  });
-        
-        $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
+            }
+          });
+
+          $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
           $('input[name="radio"]').on('click', function () {
             var value = $(this).val();
 
@@ -237,7 +219,7 @@
 
             $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
             // Show the corresponding dropdown's card-body based on the selected radio button
-            
+
           });
           $(document).on('change', '#selectmonth', function () {
             var month = $(this).val();

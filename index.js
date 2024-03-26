@@ -44,13 +44,14 @@ require('./server/routes/api.financials.routes')(app);
 require('./server/routes/api.itemSearch.routes')(app);
 require('./server/routes/api.whatsappMsg.route')(app);
 require('./server/routes/api.hsn_gst.routes')(app);
+require('./server/routes/api.transaction.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);
 require('./server/routes/front.auth.routes')(app);
 
 // CRON Jobs
-require('./server/cron-jobs/monthlyTask');
+require('./server/cron-jobs/cron.notifications');
 
 initialisePool().then(() => {
   app.listen(process.env.PORT || 4800, () => {

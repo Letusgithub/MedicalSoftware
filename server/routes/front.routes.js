@@ -211,6 +211,10 @@ module.exports = async (app) => {
     res.render('Inventory/product_stock', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
+  app.get('/near_expiry_list', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/near-expiry-list', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  });
+
   app.get('/update_addproduct/:id', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
       `select * from inventory inv
@@ -309,8 +313,13 @@ module.exports = async (app) => {
     });
   });
 
+  // app.get('/credit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
+  //   res.render('Receipt/credit_note_receipt', {
+  //     id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+  //   });
+  // });
   app.get('/credit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/credit_note_receipt', {
+    res.render('Receipt/new_credit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });

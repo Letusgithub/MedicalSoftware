@@ -145,6 +145,24 @@ module.exports = {
     getPool().query(
       `SELECT inv.primary_unit, inv.secondary_unit, 
       spl.med_name, 
+      bth.batch_name, bth.exp_date, bth.batch_qty, bth.saled_pri_qty, bth.saled_sec_qty, bth.conversion, bth.purchase_rate
+      FROM inventory AS inv
+      JOIN sample AS spl ON inv.product_id = spl.product_id
+      LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
+      WHERE inv.org_id=${orgId} AND bth.exp_date BETWEEN ? AND ?
+      `,
+      [currentDate, futureDate],
+      (error, results) => {
+        if (error) return callBack(error);
+        return callBack(null, results);
+      },
+    );
+  },
+
+  getNearExpiryForNotification: (orgId, currentDate, futureDate, callBack) => {
+    getPool().query(
+      `SELECT inv.primary_unit, inv.secondary_unit, 
+      spl.med_name, 
       bth.batch_name, bth.exp_date, COALESCE(SUM(bth.batch_qty-bth.saled_pri_qty), 0) AS batch_qty
       FROM inventory AS inv
       JOIN sample AS spl ON inv.product_id = spl.product_id
@@ -164,6 +182,17 @@ module.exports = {
     getPool().query(
       'SELECT org_email FROM organisation WHERE org_id = ?',
       [orgId],
+      (error, results) => {
+        if (error) return callBack(error);
+        return callBack(null, results);
+      },
+    );
+  },
+
+  getAllOrgEmailOrgId: (callBack) => {
+    getPool().query(
+      'SELECT org_id, org_email FROM organisation',
+      [],
       (error, results) => {
         if (error) return callBack(error);
         return callBack(null, results);

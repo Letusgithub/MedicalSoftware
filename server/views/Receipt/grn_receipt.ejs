@@ -498,6 +498,7 @@
                             <div class="label">
                                 CR/DR:
                             </div>
+                            <div id="credit_debit"></div>
                         </div>
 
                     </div>
@@ -506,7 +507,7 @@
                             <div>
                                 Total Amount(₹):
                             </div>
-                            <div id="totalcredit">
+                            <div id="totalamount">
                             </div>
                         </div>
                     </div>
@@ -546,7 +547,7 @@
                 $("#orderdate").text(`Invoice Date: ${formattedDate}`);
 
                 $("#paymentMethod").text(`Payment Mode: ${grnData.payment_method}`);
-                // $("#totalcredit").text(grnData.total);
+                // $("#totalamount").text(grnData.total);
                 $("#invoiceno").text(`Invoice No: ${grnData.vendor_invoice}`);
                 $("#grnno").text(`GRN No:${id}`)
                 $("#vendorname").text(`Distributor Name: ${grnData.vendor_name}`)
@@ -563,7 +564,7 @@
                 var totalGST = 0;
                 var totalAmount = 0;
                 var lessDiscount = grnData.less_discount;
-
+                var creditDebit = grnData.credit_debit || 0;
                 var transactions = [];
 
                 for (var i = 0; i < items.length; i++) {
@@ -611,12 +612,13 @@
 
                 console.log(transactions);
 
-                totalAmount = totalAmount - lessDiscount;
+                totalAmount = totalAmount - lessDiscount - creditDebit;
                 $("#lessDiscount").text(lessDiscount);
                 $("#totalGross").text(totalGross.toFixed(2));
                 $("#cgst").text((totalGST / 2).toFixed(2));
                 $("#sgst").text((totalGST / 2).toFixed(2));
-                $("#totalcredit").text(totalAmount.toFixed(2));
+                $("#credit_debit").text((creditDebit).toFixed(2));
+                $("#totalamount").text(totalAmount.toFixed(2));
 
                 // Initialize totals
                 var totals = {

@@ -151,56 +151,64 @@ exports.checkById = (req, res) => {
   });
 };
 
-exports.createNearExpiryReport = (req) => {
-  const orgId = req.query.orgID;
+exports.createNearExpiryReportById = (req, res) => {
+  const orgId = req.params.id;
   const currentDate = new Date();
   const futureDate = new Date();
-  console.log(orgId);
-  futureDate.setDate(currentDate.getDate() + 30);
+  futureDate.setDate(currentDate.getDate() + 90);
 
   service.getNearExpiryProducts(orgId, currentDate, futureDate, (err, results) => {
     if (err) {
       console.log(err);
     }
-    service.getOrgEmail(orgId, (orgErr, orgResults) => {
-      if (orgErr) {
-        console.log(orgErr);
-      }
-      const orgEmail = orgResults[0].org_email;
 
-      // Create workbook and worksheet
-      const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet('Near Expiry Products');
-
-      // Add headers
-      const headers = Object.keys(results[0]);
-      worksheet.addRow(headers);
-
-      // Add data rows
-      results.forEach((row) => {
-        worksheet.addRow(Object.values(row));
-      });
-
-      // Generate Excel file
-      const excelFileName = 'near_expiry_products.xlsx';
-      workbook.xlsx.writeFile(excelFileName)
-        .then(() => {
-        // Send email with attachment
-          mailer.sendAttachmentEmail(orgEmail, excelFileName);
-        });
+    return res.json({
+      success: 1,
+      data: results,
     });
   });
 };
 
-// exports.getTotalStock = (req, res) => {
-//   const orgID = req.query.orgID;
-//   console.log('orgID', orgID);
-//   service.getAllInventory(orgID, (allError, allResult) => {
-//     if (allError) {
-//       console.log(allError);
-//     }
-//     return res.status(200).json({
-//       status: 'success',
-//       data: allResult,
-//     });
-//   });
+exports.createAllNearExpiryReports = () => {
+  const currentDate = new Date();
+  const futureDate = new Date();
+  futureDate.setDate(currentDate.getDate() + 3);
+
+  service.getAllOrgEmailOrgId((orgErr, orgResults) => {
+    if (orgErr) {
+      console.log(orgErr);
+    }
+    orgResults.forEach((org) => {
+      const orgId = org.org_id;
+      service.getNearExpiryForNotification(orgId, currentDate, futureDate, (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        const orgEmail = org.org_email;
+
+        if (results.length > 0) {
+          // Create workbook and worksheet
+          const workbook = new ExcelJS.Workbook();
+          const worksheet = workbook.addWorksheet('Near Expiry Products');
+
+          // Add headers
+          const headers = Object.keys(results[0]);
+          worksheet.addRow(headers);
+
+          // Add data rows
+          results.forEach((row) => {
+            worksheet.addRow(Object.values(row));
+          });
+
+          // Generate Excel file
+          const excelFileName = 'near_expiry_products.xlsx';
+          workbook.xlsx.writeFile(excelFileName)
+            .then(() => {
+              // Send email with attachment
+              mailer.sendAttachmentEmail(orgEmail, excelFileName);
+            });
+        }
+      });
+    });
+  });
+};

@@ -19,5 +19,5 @@ module.exports = (app) => {
 
   app.get('/api/checkbyid', controller.checkById);
 
-  app.get('/api/getNearExpiryProducts', controller.createNearExpiryReport);
+  app.get('/api/getNearExpiryProducts/:id', controller.createNearExpiryReportById);
 };

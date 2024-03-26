@@ -22,9 +22,9 @@
 
 
 
-                                    <div class="d-flex justify-content-between m-0 p-0">
-                                        <h4 class="fw-bold py-3 mb-1">Purchase Bill</h4>
-                                        <div class=" text-center mt-3 d-flex">
+                                    <div class="row d-flex justify-content-between m-0 p-0">
+                                        <h4 class="col-md-8 fw-bold py-3 mb-1">Purchase Bill</h4>
+                                        <div class="col-md-4 text-center mt-3 d-flex">
                                             <div>
                                                 <div class="form-check form-check-inline mt-3">
                                                     <input class="form-check-input" type="radio" name="paymentMethod"
@@ -399,39 +399,99 @@
 
                                     </div>
 
-                                </div>
+                                    <hr class="mb-4">
 
-                                <hr class="mb-4">
+                                    <div class="card">
+                                        <h5 class="card-header">Cart</h5>
+                                        <div class="card-body">
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Product name</th>
+                                                            <th>Batch</th>
+                                                            <th>Expiry</th>
+                                                            <th>MRP</th>
+                                                            <th>PTR</th>
+                                                            <th>QTY</th>
+                                                            <th>Unit</th>
+                                                            <th>GST(%)</th>
+                                                            <th>Dis(%)</th>
+                                                            <th>Amount</th>
+                                                            <th class="col-1">Action</th>
 
-                                <div class="card">
-                                    <h5 class="card-header">Cart</h5>
-                                    <div class="card-body">
-                                        <div class="table-responsive text-nowrap">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Product name</th>
-                                                        <th>Batch</th>
-                                                        <th>Expiry</th>
-                                                        <th>MRP</th>
-                                                        <th>PTR</th>
-                                                        <th>QTY</th>
-                                                        <th>Unit</th>
-                                                        <th>GST(%)</th>
-                                                        <th>Dis(%)</th>
-                                                        <th>Amount</th>
-                                                        <th class="col-1">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="cart">
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="cart">
-
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <div class="row d-flex justify-content-evenly mt-3">
+
+                                        <div class="d-flex row m-0 p-0">
+                                            <h4 class="col-sm-7 fw-bold py-3 mb-4">Bill Summary</h4>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="card mb-4">
+                                                <h5 class="card-header"> Total Amount (₹)</h5>
+                                                <div class="card-body">
+                                                    <div>
+
+                                                        <input type="number" class="form-control" id="totalAmt"
+                                                            readonly />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="card mb-4">
+                                                <div class="row m-0 p-0">
+                                                    <h5 class="col-md-7 card-header">Credit (₹) </h5>
+                                                    <div class="col-md-5 card-header text-end text-success">Balance:
+                                                        ₹<span id="balance"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body pt-0">
+                                                    <div>
+                                                        <input type="number" class="form-control text-danger"
+                                                            id="creditAmt" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-md-4">
+                                            <div class="card mb-4">
+                                                <div class="d-flex justify-content-between m-0 p-0">
+                                                    <h5 class="card-header">Final Amount (₹)</h5>
+                                                </div>
+
+                                                <div class="card-body pt-0">
+                                                    <div>
+                                                        <input type="number" class="form-control" id="finalamount"
+                                                            readonly />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                    </div>
                                 </div>
+
+
+
 
 
                                 <div class="form-check mt-3">
@@ -886,9 +946,9 @@
 
                     // logic for redering cart data on addtocart click 
                     $("#addtocart").on('click', function () {
-
                         cartItems = JSON.parse(localStorage.getItem('grncartdetails')) || [];
                         renderCart(cartItems);
+                        getBillSummary();
                     });
 
                     //deletefunctionality
@@ -900,13 +960,13 @@
                         cartarray = cartItemsinStorage;
                         localStorage.setItem('grncartdetails', JSON.stringify(cartItemsinStorage));
                         renderCart(cartItemsinStorage);
+                        getBillSummary();
                     });
                     //endofdeletefunctionality
 
                     //rendercart functionality
                     function renderCart(items) {
                         $('#cart').empty();
-
                         for (var i = 0; i < items.length; i++) {
                             htmlData = `
                           <tr>
@@ -934,11 +994,65 @@
                     }
                     //end of rendereing data logic
 
-                    //allchanges done for footer total;
+                    function getBillSummary() {
+                        var totalAmt = 0;
+                        getAllData = JSON.parse(localStorage.getItem("grncartdetails")) || [];
+
+                        if (getAllData.length != 0) {
+                            for (let i = 0; i < getAllData.length; i++) {
+                                totalAmt += parseFloat(getAllData[i].amt);
+                                totalAmt = totalAmt - parseFloat($("#lessDiscount").val());
+                            }
+                            $("#totalAmt").val(totalAmt.toFixed(2));
+                            // $("#finalamount").val(totalAmt.toFixed(2));
+                        }
+                        else if (getAllData.length == 0) {
+                            $("#totalAmt").val(0);
+                            // $("#finalamount").val(0);
+                        }
+                    }
+
+                    // Ensure credit Amount is not greater than total Amount and not less than zero
+                    $('#creditAmt').on('keypress', function (e) {
+                        if (e.which == 45) {
+                            return false;
+                        }
+                    });
+                    $('#creditAmt').on("input", function () {
+                        var getTotalAmt = parseFloat($("#totalAmt").val());
+                        var creditAmtInput = parseFloat($(this).val());
+
+                        if (creditAmtInput > getTotalAmt) {
+                            alert("Credit Amount cannot be greater than subtotal!");
+                            $(this).val(getTotalAmt);
+                        } else if (creditAmtInput < 0) {
+                            alert("Credit Amount cannot be less than zero!");
+                            $(this).val(0);
+                        }
+                    });
+                    // Calculate final amount on input of additional discount
+                    // $('#creditAmt').on("input", function () {
+                    //     var getTotalAmt = parseFloat(("#totalAmt").val());
+                    //     var creditAmtInput = parseFloat($(this).val());
+
+                    //     var finalAmount= getTotalAmt - creditAmtInput;
+                    //     $("#finalamount").val(finalAmount.toFixed(2));
+                    // });
 
 
                     var orderDetails;
                     var org = '<%=orgId%>'
+                    var transactionId;
+
+                    // Get Credit/Debit balance of the pharmacy
+                    $('#vendorselect').change(function () {
+                        $.get(`/api/transaction/getbalance?org_id=${org}&vendor_id=${$(this).val()}`, function (result, status) {
+                            console.log(result);
+                            $("#balance").text(result.data[0].balance_amt);
+                            transactionId = result.data[0].transaction_id;
+                        });
+                    });
+
                     $("#submitorder").click(function () {
                         if ($("#vendorselect").val() === 'Select Vendor') {
                             return alert('Please fill "Distributor Name"');
@@ -953,13 +1067,14 @@
                         var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
                         var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
                         var lessDiscount = $("#lessDiscount").val() || 0;
+                        var creditDebit = parseFloat($("#creditAmt").val()) || 0;
                         var totalPurchase = 0;
 
                         for (let i in cartDetails) {
                             totalPurchase += parseFloat(cartDetails[i].amt);
                         }
 
-                        totalPurchase = totalPurchase - lessDiscount;
+                        totalPurchase = totalPurchase - lessDiscount - creditDebit;
 
                         $.ajax({
                             url: `/api/creategrn/`,
@@ -973,6 +1088,7 @@
                                 invoice_date: $("input[name='invoiceDate']").val(),
                                 credit_period: $("#creditPeriodInput").val(),
                                 less_discount: lessDiscount,
+                                credit_debit: creditDebit,
                                 payment_method: $('input[name="paymentMethod"]').val(),
                             }),
                             contentType: 'application/json',
@@ -980,146 +1096,228 @@
 
                                 var GRNid = response.grn_invoice_no;
 
+                                $.ajax({
+                                    url: `/api/transaction/updatebalance`,
+                                    type: 'POST',
+                                    data: JSON.stringify({
+                                        transaction_id: transactionId,
+                                        deduction: parseFloat($("#creditAmt").val()) || 0,
+                                    }),
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        console.log('Balance Updated', response);
+                                        console.log('orderdetails of grn', cartDetails);
 
-                                console.log('orderdetails of grn', cartDetails);
+                                        for (let i in cartDetails) {
 
-                                for (let i in cartDetails) {
-
-                                    if (cartDetails[i].productId == null) {
-                                        var customProductDetails = {
-                                            org_id: org,
-                                            med_name: cartDetails[i].productname,
-                                            mfd_mkt: cartDetails[i].brandname,
-                                            salt: cartDetails[i].salt,
-                                            conversion: cartDetails[i].conversion,
-                                        }
-
-                                        $.ajax({
-                                            url: '/api/createproduct',
-                                            type: 'POST',
-                                            data: JSON.stringify(customProductDetails),
-                                            contentType: 'application/json',
-                                            success: function (response) {
-                                                console.log(response);
-                                                cartDetails[i].productId = response.product_id;
-
-                                                var productDetails = {
-                                                    product_id: cartDetails[i].productId,
+                                            if (cartDetails[i].productId == null) {
+                                                var customProductDetails = {
                                                     org_id: org,
-                                                    category_id: cartDetails[i].category_id,
-                                                    gst: cartDetails[i].gst,
-                                                    hsn: cartDetails[i].hsn,
-                                                    primary_unit: cartDetails[i].punit,
-                                                    secondary_unit: cartDetails[i].sunit,
-                                                    threshold: cartDetails[i].moq
+                                                    med_name: cartDetails[i].productname,
+                                                    mfd_mkt: cartDetails[i].brandname,
+                                                    salt: cartDetails[i].salt,
+                                                    conversion: cartDetails[i].conversion,
                                                 }
 
-                                                console.log('product details', productDetails);
                                                 $.ajax({
-                                                    url: `/api/createinventory/`,
+                                                    url: '/api/createproduct',
                                                     type: 'POST',
-                                                    data: JSON.stringify(productDetails),
+                                                    data: JSON.stringify(customProductDetails),
                                                     contentType: 'application/json',
                                                     success: function (response) {
-                                                        var batchDetails = {
+                                                        console.log(response);
+                                                        cartDetails[i].productId = response.product_id;
+
+                                                        var productDetails = {
                                                             product_id: cartDetails[i].productId,
                                                             org_id: org,
-                                                            batch_name: cartDetails[i].batch,
-                                                            exp_date: cartDetails[i].expdate,
-                                                            conversion: cartDetails[i].conversion,
-                                                            batch_qty: cartDetails[i].qty,
-                                                            purchase_rate: cartDetails[i].purchase,
-                                                            mrp: cartDetails[i].mrp,
-                                                            free: cartDetails[i].free,
-                                                            bulk_discount: cartDetails[i].bulk_discount,
-                                                            base_price: cartDetails[i].base_price,
-                                                            shelf_label: cartDetails[i].shelflabel,
-                                                            grn_id: GRNid
+                                                            category_id: cartDetails[i].category_id,
+                                                            gst: cartDetails[i].gst,
+                                                            hsn: cartDetails[i].hsn,
+                                                            primary_unit: cartDetails[i].punit,
+                                                            secondary_unit: cartDetails[i].sunit,
+                                                            threshold: cartDetails[i].moq
                                                         }
 
+                                                        console.log('product details', productDetails);
                                                         $.ajax({
-                                                            url: `/api/addbatch/`,
+                                                            url: `/api/createinventory/`,
                                                             type: 'POST',
-                                                            data: JSON.stringify(batchDetails),
+                                                            data: JSON.stringify(productDetails),
                                                             contentType: 'application/json',
                                                             success: function (response) {
-                                                                $.ajax({
-                                                                    url: `/api/creategrncarts`,
-                                                                    type: 'POST',
-                                                                    data: JSON.stringify({
-                                                                        grn_id: GRNid,
-                                                                        product_id: cartDetails[i].productId,
-                                                                        gst: cartDetails[i].gst,
-                                                                        category_id: cartDetails[i].category_id,
-                                                                        hsn: cartDetails[i].hsn,
-                                                                        punit: cartDetails[i].punit,
-                                                                        sunit: cartDetails[i].sunit,
-                                                                        moq: cartDetails[i].moq,
-                                                                        batch_name: cartDetails[i].batch,
-                                                                        exp: cartDetails[i].expdate,
-                                                                        conversion: cartDetails[i].conversion,
-                                                                        shelf_label: cartDetails[i].shelflabel,
-                                                                        purchase: cartDetails[i].purchase,
-                                                                        mrp: cartDetails[i].mrp,
-                                                                        free: cartDetails[i].free,
-                                                                        bulk_discount: cartDetails[i].bulk_discount,
-                                                                        base_price: cartDetails[i].base_price,
-                                                                        qty: cartDetails[i].qty,
+                                                                var batchDetails = {
+                                                                    product_id: cartDetails[i].productId,
+                                                                    org_id: org,
+                                                                    batch_name: cartDetails[i].batch,
+                                                                    exp_date: cartDetails[i].expdate,
+                                                                    conversion: cartDetails[i].conversion,
+                                                                    batch_qty: cartDetails[i].qty,
+                                                                    purchase_rate: cartDetails[i].purchase,
+                                                                    mrp: cartDetails[i].mrp,
+                                                                    free: cartDetails[i].free,
+                                                                    bulk_discount: cartDetails[i].bulk_discount,
+                                                                    base_price: cartDetails[i].base_price,
+                                                                    shelf_label: cartDetails[i].shelflabel,
+                                                                    grn_id: GRNid
+                                                                }
 
-                                                                    }),
+                                                                $.ajax({
+                                                                    url: `/api/addbatch/`,
+                                                                    type: 'POST',
+                                                                    data: JSON.stringify(batchDetails),
                                                                     contentType: 'application/json',
                                                                     success: function (response) {
-                                                                        console.log('grn done', response);
+                                                                        $.ajax({
+                                                                            url: `/api/creategrncarts`,
+                                                                            type: 'POST',
+                                                                            data: JSON.stringify({
+                                                                                grn_id: GRNid,
+                                                                                product_id: cartDetails[i].productId,
+                                                                                gst: cartDetails[i].gst,
+                                                                                category_id: cartDetails[i].category_id,
+                                                                                hsn: cartDetails[i].hsn,
+                                                                                punit: cartDetails[i].punit,
+                                                                                sunit: cartDetails[i].sunit,
+                                                                                moq: cartDetails[i].moq,
+                                                                                batch_name: cartDetails[i].batch,
+                                                                                exp: cartDetails[i].expdate,
+                                                                                conversion: cartDetails[i].conversion,
+                                                                                shelf_label: cartDetails[i].shelflabel,
+                                                                                purchase: cartDetails[i].purchase,
+                                                                                mrp: cartDetails[i].mrp,
+                                                                                free: cartDetails[i].free,
+                                                                                bulk_discount: cartDetails[i].bulk_discount,
+                                                                                base_price: cartDetails[i].base_price,
+                                                                                qty: cartDetails[i].qty,
+
+                                                                            }),
+                                                                            contentType: 'application/json',
+                                                                            success: function (response) {
+                                                                                console.log('grn done', response);
+                                                                            },
+                                                                            error: function (error) {
+                                                                                console.log('error in grn', error);
+                                                                                return alert("not Created", error)
+                                                                            }
+                                                                        })
+                                                                        console.log(response);
+
                                                                     },
                                                                     error: function (error) {
-                                                                        console.log('error in grn', error);
+                                                                        console.log(error);
                                                                         return alert("not Created", error)
                                                                     }
                                                                 })
-                                                                console.log(response);
-
                                                             },
                                                             error: function (error) {
                                                                 console.log(error);
                                                                 return alert("not Created", error)
                                                             }
                                                         })
+
                                                     },
-                                                    error: function (error) {
-                                                        console.log(error);
-                                                        return alert("not Created", error)
-                                                    }
                                                 })
+                                            }
 
-                                            },
-                                        })
-                                    }
+                                            else {
+                                                // If productId fetched (Product is in Master Database)
+                                                $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
+                                                    console.log(data.data);
+                                                    if (data.data.length === 0) {
 
-                                    else {
-                                        // If productId fetched (Product is in Master Database)
-                                        $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
-                                            console.log(data.data);
-                                            if (data.data.length === 0) {
-
-                                                var productDetails = {
-                                                    product_id: cartDetails[i].productId,
-                                                    org_id: org,
-                                                    category_id: cartDetails[i].category_id,
-                                                    gst: cartDetails[i].gst,
-                                                    hsn: cartDetails[i].hsn,
-                                                    primary_unit: cartDetails[i].punit,
-                                                    secondary_unit: cartDetails[i].sunit,
-                                                    threshold: cartDetails[i].moq
-                                                }
+                                                        var productDetails = {
+                                                            product_id: cartDetails[i].productId,
+                                                            org_id: org,
+                                                            category_id: cartDetails[i].category_id,
+                                                            gst: cartDetails[i].gst,
+                                                            hsn: cartDetails[i].hsn,
+                                                            primary_unit: cartDetails[i].punit,
+                                                            secondary_unit: cartDetails[i].sunit,
+                                                            threshold: cartDetails[i].moq
+                                                        }
 
 
-                                                $.ajax({
-                                                    url: `/api/createinventory/`,
-                                                    type: 'POST',
-                                                    data: JSON.stringify(productDetails),
-                                                    contentType: 'application/json',
-                                                    success: function (response) {
+                                                        $.ajax({
+                                                            url: `/api/createinventory/`,
+                                                            type: 'POST',
+                                                            data: JSON.stringify(productDetails),
+                                                            contentType: 'application/json',
+                                                            success: function (response) {
 
+                                                                var batchDetails = {
+                                                                    product_id: cartDetails[i].productId,
+                                                                    org_id: org,
+                                                                    batch_name: cartDetails[i].batch,
+                                                                    exp_date: cartDetails[i].expdate,
+                                                                    conversion: cartDetails[i].conversion,
+                                                                    batch_qty: cartDetails[i].qty,
+                                                                    purchase_rate: cartDetails[i].purchase,
+                                                                    mrp: cartDetails[i].mrp,
+                                                                    free: cartDetails[i].free,
+                                                                    bulk_discount: cartDetails[i].bulk_discount,
+                                                                    base_price: cartDetails[i].base_price,
+                                                                    shelf_label: cartDetails[i].shelflabel,
+                                                                    grn_id: GRNid
+                                                                }
+                                                                //console.log(batchDetails);
+
+                                                                $.ajax({
+                                                                    url: `/api/addbatch/`,
+                                                                    type: 'POST',
+                                                                    data: JSON.stringify(batchDetails),
+                                                                    contentType: 'application/json',
+                                                                    success: function (response) {
+
+
+                                                                        $.ajax({
+                                                                            url: `/api/creategrncarts`,
+                                                                            type: 'POST',
+                                                                            data: JSON.stringify({
+                                                                                grn_id: GRNid,
+                                                                                product_id: cartDetails[i].productId,
+                                                                                gst: cartDetails[i].gst,
+                                                                                category_id: cartDetails[i].category_id,
+                                                                                hsn: cartDetails[i].hsn,
+                                                                                punit: cartDetails[i].punit,
+                                                                                sunit: cartDetails[i].sunit,
+                                                                                moq: cartDetails[i].moq,
+                                                                                batch_name: cartDetails[i].batch,
+                                                                                exp: cartDetails[i].expdate,
+                                                                                conversion: cartDetails[i].conversion,
+                                                                                shelf_label: cartDetails[i].shelflabel,
+                                                                                purchase: cartDetails[i].purchase,
+                                                                                mrp: cartDetails[i].mrp,
+                                                                                free: cartDetails[i].free,
+                                                                                bulk_discount: cartDetails[i].bulk_discount,
+                                                                                base_price: cartDetails[i].base_price,
+                                                                                qty: cartDetails[i].qty,
+
+                                                                            }),
+                                                                            contentType: 'application/json',
+                                                                            success: function (response) {
+                                                                                console.log('grn done', response);
+                                                                            },
+                                                                            error: function (error) {
+                                                                                console.log('error in grn', error);
+                                                                                return alert("not Created", error)
+                                                                            }
+                                                                        })
+                                                                        console.log(response);
+                                                                    },
+                                                                    error: function (error) {
+                                                                        console.log(error);
+                                                                        return alert("not Created", error)
+                                                                    }
+                                                                })
+                                                                console.log(response);
+                                                            },
+                                                            error: function (error) {
+                                                                console.log(error);
+                                                                return alert("not Created", error)
+                                                            }
+                                                        })
+                                                    } else {
                                                         var batchDetails = {
                                                             product_id: cartDetails[i].productId,
                                                             org_id: org,
@@ -1144,7 +1342,6 @@
                                                             contentType: 'application/json',
                                                             success: function (response) {
 
-
                                                                 $.ajax({
                                                                     url: `/api/creategrncarts`,
                                                                     type: 'POST',
@@ -1152,7 +1349,6 @@
                                                                         grn_id: GRNid,
                                                                         product_id: cartDetails[i].productId,
                                                                         gst: cartDetails[i].gst,
-                                                                        category_id: cartDetails[i].category_id,
                                                                         hsn: cartDetails[i].hsn,
                                                                         punit: cartDetails[i].punit,
                                                                         sunit: cartDetails[i].sunit,
@@ -1175,98 +1371,32 @@
                                                                     },
                                                                     error: function (error) {
                                                                         console.log('error in grn', error);
-                                                                        return alert("not Created", error)
+                                                                        return alert("Not Created", error)
                                                                     }
                                                                 })
                                                                 console.log(response);
                                                             },
                                                             error: function (error) {
                                                                 console.log(error);
-                                                                return alert("not Created", error)
-                                                            }
-                                                        })
-                                                        console.log(response);
-                                                    },
-                                                    error: function (error) {
-                                                        console.log(error);
-                                                        return alert("not Created", error)
-                                                    }
-                                                })
-                                            } else {
-                                                var batchDetails = {
-                                                    product_id: cartDetails[i].productId,
-                                                    org_id: org,
-                                                    batch_name: cartDetails[i].batch,
-                                                    exp_date: cartDetails[i].expdate,
-                                                    conversion: cartDetails[i].conversion,
-                                                    batch_qty: cartDetails[i].qty,
-                                                    purchase_rate: cartDetails[i].purchase,
-                                                    mrp: cartDetails[i].mrp,
-                                                    free: cartDetails[i].free,
-                                                    bulk_discount: cartDetails[i].bulk_discount,
-                                                    base_price: cartDetails[i].base_price,
-                                                    shelf_label: cartDetails[i].shelflabel,
-                                                    grn_id: GRNid
-                                                }
-                                                //console.log(batchDetails);
-
-                                                $.ajax({
-                                                    url: `/api/addbatch/`,
-                                                    type: 'POST',
-                                                    data: JSON.stringify(batchDetails),
-                                                    contentType: 'application/json',
-                                                    success: function (response) {
-
-                                                        $.ajax({
-                                                            url: `/api/creategrncarts`,
-                                                            type: 'POST',
-                                                            data: JSON.stringify({
-                                                                grn_id: GRNid,
-                                                                product_id: cartDetails[i].productId,
-                                                                gst: cartDetails[i].gst,
-                                                                hsn: cartDetails[i].hsn,
-                                                                punit: cartDetails[i].punit,
-                                                                sunit: cartDetails[i].sunit,
-                                                                moq: cartDetails[i].moq,
-                                                                batch_name: cartDetails[i].batch,
-                                                                exp: cartDetails[i].expdate,
-                                                                conversion: cartDetails[i].conversion,
-                                                                shelf_label: cartDetails[i].shelflabel,
-                                                                purchase: cartDetails[i].purchase,
-                                                                mrp: cartDetails[i].mrp,
-                                                                free: cartDetails[i].free,
-                                                                bulk_discount: cartDetails[i].bulk_discount,
-                                                                base_price: cartDetails[i].base_price,
-                                                                qty: cartDetails[i].qty,
-
-                                                            }),
-                                                            contentType: 'application/json',
-                                                            success: function (response) {
-                                                                console.log('grn done', response);
-                                                            },
-                                                            error: function (error) {
-                                                                console.log('error in grn', error);
                                                                 return alert("Not Created", error)
                                                             }
                                                         })
-                                                        console.log(response);
-                                                    },
-                                                    error: function (error) {
-                                                        console.log(error);
-                                                        return alert("Not Created", error)
                                                     }
                                                 })
+
                                             }
-                                        })
 
+                                        }
+
+                                        setTimeout(() => {
+
+                                            window.location.href = `/grn_receipt/${GRNid}`
+                                        }, 3000);
+                                    },
+                                    error: function (error) {
+                                        console.log('error in updating balance', error);
                                     }
-
-                                }
-
-                                setTimeout(() => {
-
-                                    window.location.href = `/grn_receipt/${GRNid}`
-                                }, 3000);
+                                })
 
                             },
                             error: function (error) {

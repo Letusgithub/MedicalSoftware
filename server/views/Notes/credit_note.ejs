@@ -89,16 +89,17 @@
                             </div>
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
-                            <p class="mb-2 repeater-title">MRP / P.Unit</p>
-                            <input type="number" class="form-control" id="price" placeholder="" min="0" />
+                            <p class="mb-2 repeater-title">Rate / P.Unit</p>
+                            <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0" />
                           </div>
-                          <div class="col-md-1 col-12 mb-md-0 mb-3">
+
+                          <!-- <div class="col-md-1 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Disc %</p>
                             <input type="number" class="form-control" id="discount" placeholder="" min="0" />
-                          </div>
+                          </div> -->
 
 
-                          <div class="col-md-1 col-6 pe-0">
+                          <div class="col-md-2 col-6 pe-0">
                             <p class="mb-2 repeater-title">Total</p>
                             <input type="text" class="form-control px-0" id="total" placeholder="" min="0" readonly />
                             <div style="font-size: smaller;"><span id="profit"></span></div>
@@ -130,8 +131,7 @@
                               <th class="col-7">Product name</th>
                               <th class="col-1" id="priqtycart">PQty</th>
                               <th class="col-1" id="secqtycart">SQty</th>
-                              <th class="col-1">MRP/PUnit</th>
-                              <!-- <th class="col-1">Disc %</th> -->
+                              <th class="col-1">Rate/PUnit</th>
                               <th class="col-1">Total</th>
                               <th class="col-1">Action</th>
 
@@ -258,7 +258,7 @@
               select: function (event, ui) {
                 setTimeout(function () {
                   console.log('the selected med', ui.item);
-                  productId = ui.item.sample_id;
+                  productId = ui.item.product_id;
 
                   //getting all the batches associated with the product
                   $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
@@ -296,8 +296,8 @@
                     availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
                     $("#pUnit").val(availablePrimaryQty);
                     $("#sUnit").val(availableSecondaryQty);
-                    priceMed = data.data[0].mrp;
-                    $("#price").val(priceMed);
+                    priceMed = data.data[0].purchase_rate;
+                    $("#purchase_rate").val(priceMed);
                     calculateTotal();
 
                     $("#primaryunitname span").text(` (${primaryUnit})`);
@@ -321,7 +321,7 @@
                       $("#shelflabel").val(data.data[batchId].shelf_label);
                       var date = new Date(data.data[batchId].exp_date);
                       $("#expdate").val(date.toISOString().split('T')[0]);
-                      $("#price").val(data.data[batchId].mrp);
+                      $("#purchase_rate").val(data.data[batchId].purchase_rate);
                       conversion = data.data[batchId].conversion;
 
                       availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
@@ -348,24 +348,24 @@
 
             var priQty = $("#pUnit");
             var secQty = $("#sUnit");
-            var priceInput = $("#price");
-            var discInput = $("#discount");
+            var rateInput = $("#purchase_rate");
+            // var discInput = $("#discount");
             var totalInput = $("#total");
 
             priQty.on("input", calculateTotal);
             secQty.on("input", calculateTotal);
-            discInput.on("input", calculateTotal);
+            // discInput.on("input", calculateTotal);
 
             function calculateTotal() {
               var primaryqty = parseInt(priQty.val()) || 0;
 
               var secondaryqty = parseInt(secQty.val()) || 0;
 
-              var price = parseFloat(priceInput.val()) || 0;
+              var rate = parseFloat(rateInput.val()) || 0;
 
-              console.log(price);
+              console.log(rate);
 
-              var total = primaryqty * price + secondaryqty * price / conversion;
+              var total = primaryqty * rate + secondaryqty * rate / conversion;
 
 
               totalInput.val(total.toFixed(2));
@@ -410,7 +410,7 @@
               var brand = $("#brand").val();
               var priCartQty = priQty.val();
               var secCartQty = secQty.val();
-              var mrp = priceInput.val();
+              var mrp = rateInput.val();
 
               var total = totalInput.val();
 
@@ -448,7 +448,7 @@
               $("#brand").val("");
               $("#pUnit").val("");
               $("#sUnit").val("");
-              $("#price").val("");
+              $("#purchase_rate").val("");
 
               $("#total").val("");
               $("#shelflabel").val("");
@@ -458,6 +458,8 @@
               $("#unit").empty();
               $("#pack .unit").empty();
               $("#message").empty();
+              $("#primaryunitname span").text(``);
+              $("#secondaryunitname span").text(``);
 
             })
 
@@ -495,7 +497,7 @@
               $("#brand").val(selectedItem.brand);
               $("#pUnit").val(selectedItem.priQty);
               $("#sUnit").val(selectedItem.secQty);
-              $("#price").val(selectedItem.mrp);
+              $("#purchase_rate").val(selectedItem.purchase_rate);
               $("#total").val(selectedItem.total);
 
               //getting all data for batches
@@ -539,8 +541,8 @@
                 $("#shelflabel").val(data.data[batchnumber].shelf_label);
 
                 //$("#batch").val(data.data[0].batch_id);
-                priceMed = data.data[batchnumber].mrp;
-                $("#price").val(priceMed);
+                priceMed = data.data[batchnumber].purchase_rate;
+                $("#purchase_rate").val(priceMed);
 
                 $("#batchdroporinput").on("change", "#batchnumber", function () {
                   var batchId = $("#batchdroporinput #batchnumber").val();
@@ -549,7 +551,7 @@
                   $("#shelflabel").val(data.data[batchId].shelf_label);
                   var date = new Date(data.data[batchId].exp_date);
                   $("#expdate").val(date.toISOString().split('T')[0]);
-                  $("#price").val(data.data[batchId].mrp);
+                  $("#purchase_rate").val(data.data[batchId].purchase_rate);
                   conversion = data.data[batchId].conversion;
 
                   availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
@@ -609,8 +611,12 @@
             // post the data to the credit note
             var creditInvoice;
             $("#submitcredit").click(function () {
-
+              var credit_amt = 0;
               var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
+
+              for(let i in creditCarts){
+                credit_amt += parseFloat(creditCarts[i].total);
+              }
 
               if (creditCarts == null || creditCarts.length == 0) {
                 return alert("Item Cart Empty");
@@ -625,6 +631,7 @@
                   vendor_id: vendorId,
                   pharmacyId: pharmacyDetails.pharmaId,
                   org_id: '<%=orgId%>',
+                  credit_amt : credit_amt.toFixed(2)
                 }),
 
                 contentType: 'application/json',
@@ -659,7 +666,7 @@
                       sec_unit_credit: creditCarts[i].secQty,
                       credit_invoice_no: creditInvoice,
                       batch_id_credit: creditCarts[i].batchId,
-                      total_credit: creditCarts[i].total
+                      total_credit: creditCarts[i].total,
                     })
 
                     console.log('cartDetail for the saled product', cartDetails);
