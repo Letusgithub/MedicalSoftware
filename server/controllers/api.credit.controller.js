@@ -22,19 +22,19 @@ exports.createCreditNote = (req, res) => {
           message: 'Db error',
         });
       }
-      service.creditDetailsToTransactions(data, creditInvoiceId, (error, results) => {
-        if (error) {
-          console.log('error', error);
-          return res.status(500).json({
-            success: 0,
-            message: 'Db error',
-          });
-        }
-        return res.status(200).json({
-          status: 'success',
-          credit_invoice_no: creditInvoiceId,
-        });
+      return res.status(200).json({
+        status: 'success',
+        credit_invoice_no: creditInvoiceId,
       });
+      // service.creditDetailsToTransactions(data, creditInvoiceId, (error, results) => {
+      //   if (error) {
+      //     console.log('error', error);
+      //     return res.status(500).json({
+      //       success: 0,
+      //       message: 'Db error',
+      //     });
+      //   }
+      // });
     });
   });
 };

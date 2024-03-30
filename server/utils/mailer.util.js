@@ -2,7 +2,7 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-exports.sendAttachmentEmail = (to, attachmentPath) => {
+exports.sendAttachmentEmail = (to, filename, buffer) => {
   const transporter = nodemailer.createTransport({
     port: 465,
     host: 'smtp.gmail.com',
@@ -20,8 +20,8 @@ exports.sendAttachmentEmail = (to, attachmentPath) => {
     text: 'Please find attached the report of near expiry products.',
     attachments: [
       {
-        filename: 'near-expiry-products.xlsx',
-        path: attachmentPath,
+        filename,
+        content: buffer,
       },
     ],
   };

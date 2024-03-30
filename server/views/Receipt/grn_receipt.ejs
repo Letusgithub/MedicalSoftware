@@ -612,7 +612,7 @@
 
                 console.log(transactions);
 
-                totalAmount = totalAmount - lessDiscount - creditDebit;
+                totalAmount = totalAmount - lessDiscount + creditDebit;
                 $("#lessDiscount").text(lessDiscount);
                 $("#totalGross").text(totalGross.toFixed(2));
                 $("#cgst").text((totalGST / 2).toFixed(2));

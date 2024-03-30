@@ -89,13 +89,13 @@
                             </div>
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
-                            <p class="mb-2 repeater-title">MRP / P.Unit</p>
-                            <input type="number" class="form-control" id="price" placeholder="" min="0" />
+                            <p class="mb-2 repeater-title">Rate / P.Unit</p>
+                            <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0" />
                           </div>
-                          <div class="col-md-1 col-12 mb-md-0 mb-3">
+                          <!-- <div class="col-md-1 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Disc %</p>
                             <input type="number" class="form-control" id="discount" placeholder="" min="0" />
-                          </div>
+                          </div> -->
 
                           <div class="col-md-1 col-6 pe-0">
                             <p class="mb-2 repeater-title">Total</p>
@@ -129,34 +129,12 @@
                               <th class="col-7">Product name</th>
                               <th class="col-1" id="priqtycart">PQty</th>
                               <th class="col-1" id="secqtycart">SQty</th>
-                              <th class="col-1">MRP/PUnit</th>
-                              <!-- <th class="col-1">Disc %</th> -->
+                              <th class="col-1">Rate/PUnit</th>
                               <th class="col-1">Total</th>
                               <th class="col-1">Action</th>
-
-
                             </tr>
                           </thead>
                           <tbody id="itemcart">
-
-                            <!-- <tr>
-                              <td>1</td>
-                              <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                  <strong>Actapro Tablet</strong>
-                              </td>
-                              <td>Sun Pharmaceutical Industries Ltd</td>
-                              <td>10</td>
-                              <td>Box</td>
-                              <td>
-                                  <div class="action-btns">
-                                      <button type="button" class="btn p-0 mx-2"><i
-                                              class='bx bxs-edit'></i></button>
-                                      <button type="button" class="btn p-0 mx-2"><i
-                                              class="bx bx-trash me-1"></i></button>
-                                  </div>
-                              </td>
-                          </tr> -->
-
                           </tbody>
                         </table>
                       </div>
@@ -167,13 +145,9 @@
 
 
                   <!-- / Content -->
-
-
                   <div class="text-center mt-3">
                     <button type="button" class="btn btn-primary" id="submitdebit">Submit</button>
                   </div>
-
-
 
                   <div class="content-backdrop fade"></div>
                 </div>
@@ -291,7 +265,7 @@
                     $("#pUnit").val(availablePrimaryQty);
                     $("#sUnit").val(availableSecondaryQty);
                     priceMed = data.data[0].mrp;
-                    $("#price").val(priceMed);
+                    $("#purchase_rate").val(priceMed);
                     calculateTotal();
 
                     $("#primaryunitname span").text(` (${primaryUnit})`);
@@ -315,7 +289,7 @@
                       $("#shelflabel").val(data.data[batchId].shelf_label);
                       var date = new Date(data.data[batchId].exp_date);
                       $("#expdate").val(date.toISOString().split('T')[0]);
-                      $("#price").val(data.data[batchId].mrp);
+                      $("#purchase_rate").val(data.data[batchId].purchase_rate);
                       conversion = data.data[batchId].conversion;
 
                       availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
@@ -342,20 +316,20 @@
 
             var priQty = $("#pUnit");
             var secQty = $("#sUnit");
-            var priceInput = $("#price");
-            var discInput = $("#discount");
+            var rateInput = $("#purchase_rate");
+            // var discInput = $("#discount");
             var totalInput = $("#total");
 
             priQty.on("input", calculateTotal);
             secQty.on("input", calculateTotal);
-            discInput.on("input", calculateTotal);
+            // discInput.on("input", calculateTotal);
 
             function calculateTotal() {
               var primaryqty = parseInt(priQty.val()) || 0;
 
               var secondaryqty = parseInt(secQty.val()) || 0;
 
-              var price = parseFloat(priceInput.val()) || 0;
+              var price = parseFloat(rateInput.val()) || 0;
 
               console.log(price);
 
@@ -404,7 +378,7 @@
               var brand = $("#brand").val();
               var priCartQty = priQty.val();
               var secCartQty = secQty.val();
-              var mrp = priceInput.val();
+              var mrp = rateInput.val();
 
               var total = totalInput.val();
 
@@ -442,7 +416,7 @@
               $("#brand").val("");
               $("#pUnit").val("");
               $("#sUnit").val("");
-              $("#price").val("");
+              $("#purchase_rate").val("");
 
               $("#total").val("");
               $("#shelflabel").val("");
@@ -489,7 +463,7 @@
               $("#brand").val(selectedItem.brand);
               $("#pUnit").val(selectedItem.priQty);
               $("#sUnit").val(selectedItem.secQty);
-              $("#price").val(selectedItem.mrp);
+              $("#purchase_rate").val(selectedItem.mrp);
               $("#total").val(selectedItem.total);
 
               //getting all data for batches
@@ -534,7 +508,7 @@
 
                 //$("#batch").val(data.data[0].batch_id);
                 priceMed = data.data[batchnumber].mrp;
-                $("#price").val(priceMed);
+                $("#purchase_rate").val(priceMed);
 
                 $("#batchdroporinput").on("change", "#batchnumber", function () {
                   var batchId = $("#batchdroporinput #batchnumber").val();
@@ -543,7 +517,7 @@
                   $("#shelflabel").val(data.data[batchId].shelf_label);
                   var date = new Date(data.data[batchId].exp_date);
                   $("#expdate").val(date.toISOString().split('T')[0]);
-                  $("#price").val(data.data[batchId].mrp);
+                  $("#purchase_rate").val(data.data[batchId].mrp);
                   conversion = data.data[batchId].conversion;
 
                   availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
@@ -605,6 +579,11 @@
             $("#submitdebit").click(function () {
 
               var debitCarts = JSON.parse(localStorage.getItem('debitnoteitems'));
+              var debit_amt = 0;
+
+              for (let i in debitCarts) {
+                debit_amt += parseFloat(debitCarts[i].total);
+              }
 
               if (debitCarts == null || debitCarts.length == 0) {
                 return alert("Item Cart Empty");
@@ -619,6 +598,7 @@
                   vendor_id: vendorId,
                   pharmacyId: pharmacyDetails.pharmaId,
                   org_id: '<%=orgId%>',
+                  debit_amt: debit_amt.toFixed(2)
                 }),
 
                 contentType: 'application/json',

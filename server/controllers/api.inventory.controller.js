@@ -81,8 +81,9 @@ exports.deleteInventory = (req, res) => {
 };
 
 exports.getInventoryById = (req, res) => {
-  const productId = req.params.id;
-  service.getById(productId, (err, results) => {
+  const productId = req.query.productId;
+  const orgId = req.query.orgId;
+  service.getById(productId, orgId, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -135,6 +136,7 @@ exports.getAllInventory = (req, res) => {
     });
   });
 };
+
 exports.checkById = (req, res) => {
   const productId = req.query.product;
   const orgId = req.query.org;
@@ -151,17 +153,64 @@ exports.checkById = (req, res) => {
   });
 };
 
-exports.createNearExpiryReportById = (req, res) => {
+exports.next3MonthsExpiry = (req, res) => {
   const orgId = req.params.id;
   const currentDate = new Date();
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  currentDate.setDate(1);
+
   const futureDate = new Date();
-  futureDate.setDate(currentDate.getDate() + 90);
+  futureDate.setMonth(currentDate.getMonth() + 3);
+  futureDate.setDate(1);
+  futureDate.setDate(futureDate.getDate() - 1);
 
   service.getNearExpiryProducts(orgId, currentDate, futureDate, (err, results) => {
     if (err) {
       console.log(err);
     }
+    return res.json({
+      success: 1,
+      data: results,
+    });
+  });
+};
 
+exports.thisMonthExpiry = (req, res) => {
+  const orgId = req.params.id;
+  const currentDate = new Date();
+  currentDate.setDate(1);
+
+  const futureDate = new Date();
+  futureDate.setMonth(currentDate.getMonth() + 1);
+  futureDate.setDate(1);
+  futureDate.setDate(futureDate.getDate() - 1);
+
+  service.getNearExpiryProducts(orgId, currentDate, futureDate, (err, results) => {
+    if (err) {
+      console.log(err);
+    }
+    return res.json({
+      success: 1,
+      data: results,
+    });
+  });
+};
+
+exports.last3MonthsExpiry = (req, res) => {
+  const orgId = req.params.id;
+  const currentDate = new Date();
+  currentDate.setMonth(currentDate.getMonth() - 3);
+  currentDate.setDate(1);
+
+  const futureDate = new Date();
+  futureDate.setMonth(futureDate.getMonth() - 1);
+  futureDate.setDate(1);
+  futureDate.setDate(futureDate.getDate() - 1);
+
+  service.getNearExpiryProducts(orgId, currentDate, futureDate, (err, results) => {
+    if (err) {
+      console.log(err);
+    }
     return res.json({
       success: 1,
       data: results,
@@ -171,8 +220,12 @@ exports.createNearExpiryReportById = (req, res) => {
 
 exports.createAllNearExpiryReports = () => {
   const currentDate = new Date();
+  currentDate.setDate(1);
+
   const futureDate = new Date();
-  futureDate.setDate(currentDate.getDate() + 3);
+  futureDate.setMonth(currentDate.getMonth() + 4);
+  futureDate.setDate(1);
+  futureDate.setDate(futureDate.getDate() - 1);
 
   service.getAllOrgEmailOrgId((orgErr, orgResults) => {
     if (orgErr) {
@@ -201,11 +254,10 @@ exports.createAllNearExpiryReports = () => {
           });
 
           // Generate Excel file
-          const excelFileName = 'near_expiry_products.xlsx';
-          workbook.xlsx.writeFile(excelFileName)
-            .then(() => {
+          workbook.xlsx.writeBuffer()
+            .then((buffer) => {
               // Send email with attachment
-              mailer.sendAttachmentEmail(orgEmail, excelFileName);
+              mailer.sendAttachmentEmail(orgEmail, 'near_expiry_products.xlsx', buffer);
             });
         }
       });

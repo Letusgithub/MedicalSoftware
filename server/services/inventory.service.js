@@ -91,13 +91,14 @@ module.exports = {
   },
 
   // Get Inventory by batch ID
-  getById: (productId, callBack) => {
+  getById: (productId, orgId, callBack) => {
     getPool().query(
       `select * from inventory inv
       JOIN sample spl ON spl.product_id = inv.product_id
       LEFT JOIN category cat on cat.category_id = inv.category_id
-      where spl.product_id = ? `,
-      [productId],
+      where spl.product_id = ? and inv.org_id = ? `,
+      [productId,
+        orgId],
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -150,6 +151,7 @@ module.exports = {
       JOIN sample AS spl ON inv.product_id = spl.product_id
       LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
       WHERE inv.org_id=${orgId} AND bth.exp_date BETWEEN ? AND ?
+      ORDER BY bth.exp_date ASC
       `,
       [currentDate, futureDate],
       (error, results) => {

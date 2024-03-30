@@ -178,7 +178,7 @@
                     var productId = '<%= id %>'
                     console.log(productId)
 
-                    $.get(`/api/getinventory/${productId}`, function (data, status) {
+                    $.get(`/api/getinventory?productId=${productId}&orgId=<%=orgId%>`, function (data, status) {
                         var items = data.data[0];
                         console.log('in view batches', items);
                         $("#productname").text(items.med_name);

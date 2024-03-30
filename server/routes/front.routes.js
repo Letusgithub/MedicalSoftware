@@ -76,6 +76,10 @@ module.exports = async (app) => {
     );
   });
 
+  app.get('/my_subscription', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Subscription/my_subscription', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  });
+
   // Owner Control components
   app.get('/employee_master', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
@@ -313,18 +317,13 @@ module.exports = async (app) => {
     });
   });
 
-  // app.get('/credit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-  //   res.render('Receipt/credit_note_receipt', {
-  //     id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
-  //   });
-  // });
   app.get('/credit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
     res.render('Receipt/new_credit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
   app.get('/debit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/debit_note_receipt', {
+    res.render('Receipt/new_debit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });

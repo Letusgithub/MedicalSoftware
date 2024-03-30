@@ -12,6 +12,18 @@ exports.getBalance = (req, res) => {
         message: 'error',
       });
     }
+    if (!results.length) {
+      return res.status(200).json({
+        status: 'success',
+        data: [
+          {
+            transaction_id: null,
+            balance_amt: 0,
+          },
+
+        ],
+      });
+    }
     return res.status(200).json({
       status: 'success',
       data: results,

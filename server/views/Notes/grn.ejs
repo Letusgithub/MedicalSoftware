@@ -42,6 +42,15 @@
                                         </div>
                                     </div>
 
+                                    <!-- Loader GIF -->
+                                    <div id="loader"
+                                        style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status"
+                                            style="position: absolute; top: 50%; left: 50%;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+
                                     <hr class="mb-4">
 
                                     <div class="row">
@@ -160,20 +169,20 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3">
+                                                <div class="row">
 
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">HSN Code</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <input type="number" class="form-control"
                                                                 placeholder="Eg- 30049047" id="hsn" name="hsn">
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label ps-4"
+                                                    <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">GST (%)</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <select class="form-select" name="gst" id="gst">
                                                                 <option selected>Select GST %</option>
@@ -227,11 +236,11 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3">
+                                                <div class="row">
 
                                                     <label class="col-sm-2 col-form-label"
                                                         for="category">Category</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <select class="form-select" name="category"
                                                                 id="categorySelect">
@@ -240,10 +249,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label ps-4"
+                                                    <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">Reorder Level</label>
 
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <input type="text" class="form-control"
                                                                 id="basic-icon-default-companyname" placeholder=""
@@ -263,20 +272,20 @@
                                                 <h4 class="fs-5">Batch Details</h4>
                                                 <hr>
 
-                                                <div class="row mb-3">
+                                                <div class="row">
 
                                                     <label class="col-sm-2 col-form-label "
                                                         for="basic-icon-default-companyname">Batch No.</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Eg- B6AEW8852" id="batchname" />
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label ps-4"
+                                                    <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-address">Exp Date</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <input class="form-control" type="date"
                                                                 id="html5-date-input" name="addexp" />
@@ -284,11 +293,11 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3">
+                                                <div class="row">
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">Conversion</label>
 
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <span class="input-group-text" id="primarypopulate"></span>
                                                             <span class="input-group-text">=</span>
@@ -299,9 +308,9 @@
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-1 col-form-label  ps-4"
+                                                    <label class="col-sm-1 col-form-label"
                                                         for="basic-icon-default-email">QTY</label>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-2 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <span class="input-group-text"></span>
                                                             <input type="text" id="basic-icon-default-email"
@@ -310,9 +319,9 @@
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-1 col-form-label  ps-4"
+                                                    <label class="col-sm-1 col-form-label"
                                                         for="free_scheme">Free</label>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-2 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <span id="basic-icon-default-companyname2"
                                                                 class="input-group-text"></span>
@@ -322,11 +331,11 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3">
+                                                <div class="row">
 
                                                     <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">MRP</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <span id="" class="input-group-text"></span>
                                                             <input type="number" class="form-control" name="addmrp"
@@ -334,9 +343,9 @@
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label ps-4"
+                                                    <label class="col-sm-2 col-form-label"
                                                         for="basic-icon-default-companyname">PTR / Rate</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <span id="basic-icon-default-companyname2"
                                                                 class="input-group-text"></span>
@@ -351,10 +360,10 @@
 
                                                 </div>
 
-                                                <div class="row mb-3">
+                                                <div class="row">
                                                     <label class="col-sm-2 col-form-label" for="bulk_discount">Discount
                                                         (%)</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <span id="basic-icon-default-companyname2"
                                                                 class="input-group-text"></span>
@@ -455,16 +464,12 @@
                                         <div class="col-md-4">
                                             <div class="card mb-4">
                                                 <div class="row m-0 p-0">
-                                                    <h5 class="col-md-7 card-header">Credit (₹) </h5>
-                                                    <div class="col-md-5 card-header text-end text-success">Balance:
-                                                        ₹<span id="balance"></span>
-                                                    </div>
+                                                    <h5 class="col-sm-5 card-header">CR/DR (₹) </h5>
                                                 </div>
 
                                                 <div class="card-body pt-0">
                                                     <div>
-                                                        <input type="number" class="form-control text-danger"
-                                                            id="creditAmt" />
+                                                        <input type="number" class="form-control" id="creditAmt" />
 
                                                     </div>
                                                 </div>
@@ -832,6 +837,7 @@
 
                     //  Clear input fields on product name change
                     $("input[name='productname']").on('input', function () {
+                        productId = undefined;
                         $("select[name = 'gst']").val('Select option').prop('disabled', false);;
                         $("#hsn").val("").prop('disabled', false);;
                         $("select[name='primary']").val('Primary').prop('disabled', false);;
@@ -919,6 +925,7 @@
 
                         localStorage.setItem("grncartdetails", setLocalData);
 
+                        productId = undefined;
                         $("#medicinename").val("");
                         $("select[name = 'gst']").val('Select option');
                         $("#hsn").val("");
@@ -1001,7 +1008,7 @@
                         if (getAllData.length != 0) {
                             for (let i = 0; i < getAllData.length; i++) {
                                 totalAmt += parseFloat(getAllData[i].amt);
-                                totalAmt = totalAmt - parseFloat($("#lessDiscount").val());
+                                totalAmt = totalAmt - parseFloat($("#lessDiscount").val() || 0);
                             }
                             $("#totalAmt").val(totalAmt.toFixed(2));
                             // $("#finalamount").val(totalAmt.toFixed(2));
@@ -1013,21 +1020,13 @@
                     }
 
                     // Ensure credit Amount is not greater than total Amount and not less than zero
-                    $('#creditAmt').on('keypress', function (e) {
-                        if (e.which == 45) {
-                            return false;
-                        }
-                    });
                     $('#creditAmt').on("input", function () {
                         var getTotalAmt = parseFloat($("#totalAmt").val());
                         var creditAmtInput = parseFloat($(this).val());
 
-                        if (creditAmtInput > getTotalAmt) {
+                        if (abs(creditAmtInput) > getTotalAmt) {
                             alert("Credit Amount cannot be greater than subtotal!");
                             $(this).val(getTotalAmt);
-                        } else if (creditAmtInput < 0) {
-                            alert("Credit Amount cannot be less than zero!");
-                            $(this).val(0);
                         }
                     });
                     // Calculate final amount on input of additional discount
@@ -1041,17 +1040,7 @@
 
 
                     var orderDetails;
-                    var org = '<%=orgId%>'
-                    var transactionId;
-
-                    // Get Credit/Debit balance of the pharmacy
-                    $('#vendorselect').change(function () {
-                        $.get(`/api/transaction/getbalance?org_id=${org}&vendor_id=${$(this).val()}`, function (result, status) {
-                            console.log(result);
-                            $("#balance").text(result.data[0].balance_amt);
-                            transactionId = result.data[0].transaction_id;
-                        });
-                    });
+                    var org = '<%=orgId%>';
 
                     $("#submitorder").click(function () {
                         if ($("#vendorselect").val() === 'Select Vendor') {
@@ -1063,7 +1052,12 @@
                         if (!$("#defaultCheck1").prop("checked")) {
                             return alert("Please check the disclaimer before submitting.");
                         }
+
                         $("#submitorder").prop('disabled', true);
+
+                        // Show loader
+                        $('#loader').show();
+
                         var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
                         var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
                         var lessDiscount = $("#lessDiscount").val() || 0;
@@ -1074,7 +1068,7 @@
                             totalPurchase += parseFloat(cartDetails[i].amt);
                         }
 
-                        totalPurchase = totalPurchase - lessDiscount - creditDebit;
+                        totalPurchase = totalPurchase - lessDiscount + creditDebit;
 
                         $.ajax({
                             url: `/api/creategrn/`,
@@ -1089,235 +1083,156 @@
                                 credit_period: $("#creditPeriodInput").val(),
                                 less_discount: lessDiscount,
                                 credit_debit: creditDebit,
-                                payment_method: $('input[name="paymentMethod"]').val(),
+                                payment_method: $('input[name="paymentMethod"]:checked').val(),
                             }),
                             contentType: 'application/json',
                             success: function (response) {
 
                                 var GRNid = response.grn_invoice_no;
 
-                                $.ajax({
-                                    url: `/api/transaction/updatebalance`,
-                                    type: 'POST',
-                                    data: JSON.stringify({
-                                        transaction_id: transactionId,
-                                        deduction: parseFloat($("#creditAmt").val()) || 0,
-                                    }),
-                                    contentType: 'application/json',
-                                    success: function (response) {
-                                        console.log('Balance Updated', response);
-                                        console.log('orderdetails of grn', cartDetails);
+                                console.log('Balance Updated', response);
+                                console.log('orderdetails of grn', cartDetails);
 
-                                        for (let i in cartDetails) {
+                                for (let i in cartDetails) {
 
-                                            if (cartDetails[i].productId == null) {
-                                                var customProductDetails = {
+                                    if (cartDetails[i].productId == null) {
+                                        var customProductDetails = {
+                                            org_id: org,
+                                            med_name: cartDetails[i].productname,
+                                            mfd_mkt: cartDetails[i].brandname,
+                                            salt: cartDetails[i].salt,
+                                            conversion: cartDetails[i].conversion,
+                                        }
+
+                                        $.ajax({
+                                            url: '/api/createproduct',
+                                            type: 'POST',
+                                            data: JSON.stringify(customProductDetails),
+                                            contentType: 'application/json',
+                                            success: function (response) {
+                                                console.log(response);
+                                                cartDetails[i].productId = response.product_id;
+
+                                                var productDetails = {
+                                                    product_id: cartDetails[i].productId,
                                                     org_id: org,
-                                                    med_name: cartDetails[i].productname,
-                                                    mfd_mkt: cartDetails[i].brandname,
-                                                    salt: cartDetails[i].salt,
-                                                    conversion: cartDetails[i].conversion,
+                                                    category_id: cartDetails[i].category_id,
+                                                    gst: cartDetails[i].gst,
+                                                    hsn: cartDetails[i].hsn,
+                                                    primary_unit: cartDetails[i].punit,
+                                                    secondary_unit: cartDetails[i].sunit,
+                                                    threshold: cartDetails[i].moq
                                                 }
 
+                                                console.log('product details', productDetails);
                                                 $.ajax({
-                                                    url: '/api/createproduct',
+                                                    url: `/api/createinventory/`,
                                                     type: 'POST',
-                                                    data: JSON.stringify(customProductDetails),
+                                                    data: JSON.stringify(productDetails),
                                                     contentType: 'application/json',
                                                     success: function (response) {
-                                                        console.log(response);
-                                                        cartDetails[i].productId = response.product_id;
-
-                                                        var productDetails = {
+                                                        var batchDetails = {
                                                             product_id: cartDetails[i].productId,
                                                             org_id: org,
-                                                            category_id: cartDetails[i].category_id,
-                                                            gst: cartDetails[i].gst,
-                                                            hsn: cartDetails[i].hsn,
-                                                            primary_unit: cartDetails[i].punit,
-                                                            secondary_unit: cartDetails[i].sunit,
-                                                            threshold: cartDetails[i].moq
+                                                            batch_name: cartDetails[i].batch,
+                                                            exp_date: cartDetails[i].expdate,
+                                                            conversion: cartDetails[i].conversion,
+                                                            batch_qty: cartDetails[i].qty,
+                                                            purchase_rate: cartDetails[i].purchase,
+                                                            mrp: cartDetails[i].mrp,
+                                                            free: cartDetails[i].free,
+                                                            bulk_discount: cartDetails[i].bulk_discount,
+                                                            base_price: cartDetails[i].base_price,
+                                                            shelf_label: cartDetails[i].shelflabel,
+                                                            grn_id: GRNid
                                                         }
 
-                                                        console.log('product details', productDetails);
                                                         $.ajax({
-                                                            url: `/api/createinventory/`,
+                                                            url: `/api/addbatch/`,
                                                             type: 'POST',
-                                                            data: JSON.stringify(productDetails),
+                                                            data: JSON.stringify(batchDetails),
                                                             contentType: 'application/json',
                                                             success: function (response) {
-                                                                var batchDetails = {
-                                                                    product_id: cartDetails[i].productId,
-                                                                    org_id: org,
-                                                                    batch_name: cartDetails[i].batch,
-                                                                    exp_date: cartDetails[i].expdate,
-                                                                    conversion: cartDetails[i].conversion,
-                                                                    batch_qty: cartDetails[i].qty,
-                                                                    purchase_rate: cartDetails[i].purchase,
-                                                                    mrp: cartDetails[i].mrp,
-                                                                    free: cartDetails[i].free,
-                                                                    bulk_discount: cartDetails[i].bulk_discount,
-                                                                    base_price: cartDetails[i].base_price,
-                                                                    shelf_label: cartDetails[i].shelflabel,
-                                                                    grn_id: GRNid
-                                                                }
-
                                                                 $.ajax({
-                                                                    url: `/api/addbatch/`,
+                                                                    url: `/api/creategrncarts`,
                                                                     type: 'POST',
-                                                                    data: JSON.stringify(batchDetails),
+                                                                    data: JSON.stringify({
+                                                                        grn_id: GRNid,
+                                                                        product_id: cartDetails[i].productId,
+                                                                        gst: cartDetails[i].gst,
+                                                                        category_id: cartDetails[i].category_id,
+                                                                        hsn: cartDetails[i].hsn,
+                                                                        punit: cartDetails[i].punit,
+                                                                        sunit: cartDetails[i].sunit,
+                                                                        moq: cartDetails[i].moq,
+                                                                        batch_name: cartDetails[i].batch,
+                                                                        exp: cartDetails[i].expdate,
+                                                                        conversion: cartDetails[i].conversion,
+                                                                        shelf_label: cartDetails[i].shelflabel,
+                                                                        purchase: cartDetails[i].purchase,
+                                                                        mrp: cartDetails[i].mrp,
+                                                                        free: cartDetails[i].free,
+                                                                        bulk_discount: cartDetails[i].bulk_discount,
+                                                                        base_price: cartDetails[i].base_price,
+                                                                        qty: cartDetails[i].qty,
+
+                                                                    }),
                                                                     contentType: 'application/json',
                                                                     success: function (response) {
-                                                                        $.ajax({
-                                                                            url: `/api/creategrncarts`,
-                                                                            type: 'POST',
-                                                                            data: JSON.stringify({
-                                                                                grn_id: GRNid,
-                                                                                product_id: cartDetails[i].productId,
-                                                                                gst: cartDetails[i].gst,
-                                                                                category_id: cartDetails[i].category_id,
-                                                                                hsn: cartDetails[i].hsn,
-                                                                                punit: cartDetails[i].punit,
-                                                                                sunit: cartDetails[i].sunit,
-                                                                                moq: cartDetails[i].moq,
-                                                                                batch_name: cartDetails[i].batch,
-                                                                                exp: cartDetails[i].expdate,
-                                                                                conversion: cartDetails[i].conversion,
-                                                                                shelf_label: cartDetails[i].shelflabel,
-                                                                                purchase: cartDetails[i].purchase,
-                                                                                mrp: cartDetails[i].mrp,
-                                                                                free: cartDetails[i].free,
-                                                                                bulk_discount: cartDetails[i].bulk_discount,
-                                                                                base_price: cartDetails[i].base_price,
-                                                                                qty: cartDetails[i].qty,
-
-                                                                            }),
-                                                                            contentType: 'application/json',
-                                                                            success: function (response) {
-                                                                                console.log('grn done', response);
-                                                                            },
-                                                                            error: function (error) {
-                                                                                console.log('error in grn', error);
-                                                                                return alert("not Created", error)
-                                                                            }
-                                                                        })
-                                                                        console.log(response);
-
+                                                                        console.log('grn done', response);
                                                                     },
                                                                     error: function (error) {
-                                                                        console.log(error);
-                                                                        return alert("not Created", error)
-                                                                    }
-                                                                })
-                                                            },
-                                                            error: function (error) {
-                                                                console.log(error);
-                                                                return alert("not Created", error)
-                                                            }
-                                                        })
-
-                                                    },
-                                                })
-                                            }
-
-                                            else {
-                                                // If productId fetched (Product is in Master Database)
-                                                $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
-                                                    console.log(data.data);
-                                                    if (data.data.length === 0) {
-
-                                                        var productDetails = {
-                                                            product_id: cartDetails[i].productId,
-                                                            org_id: org,
-                                                            category_id: cartDetails[i].category_id,
-                                                            gst: cartDetails[i].gst,
-                                                            hsn: cartDetails[i].hsn,
-                                                            primary_unit: cartDetails[i].punit,
-                                                            secondary_unit: cartDetails[i].sunit,
-                                                            threshold: cartDetails[i].moq
-                                                        }
-
-
-                                                        $.ajax({
-                                                            url: `/api/createinventory/`,
-                                                            type: 'POST',
-                                                            data: JSON.stringify(productDetails),
-                                                            contentType: 'application/json',
-                                                            success: function (response) {
-
-                                                                var batchDetails = {
-                                                                    product_id: cartDetails[i].productId,
-                                                                    org_id: org,
-                                                                    batch_name: cartDetails[i].batch,
-                                                                    exp_date: cartDetails[i].expdate,
-                                                                    conversion: cartDetails[i].conversion,
-                                                                    batch_qty: cartDetails[i].qty,
-                                                                    purchase_rate: cartDetails[i].purchase,
-                                                                    mrp: cartDetails[i].mrp,
-                                                                    free: cartDetails[i].free,
-                                                                    bulk_discount: cartDetails[i].bulk_discount,
-                                                                    base_price: cartDetails[i].base_price,
-                                                                    shelf_label: cartDetails[i].shelflabel,
-                                                                    grn_id: GRNid
-                                                                }
-                                                                //console.log(batchDetails);
-
-                                                                $.ajax({
-                                                                    url: `/api/addbatch/`,
-                                                                    type: 'POST',
-                                                                    data: JSON.stringify(batchDetails),
-                                                                    contentType: 'application/json',
-                                                                    success: function (response) {
-
-
-                                                                        $.ajax({
-                                                                            url: `/api/creategrncarts`,
-                                                                            type: 'POST',
-                                                                            data: JSON.stringify({
-                                                                                grn_id: GRNid,
-                                                                                product_id: cartDetails[i].productId,
-                                                                                gst: cartDetails[i].gst,
-                                                                                category_id: cartDetails[i].category_id,
-                                                                                hsn: cartDetails[i].hsn,
-                                                                                punit: cartDetails[i].punit,
-                                                                                sunit: cartDetails[i].sunit,
-                                                                                moq: cartDetails[i].moq,
-                                                                                batch_name: cartDetails[i].batch,
-                                                                                exp: cartDetails[i].expdate,
-                                                                                conversion: cartDetails[i].conversion,
-                                                                                shelf_label: cartDetails[i].shelflabel,
-                                                                                purchase: cartDetails[i].purchase,
-                                                                                mrp: cartDetails[i].mrp,
-                                                                                free: cartDetails[i].free,
-                                                                                bulk_discount: cartDetails[i].bulk_discount,
-                                                                                base_price: cartDetails[i].base_price,
-                                                                                qty: cartDetails[i].qty,
-
-                                                                            }),
-                                                                            contentType: 'application/json',
-                                                                            success: function (response) {
-                                                                                console.log('grn done', response);
-                                                                            },
-                                                                            error: function (error) {
-                                                                                console.log('error in grn', error);
-                                                                                return alert("not Created", error)
-                                                                            }
-                                                                        })
-                                                                        console.log(response);
-                                                                    },
-                                                                    error: function (error) {
-                                                                        console.log(error);
+                                                                        $('#loader').hide();
+                                                                        console.log('error in grn', error);
                                                                         return alert("not Created", error)
                                                                     }
                                                                 })
                                                                 console.log(response);
+
                                                             },
                                                             error: function (error) {
+                                                                $('#loader').hide();
                                                                 console.log(error);
                                                                 return alert("not Created", error)
                                                             }
                                                         })
-                                                    } else {
+                                                    },
+                                                    error: function (error) {
+                                                        $('#loader').hide();
+                                                        console.log(error);
+                                                        return alert("not Created", error)
+                                                    }
+                                                })
+
+                                            },
+                                        })
+                                    }
+
+                                    else {
+                                        // If productId fetched (Product is in Master Database)
+                                        $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
+                                            console.log(data.data);
+                                            if (data.data.length === 0) {
+
+                                                var productDetails = {
+                                                    product_id: cartDetails[i].productId,
+                                                    org_id: org,
+                                                    category_id: cartDetails[i].category_id,
+                                                    gst: cartDetails[i].gst,
+                                                    hsn: cartDetails[i].hsn,
+                                                    primary_unit: cartDetails[i].punit,
+                                                    secondary_unit: cartDetails[i].sunit,
+                                                    threshold: cartDetails[i].moq
+                                                }
+
+
+                                                $.ajax({
+                                                    url: `/api/createinventory/`,
+                                                    type: 'POST',
+                                                    data: JSON.stringify(productDetails),
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+
                                                         var batchDetails = {
                                                             product_id: cartDetails[i].productId,
                                                             org_id: org,
@@ -1342,6 +1257,7 @@
                                                             contentType: 'application/json',
                                                             success: function (response) {
 
+
                                                                 $.ajax({
                                                                     url: `/api/creategrncarts`,
                                                                     type: 'POST',
@@ -1349,6 +1265,7 @@
                                                                         grn_id: GRNid,
                                                                         product_id: cartDetails[i].productId,
                                                                         gst: cartDetails[i].gst,
+                                                                        category_id: cartDetails[i].category_id,
                                                                         hsn: cartDetails[i].hsn,
                                                                         punit: cartDetails[i].punit,
                                                                         sunit: cartDetails[i].sunit,
@@ -1370,36 +1287,108 @@
                                                                         console.log('grn done', response);
                                                                     },
                                                                     error: function (error) {
+                                                                        $('#loader').hide();
                                                                         console.log('error in grn', error);
-                                                                        return alert("Not Created", error)
+                                                                        return alert("not Created", error)
                                                                     }
                                                                 })
                                                                 console.log(response);
                                                             },
                                                             error: function (error) {
+                                                                $('#loader').hide();
                                                                 console.log(error);
+                                                                return alert("not Created", error)
+                                                            }
+                                                        })
+                                                        console.log(response);
+                                                    },
+                                                    error: function (error) {
+                                                        $('#loader').hide();
+                                                        console.log(error);
+                                                        return alert("not Created", error)
+                                                    }
+                                                })
+                                            } else {
+                                                var batchDetails = {
+                                                    product_id: cartDetails[i].productId,
+                                                    org_id: org,
+                                                    batch_name: cartDetails[i].batch,
+                                                    exp_date: cartDetails[i].expdate,
+                                                    conversion: cartDetails[i].conversion,
+                                                    batch_qty: cartDetails[i].qty,
+                                                    purchase_rate: cartDetails[i].purchase,
+                                                    mrp: cartDetails[i].mrp,
+                                                    free: cartDetails[i].free,
+                                                    bulk_discount: cartDetails[i].bulk_discount,
+                                                    base_price: cartDetails[i].base_price,
+                                                    shelf_label: cartDetails[i].shelflabel,
+                                                    grn_id: GRNid
+                                                }
+                                                //console.log(batchDetails);
+
+                                                $.ajax({
+                                                    url: `/api/addbatch/`,
+                                                    type: 'POST',
+                                                    data: JSON.stringify(batchDetails),
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+
+                                                        $.ajax({
+                                                            url: `/api/creategrncarts`,
+                                                            type: 'POST',
+                                                            data: JSON.stringify({
+                                                                grn_id: GRNid,
+                                                                product_id: cartDetails[i].productId,
+                                                                gst: cartDetails[i].gst,
+                                                                hsn: cartDetails[i].hsn,
+                                                                punit: cartDetails[i].punit,
+                                                                sunit: cartDetails[i].sunit,
+                                                                moq: cartDetails[i].moq,
+                                                                batch_name: cartDetails[i].batch,
+                                                                exp: cartDetails[i].expdate,
+                                                                conversion: cartDetails[i].conversion,
+                                                                shelf_label: cartDetails[i].shelflabel,
+                                                                purchase: cartDetails[i].purchase,
+                                                                mrp: cartDetails[i].mrp,
+                                                                free: cartDetails[i].free,
+                                                                bulk_discount: cartDetails[i].bulk_discount,
+                                                                base_price: cartDetails[i].base_price,
+                                                                qty: cartDetails[i].qty,
+
+                                                            }),
+                                                            contentType: 'application/json',
+                                                            success: function (response) {
+                                                                console.log('grn done', response);
+                                                            },
+                                                            error: function (error) {
+                                                                console.log('error in grn', error);
                                                                 return alert("Not Created", error)
                                                             }
                                                         })
+                                                        console.log(response);
+                                                    },
+                                                    error: function (error) {
+                                                        $('#loader').hide();
+                                                        console.log(error);
+                                                        return alert("Not Created", error)
                                                     }
                                                 })
-
                                             }
+                                        })
 
-                                        }
-
-                                        setTimeout(() => {
-
-                                            window.location.href = `/grn_receipt/${GRNid}`
-                                        }, 3000);
-                                    },
-                                    error: function (error) {
-                                        console.log('error in updating balance', error);
                                     }
-                                })
+
+                                }
+
+                                setTimeout(() => {
+                                    $('#loader').hide();
+                                    window.location.href = `/grn_receipt/${GRNid}`
+                                }, 3000);
+
 
                             },
                             error: function (error) {
+                                $('#loader').hide();
                                 alert("Not Created", error)
                             }
 
