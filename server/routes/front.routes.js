@@ -312,29 +312,23 @@ module.exports = async (app) => {
   });
 
   app.get('/po_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/po_receipt', {
+    res.render('Receipt/preview_po_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
 
   app.get('/credit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/new_credit_note_receipt', {
+    res.render('Receipt/preview_credit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
   app.get('/debit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/new_debit_note_receipt', {
+    res.render('Receipt/preview_debit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
   app.get('/grn_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
     res.render('Receipt/preview_grn_receipt', {
-      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
-    });
-  });
-
-  app.get('/debit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/debit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
