@@ -7,18 +7,6 @@ const { getPool } = require('../config/database');
 
 module.exports = {
   create: (data, invoiceId, callback) => {
-    // const date_time = new Date();
-    // const date = (`0${date_time.getDate()}`).slice(-2);
-    // const month = (`0${date_time.getMonth() + 1}`).slice(-2);
-    // const year = date_time.getFullYear();
-
-    // const hours = date_time.getHours();
-    // const minutes = date_time.getMinutes();
-    // const seconds = date_time.getSeconds();
-
-    // const order_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-    // const order_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-
     getPool().query(
       `insert into order_details(org_id, customer_id, invoice_id_main, subtotal, total_dist, grand_total, mop, current_total, doctor_name) 
                                     values(?,?,?,?,?,?,?,?,?)`,
@@ -237,7 +225,7 @@ module.exports = {
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      where MONTH(od.sales_created_date) = ${month} and cd.org_id = ${orgId} 
+      where MONTH(od.sales_created_date) = ${month} AND YEAR(od.sales_created_date) = YEAR(CURDATE()) AND cd.org_id = ${orgId} 
       `,
       (error, results) => {
         if (error) return callback(error);
@@ -251,7 +239,7 @@ module.exports = {
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      where MONTH(od.sales_created_date)>= ${start} and MONTH(od.sales_created_date)<= ${end} and cd.org_id = ${orgId} 
+      where MONTH(od.sales_created_date)>= ${start} and MONTH(od.sales_created_date)<= ${end} AND YEAR(od.sales_created_date) = YEAR(CURDATE()) and cd.org_id = ${orgId} 
       `,
       (error, results) => {
         if (error) return callback(error);

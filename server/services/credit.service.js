@@ -113,7 +113,7 @@ module.exports = {
     getPool().query(
       `SELECT DISTINCT * FROM credit_note cn
       Join vendor on vendor.vendor_id = cn.vendor_id
-      where MONTH(cn.created_date_credit)=? and cn.org_id = ${orgId}
+      where MONTH(cn.created_date_credit)=? AND YEAR(cn.created_date_credit) = YEAR(CURDATE()) and cn.org_id = ${orgId}
       `,
       [
         month,
@@ -129,7 +129,7 @@ module.exports = {
     getPool().query(
       `SELECT DISTINCT * FROM credit_note cn
       Join vendor on vendor.vendor_id = cn.vendor_id
-      where MONTH(cn.created_date_credit)>=? and MONTH(cn.created_date_credit)<=? and cn.org_id = ${orgId} 
+      where MONTH(cn.created_date_credit)>=? and MONTH(cn.created_date_credit)<=? AND YEAR(cn.created_date_credit) = YEAR(CURDATE()) and cn.org_id = ${orgId} 
       `,
       [
         start,

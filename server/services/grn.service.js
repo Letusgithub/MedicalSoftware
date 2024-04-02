@@ -120,7 +120,7 @@ module.exports = {
       `SELECT grn.*, vendor.vendor_name
       FROM grn 
       JOIN vendor on vendor.vendor_id = grn.vendor_id
-      where MONTH(grn.created_date_grn)=? and grn.org_id = ${orgId} 
+      where MONTH(grn.created_date_grn)=? AND YEAR(grn.created_date_grn) = YEAR(CURDATE()) and grn.org_id = ${orgId} 
       `,
       [
         month,
@@ -137,7 +137,7 @@ module.exports = {
       `SELECT grn.*, vendor.vendor_name
       FROM grn 
       JOIN vendor ON vendor.vendor_id = grn.vendor_id
-      where MONTH(grn.created_date_grn)>=? and MONTH(grn.created_date_grn)<=? and grn.org_id = ${orgId} 
+      where MONTH(grn.created_date_grn)>=? and MONTH(grn.created_date_grn)<=? AND YEAR(grn.created_date_grn) = YEAR(CURDATE()) and grn.org_id = ${orgId} 
       `,
       [
         start,

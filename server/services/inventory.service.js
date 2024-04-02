@@ -169,7 +169,7 @@ module.exports = {
       FROM inventory AS inv
       JOIN sample AS spl ON inv.product_id = spl.product_id
       LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
-      WHERE inv.org_id=${orgId} AND bth.exp_date BETWEEN ? AND ?
+      WHERE inv.org_id=${orgId} AND bth.org_id=${orgId} AND bth.exp_date BETWEEN ? AND ?
       GROUP BY inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold, spl.med_name, bth.batch_name, bth.exp_date
       `,
       [currentDate, futureDate],

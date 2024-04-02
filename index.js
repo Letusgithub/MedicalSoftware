@@ -45,6 +45,7 @@ require('./server/routes/api.itemSearch.routes')(app);
 require('./server/routes/api.whatsappMsg.route')(app);
 require('./server/routes/api.hsn_gst.routes')(app);
 require('./server/routes/api.transaction.routes')(app);
+require('./server/routes/api.subscription.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);

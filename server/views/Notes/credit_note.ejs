@@ -537,8 +537,7 @@
                   $("#sUnit").val(availableSecondaryQty);
                   calculateTotal();
                 })
-
-
+                
               })
 
               UpdatecartItemsinStorage.splice(item_id - 1, 1);
@@ -577,10 +576,6 @@
               }
             }
             //end of rendereing data logic
-
-
-
-
 
 
 
@@ -664,14 +659,11 @@
                   localStorage.removeItem("creditnotecartitems");
                   window.location.href = `/credit_note_receipt/${creditInvoice}`
 
-
                 },
                 error: function (error) {
                   alert("not Created", error)
                 }
               })
-
-
             })
 
 

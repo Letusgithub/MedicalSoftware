@@ -128,7 +128,7 @@ module.exports = {
       FROM debit_note_cart_details debitcart
       JOIN debit_note dn ON debitcart.debit_invoice_id = dn.debit_invoice_id
       JOIN vendor on vendor.vendor_id = dn.vendor_id
-      where MONTH(debitcart.debit_created_date)=? and dn.org_id = ${orgId} 
+      where MONTH(debitcart.debit_created_date)=? AND YEAR(debitcart.debit_created_date) = YEAR(CURDATE()) and dn.org_id = ${orgId} 
       `,
       [
         month,
@@ -146,7 +146,7 @@ module.exports = {
       FROM debit_note_cart_details debitcart
       JOIN debit_note dn ON debitcart.debit_invoice_id = dn.debit_invoice_id
       JOIN vendor ON vendor.vendor_id = dn.vendor_id
-      where MONTH(debitcart.debit_created_date)>=? and MONTH(debitcart.debit_created_date)<=? and dn.org_id = ${orgId} 
+      where MONTH(debitcart.debit_created_date)>=? and MONTH(debitcart.debit_created_date)<=? AND YEAR(debitcart.debit_created_date) = YEAR(CURDATE()) and dn.org_id = ${orgId} 
       `,
       [
         start,

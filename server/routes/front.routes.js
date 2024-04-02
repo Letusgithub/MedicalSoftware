@@ -294,13 +294,13 @@ module.exports = async (app) => {
   app.get('/sale_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
     console.log('got the id', req.params.id);
     console.log(req.org_id);
-    res.render('Receipt/new_sales_receipt', {
+    res.render('Receipt/preview_sale_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
 
   app.get('/sales_invoice', (req, res) => {
-    res.render('Receipt/preview_sale_receipt', {
+    res.render('Receipt/sale_receipt', {
       id: req.query.invoice_id, orgId: req.query.org_id,
     });
   });
@@ -328,7 +328,7 @@ module.exports = async (app) => {
     });
   });
   app.get('/grn_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/grn_receipt', {
+    res.render('Receipt/preview_grn_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
