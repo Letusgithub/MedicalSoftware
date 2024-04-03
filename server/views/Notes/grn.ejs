@@ -23,8 +23,8 @@
 
 
                                     <div class="row d-flex justify-content-between m-0 p-0">
-                                        <h4 class="col-md-8 fw-bold py-3 mb-1">Purchase Bill</h4>
-                                        <div class="col-md-4 text-center mt-3 d-flex">
+                                        <h4 class="col-md-7 fw-bold py-3 mb-1">Purchase Bill</h4>
+                                        <div class="col-md-5 text-center mt-3 d-flex justify-content-around p-0">
                                             <div>
                                                 <div class="form-check form-check-inline mt-3">
                                                     <input class="form-check-input" type="radio" name="paymentMethod"
@@ -37,7 +37,7 @@
                                                     <label class="form-check-label" for="creditRadio">Credit</label>
                                                 </div>
                                             </div>
-                                            <a class="btn btn-primary mx-4" style="color: white;" href="/new_vendor">+
+                                            <a class="btn btn-primary p-2" style="color: white;" href="/new_vendor">+
                                                 Add Distributor</a>
                                         </div>
                                     </div>
@@ -1070,6 +1070,9 @@
                         }
                         if ($("#vendorinvoicenumber").val() == '') {
                             return alert('Please fill "Distributor Invoice number"');
+                        }
+                        if ($("input[name='invoiceDate']").val() == '') {
+                            return alert('Please fill "Invoice Date"');
                         }
                         if (!$("#defaultCheck1").prop("checked")) {
                             return alert("Please check the disclaimer before submitting.");
