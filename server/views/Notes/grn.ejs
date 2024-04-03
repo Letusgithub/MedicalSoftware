@@ -96,20 +96,8 @@
 
                                         <div class="col-md-6">
                                             <div class="card mb-4">
-                                                <div class="card-header d-flex justify-content-between">
-                                                    <h5 class="mb-0">Invoice Date </h5>
-                                                    <div class="d-flex align-items-center">
-                                                        <select class="form-select form-select-sm me-2 mb-0"
-                                                            id="creditPeriodInput" style="display: none;">
-                                                            <option value="0">0D</option>
-                                                            <option value="10">10D</option>
-                                                            <option value="15">15D</option>
-                                                            <option value="30">30D</option>
-                                                        </select>
-                                                        <input type="number" class="form-control" id="lessDiscount"
-                                                            name="lessDiscount" placeholder="Less Discount in (₹)" />
-                                                    </div>
-                                                </div>
+                                                <h5 class="card-header">Invoice Date </h5>
+
                                                 <div class="card-body">
                                                     <input class="form-control" type="date" id="html5-date-input"
                                                         id="invoiceDate" name="invoiceDate" />
@@ -117,272 +105,302 @@
                                             </div>
                                         </div>
 
-
-
-
                                         <div class="d-flex justify-content-between m-0 p-0">
                                             <h4 class="fw-bold py-3 mb-1"> Add Product To Your Cart</h4>
 
                                         </div>
                                         <hr class="mb-4">
-                                        <div class="card mb-4 mx-2 col-sm-12">
+                                        <form class="myForm">
+                                            <div class="card mb-4 mx-2 col-sm-12">
 
-                                            <div class="card-body ">
+                                                <div class="card-body ">
 
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-fullname">Product Name</label>
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control" id="medicinename"
-                                                                placeholder="Type some letters of the medicine name"
-                                                                name="productname" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-fullname">Mfg/Mkt</label>
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control" id="brand"
-                                                                placeholder="" name="brand">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-fullname">Salt Comp.</label>
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control" id="salt"
-                                                                placeholder="" name="salt">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">HSN Code</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <input type="number" class="form-control"
-                                                                placeholder="Eg- 30049047" id="hsn" name="hsn">
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-fullname">Product Name</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="text" class="form-control"
+                                                                    id="medicinename"
+                                                                    placeholder="Type some letters of the medicine name"
+                                                                    name="productname" required>
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">GST (%)</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <select class="form-select" name="gst" id="gst">
-                                                                <option selected>Select GST %</option>
-                                                                <option value="0">0%</option>
-                                                                <option value="5">5%</option>
-                                                                <option value="12">12%</option>
-                                                                <option value="18">18%</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="row mb-2">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-address">Unit</label>
-                                                    <div class="col-sm-4 me-0">
-                                                        <div class="input-group input-group-merge">
-                                                            <select class="form-select" id="primaryDropdown"
-                                                                name="primary" aria-label="Default select example">
-                                                                <option selected>Primary</option>
-                                                                <option value="STP">STP</option>
-                                                                <option value="AMP">AMP</option>
-                                                                <option value="BOX">BOX</option>
-                                                                <option value="BTL">BTL</option>
-                                                                <option value="PCS">PCS</option>
-                                                                <option value="TUBE">TUBE</option>
-                                                                <option value="DROP">DROP</option>
-                                                                <option value="DRSP">DRSP (Dry Syrup)</option>
-                                                                <option value="E/D">E/D (Eye Drop)</option>
-                                                                <option value="EAR/D">EAR/D (Ear Drop)</option>
-                                                                <option value="INJ">INJ (Injection)</option>
-                                                                <option value="INH">INH (Inhaler)</option>
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="col-sm-1 text-center mx-0 p-0">
-                                                        <p class="fs-4">-</p>
-                                                    </div>
-
-                                                    <div class="col-sm-4 ms-0">
-                                                        <div class="input-group input-group-merge">
-                                                            <select class="form-select" id="secondaryDropdown"
-                                                                name="secondary" aria-label="Default select example">
-                                                                <option selected>Secondary</option>
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="category">Category</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <select class="form-select" name="category"
-                                                                id="categorySelect">
-                                                                <option selected>Select Category</option>
-                                                            </select>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-fullname">Mfg/Mkt</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="text" class="form-control" id="brand"
+                                                                    placeholder="" name="brand">
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">Reorder Level</label>
-
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control" id="threshold"
-                                                                placeholder="" name="threshold">
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-fullname">Salt Comp.</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="text" class="form-control" id="salt"
+                                                                    placeholder="" name="salt">
+                                                            </div>
                                                         </div>
                                                     </div>
 
+                                                    <div class="row">
+
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-companyname">HSN Code</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group has-validation">
+                                                                <input type="number" class="form-control"
+                                                                    placeholder="Eg- 30049047" id="hsn" name="hsn">
+                                                                <div class="invalid-feedback">
+                                                                    Please enter HSN code.
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-companyname">GST (%)</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group has-validation">
+                                                                <select class="form-select" name="gst" id="gst">
+                                                                    <option selected>Select GST %</option>
+                                                                    <option value="0">0%</option>
+                                                                    <option value="5">5%</option>
+                                                                    <option value="12">12%</option>
+                                                                    <option value="18">18%</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select GST.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row mb-2">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-address">Unit</label>
+                                                        <div class="col-sm-4 me-0">
+                                                            <div class="input-group has-validation">
+                                                                <select class="form-select" id="primaryDropdown"
+                                                                    name="primary" aria-label="Default select example">
+                                                                    <option selected>Primary</option>
+                                                                    <option value="STP">STP</option>
+                                                                    <option value="AMP">AMP</option>
+                                                                    <option value="BOX">BOX</option>
+                                                                    <option value="BTL">BTL</option>
+                                                                    <option value="PCS">PCS</option>
+                                                                    <option value="TUBE">TUBE</option>
+                                                                    <option value="DROP">DROP</option>
+                                                                    <option value="DRSP">DRSP (Dry Syrup)</option>
+                                                                    <option value="E/D">E/D (Eye Drop)</option>
+                                                                    <option value="EAR/D">EAR/D (Ear Drop)</option>
+                                                                    <option value="INJ">INJ (Injection)</option>
+                                                                    <option value="INH">INH (Inhaler)</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select primary unit.
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-sm-1 text-center mx-0 p-0">
+                                                            <p class="fs-4">-</p>
+                                                        </div>
+
+                                                        <div class="col-sm-4 ms-0">
+                                                            <div class="input-group  has-validation">
+                                                                <select class="form-select" id="secondaryDropdown"
+                                                                    name="secondary"
+                                                                    aria-label="Default select example">
+                                                                    <option selected>Secondary</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select secondary unit.
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="category">Category</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group  has-validation">
+                                                                <select class="form-select" name="category"
+                                                                    id="categorySelect">
+                                                                    <option selected>Select Category</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select category.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-companyname">Reorder Level</label>
+
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group  has-validation">
+                                                                <input type="text" class="form-control" id="threshold"
+                                                                    placeholder="" name="threshold">
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                Please enter reorder level.
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
 
                                                 </div>
 
                                             </div>
+                                            <div class="card mb-4 mx-2 col-sm-12">
 
-                                        </div>
-                                        <div class="card mb-4 mx-2 col-sm-12">
+                                                <div class="card-body ">
+                                                    <h4 class="fs-5">Batch Details</h4>
+                                                    <hr>
 
-                                            <div class="card-body ">
-                                                <h4 class="fs-5">Batch Details</h4>
-                                                <hr>
+                                                    <div class="row">
 
-                                                <div class="row">
+                                                        <label class="col-sm-2 col-form-label "
+                                                            for="basic-icon-default-companyname">Batch No.</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group  has-validation">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Eg- B6AEW8852" id="batchname" />
+                                                                <div class="invalid-feedback">
+                                                                    Please enter batch number.
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                                    <label class="col-sm-2 col-form-label "
-                                                        for="basic-icon-default-companyname">Batch No.</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Eg- B6AEW8852" id="batchname" />
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-address">Exp Date</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group  has-validation">
+                                                                <input class="form-control" type="date"
+                                                                    id="html5-date-input" name="addexp" />
+                                                                <div class="invalid-feedback">
+                                                                    Please select expiry date.
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-address">Exp Date</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <input class="form-control" type="date"
-                                                                id="html5-date-input" name="addexp" />
+                                                    <div class="row">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-companyname">Conversion</label>
+
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group has-validation">
+                                                                <span class="input-group-text"
+                                                                    id="primarypopulate"></span>
+                                                                <span class="input-group-text">=</span>
+                                                                <input type="number" class="form-control rounded-0"
+                                                                    id="conversion" />
+                                                                <span class="input-group-text"
+                                                                    id="secondarypopulate"></span>
+                                                                <div class="invalid-feedback">
+                                                                    Please enter conversion.
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">Conversion</label>
-
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <span class="input-group-text" id="primarypopulate"></span>
-                                                            <span class="input-group-text">=</span>
-                                                            <input type="number" class="form-control" placeholder=""
-                                                                aria-label="" id="conversion" />
-                                                            <span class="input-group-text"
-                                                                id="secondarypopulate"></span>
+                                                        <label class="col-sm-1 col-form-label"
+                                                            for="basic-icon-default-email">QTY</label>
+                                                        <div class="col-sm-2 mb-3">
+                                                            <div class="input-group  has-validation">
+                                                                <input type="text" id="basic-icon-default-email"
+                                                                    class="form-control" placeholder="" id="addquantity"
+                                                                    name="quantity">
+                                                                <div class="invalid-feedback">
+                                                                    Please enter quantity.
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    <label class="col-sm-1 col-form-label"
-                                                        for="basic-icon-default-email">QTY</label>
-                                                    <div class="col-sm-2 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <span class="input-group-text"></span>
-                                                            <input type="text" id="basic-icon-default-email"
-                                                                class="form-control" placeholder="" id="addquantity"
-                                                                name="quantity">
-                                                        </div>
-                                                    </div>
-
-                                                    <label class="col-sm-1 col-form-label"
-                                                        for="free_scheme">Free</label>
-                                                    <div class="col-sm-2 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control" name="free_scheme"
-                                                                id="free_scheme">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">MRP</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="" class="input-group-text"></span>
-                                                            <input type="number" class="form-control" name="addmrp"
-                                                                placeholder="Eg- 100" id="price">
+                                                        <label class="col-sm-1 col-form-label"
+                                                            for="free_scheme">Free</label>
+                                                        <div class="col-sm-2 mb-3">
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="text" class="form-control"
+                                                                    name="free_scheme" id="free_scheme">
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">PTR</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="number" class="form-control" id="addpur"
-                                                                placeholder="Eg- 78">
+                                                    <div class="row">
+
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-companyname">MRP</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group  has-validation">
+                                                                <input type="number" class="form-control" name="addmrp"
+                                                                    placeholder="Eg- 100" id="price">
+                                                                <div class="invalid-feedback">
+                                                                    Please enter MRP.
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div style="font-size: smaller; color: blue; margin-top: 5px; display: none;"
-                                                            id="r_margin">
-                                                            Retailer Margin: <span id="retailer_margin"></span>%
+
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-companyname">PTR</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group  has-validation">
+                                                                <input type="number" class="form-control" id="addpur"
+                                                                    placeholder="Eg- 78">
+                                                                <div class="invalid-feedback">
+                                                                    Please enter PTR.
+                                                                </div>
+                                                            </div>
+                                                            <div style="font-size: smaller; color: blue; margin-top: 5px; display: none;"
+                                                                id="r_margin">
+                                                                Retailer Margin: <span id="retailer_margin"></span>%
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="bulk_discount">Discount
+                                                            (%)</label>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="number" class="form-control"
+                                                                    name="bulk_discount" id="bulk_discount"
+                                                                    placeholder="Eg- 5%">
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                </div>
 
-                                                <div class="row">
-                                                    <label class="col-sm-2 col-form-label" for="bulk_discount">Discount
-                                                        (%)</label>
-                                                    <div class="col-sm-4 mb-3">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="number" class="form-control"
-                                                                name="bulk_discount" id="bulk_discount"
-                                                                placeholder="Eg- 5%">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-sm-12 text-center">
-                                                    <button type="submit" class="btn btn-primary" id="addtocart">Add to
-                                                        Cart</button>
-                                                    <div>
-                                                        <div style=" color: blue; margin-top: 5px; display: none;"
-                                                            id="b_price">
-                                                            Base price: <span id="base_price"></span>
+                                                    <div class="col-sm-12 text-center">
+                                                        <button class="btn btn-primary" id="addtocart">Add
+                                                            to
+                                                            Cart</button>
+                                                        <div>
+                                                            <div style=" color: blue; margin-top: 5px; display: none;"
+                                                                id="b_price">
+                                                                Base price: <span id="base_price"></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-
-                                        </div>
-
+                                        </form>
                                     </div>
 
                                     <hr class="mb-4">
@@ -453,21 +471,37 @@
                                             </div>
                                         </div>
 
-                                        <!-- <div class="col-md-4">
+                                        <div class="col-md-4" id="creditPeriodInputBox" style="display: none;">
                                             <div class="card mb-4">
                                                 <div class="d-flex justify-content-between m-0 p-0">
-                                                    <h5 class="card-header">Final Amount (₹)</h5>
+                                                    <h5 class="card-header">Credit Period</h5>
+                                                </div>
+
+                                                <div class="card-body pt-0" id="creditPeriodInput">
+                                                    <select class="form-select form-select">
+                                                        <option value="0">0D</option>
+                                                        <option value="10">10D</option>
+                                                        <option value="15">15D</option>
+                                                        <option value="30">30D</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4"  id="lessDiscountBox">
+                                            <div class="card mb-4">
+                                                <div class="d-flex justify-content-between m-0 p-0">
+                                                    <h5 class="card-header">Less Discount</h5>
                                                 </div>
 
                                                 <div class="card-body pt-0">
-                                                    <div>
-                                                        <input type="number" class="form-control" id="finalamount"
-                                                            readonly />
+                                                    <input type="number" class="form-control"
+                                                        id="lessDiscount" name="lessDiscount" placeholder="Less Discount in (₹)" />
 
-                                                    </div>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div>
 
                                     </div>
                                 </div>
@@ -514,6 +548,10 @@
                 localStorage.removeItem('grnitems');
                 var cartarray = [];
                 $(document).ready(function () {
+                    $('.myForm').on('submit', function (e) {
+                        e.preventDefault();
+                    });
+
                     $("#contact").text("Contact No :");
                     $("#email").text("Email :");
                     $("#dl_no").text("DL No. :");
@@ -550,12 +588,12 @@
                     $('input[name="paymentMethod"]').change(function () {
                         // Check if the "Cash" radio button is selected
                         if ($('#cashRadio').is(':checked')) {
-                            $('#creditPeriodInput').hide();
-                            $('#lessDiscount').show();
+                            $('#creditPeriodInputBox').hide();
+                            $('#lessDiscountBox').show();
                             $('#creditPeriodInput').val('');
                         } else {
-                            $('#creditPeriodInput').show();
-                            $('#lessDiscount').hide();
+                            $('#creditPeriodInputBox').show();
+                            $('#lessDiscountBox').hide();
                         }
                     });
 
@@ -842,42 +880,89 @@
 
                         // Validations
                         if ($("#hsn").val() == null || $("#hsn").val() == "") {
-                            return alert("Please select HSN code");
+                            $('#hsn').addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $('#hsn').removeClass('is-invalid');
                         }
+
                         if ($("select[name = 'gst']").val() == "Select option" || $("select[name = 'gst']").val() == null) {
-                            return alert("Please select GST");
+                            $("select[name = 'gst']").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("select[name = 'gst']").removeClass('is-invalid');
                         }
+
                         if ($("select[name='primary']").val() == null || $("select[name='primary']").val() == "Primary") {
-                            return alert("Please select Primary Unit");
+                            $("select[name='primary']").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("select[name='primary']").removeClass('is-invalid');
                         }
+
                         if ($("select[name='secondary']").val() == null || $("select[name='secondary']").val() == "Secondary") {
-                            return alert("Please select Secondary Unit");
+                            $("select[name='secondary']").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("select[name='secondary']").removeClass('is-invalid');
                         }
+
                         if ($("select[name='category']").val() == "Select Category") {
-                            return alert("Please select Category");
+                            $("select[name='category']").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("select[name='category']").removeClass('is-invalid');
                         }
+
                         if ($("#threshold").val() == "") {
-                            return alert("Please select Reorder Level");
+                            $("#threshold").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("#threshold").removeClass('is-invalid');
                         }
 
                         if ($("#batchname").val() == null || $("#batchname").val() == "") {
-                            return alert("Please enter Batch No.");
+                            $("#batchname").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("#batchname").removeClass('is-invalid');
                         }
+
                         if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
-                            return alert("Please enter Expiry Date");
+                            $('[name="addexp"]').addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $('[name="addexp"]').removeClass('is-invalid');
                         }
+
                         if ($("#conversion").val() == "") {
-                            return alert("Please enter Conversion");
+                            $("#conversion").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("#conversion").removeClass('is-invalid');
                         }
+
                         if ($("input[name='quantity']").val() == "" || $("input[name='quantity']").val() == null) {
-                            return alert("Please enter Quantity");
+                            $("input[name='quantity']").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("input[name='quantity']").removeClass('is-invalid');
                         }
+
                         if ($("#price").val() == "" || $("#price").val() == null) {
-                            return alert("Please enter MRP");
+                            $("#price").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("#price").removeClass('is-invalid');
                         }
+
                         if ($("#addpur").val() == "" || $("#addpur").val() == null) {
-                            return alert("Please enter PTR");
+                            $("#addpur").addClass('is-invalid');
+                            e.preventDefault();
+                        } else {
+                            $("#addpur").removeClass('is-invalid');
                         }
+
                         if (parseFloat($("#addpur").val()) > parseFloat($("#price").val())) {
                             return alert("Purchase Rate can't be greater than MRP");
                         }
@@ -1030,7 +1115,6 @@
                         if (getAllData.length != 0) {
                             for (let i = 0; i < getAllData.length; i++) {
                                 totalAmt += parseFloat(getAllData[i].amt);
-                                totalAmt = totalAmt - parseFloat($("#lessDiscount").val() || 0);
                             }
                             $("#totalAmt").val(totalAmt.toFixed(2));
                             // $("#finalamount").val(totalAmt.toFixed(2));
@@ -1051,6 +1135,7 @@
                             $(this).val(getTotalAmt);
                         }
                     });
+
                     // Calculate final amount on input of additional discount
                     // $('#creditAmt').on("input", function () {
                     //     var getTotalAmt = parseFloat(("#totalAmt").val());
@@ -1067,7 +1152,7 @@
                     $("#submitorder").click(function () {
                         if ($("#vendorselect").val() === 'Select Vendor') {
                             return alert('Please fill "Distributor Name"');
-                        }
+                        } 
                         if ($("#vendorinvoicenumber").val() == '') {
                             return alert('Please fill "Distributor Invoice number"');
                         }
