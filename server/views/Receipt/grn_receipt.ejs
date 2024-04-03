@@ -571,7 +571,7 @@
                     $("#NumberOfItems").text(`No of Items: ${items.length}`);
 
                     var datetime = items[i].exp_Date;
-                    var expDate = moment(datetime).format('MM-YY');
+                    var expDate = moment(datetime).format('MM/YYYY');
                     var grossValue = (items[i].qty - items[i].free) * items[i].purchase * (1 - items[i].bulk_discount / 100);
                     var gstValue = grossValue * items[i].gst / 100;
                     var amount = grossValue + gstValue;

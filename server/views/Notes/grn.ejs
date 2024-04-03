@@ -134,11 +134,9 @@
                                                         for="basic-icon-default-fullname">Product Name</label>
                                                     <div class="col-sm-10">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-fullname2"
-                                                                class="input-group-text"></span>
                                                             <input type="text" class="form-control" id="medicinename"
                                                                 placeholder="Type some letters of the medicine name"
-                                                                name="productname">
+                                                                name="productname" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -148,8 +146,6 @@
                                                         for="basic-icon-default-fullname">Mfg/Mkt</label>
                                                     <div class="col-sm-10">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-fullname2"
-                                                                class="input-group-text"></span>
                                                             <input type="text" class="form-control" id="brand"
                                                                 placeholder="" name="brand">
                                                         </div>
@@ -161,8 +157,6 @@
                                                         for="basic-icon-default-fullname">Salt Comp.</label>
                                                     <div class="col-sm-10">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-fullname2"
-                                                                class="input-group-text"></span>
                                                             <input type="text" class="form-control" id="salt"
                                                                 placeholder="" name="salt">
                                                         </div>
@@ -254,9 +248,8 @@
 
                                                     <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
-                                                            <input type="text" class="form-control"
-                                                                id="basic-icon-default-companyname" placeholder=""
-                                                                name="threshold">
+                                                            <input type="text" class="form-control" id="threshold"
+                                                                placeholder="" name="threshold">
                                                         </div>
                                                     </div>
 
@@ -344,7 +337,7 @@
                                                     </div>
 
                                                     <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">PTR / Rate</label>
+                                                        for="basic-icon-default-companyname">PTR</label>
                                                     <div class="col-sm-4 mb-3">
                                                         <div class="input-group input-group-merge">
                                                             <span id="basic-icon-default-companyname2"
@@ -373,22 +366,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <!-- Temporarily Disabled -->
-                                                <!-- <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-companyname">Shelf Label</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-companyname2"
-                                                                class="input-group-text"></span>
-                                                            <input type="text" class="form-control" name="addshelf"
-                                                                id="shelflabel">
-                                                            <span class="input-group-text" id="getshelfnumber"></span>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-
 
 
                                                 <div class="col-sm-12 text-center">
@@ -676,6 +653,12 @@
                                 console.log(ui.item);
                                 $("input[name='hsn']").val(ui.item.hsn_code);
                                 $("select[name='gst']").val(ui.item.gst_rate);
+
+                                $("#price").val(0);
+                                $("#addpur").val(0);
+                                $("#retailer_margin").text(0);
+                                $("#free_scheme").val(0);
+                                $("#bulk_discount").val(0);
                             }, 0)
                         }
 
@@ -794,9 +777,9 @@
                     $("#price").on("keyup", function () {
                         $("#r_margin").show();
 
-                        var mrp = parseFloat($("#price").val());
-                        var gst = parseFloat($("select[name='gst']").val());
-                        var ptr = parseFloat($("#addpur").val());
+                        var mrp = parseFloat($("#price").val()) || 0;
+                        var gst = parseFloat($("select[name='gst']").val()) || 0;
+                        var ptr = parseFloat($("#addpur").val()) || 0;
 
                         var retailerMargin = calculateRetailerMargin(mrp, ptr, gst);
 
@@ -804,12 +787,12 @@
                     });
 
                     $("#addpur").on("keyup", function () {
-                        var mrp = parseFloat($("#price").val());
-                        var gst = parseFloat($("select[name='gst']").val());
-                        var ptr = parseFloat($("#addpur").val());
-                        var qty = parseFloat($("input[name='quantity']").val());
-                        var free = parseFloat($("#free_scheme").val());
-                        var bulkDis = parseFloat($("#bulk_discount").val());
+                        var mrp = parseFloat($("#price").val()) || 0;
+                        var gst = parseFloat($("select[name='gst']").val()) || 0;
+                        var ptr = parseFloat($("#addpur").val()) || 0;
+                        var qty = parseFloat($("input[name='quantity']").val()) || 0;
+                        var free = parseFloat($("#free_scheme").val()) || 0;
+                        var bulkDis = parseFloat($("#bulk_discount").val()) || 0;
 
                         var retailerMargin = calculateRetailerMargin(mrp, ptr, gst);
 
@@ -822,12 +805,12 @@
 
                     // Compute base price on change
                     $("#free_scheme, #bulk_discount, input[name='quantity']").on("keyup", function () {
-                        var mrp = parseFloat($("#price").val());
-                        var gst = parseFloat($("select[name='gst']").val());
-                        var ptr = parseFloat($("#addpur").val());
-                        var qty = parseFloat($("input[name='quantity']").val());
-                        var free = parseFloat($("#free_scheme").val());
-                        var bulkDis = parseFloat($("#bulk_discount").val());
+                        var mrp = parseFloat($("#price").val()) || 0;
+                        var gst = parseFloat($("select[name='gst']").val()) || 0;
+                        var ptr = parseFloat($("#addpur").val()) || 0;
+                        var qty = parseFloat($("input[name='quantity']").val()) || 0;
+                        var free = parseFloat($("#free_scheme").val()) || 0;
+                        var bulkDis = parseFloat($("#bulk_discount").val()) || 0;
 
                         var basePrice = calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis);
 
@@ -839,7 +822,7 @@
                     $("input[name='productname']").on('input', function () {
                         productId = undefined;
                         $("select[name = 'gst']").val('Select option').prop('disabled', false);;
-                        $("#hsn").val("").prop('disabled', false);;
+                        $("#hsn").val('').prop('disabled', false);;
                         $("select[name='primary']").val('Primary').prop('disabled', false);;
                         $("select[name='secondary']").val('Secondary').prop('disabled', false);;
                         $("input[name='threshold']").val("").prop('disabled', false);;
@@ -857,9 +840,48 @@
                     var htmlData;
                     $("#addtocart").click(function () {
 
+                        // Validations
+                        if ($("#hsn").val() == null || $("#hsn").val() == "") {
+                            return alert("Please select HSN code");
+                        }
+                        if ($("select[name = 'gst']").val() == "Select option" || $("select[name = 'gst']").val() == null) {
+                            return alert("Please select GST");
+                        }
+                        if ($("select[name='primary']").val() == null || $("select[name='primary']").val() == "Primary") {
+                            return alert("Please select Primary Unit");
+                        }
+                        if ($("select[name='secondary']").val() == null || $("select[name='secondary']").val() == "Secondary") {
+                            return alert("Please select Secondary Unit");
+                        }
+                        if ($("select[name='category']").val() == "Select Category") {
+                            return alert("Please select Category");
+                        }
+                        if ($("#threshold").val() == "") {
+                            return alert("Please select Reorder Level");
+                        }
+
+                        if ($("#batchname").val() == null || $("#batchname").val() == "") {
+                            return alert("Please enter Batch No.");
+                        }
+                        if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
+                            return alert("Please enter Expiry Date");
+                        }
+                        if ($("#conversion").val() == "") {
+                            return alert("Please enter Conversion");
+                        }
+                        if ($("input[name='quantity']").val() == "" || $("input[name='quantity']").val() == null) {
+                            return alert("Please enter Quantity");
+                        }
+                        if ($("#price").val() == "" || $("#price").val() == null) {
+                            return alert("Please enter MRP");
+                        }
+                        if ($("#addpur").val() == "" || $("#addpur").val() == null) {
+                            return alert("Please enter PTR");
+                        }
                         if (parseFloat($("#addpur").val()) > parseFloat($("#price").val())) {
                             return alert("Purchase Rate can't be greater than MRP");
                         }
+
                         $("#r_margin").hide();
                         $("select[name = 'gst']").prop('disabled', false);
                         $("#hsn").prop('disabled', false);
@@ -885,8 +907,8 @@
                         var shelflabel = $("#shelflabel").val();
                         var mrp = $("#price").val();
                         var purchase = parseFloat($("#addpur").val());
-                        var free = parseFloat($("#free_scheme").val());
-                        var bulk_discount = parseFloat($("#bulk_discount").val());
+                        var free = parseFloat($("#free_scheme").val()) || 0;
+                        var bulk_discount = parseFloat($("#bulk_discount").val()) || 0;
                         var base_price = $("#base_price").text();
                         var quantity = parseFloat($("input[name='quantity']").val());
 

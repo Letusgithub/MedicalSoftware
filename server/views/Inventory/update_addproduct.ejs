@@ -89,18 +89,17 @@
 
                                                 <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">GST (%)</label>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-4 mb-3">
                                                     <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
-                                                        <input type="text" class="form-control"
-                                                            id="basic-icon-default-companyname" placeholder=""
-                                                            aria-label="John Doe"
-                                                            aria-describedby="basic-icon-default-companyname2"
-                                                            name="gst" value="<%=data[0].gst%>">
+                                                        <select class="form-select" name="gst" id="gst">
+                                                            <option selected>Select GST %</option>
+                                                            <option value="0">0%</option>
+                                                            <option value="5">5%</option>
+                                                            <option value="12">12%</option>
+                                                            <option value="18">18%</option>
+                                                        </select>
                                                     </div>
                                                 </div>
-
 
 
                                                 <label class="col-sm-2 col-form-label ps-4"
@@ -262,11 +261,14 @@
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
                 $(document).ready(function () {
-                    productId = '<%=data[0].product_id%>';
-                    orgID = '<%=orgId%>';
+                    var productId = '<%=data[0].product_id%>';
+                    var orgID = '<%=orgId%>';
 
-                    categoryId = '<%=data[0].category_id%>';
-                    categoryName = '<%=data[0].category_name%>';
+                    var categoryId = '<%=data[0].category_id%>';
+                    var categoryName = '<%=data[0].category_name%>';
+
+                    var gst = '<%=data[0].gst%>';
+                    $("select[name='gst']").val(gst);
                     $("#categorySelect").append(`<option selected value="${categoryId}">${categoryName}</option>`);
 
                     // Fetch categories from the API using jQuery
@@ -276,7 +278,7 @@
 
                         // Populate the dropdown with options
                         $.each(response.data, function (index, category) {
-                            if(category.category_id != categoryId){
+                            if (category.category_id != categoryId) {
                                 categorySelect.append($('<option>', {
                                     value: category.category_id,
                                     text: category.category_name
@@ -284,16 +286,16 @@
                             }
                         });
                     })
-                    .fail(function (error) {
-                        console.error("Error fetching categories:", error);
-                    });
+                        .fail(function (error) {
+                            console.error("Error fetching categories:", error);
+                        });
 
                     $("#submitproduct").click(function () {
                         var productDetails = {
                             product_id: productId,
                             org_id: orgID,
                             category_id: $("select[name='category']").val(),
-                            gst: $("input[name='gst']").val(),
+                            gst: $("select[name='gst']").val(),
                             hsn: $("input[name='hsn']").val(),
                             threshold: $("input[name='threshold']").val()
                         }

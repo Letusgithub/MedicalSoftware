@@ -540,7 +540,7 @@
                     $("#NumberOfItems").text(`No of Items: ${items.length}`);
                     
                     var datetime = items[i].exp_date;
-                    var expDate = moment(datetime).format('MM-YYYY');
+                    var expDate = moment(datetime).format('MM/YYYY');
 
                     var grossValue = items[i].pri_unit_credit * items[i].purchase_rate + (items[i].purchase_rate / items[i].conversion) * items[i].sec_unit_credit;
                     var gstValue = grossValue * items[i].gst / 100;
