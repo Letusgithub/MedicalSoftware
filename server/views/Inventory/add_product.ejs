@@ -376,8 +376,10 @@
                                     $("select[name = 'gst']").val(items.gst).prop('disabled', true);
                                     $("#hsn").val(items.hsn).prop('disabled', true);
                                     $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
+                                    populateSecondaryDropdown();
                                     $("select[name='secondary']").val(items.secondary_unit).prop('disabled', true);
                                     $("input[name='threshold']").val(items.threshold).prop('disabled', true);
+                                    $("select[name='category']").val(items.category_id).prop('disabled', true);
 
                                     var primaryUnit = $("select[name='primary']").val();
                                     var secondaryUnit = $("select[name='secondary']").val();
@@ -590,9 +592,48 @@
                     //submit process after adding batch
                     $("#submitbatch").click(function () {
 
-                        $('#loader').show();
+                        
 
                         // Validations
+
+                        if ($("input[name='hsn']").val() == null || $("input[name='hsn']").val() == "") {
+                            return alert("Please select HSN code");
+                        }
+                        if ($("select[name = 'gst']").val() == "Select option" || $("select[name = 'gst']").val() == null) {
+                            return alert("Please select GST");
+                        }
+                        if ($("select[name='primary']").val() == null || $("select[name='primary']").val() == "Primary") {
+                            return alert("Please select Primary Unit");
+                        }
+                        if ($("select[name='secondary']").val() == null || $("select[name='secondary']").val() == "Secondary") {
+                            return alert("Please select Secondary Unit");
+                        }
+                        if ($("select[name='category']").val() == "Select Category") {
+                            return alert("Please select Category");
+                        }
+                        if ($("input[name='threshold']").val() == "") {
+                            return alert("Please select Reorder Level");
+                        }
+
+                        if ($("#batchname").val() == null || $("#batchname").val() == "") {
+                            return alert("Please enter Batch No.");
+                        }
+                        if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
+                            return alert("Please enter Expiry Date");
+                        }
+                        if ($("#conversion").val() == "") {
+                            return alert("Please enter Conversion");
+                        }
+                        if ($("input[name='addqty']").val() == "" || $("input[name='addqty']").val() == null) {
+                            return alert("Please enter Quantity");
+                        }
+                        if ($("input[name='addmrp']").val() == "" || $("input[name='addmrp']").val() == null) {
+                            return alert("Please enter MRP");
+                        }
+                        if ($("input[name='addpur']").val() == "" || $("input[name='addpur']").val() == null) {
+                            return alert("Please enter PTR");
+                        }
+
                         if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
                             return alert("Purchase Rate can't be greater than MRP");
                         }
@@ -600,6 +641,7 @@
                             return alert("Quantity can't be negative");
                         }
 
+                        $('#loader').show();
                         if (productId == null) {
                             var customProductDetails = {
                                 org_id: orgID,
@@ -645,8 +687,8 @@
                                                 batch_qty: parseFloat($("input[name='addqty']").val()) + parseFloat($("input[name='free_scheme']").val()),
                                                 purchase_rate: $("input[name='addpur']").val(),
                                                 mrp: $("input[name='addmrp']").val(),
-                                                free: $("input[name='free_scheme']").val(),
-                                                bulk_discount: $("input[name='bulk_discount']").val(),
+                                                free: $("input[name='free_scheme']").val() || 0,
+                                                bulk_discount: $("input[name='bulk_discount']").val() || 0,
                                                 base_price: $("#base_price").text(),
                                                 shelf_label: $("input[name='addshelf']").val()
                                             }
