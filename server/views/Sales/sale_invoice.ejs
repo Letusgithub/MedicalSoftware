@@ -1132,7 +1132,9 @@
             if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
               return alert("PLEASE ADD SOME ITEMS FIRST");
             }
-
+            if ($("#mop").val() == null ) {
+              return alert("PLEASE SELECT MODE OF PAYMENT");
+            }
             if (!$("#defaultCheck1").prop("checked")) {
               return alert("Please check the disclaimer before submitting.");
             }
