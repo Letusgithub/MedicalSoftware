@@ -46,7 +46,8 @@ module.exports = {
     getPool().query(
       `select distinct * from batch 
       JOIN inventory inv ON batch.product_id =  inv.product_id
-      where batch.product_id =? and batch.org_id = ${orgId} and inv.org_id = ${orgId}`,
+      where batch.product_id =? and batch.org_id = ${orgId} and inv.org_id = ${orgId}
+      ORDER BY batch.exp_date ASC`,
       [id],
       (error, results) => {
         if (error) return callback(error);

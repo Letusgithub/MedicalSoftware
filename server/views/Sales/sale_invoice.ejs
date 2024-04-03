@@ -792,7 +792,7 @@
             var mrp = priceInput.val();
             var hsn = hsn_number;
             var gst = gst_percent;
-            var disc = discInput.val();
+            var disc = discInput.val() || 0;
             var total = totalInput.val();
             var shelflabel = $("#shelflabel").val();
             var batch = $("#batchdroporinput #batchnumber").val() || $("#batch").val();
