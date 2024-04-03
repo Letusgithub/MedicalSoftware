@@ -96,9 +96,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <input type="text" class="form-control"
-                                                            id="basic-icon-default-companyname" placeholder=""
-                                                            aria-label="John Doe"
-                                                            aria-describedby="basic-icon-default-companyname2"
+                                                            id="gst"
                                                             name="gst" disabled value="<%=data[0].gst%>">
                                                     </div>
                                                 </div>
@@ -110,9 +108,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <input type="text" class="form-control"
-                                                            id="basic-icon-default-companyname" placeholder=""
-                                                            aria-label="John Doe"
-                                                            aria-describedby="basic-icon-default-companyname2"
+                                                            id="hsn"
                                                             name="hsn" disabled value="<%=data[0].hsn%>">
                                                     </div>
                                                 </div>
@@ -245,7 +241,8 @@
                                                     for="basic-icon-default-companyname">PTR</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control" name="addpur" id="addpur">
+                                                        <input type="text" class="form-control" name="addpur"
+                                                            id="addpur">
                                                     </div>
                                                     <div style="font-size: smaller; color:blue; margin-top: 5px; display: none;"
                                                         id="r_margin">
@@ -341,10 +338,10 @@
         <%- include('../partials/footercode.ejs') %>
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
-                console.log('<%=data[0].sample_id%>');
+                console.log('<%=data[0].product_id%>');
 
                 var orgID = '<%= orgId %>';
-                var productId = '<%=data[0].sample_id%>';
+                var productId = '<%=data[0].product_id%>';
 
                 $("input[name='addexp']").on('input', function () {
                     var input = $(this);
@@ -396,11 +393,11 @@
 
                 $("input[name='addpur']").on("keyup", function () {
                     var mrp = parseFloat($("#price").val());
-                    var gst = parseFloat($("select[name='gst']").val());
+                    var gst = parseFloat($("input[name='gst']").val());
                     var ptr = parseFloat($("#addpur").val());
                     var qty = parseFloat($("input[name='addqty']").val());
-                    var free = parseFloat($("#free_scheme").val());
-                    var bulkDis = parseFloat($("#bulk_discount").val());
+                    var free = parseFloat($("#free_scheme").val()) || 0;
+                    var bulkDis = parseFloat($("#bulk_discount").val()) || 0;
 
                     var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
 
@@ -414,11 +411,11 @@
                 // Compute base price on change
                 $("#free_scheme, #bulk_discount, input[name='addqty']").on("keyup", function () {
                     var mrp = parseFloat($("#price").val());
-                    var gst = parseFloat($("select[name='gst']").val());
+                    var gst = parseFloat($("input[name='gst']").val());
                     var ptr = parseFloat($("#addpur").val());
                     var qty = parseFloat($("input[name='addqty']").val());
-                    var free = parseFloat($("#free_scheme").val());
-                    var bulkDis = parseFloat($("#bulk_discount").val());
+                    var free = parseFloat($("#free_scheme").val()) || 0;
+                    var bulkDis = parseFloat($("#bulk_discount").val()) || 0;
 
                     var basePrice = calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis);
 
@@ -431,14 +428,33 @@
                 //submit process after adding batch
                 $("#submitbatch").click(function () {
 
-                    $('#loader').show();
+                    if ($("#batchname").val() == null || $("#batchname").val() == "") {
+                        return alert("Please enter Batch No.");
+                    }
+                    if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
+                        return alert("Please enter Expiry Date");
+                    }
+                    if ($("#conversion").val() == "") {
+                        return alert("Please enter Conversion");
+                    }
+                    if ($("input[name='addqty']").val() == "" || $("input[name='addqty']").val() == null) {
+                        return alert("Please enter Quantity");
+                    }
+                    if ($("input[name='addmrp']").val() == "" || $("input[name='addmrp']").val() == null) {
+                        return alert("Please enter MRP");
+                    }
+                    if ($("input[name='addpur']").val() == "" || $("input[name='addpur']").val() == null) {
+                        return alert("Please enter PTR");
+                    }
 
                     if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
                         return alert("Purchase Rate can't be greater than MRP");
                     }
 
+                    $('#loader').show();
+
                     var batchDetails = {
-                        product_id: "<%=data[0].sample_id%>",
+                        product_id: "<%=data[0].product_id%>",
                         org_id: orgID,
                         batch_name: $("#batchname").val(),
                         exp_date: $("input[name='addexp']").val(),
@@ -446,8 +462,8 @@
                         batch_qty: parseFloat($("input[name='addqty']").val()) + parseFloat($("input[name='free_scheme']").val()),
                         purchase_rate: $("input[name='addpur']").val(),
                         mrp: $("input[name='addmrp']").val(),
-                        free: $("input[name='free_scheme']").val(),
-                        bulk_discount: $("input[name='bulk_discount']").val(),
+                        free: $("input[name='free_scheme']").val() || 0,
+                        bulk_discount: $("input[name='bulk_discount']").val() || 0,
                         base_price: $("#base_price").text(),
                         shelf_label: $("input[name='addshelf']").val()
                     }
