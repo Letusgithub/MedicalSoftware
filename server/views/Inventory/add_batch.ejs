@@ -95,9 +95,8 @@
                                                     for="basic-icon-default-companyname">GST (%)</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control"
-                                                            id="gst"
-                                                            name="gst" disabled value="<%=data[0].gst%>">
+                                                        <input type="text" class="form-control" id="gst" name="gst"
+                                                            disabled value="<%=data[0].gst%>">
                                                     </div>
                                                 </div>
 
@@ -107,9 +106,8 @@
                                                     for="basic-icon-default-companyname">HSN Code</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control"
-                                                            id="hsn"
-                                                            name="hsn" disabled value="<%=data[0].hsn%>">
+                                                        <input type="text" class="form-control" id="hsn" name="hsn"
+                                                            disabled value="<%=data[0].hsn%>">
                                                     </div>
                                                 </div>
 
@@ -175,21 +173,23 @@
                                                 <label class="col-sm-2 col-form-label "
                                                     for="basic-icon-default-companyname">Batch No.</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
-                                                        <input type="text" class="form-control" placeholder=""
-                                                            aria-label="" id="batchname" />
+                                                    <div class="input-group has-validation">
+                                                        <input type="text" class="form-control" id="batchname"
+                                                            placeholder="Eg- B6AEW8852" />
+                                                        <div class="invalid-feedback">
+                                                            Please enter batch number.</div>
                                                     </div>
                                                 </div>
 
                                                 <label class="col-sm-2 col-form-label ps-4"
                                                     for="basic-icon-default-address">Exp Date</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-
+                                                    <div class="input-group  has-validation">
                                                         <input class="form-control" type="date" id="html5-date-input"
                                                             name="addexp" />
+                                                        <div class="invalid-feedback">
+                                                            Please select expiry date.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -199,16 +199,19 @@
                                                     for="basic-icon-default-companyname">Conversion</label>
 
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
+                                                    <div class="input-group has-validation">
                                                         <span class="input-group-text" id="primarypopulate">
                                                             <%=data[0].primary_unit%>
                                                         </span>
                                                         <span class="input-group-text">=</span>
-                                                        <input type="number" class="form-control" placeholder=""
-                                                            aria-label="" id="conversion" />
+                                                        <input type="number" class="form-control  rounded-0"
+                                                            id="conversion" />
                                                         <span class="input-group-text" id="secondarypopulate">
                                                             <%=data[0].secondary_unit%>
                                                         </span>
+                                                        <div class="invalid-feedback">
+                                                            Please enter conversion.
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -216,33 +219,40 @@
                                                     for="basic-icon-default-companyname">Quantity</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
-                                                        <input type="number" class="form-control" name="addqty">
-                                                        <span class="input-group-text" id="getprimaryunit">
-                                                            <%=data[0].primary_unit%>
-                                                        </span>
+                                                        <div class="input-group has-validation">
+                                                            <input type="number" class="form-control" name="addqty">
+                                                            <span class="input-group-text" id="getprimaryunit"><%=data[0].primary_unit%></span>
+                                                            <div class="invalid-feedback">
+                                                                Please enter quantity.
+                                                            </div>
+                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
 
-                                                <label class="col-sm-2 col-form-label"
-                                                    for="basic-icon-default-companyname">MRP</label>
+                                                <label class="col-sm-2 col-form-label">MRP</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control" name="addmrp"
-                                                            id="price">
+                                                    <div class="input-group has-validation">
+                                                        <input type="text" class="form-control" name="addmrp" id="price"
+                                                            placeholder="Eg- 100">
+                                                        <div class="invalid-feedback">
+                                                            Please enter MRP.
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <label class="col-sm-2 col-form-label ps-4"
                                                     for="basic-icon-default-companyname">PTR</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
+                                                    <div class="input-group has-validation">
                                                         <input type="text" class="form-control" name="addpur"
-                                                            id="addpur">
+                                                            id="addpur" placeholder="Eg- 78">
+                                                        <div class="invalid-feedback">
+                                                            Please enter PTR.
+                                                        </div>
                                                     </div>
                                                     <div style="font-size: smaller; color:blue; margin-top: 5px; display: none;"
                                                         id="r_margin">
@@ -257,8 +267,6 @@
                                                 <label class="col-sm-2 col-form-label" for="free_scheme">Free</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
                                                         <input type="text" class="form-control" name="free_scheme"
                                                             id="free_scheme">
                                                     </div>
@@ -268,8 +276,6 @@
                                                     for="bulk_discount">Discount(%)</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
                                                         <input type="text" class="form-control" name="bulk_discount"
                                                             id="bulk_discount">
                                                     </div>
@@ -429,22 +435,50 @@
                 $("#submitbatch").click(function () {
 
                     if ($("#batchname").val() == null || $("#batchname").val() == "") {
-                        return alert("Please enter Batch No.");
+                        $("#batchname").addClass('is-invalid');
+                        $("#batchname").focus();
+                        e.preventDefault();
+                    } else {
+                        $("#batchname").removeClass('is-invalid');
                     }
+
                     if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
-                        return alert("Please enter Expiry Date");
+                        $('[name="addexp"]').addClass('is-invalid');
+                        $('[name="addexp"]').focus();
+                        e.preventDefault();
+                    } else {
+                        $('[name="addexp"]').removeClass('is-invalid');
                     }
+
                     if ($("#conversion").val() == "") {
-                        return alert("Please enter Conversion");
+                        $("#conversion").addClass('is-invalid');
+                        $("#conversion").focus();
+                        e.preventDefault();
+                    } else {
+                        $("#conversion").removeClass('is-invalid');
                     }
                     if ($("input[name='addqty']").val() == "" || $("input[name='addqty']").val() == null) {
-                        return alert("Please enter Quantity");
+                        $("input[name='addqty']").addClass('is-invalid');
+                        $("input[name='addqty']").focus();
+                        e.preventDefault();
+                    } else {
+                        $("input[name='addqty']").removeClass('is-invalid');
                     }
+
                     if ($("input[name='addmrp']").val() == "" || $("input[name='addmrp']").val() == null) {
-                        return alert("Please enter MRP");
+                        $("input[name='addmrp']").addClass('is-invalid');
+                        $("input[name='addmrp']").focus();
+                        e.preventDefault();
+                    } else {
+                        $("input[name='addmrp']").removeClass('is-invalid');
                     }
+
                     if ($("input[name='addpur']").val() == "" || $("input[name='addpur']").val() == null) {
-                        return alert("Please enter PTR");
+                        $("input[name='addpur']").addClass('is-invalid');
+                        $("input[name='addpur']").focus();
+                        e.preventDefault();
+                    } else {
+                        $("input[name='addpur']").removeClass('is-invalid');
                     }
 
                     if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
