@@ -323,7 +323,7 @@
                                         <div class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4">
                                             <div class="card invoice-preview-card">
                                                 <div class="card-body pb-0 text-center">
-                                                    <h3 class="text-body fw-bold">GoodS Received Note</h3>
+                                                    <h3 class="text-body fw-bold">Goods Received Note</h3>
                                                     <hr class="my-0">
                                                 </div>
                                                 <div class="card-body">
@@ -784,7 +784,7 @@
                         console.log(transactions);
 
                         totalAmount = totalAmount - lessDiscount + creditDebit;
-                        $(".lessDiscount").text(lessDiscount);
+                        $(".lessDiscount").text(lessDiscount.toFixed(2));
                         $(".totalGross").text(totalGross.toFixed(2));
                         $(".cgst").text((totalGST / 2).toFixed(2));
                         $(".sgst").text((totalGST / 2).toFixed(2));

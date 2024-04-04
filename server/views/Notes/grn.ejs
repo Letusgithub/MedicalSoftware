@@ -1227,7 +1227,7 @@
                                 total: totalPurchase,
                                 org_id: org,
                                 invoice_date: $("input[name='invoiceDate']").val(),
-                                credit_period: $("#creditPeriodInput").val(),
+                                credit_period: $("#creditPeriodInput").val() || 0,
                                 less_discount: lessDiscount,
                                 credit_debit: creditDebit,
                                 payment_method: $('input[name="paymentMethod"]:checked').val(),
