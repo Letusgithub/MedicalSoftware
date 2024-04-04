@@ -881,6 +881,7 @@
                         // Validations
                         if ($("#hsn").val() == null || $("#hsn").val() == "") {
                             $('#hsn').addClass('is-invalid');
+                            $('#hsn').focus();
                             e.preventDefault();
                         } else {
                             $('#hsn').removeClass('is-invalid');
@@ -888,6 +889,7 @@
 
                         if ($("select[name = 'gst']").val() == "Select option" || $("select[name = 'gst']").val() == null) {
                             $("select[name = 'gst']").addClass('is-invalid');
+                            $("select[name = 'gst']").focus();
                             e.preventDefault();
                         } else {
                             $("select[name = 'gst']").removeClass('is-invalid');
@@ -895,6 +897,7 @@
 
                         if ($("select[name='primary']").val() == null || $("select[name='primary']").val() == "Primary") {
                             $("select[name='primary']").addClass('is-invalid');
+                            $("select[name='primary']").focus();
                             e.preventDefault();
                         } else {
                             $("select[name='primary']").removeClass('is-invalid');
@@ -902,6 +905,7 @@
 
                         if ($("select[name='secondary']").val() == null || $("select[name='secondary']").val() == "Secondary") {
                             $("select[name='secondary']").addClass('is-invalid');
+                            $("select[name='secondary']").focus();
                             e.preventDefault();
                         } else {
                             $("select[name='secondary']").removeClass('is-invalid');
@@ -909,6 +913,7 @@
 
                         if ($("select[name='category']").val() == "Select Category") {
                             $("select[name='category']").addClass('is-invalid');
+                            $("select[name='category']").focus();
                             e.preventDefault();
                         } else {
                             $("select[name='category']").removeClass('is-invalid');
@@ -916,6 +921,7 @@
 
                         if ($("#threshold").val() == "") {
                             $("#threshold").addClass('is-invalid');
+                            $("#threshold").focus();
                             e.preventDefault();
                         } else {
                             $("#threshold").removeClass('is-invalid');
@@ -923,6 +929,7 @@
 
                         if ($("#batchname").val() == null || $("#batchname").val() == "") {
                             $("#batchname").addClass('is-invalid');
+                            $("#batchname").focus();
                             e.preventDefault();
                         } else {
                             $("#batchname").removeClass('is-invalid');
@@ -930,6 +937,7 @@
 
                         if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
                             $('[name="addexp"]').addClass('is-invalid');
+                            $('[name="addexp"]').focus();
                             e.preventDefault();
                         } else {
                             $('[name="addexp"]').removeClass('is-invalid');
@@ -937,6 +945,7 @@
 
                         if ($("#conversion").val() == "") {
                             $("#conversion").addClass('is-invalid');
+                            $("#conversion").focus();
                             e.preventDefault();
                         } else {
                             $("#conversion").removeClass('is-invalid');
@@ -944,6 +953,7 @@
 
                         if ($("input[name='quantity']").val() == "" || $("input[name='quantity']").val() == null) {
                             $("input[name='quantity']").addClass('is-invalid');
+                            $("input[name='quantity']").focus();
                             e.preventDefault();
                         } else {
                             $("input[name='quantity']").removeClass('is-invalid');
@@ -951,6 +961,7 @@
 
                         if ($("#price").val() == "" || $("#price").val() == null) {
                             $("#price").addClass('is-invalid');
+                            $("#price").focus();
                             e.preventDefault();
                         } else {
                             $("#price").removeClass('is-invalid');
@@ -958,6 +969,7 @@
 
                         if ($("#addpur").val() == "" || $("#addpur").val() == null) {
                             $("#addpur").addClass('is-invalid');
+                            $("#addpur").focus();
                             e.preventDefault();
                         } else {
                             $("#addpur").removeClass('is-invalid');
