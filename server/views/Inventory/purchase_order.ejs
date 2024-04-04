@@ -215,36 +215,42 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>
+                                                                <td class="has-validation">
                                                                     <input type="text" class="form-control"
-                                                                        id="basic-default-name"
                                                                         placeholder="Enter product name"
                                                                         name="productname" />
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter product name.
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="brand" />
+                                                                        placeholder="" name="brand" />
                                                                 </td>
-                                                                <td>
+                                                                <td class="has-validation">
                                                                     <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="mrp" />
+                                                                        placeholder="" name="mrp" />
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter MRP.
+                                                                    </div>
                                                                 </td>
-                                                                <td>
+                                                                <td class="has-validation">
                                                                     <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="ptr" />
+                                                                        placeholder="" name="ptr" />
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter PTR.
+                                                                    </div>
                                                                 </td>
-                                                                <td>
+                                                                <td class="has-validation">
                                                                     <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="quantity" />
+                                                                        placeholder="" name="quantity" />
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter quantity.
+                                                                    </div>
                                                                 </td>
-                                                                <td>
+                                                                <td class="has-validation">
                                                                     <select class="form-select px-1"
                                                                         id="exampleFormControlSelect1"
-                                                                        aria-label="Default select example"
                                                                         name="unitoption">
                                                                         <option selected>Select Unit</option>
                                                                         <option value="BOX">Box</option>
@@ -253,12 +259,14 @@
                                                                         <option value="BOTTLE">Bottle</option>
                                                                         <option value="PCS">Piece</option>
                                                                     </select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please select unit.
+                                                                    </div>
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="amount" readonly />
+                                                                        placeholder="" name="amount" readonly />
                                                                 </td>
 
                                                             </tr>
@@ -273,8 +281,6 @@
                                                 </btn>
                                                 <input type="reset" class="btn btn-primary" style="color: white;"
                                                     value="Clear" />
-
-
 
                                             </div>
                                         </form>
@@ -382,7 +388,7 @@
                         var vendorId = -1;
                         //autocomplete suggestion   
                         $("#vendor_name").autocomplete({
-                            minLength: 5,
+                            minLength: 3,
                             source: function (request, response) {
 
                                 $.get('/api/getallvendors', function (data, status) {
@@ -560,15 +566,43 @@
                         $("#addtocart").click(function () {
 
                             if ($("input[name='productname']").val() == '') {
-                                return alert('PLEASE ADD MEDICINE FIRST');
+                                $("input[name='productname']").addClass('is-invalid');
+                                $("input[name='productname']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='productname']").removeClass('is-invalid');
+                            }
+
+                            if ($("input[name='mrp']").val() == '') {
+                                $("input[name='mrp']").addClass('is-invalid');
+                                $("input[name='mrp']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='mrp']").removeClass('is-invalid');
+                            }
+
+                            if ($("input[name='ptr']").val() == '') {
+                                $("input[name='ptr']").addClass('is-invalid');
+                                $("input[name='ptr']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='ptr']").removeClass('is-invalid');
                             }
 
                             if ($("input[name='quantity']").val() == '') {
-                                return alert('PLEASE ADD QUANTITY FIRST');
+                                $("input[name='quantity']").addClass('is-invalid');
+                                $("input[name='quantity']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='quantity']").removeClass('is-invalid');
                             }
 
                             if ($("select[name='unitoption']").find('option:selected').text() == "Select Unit") {
-                                return alert('PLEASE ADD UNIT FIRST');
+                                $("select[name='unitoption']").addClass('is-invalid');
+                                $("select[name='unitoption']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("select[name='unitoption']").removeClass('is-invalid');
                             }
 
                             var product = $("input[name='productname']").val();
