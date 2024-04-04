@@ -684,6 +684,7 @@
                     $.get(`/api/getdebitnoteininvoice?id=${id}`, function (data, status) {
                         var podata = data.data[0];
                         console.log('inside the debit note', data);
+
                         $(".orderdate").html(`Date: ${moment(podata.created_at).format('DD-MM-YYYY')}`)
                         $(".drno").html(`Debit No:<br>${id}`)
 

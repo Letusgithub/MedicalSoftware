@@ -23,37 +23,43 @@
                   <h4 class="fw-bold py-3 mb-1">Credit Note</h4>
                   <hr class="mb-4">
 
-                  <div class="row">
+                  <form>
+                    <div class="row">
 
-                    <div class="col-md-6">
-                      <div class="card mb-4">
-                        <h5 class="card-header">Vendor Name</h5>
-                        <div class="card-body" id="vendorname">
-                          <select class="form-select" id="vendorselect" aria-label="Default select example">
-                            <option selected>Select Vendor</option>
-                            <%vendors.forEach(function(vendor) {%>
-                              <option value="<%= vendor.vendor_id %>">
-                                <%= vendor.vendor_name %>
-                              </option>
-                              <%});%>
-                          </select>
+                      <div class="col-md-6">
+                        <div class="card mb-4">
+                          <h5 class="card-header">Distributor Name</h5>
+                          <div class="card-body has-validation" id="vendorname">
+                            <select class="form-select" id="vendorselect" aria-label="Default select example">
+                              <option selected>Select Distributor</option>
+                              <%vendors.forEach(function(vendor) {%>
+                                <option value="<%= vendor.vendor_id %>">
+                                  <%= vendor.vendor_name %>
+                                </option>
+                                <%});%>
+                            </select>
+                            <div class="invalid-feedback">
+                              Please select a distributor.
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="col-md-6">
-                      <div class="card mb-4 py-1">
+                      <div class="col-md-6">
+                        <div class="card mb-4 py-1">
 
-                        <h6 class="card-header py-1" id="contact"></h6>
-                        <h6 class="card-header py-1" id="email"></h6>
-                        <h6 class="card-header py-1" id="dl_no"></h6>
-                        <h6 class="card-header py-1" id="gstin"></h6>
-                        <h6 class="card-header py-1" id="address"></h6>
+                          <h6 class="card-header py-1" id="contact"></h6>
+                          <h6 class="card-header py-1" id="email"></h6>
+                          <h6 class="card-header py-1" id="dl_no"></h6>
+                          <h6 class="card-header py-1" id="gstin"></h6>
+                          <h6 class="card-header py-1" id="address"></h6>
 
+                        </div>
                       </div>
+
                     </div>
 
-                  </div>
+                  </form>
                   <hr>
 
                   <!-- Bordered Table -->
@@ -64,33 +70,42 @@
                       <div class="card-body form-block mb-3">
 
                         <div class="row w-100 m-0 p-0">
-                          <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
+                          <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0 has-validation">
                             <p class="mb-2 repeater-title fw-bold">Item</p>
                             <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name" />
-                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" />
+                            <div class="invalid-feedback">
+                              Please select a product.
+                            </div>
+                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" readonly/>
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Batch</p>
                             <div class="mb-2" id="batchdroporinput">
                               <input type="text" class="form-control" id="batch" placeholder="" />
                             </div>
-                            <input class="form-control" type="date" id="expdate" />
+                            <input class="form-control" type="date" id="expdate" readonly/>
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
-                            <div>
+                            <div class="has-validation">
                               <p class="mb-2 repeater-title" id="primaryunitname">P.Unit<span></span></p>
                               <input type="number" class="form-control px-1" id="pUnit" min="0" />
+                              <div class="invalid-feedback">
+                                Please enter quantity.
+                            </div>
                             </div>
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
-                            <div>
+                            <div class="has-validation">
                               <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
                               <input type="number" class="form-control px-1" id="sUnit" min="0" />
+                              <div class="invalid-feedback">
+                                Please enter quantity.
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Rate / P.Unit</p>
-                            <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0" />
+                            <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0" readonly/>
                           </div>
 
                           <!-- <div class="col-md-1 col-12 mb-md-0 mb-3">
@@ -354,23 +369,45 @@
             var htmlData;
             $("#addtocart").click(function () {
 
-              if ($("#vendorselect").val() == 'Select Vendor') {
-                return alert('PLEASE ADD VENDOR FIRST');
+              if ($("#vendorselect").val() == 'Select Distributor') {
+                $("#vendorselect").addClass('is-invalid');
+                $("#vendorselect").focus();
+                e.preventDefault();
+              } else {
+                $("#vendorselect").removeClass('is-invalid');
               }
 
-
               if ($("#medicinename").val() == '') {
-                return alert('PLEASE ADD MEDICINE FIRST');
+                $("#medicinename").addClass('is-invalid');
+                $("#medicinename").focus();
+                e.preventDefault();
+              } else {
+                $("#medicinename").removeClass('is-invalid');
               }
 
               if ($("#pUnit").val() == '') {
-                return alert('PLEASE ADD QUANTITY FIRST');
+                $("#pUnit").addClass('is-invalid');
+                $("#pUnit").focus();
+                e.preventDefault();
+              } else {
+                $("#pUnit").removeClass('is-invalid');
+              }
+
+              if ($("#sUnit").val() == '') {
+                $("#sUnit").addClass('is-invalid');
+                $("#sUnit").focus();
+                e.preventDefault();
+              } else {
+                $("#sUnit").removeClass('is-invalid');
               }
 
               if ($("#batch").val() == '') {
-                return alert('PLEASE ADD BATCH FIRST');
+                $("#batch").addClass('is-invalid');
+                $("#batch").focus();
+                e.preventDefault();
+              } else {
+                $("#batch").removeClass('is-invalid');
               }
-
 
 
               if (priQty.val() > availablePrimaryQty) {
@@ -537,7 +574,7 @@
                   $("#sUnit").val(availableSecondaryQty);
                   calculateTotal();
                 })
-                
+
               })
 
               UpdatecartItemsinStorage.splice(item_id - 1, 1);
@@ -691,15 +728,8 @@
                     console.log('Error:', error);
                 }
             });
- 
         */
           })
         </script>
-
-
-
-
   </body>
-
-
-  </html>
+</html>

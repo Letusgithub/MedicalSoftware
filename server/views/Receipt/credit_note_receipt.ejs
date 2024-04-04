@@ -408,7 +408,7 @@
                             <td id="taxAmt0"></td>
                             <td id="cgst-0"></td>
                             <td id="sgst-0">
-                                </td>
+                            </td>
                             <td id="totalGst0"></td>
                         </tr>
                         <tr>
@@ -416,7 +416,7 @@
                             <td id="taxAmt5"></td>
                             <td id="cgst-5"></td>
                             <td id="sgst-5">
-                                </td>
+                            </td>
                             <td id="totalGst5"></td>
                         </tr>
                         <tr>
@@ -424,7 +424,7 @@
                             <td id="taxAmt12"></td>
                             <td id="cgst-12"></td>
                             <td id="sgst-12">
-                                </td>
+                            </td>
                             <td id="totalGst12"></td>
                         </tr>
                         <tr>
@@ -432,7 +432,7 @@
                             <td id="taxAmt18"></td>
                             <td id="cgst-18"></td>
                             <td id="sgst-18">
-                                </td>
+                            </td>
                             <td id="totalGst18"></td>
                         </tr>
                         <tr>
@@ -511,12 +511,15 @@
     <script>
         $(document).ready(function () {
             var id = '<%=id%>';
-            console.log(id);            
+            console.log(id);
 
             $.get(`/api/getcreditnoteininvoice?id=${id}`, function (data, status) {
                 var podata = data.data[0];
                 console.log('inside the credit note', data);
-                $("#orderdate").html(`Date: ${moment(podata.created_date_credit).format('DD-MM-YYYY')}`)
+                var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                var invoiceDate = new Date(podata.credit_created_date);
+                var formattedDate = invoiceDate.toLocaleDateString('en-US', options);
+                $(".orderdate").text(`Date: ${formattedDate}`);
                 $("#crno").html(`Credit No:<br>${id}`)
 
                 $("#vendorname").text(`Distributor Name: ${podata.vendor_name}`)
@@ -536,9 +539,9 @@
                 var transactions = [];
 
                 for (var i = 0; i < items.length; i++) {
-                    
+
                     $("#NumberOfItems").text(`No of Items: ${items.length}`);
-                    
+
                     var datetime = items[i].exp_date;
                     var expDate = moment(datetime).format('MM/YYYY');
 

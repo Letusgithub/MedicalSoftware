@@ -687,7 +687,8 @@
                         console.log('inside the credit note', data);
 
                         var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                        var invoiceDate = new Date(podata.created_date_credit);
+                        var invoiceDate = new Date(podata.credit_created_date);
+                        console.log(invoiceDate)
                         var formattedDate = invoiceDate.toLocaleDateString('en-US', options);
                         $(".orderdate").text(`Date: ${formattedDate}`);
                         $(".crno").html(`Credit No:<br>${id}`)
