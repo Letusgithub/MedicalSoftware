@@ -19,8 +19,9 @@
                 padding-left: 15px;
                 margin-right: auto;
                 margin-left: auto;
+
                 position: relative;
-                width: 44.2365rem;
+                width: 50.2365rem;
                 height: 35.97663rem;
                 flex-shrink: 0;
                 border: 0.2px solid #1E1E1E;
@@ -141,7 +142,7 @@
 
             .cart-table {
                 position: relative;
-                width: 44.23000rem;
+                width: 50.2365rem;
                 height: 14.56863rem;
                 border: 0.05rem solid #1E1E1E;
                 left: -1rem;
@@ -174,11 +175,46 @@
                 text-transform: uppercase;
             }
 
+            .footer-gst-distribution {
+                position: relative;
+                left: -1rem;
+                width: 19.03875rem;
+                height: 10rem;
+
+                color: #000;
+                font-size: 0.625rem;
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 0.875rem;
+                text-transform: uppercase;
+            }
+
+            .footer-gst-distribution thead th {
+                color: #000;
+                line-height: normal;
+                margin: auto;
+                border: 0.05rem solid #1E1E1E;
+            }
+
+            .footer-gst-distribution tbody td {
+                border: 1px solid #000;
+                color: #000;
+                font-size: 0.625rem;
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 0.875rem;
+                text-transform: uppercase;
+                padding-right: 0rem;
+            }
+
+
             .footer-1 {
                 position: relative;
                 left: -1rem;
                 top: -0.05rem;
-                width: 28.9rem;
+                width: 20.2rem;
                 height: 10.10rem;
                 border: 0.05rem solid #1E1E1E;
 
@@ -406,152 +442,204 @@
 
                                         <!-- Invoice -->
 
-                                        
-                                            <div class="frame1 " id="html-content" style="display: none;">
-                                                <div class="receipt-container">
-                                                    <div class="d-flex justify-content-between">
-                                                        <div>
-                                                            <div class="shop-name pharmacyName"></div>
-                                                            <div class="shop-info d-flex justify-content-between">
-                                                                <div class="shop-info-child1 shopaddress"></div>
-                                                                <div class="shop-info-child2">
-                                                                    <p class="my-0 gstin" id="">GSTIN :</p>
-                                                                    <p class="my-0 dlno1" id="">DL No 1:</p>
-                                                                    <p class="my-0 dlno2" id="">DL No 2:</p>
-                                                                    <p class="my-0 flno" id="">FSSAI :</p>
-                                                                </div>
+
+                                        <div class="frame1 " id="html-content" style="display: block;">
+                                            <div class="receipt-container">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <div class="shop-name pharmacyName"></div>
+                                                        <div class="shop-info d-flex justify-content-between">
+                                                            <div class="shop-info-child1 shopaddress"></div>
+                                                            <div class="shop-info-child2">
+                                                                <p class="my-0 gstin" id="">GSTIN :</p>
+                                                                <p class="my-0 dlno1" id="">DL No 1:</p>
+                                                                <p class="my-0 dlno2" id="">DL No 2:</p>
+                                                                <p class="my-0 flno" id="">FSSAI :</p>
                                                             </div>
-                                                        </div>
-                                                        <div class="logo-container">
-                                                            <img src="/images/logo.svg"></img>
                                                         </div>
                                                     </div>
-                                                    <hr class="px-0">
-                                                    <div class="d-flex justify-content-between">
-                                                        <div class="customer-details">
-                                                            <p class="customername" style="font-weight: 600;">
-                                                                Patient name:
-                                                            </p>
-                                                            <p class="mobilenumber">
-                                                                Mobile:
-                                                            </p>
-                                                            <p class="shippingadd">
-                                                                Shipping Address:
-                                                            </p>
-                                                            <p class="doctorname">
-                                                                Dr name:
-                                                            </p>
-
-                                                        </div>
-                                                        <div class="receipt-type">
-                                                            Sales Invoice
-                                                        </div>
-                                                        <div class="receipt-details">
-                                                            <p class="orderdate">
-                                                                Date:
-                                                            </p>
-                                                            <p class="invoicenumber">
-                                                                Invoice no.:
-                                                            </p>
-                                                        </div>
+                                                    <div class="logo-container">
+                                                        <img src="/images/logo.svg"></img>
+                                                    </div>
+                                                </div>
+                                                <hr class="px-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="customer-details">
+                                                        <p class="customername" style="font-weight: 600;">
+                                                            Patient name:
+                                                        </p>
+                                                        <p class="mobilenumber">
+                                                            Mobile:
+                                                        </p>
+                                                        <p class="shippingadd">
+                                                            Shipping Address:
+                                                        </p>
+                                                        <p class="doctorname">
+                                                            Dr name:
+                                                        </p>
 
                                                     </div>
-                                                    <table class="cart-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 11.29rem;">Item</th>
-                                                                <th style="width: 3.1rem;">QTY</th>
-                                                                <th style="width: 4.59rem;">HSN</th>
-                                                                <th style="width: 4.4rem;">Batch</th>
-                                                                <th style="width: 3.25rem;">Exp.</th>
-                                                                <th style="width: 3.62rem;">MRP(₹)</th>
-                                                                <th style="width: 3.61rem;">GST%</th>
-                                                                <th style="width: 3.91rem;">Discount%</th>
-                                                                <th style="width: 4.2rem;">Total(₹)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="cartitems">
-
-
-
-                                                        </tbody>
-                                                    </table>
-                                                    <div class="d-flex flex-row">
-                                                        <div class="footer-1">
-                                                            <div class="receipt-msg">
-                                                                <p>
-                                                                    “GET WELL SOON BY DAWA.AI”
-                                                                </p>
-                                                            </div>
-                                                            <div class="receipt-info">
-                                                                <div class="receipt-tnc">
-                                                                    <div class="header">Terms & Conditions
-                                                                        <div>
-                                                                            <p>Confirm Medicines from your Doctor before
-                                                                                use
-                                                                            </p>
-                                                                            <p>I/We declare that this invoice shows
-                                                                                actual
-                                                                                price of goods and services and that all
-                                                                                particulars are true and correct.</p>
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                </div>
-                                                                <div class="receipt-sign">
-                                                                    Authorised Signature
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="footer-2">
-                                                            <div class="cart-summary">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div class="label">
-                                                                        Subtotal(₹):
-                                                                    </div>
-                                                                    <div class="subtotal">
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div class="label">
-                                                                        Additonal Discount(₹):
-                                                                    </div>
-                                                                    <div class="additionaldisc">
-
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="d-flex justify-content-between mb-2">
-                                                                    <div class="label">
-                                                                        Payment:
-                                                                    </div>
-                                                                    <div class="mop">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="cart-total">
-                                                                <div class="d-flex justify-content-between my-2">
-                                                                    <div>
-                                                                        Amount(₹):
-                                                                    </div>
-                                                                    <div class="grandtotal">
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
-                                                        </div>
+                                                    <div class="receipt-type">
+                                                        Sales Invoice
+                                                    </div>
+                                                    <div class="receipt-details">
+                                                        <p class="orderdate">
+                                                            Date:
+                                                        </p>
+                                                        <p class="invoicenumber">
+                                                            Invoice no.:
+                                                        </p>
                                                     </div>
 
                                                 </div>
+                                                <table class="cart-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 11.29rem;">Item</th>
+                                                            <th style="width: 3.1rem;">QTY</th>
+                                                            <th style="width: 4.59rem;">HSN</th>
+                                                            <th style="width: 4.4rem;">Batch</th>
+                                                            <th style="width: 3.25rem;">Exp.</th>
+                                                            <th style="width: 3.62rem;">MRP(₹)</th>
+                                                            <th style="width: 3.61rem;">GST%</th>
+                                                            <th style="width: 3.91rem;">Discount%</th>
+                                                            <th style="width: 4.2rem;">Total(₹)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="cartitems">
+
+
+
+                                                    </tbody>
+                                                </table>
+                                                <div class="d-flex flex-row">
+                                                    <table class="footer-gst-distribution">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>GST%</th>
+                                                                <th>Taxable Amt</th>
+                                                                <th>CGST</th>
+                                                                <th>SGST</th>
+                                                                <th>Total GST</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="p-0">
+                                                            <tr>
+                                                                <td>0%</td>
+                                                                <td id="taxAmt0"></td>
+                                                                <td id="cgst-0"></td>
+                                                                <td id="sgst-0">
+                                                                    </tdid>
+                                                                <td id="totalGst0"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5%</td>
+                                                                <td id="taxAmt5"></td>
+                                                                <td id="cgst-5"></td>
+                                                                <td id="sgst-5">
+                                                                    </tdid>
+                                                                <td id="totalGst5"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>12%</td>
+                                                                <td id="taxAmt12"></td>
+                                                                <td id="cgst-12"></td>
+                                                                <td id="sgst-12">
+                                                                    </tdid>
+                                                                <td id="totalGst12"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>18%</td>
+                                                                <td id="taxAmt18"></td>
+                                                                <td id="cgst-18"></td>
+                                                                <td id="sgst-18">
+                                                                    </tdid>
+                                                                <td id="totalGst18"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Total</td>
+                                                                <td id="taxAmtTotal"></td>
+                                                                <td id="cgstTotal"></td>
+                                                                <td id="sgstTotal"></td>
+                                                                <td id="totalGst"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <div class="footer-1">
+                                                        <div class="receipt-msg">
+                                                            <p>
+                                                                “GET WELL SOON BY DAWA.AI”
+                                                            </p>
+                                                        </div>
+                                                        <div class="receipt-info">
+                                                            <div class="receipt-tnc">
+                                                                <div class="header">Terms & Conditions
+                                                                    <div>
+                                                                        <p>Confirm Medicines from your Doctor before
+                                                                            use
+                                                                        </p>
+                                                                        <!-- <p>I/We declare that this invoice shows
+                                                                            actual
+                                                                            price of goods and services and that all
+                                                                            particulars are true and correct.</p> -->
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div class="receipt-sign">
+                                                                Authorised Signature
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="footer-2">
+                                                        <div class="cart-summary">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div class="label">
+                                                                    Subtotal (₹):
+                                                                </div>
+                                                                <div class="subtotal">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between">
+                                                                <div class="label">
+                                                                    Add Discount (₹):
+                                                                </div>
+                                                                <div class="additionaldisc">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between mb-2">
+                                                                <div class="label">
+                                                                    Payment:
+                                                                </div>
+                                                                <div class="mop">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="cart-total">
+                                                            <div class="d-flex justify-content-between my-2">
+                                                                <div>
+                                                                    Amount(₹):
+                                                                </div>
+                                                                <div class="grandtotal">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
 
                                             </div>
-                                      
+
+                                        </div>
+
 
 
                                         <!-- /Invoice -->
@@ -604,15 +692,16 @@
                     let customerNumber;
                     let customerAdd;
 
-                    var todayDate = new Date();
-                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                    var formattedDate = todayDate.toLocaleDateString('en-US', options);
-                    $(".orderdate").text(`Date: ${formattedDate}`);
+
 
                     $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
                         var customer = data.result[0];
                         console.log('inside the invoice template', customer);
-                        $(".mop").text(customer.mop.toUpperCase());
+                        var todayDate = new Date(customer.sales_created_date);
+                        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                        var formattedDate = todayDate.toLocaleDateString('en-US', options);
+                        $(".orderdate").text(`Date: ${formattedDate}`);
+                        $(".mop").text(customer.mop || 'NA');
 
                         customerName = customer.cust_name;
                         customerNumber = customer.cust_telephone || 'NA';
@@ -654,10 +743,28 @@
                         var items = data.data;
                         console.log("items in data", items);
 
+                        var totalGross = 0;
+                        var totalGST = 0;
+                        var totalAmount = 0;
+                        var transactions = [];
+
+
                         for (var i = 0; i < items.length; i++) {
                             var datetime = items[i].exp_date;
                             console.log(datetime);
                             var date = moment(datetime).format('MM/YYYY');
+
+                            var grossValue = (items[i].qty - items[i].free) * items[i].purchase * (1 - items[i].bulk_discount / 100);
+                            var gstValue = grossValue * items[i].gst / 100;
+                            var amount = grossValue + gstValue;
+
+                            var transaction = {
+                                grossAmount: grossValue,
+                                gstRate: items[i].gst,
+                            }
+
+                            // Append the object to the transactions array
+                            transactions.push(transaction);
 
                             cartHtml =
                                 `<tr>
@@ -673,7 +780,62 @@
                         </tr>`
                             $(".cartitems").append(cartHtml);
 
+                            totalGross += grossValue;
+                            totalGST += gstValue;
+                            totalAmount += amount;
                         }
+
+                        // Initialize totals
+                        var totals = {
+                            0: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                            5: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                            12: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                            18: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                            total: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 },
+                            grandTotal: { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 }
+                        };
+
+                        // Calculate totals
+                        transactions.forEach(function (transaction) {
+                            // If this GST rate hasn't been seen before, add it to totals
+                            if (!(transaction.gstRate in totals)) {
+                                totals[transaction.gstRate] = { taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0 };
+                            }
+
+                            var gstAmount = transaction.grossAmount * transaction.gstRate / 100;
+                            var cgst = gstAmount / 2;
+                            var sgst = gstAmount / 2;
+
+                            totals[transaction.gstRate].taxAmt += transaction.grossAmount;
+                            totals[transaction.gstRate].cgst += cgst;
+                            totals[transaction.gstRate].sgst += sgst;
+                            totals[transaction.gstRate].totalGst += gstAmount;
+
+                            totals.total.taxAmt += transaction.grossAmount;
+                            totals.total.cgst += cgst;
+                            totals.total.sgst += sgst;
+                            totals.total.totalGst += gstAmount;
+
+                            totals.grandTotal.taxAmt += transaction.grossAmount;
+                            totals.grandTotal.cgst += cgst;
+                            totals.grandTotal.sgst += sgst;
+                            totals.grandTotal.totalGst += gstAmount;
+                        });
+
+                        // Display totals
+                        for (var gstRate in totals) {
+                            $('#taxAmt' + gstRate).text((totals[gstRate].taxAmt).toFixed(2));
+                            $('#cgst-' + gstRate).text((totals[gstRate].cgst).toFixed(2));
+                            $('#sgst-' + gstRate).text((totals[gstRate].sgst).toFixed(2));
+                            $('#totalGst' + gstRate).text((totals[gstRate].totalGst).toFixed(2));
+                        }
+
+                        // Display grand totals
+                        $('#taxAmtTotal').text((totals.grandTotal.taxAmt).toFixed(2));
+                        $('#cgstTotal').text((totals.grandTotal.cgst).toFixed(2));
+                        $('#sgstTotal').text((totals.grandTotal.sgst).toFixed(2));
+                        $('#totalGst').text((totals.grandTotal.totalGst).toFixed(2));
+
                     })
 
                     // Whatsapp Chat with customer

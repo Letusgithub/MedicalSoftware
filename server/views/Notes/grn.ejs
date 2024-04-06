@@ -375,7 +375,7 @@
                                                                 </div>
                                                                 <div style="font-size: smaller; color: blue; margin-top: 5px; display: none;"
                                                                     id="r_margin">
-                                                                    Retailer Margin: <span id="retailer_margin"></span>%
+                                                                    Retailer Margin: <span id="retailer_margin">20</span>%
                                                                 </div>
                                                             </div>
     
@@ -799,11 +799,6 @@
 
                     // logic for calculating PTR
                     $("select[name='gst']").on("change", function () {
-                        $("#price").val(0);
-                        $("#addpur").val(0);
-                        $("#retailer_margin").text(0);
-                        $("#free_scheme").val(0);
-                        $("#bulk_discount").val(0);
 
                         var mrp = parseFloat($("#price").val());
                         var gst = parseFloat($("select[name='gst']").val());
@@ -820,11 +815,13 @@
 
                         var mrp = parseFloat($("#price").val()) || 0;
                         var gst = parseFloat($("select[name='gst']").val()) || 0;
-                        var ptr = parseFloat($("#addpur").val()) || 0;
+                        var retailerMargin = parseFloat($("#retailer_margin").text());
+                        // var ptr = parseFloat($("#addpur").val()) || 0;
 
-                        var retailerMargin = calculateRetailerMargin(mrp, ptr, gst);
+                        // var retailerMargin = alculateRetailerMargin(mrp, ptr, gst);
+                        var ptr = calcuatePTR(mrp, gst, retailerMargin);
 
-                        $("#retailer_margin").text(retailerMargin.toFixed(2));
+                        $("#addpur").val(ptr.toFixed(2))
                     });
 
                     $("#addpur").on("keyup", function () {
