@@ -720,7 +720,7 @@
                         var options = { year: 'numeric', month: 'long', day: 'numeric' };
                         var formattedDate = todayDate.toLocaleDateString('en-US', options);
                         $(".orderdate").text(`Date: ${formattedDate}`);
-                        $(".mop").text(customer.mop || 'NA');
+                        $(".mop").text(customer.mop.toUpperCase() || 'NA');
 
                         customerName = customer.cust_name;
                         customerNumber = customer.cust_telephone || 'NA';
