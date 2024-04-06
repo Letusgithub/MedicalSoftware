@@ -106,7 +106,7 @@
                                                             readonly>
                                                         <select type="text" id="dl1_st" placeholder="State (eg:-MH)"
                                                             class="form-control border px-1">
-                                                            <option value="" selected> State</option>
+                                                            <option value=""> State</option>
                                                             <option value="AD">Andhra Pradesh</option>
                                                             <option value="AR"> Arunachal Pradesh</option>
                                                             <option value="AS"> Assam</option>
@@ -123,7 +123,7 @@
                                                             <option value="KL"> Kerala</option>
                                                             <option value="LD"> Lakshadweep Islands</option>
                                                             <option value="MP"> Madhya Pradesh</option>
-                                                            <option value="MH"> Maharashtra</option>
+                                                            <option value="MH" selected> Maharashtra</option>
                                                             <option value="MN"> Manipur</option>
                                                             <option value="ML"> Meghalaya</option>
                                                             <option value="MZ"> Mizoram</option>
@@ -140,7 +140,7 @@
                                                             <option value="UK"> Uttarakhand</option>
                                                             <option value="WB"> West Bengal</option>
                                                         </select>
-                                                        <input type="text" id="dl1_ct" style="text-align: center;"
+                                                        <input type="text" id="dl1_ct" style="text-align: center;" value="NGP"
                                                             placeholder="City" class="form-control border">
                                                         <input type="text" id="dl1_ln" style="text-align: center;"
                                                             placeholder="Lic. no." class="form-control border"
@@ -163,7 +163,7 @@
                                                             readonly>
                                                         <select type="text" id="dl2_st" placeholder="State (eg:-MH)"
                                                             class="form-control border px-1">
-                                                            <option value="" selected> State</option>
+                                                            <option value=""> State</option>
                                                             <option value="AD">Andhra Pradesh</option>
                                                             <option value="AR"> Arunachal Pradesh</option>
                                                             <option value="AS"> Assam</option>
@@ -180,7 +180,7 @@
                                                             <option value="KL"> Kerala</option>
                                                             <option value="LD"> Lakshadweep Islands</option>
                                                             <option value="MP"> Madhya Pradesh</option>
-                                                            <option value="MH"> Maharashtra</option>
+                                                            <option value="MH" selected> Maharashtra</option>
                                                             <option value="MN"> Manipur</option>
                                                             <option value="ML"> Meghalaya</option>
                                                             <option value="MZ"> Mizoram</option>
@@ -198,7 +198,7 @@
                                                             <option value="WB"> West Bengal</option>
                                                         </select>
 
-                                                        <input type="text" id="dl2_ct" style="text-align: center;"
+                                                        <input type="text" id="dl2_ct" style="text-align: center;" value="NGP"
                                                             placeholder="City" class="form-control border">
                                                         <input type="text" id="dl2_ln" style="text-align: center;"
                                                             placeholder="Lic. no." class="form-control border"
@@ -211,7 +211,7 @@
                                             </div>
 
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN</label>
+                                                <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span style="font-size: 15px; color: red">*</span></label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <span id="basic-icon-default-phone2" class="input-group-text"><i
@@ -296,16 +296,16 @@
                         }
                     });
 
-                    $("#dl2_ln").on('input', function () {
-                        if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
-                            $("#dl2_ln").val(null);
-                            $("#dl2_ln").addClass('is-invalid');
-                            $("#dl2_ln").focus();
-                            // return alert(" DL Number 1  and DL Number 2 cannot be same");
-                        } else {
-                            $("#dl2_ln").removeClass('is-invalid');
-                        }
-                    });
+                    // $("#dl2_ln").on('input', function () {
+                    //     if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
+                    //         $("#dl2_ln").val(null);
+                    //         $("#dl2_ln").addClass('is-invalid');
+                    //         $("#dl2_ln").focus();
+                    //         // return alert(" DL Number 1  and DL Number 2 cannot be same");
+                    //     } else {
+                    //         $("#dl2_ln").removeClass('is-invalid');
+                    //     }
+                    // });
 
                     $("#submitBtn").click(function () {
 
@@ -325,18 +325,26 @@
                             $("#vendor_contact").removeClass('is-invalid');
                         }
 
-                        if ($("#dl1_ft").val() || $("#dl1_st").val() || $("#dl1_ct").val() || $("#dl1_ln").val() == '') {
-                            $("#dl1_ln").addClass('is-invalid');
-                            e.preventDefault();
-                        } else {
-                            $("#dl1_ln").removeClass('is-invalid');
-                        }
+                        // if ($("#dl1_ft").val() || $("#dl1_st").val() || $("#dl1_ct").val() || $("#dl1_ln").val() == '') {
+                        //     $("#dl1_ln").addClass('is-invalid');
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("#dl1_ln").removeClass('is-invalid');
+                        // }
 
-                        if ($("#dl2_ft").val() || $("#dl2_st").val() || $("#dl2_ct").val() || $("#dl2_ln").val() == '') {
-                            $("#dl2_ln").addClass('is-invalid');
+                        // if ($("#dl2_ft").val() || $("#dl2_st").val() || $("#dl2_ct").val() || $("#dl2_ln").val() == '') {
+                        //     $("#dl2_ln").addClass('is-invalid');
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("#dl2_ln").removeClass('is-invalid');
+                        // }
+
+                        if($("#vendor_gstin").val() == ''){
+                            $("#vendor_gstin").addClass('is-invalid');
+                            $("#vendor_gstin").focus();
                             e.preventDefault();
                         } else {
-                            $("#dl2_ln").removeClass('is-invalid');
+                            $("#vendor_gstin").removeClass('is-invalid');
                         }
 
                         var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
