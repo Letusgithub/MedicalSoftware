@@ -297,11 +297,11 @@
                                                             <label class="col-sm-2 col-form-label"
                                                                 for="basic-icon-default-address">Exp Date</label>
                                                             <div class="col-sm-4 mb-3">
-                                                                <div class="input-group  has-validation">
+                                                                <div class="input-group has-validation">
                                                                     <input class="form-control" type="date"
                                                                         id="html5-date-input" name="addexp" />
                                                                     <div class="invalid-feedback">
-                                                                        Please select expiry date.
+                                                                        Please enter valid expiry date.
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -773,7 +773,10 @@
                         var exp_date = input.val();
                         if (exp_date < new Date().toJSON().slice(0, 10)) {
                             $("input[name='addexp']").val(null);
-                            return alert('Please add correct Expiry Date');
+                            $("input[name='addexp']").addClass('is-invalid');
+                            // return alert('Please add correct Expiry Date');
+                        } else {
+                            $('[name="addexp"]').removeClass('is-invalid');
                         }
                     });
 
