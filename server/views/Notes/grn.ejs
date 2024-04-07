@@ -1218,10 +1218,10 @@
                         var totalPurchase = 0;
 
                         for (let i in cartDetails) {
-                            totalPurchase += parseFloat(cartDetails[i].amt);
+                            totalPurchase += parseFloat((cartDetails[i].qty - cartDetails[i].free) * cartDetails[i].purchase * (1 - cartDetails[i].bulk_discount / 100));
                         }
 
-                        totalPurchase = totalPurchase - lessDiscount + creditDebit;
+                        totalPurchase = totalPurchase.toFixed(2);
 
                         $.ajax({
                             url: `/api/creategrn/`,
