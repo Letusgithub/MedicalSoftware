@@ -302,6 +302,9 @@
                                                                 <div class="input-group has-validation">
                                                                     <input class="form-control" type="date"
                                                                         id="html5-date-input" name="addexp" />
+                                                                    <!-- <input type="text" id="billings-card-date"
+                                                                        class="form-control billing-expiry-date-mask"
+                                                                        placeholder="MM/YY"> -->
                                                                     <div class="invalid-feedback">
                                                                         Please enter valid expiry date.
                                                                     </div>
@@ -385,7 +388,8 @@
                                                                         id="retailer_margin">20</span>% -->
                                                                 <div style="font-size: smaller; color: blue; margin-top: 5px; display: none;"
                                                                     id="r_margin">
-                                                                    PTR = <span id="suggest_ptr"></span> @ Retailer Margin: 20%
+                                                                    PTR = <span id="suggest_ptr"></span> @ Retailer
+                                                                    Margin: 20%
                                                                 </div>
                                                             </div>
 
@@ -793,10 +797,6 @@
                             $("input[name='addexp']").val(null);
                             $("input[name='addexp']").addClass('is-invalid');
                             // return alert('Please add correct Expiry Date');
-                        } else if (exp_date < sixMonthsFromNow) {
-                            // Show a warning if the expiry date is within 6 months
-                            $("#expiry-warning-6months").show();
-                            $(".invalid-feedback").hide();
                         } else {
                             $(".invalid-feedback").hide();
                             $("#expiry-warning-6months").hide();
@@ -915,9 +915,48 @@
                         $("select[name='category']").val('Select Category').prop('disabled', false);
                     })
 
-                    var setLocalData;
-                    var getLocalData;
-                    var htmlData;
+                    //getting data when refresh
+                    var grnCartItems = JSON.parse(localStorage.getItem('grncartdetails')) || [];
+                    var vendorDataLocal = JSON.parse(localStorage.getItem('vendordata')) || [];
+                    console.log(vendorDataLocal)
+
+                    if (grnCartItems.length != 0) {
+                        $("#vendorinvoicenumber").val((vendorDataLocal.vendorInvoiceNo));
+                    }
+
+                    renderRefreshCart(grnCartItems);
+
+                    function renderRefreshCart(items) {
+
+                        $('#cart').empty();
+                        for (var i = 0; i < items.length; i++) {
+                            htmlData = `
+                          <tr>
+                            <td class="card_id">${i + 1}</td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                            <td>${items[i].batch}</td>
+                            <td>${items[i].expdate}</td>
+                            <td>${items[i].mrp}</td>
+                            <td>${items[i].purchase}</td>
+                            <td>${items[i].qty}</td>
+                            <td>${items[i].punit}</td>
+                            <td>${items[i].gst}</td>
+                            <td>${items[i].bulk_discount}</td>
+                            <td>${items[i].amt}</td>
+                            <td>
+                              <div class="action-btns">
+                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          `
+
+                            $('#cart').append(htmlData);
+                        }
+                        getBillSummary();
+                    }
+                    //end of logic for refresh data
 
                     var setLocalData;
                     var getLocalData;
@@ -1114,6 +1153,14 @@
 
                         localStorage.setItem("grncartdetails", setLocalData);
 
+                        // also add the customer data to local storage
+                        var storeDistributorData = {
+                            vendorName: $("#vendorname").val(),
+                            vendorInvoiceNo: $("#vendorinvoicenumber").val(),
+                            vendorInvoiceDate : $("input[name='invoiceDate']").val()
+                        };
+                        localStorage.setItem("vendordata", JSON.stringify(storeDistributorData));
+
                         productId = undefined;
                         $("#medicinename").val("");
                         $("select[name = 'gst']").val('Select option');
@@ -1179,6 +1226,7 @@
                             <td>${items[i].amt}</td>
                             <td>
                               <div class="action-btns">
+                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
                                 <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
                               </div>
                             </td>
@@ -1232,6 +1280,31 @@
                     var org = '<%=orgId%>';
 
                     $("#submitorder").click(function () {
+
+                        // Validations
+                        if ($("#vendorselect").val() === 'Select Distributor') {
+                            $('#vendorselect').addClass('is-invalid');
+                            $('#vendorselect').focus();
+                            e.preventDefault();
+                        } else {
+                            $('#vendorselect').removeClass('is-invalid');
+                        }
+
+                        if ($("#vendorinvoicenumber").val() == '') {
+                            $("#vendorinvoicenumber").addClass('is-invalid');
+                            $("#vendorinvoicenumber").focus();
+                            e.preventDefault();
+                        } else {
+                            $("#vendorinvoicenumber").removeClass('is-invalid');
+                        }
+
+                        if ($("input[name='invoiceDate']").val() == '') {
+                            $("input[name='invoiceDate']").addClass('is-invalid');
+                            $("input[name='invoiceDate']").focus();
+                            e.preventDefault();
+                        } else {
+                            $("input[name='invoiceDate']").removeClass('is-invalid');
+                        }
 
                         if (!$("#defaultCheck1").prop("checked")) {
                             return alert("Please check the disclaimer before submitting.");
@@ -1566,6 +1639,8 @@
 
                                 setTimeout(() => {
                                     $('#loader').hide();
+                                    localStorage.removeItem("grncartdetails");
+                                    localStorage.removeItem("vendordata");
                                     window.location.href = `/grn_receipt/${GRNid}`
                                 }, 3000);
 

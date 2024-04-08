@@ -939,11 +939,12 @@
             $("#brand").val(selectedItem.brand);
             $("#pUnit").val(selectedItem.priQty).prop('readonly', false);
             $("#sUnit").val(selectedItem.secQty).prop('readonly', false);
-            $("#price").val(selectedItem.mrp).prop('readonly', false);
+            $("#price").val(selectedItem.mrp);
             $("#discount").val(selectedItem.disc).prop('readonly', false);
-            $("expdate").val(selectedItem.expdate);
+            var expdate = new Date(selectedItem.expdate);
+            $("#expdate").val(expdate.toISOString().split('T')[0]);
             $("#gst").val(selectedItem.gst).prop('readonly', false);
-            $("#total").val(selectedItem.total).prop('readonly', false);
+            $("#total").val(selectedItem.total);
 
 
             //getting all data for batches dropdown
@@ -956,9 +957,9 @@
                 $("#batchdroporinput input").remove();
                 $("#batchdroporinput").append(
                   `
-                      <select class="form-select" id="batchnumber" aria-label="unit">
-                      </select>
-                      `
+                  <select class="form-select" id="batchnumber" aria-label="unit">
+                  </select>
+                  `
                 )
 
                 data.data.map(function (value, key) {
@@ -1000,8 +1001,6 @@
                 conversion = data.data[batchId].conversion;
                 calculateTotal();
               })
-
-
             })
 
             //$("#shelflabel").val(selectedItem.shelflabel);
@@ -1024,8 +1023,6 @@
             cartarray = UpdatecartItemsinStorage;
             localStorage.setItem('cartitems', JSON.stringify(UpdatecartItemsinStorage));
             renderCart(UpdatecartItemsinStorage);
-
-
           })
           //end of edit functionality
 
@@ -1127,7 +1124,6 @@
             }
           });
           $('#additionaldiscount').on("input", function () {
-
             var getSubTotalValue = $("#subtotal").val();
             var discountInput = parseFloat($(this).val());
 
