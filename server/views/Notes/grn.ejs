@@ -300,17 +300,10 @@
                                                                 for="basic-icon-default-address">Exp Date</label>
                                                             <div class="col-sm-4 mb-3">
                                                                 <div class="input-group has-validation">
-                                                                    <input class="form-control" type="date"
-                                                                        id="html5-date-input" name="addexp" />
-                                                                    <!-- <input type="text" id="billings-card-date"
-                                                                        class="form-control billing-expiry-date-mask"
-                                                                        placeholder="MM/YY"> -->
+                                                                    <input class="form-control expiry-date-mask"
+                                                                        type="text" name="addexp" placeholder="MM/YY"/>
                                                                     <div class="invalid-feedback">
                                                                         Please enter valid expiry date.
-                                                                    </div>
-                                                                    <div id="expiry-warning-6months"
-                                                                        class="invalid-feedback" style="display: none;">
-                                                                        The expiry date is within 6 months.
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -590,7 +583,7 @@
                     $("input[name='invoiceDate']").val(today);
 
                     // Get the distributor details when the page loads
-                    function getDistributorDetails (vendorId) {
+                    function getDistributorDetails(vendorId) {
                         $.get(`/api/getvendor/${vendorId}`, function (data, status) {
                             var vendorDetails = data.data;
                             console.log(vendorDetails);
@@ -794,16 +787,31 @@
                         $("#secondarypopulate").text(`${secondaryUnit}`);
                     })
 
-                    $("input[name='addexp']").on('input', function () {
+                    var cleave = new Cleave('.expiry-date-mask', {
+                        date: true,
+                        datePattern: ['m', 'y']
+                    });
+
+                    // Expiry date validation
+                    $("[name='addexp']").on('change', function () {
                         var input = $(this);
                         var exp_date = input.val();
-                        if (exp_date < new Date().toJSON().slice(0, 10)) {
-                            $("input[name='addexp']").val(null);
-                            $("input[name='addexp']").addClass('is-invalid');
-                            // return alert('Please add correct Expiry Date');
+
+                        var year = parseInt(exp_date.split('/')[1], 10);
+                        year = year < 70 ? 2000 + year : 1900 + year;
+                        var expiryDate = new Date(year, exp_date.split('/')[0] - 1);
+
+                        // Get the current year and month
+                        var today = new Date();
+                        var currentYear = today.getFullYear();
+                        var currentMonth = today.getMonth();
+
+                        if (expiryDate.getFullYear() < currentYear ||
+                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)) {
+                            $("[name='addexp']").val(null);
+                            $("[name='addexp']").addClass('is-invalid');
                         } else {
                             $(".invalid-feedback").hide();
-                            $("#expiry-warning-6months").hide();
                         }
                     });
 
@@ -932,6 +940,7 @@
                         var yyyy = vendorInvoiceDate.getFullYear();
                         vendorInvoiceDate = yyyy + '-' + mm + '-' + dd;
                         $("input[name='invoiceDate']").val(vendorInvoiceDate);
+                        vendorId = vendorDataLocal.vendorId;
                         $("#vendorselect").val(vendorDataLocal.vendorId);
                         getDistributorDetails(vendorDataLocal.vendorId);
                     }
@@ -1114,8 +1123,18 @@
                         var moq = $("input[name='threshold']").val();
 
 
-                        var batch = $("#batchname").val();
+
+                        // Convert expdate to yyyy-mm-dd format
                         var exp = $('[name="addexp"]').val();
+                        var year = parseInt(exp.split('/')[1], 10);
+                        year = year < 70 ? 2000 + year : 1900 + year;
+                        var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
+                        firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
+                        var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
+
+                        console.log(exp);
+
+                        var batch = $("#batchname").val();
                         var conversion = $("#conversion").val();
                         var shelflabel = $("#shelflabel").val();
                         var mrp = $("#price").val();
@@ -1164,7 +1183,7 @@
                         var storeDistributorData = {
                             vendorId: $("#vendorselect option:selected").val(),
                             vendorInvoiceNo: $("#vendorinvoicenumber").val(),
-                            vendorInvoiceDate : $("input[name='invoiceDate']").val()
+                            vendorInvoiceDate: $("input[name='invoiceDate']").val()
                         };
                         localStorage.setItem("vendordata", JSON.stringify(storeDistributorData));
 
