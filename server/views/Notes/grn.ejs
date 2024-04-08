@@ -301,7 +301,7 @@
                                                             <div class="col-sm-4 mb-3">
                                                                 <div class="input-group has-validation">
                                                                     <input class="form-control expiry-date-mask"
-                                                                        type="text" name="addexp" placeholder="MM/YY"/>
+                                                                        type="text" name="addexp" placeholder="MM/YY" />
                                                                     <div class="invalid-feedback">
                                                                         Please enter valid expiry date.
                                                                     </div>
@@ -787,6 +787,7 @@
                         $("#secondarypopulate").text(`${secondaryUnit}`);
                     })
 
+                    // Formatted expiry date input
                     var cleave = new Cleave('.expiry-date-mask', {
                         date: true,
                         datePattern: ['m', 'y']
@@ -927,7 +928,7 @@
                         $("select[name='category']").val('Select Category').prop('disabled', false);
                     })
 
-                    //getting data when refresh
+                    // Get data when refresh
                     var grnCartItems = JSON.parse(localStorage.getItem('grncartdetails')) || [];
                     var vendorDataLocal = JSON.parse(localStorage.getItem('vendordata')) || [];
                     console.log(vendorDataLocal)
@@ -964,6 +965,7 @@
                                     <td>${items[i].amt}</td>
                                     <td>
                                     <div class="action-btns">
+                                        <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
                                         <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
                                     </div>
                                     </td>
@@ -1220,19 +1222,6 @@
                         getBillSummary();
                     });
 
-                    //deletefunctionality
-                    $("#cart").on("click", ".delete-button", function () {
-                        var item = $(this).closest("tr");
-                        var item_id = item.find(".card_id").text().trim();
-                        var cartItemsinStorage = JSON.parse(localStorage.getItem('grncartdetails')) || [];
-                        cartItemsinStorage.splice(item_id - 1, 1);
-                        cartarray = cartItemsinStorage;
-                        localStorage.setItem('grncartdetails', JSON.stringify(cartItemsinStorage));
-                        renderCart(cartItemsinStorage);
-                        getBillSummary();
-                    });
-                    //endofdeletefunctionality
-
                     //rendercart functionality
                     function renderCart(items) {
                         $('#cart').empty();
@@ -1252,6 +1241,7 @@
                             <td>${items[i].amt}</td>
                             <td>
                               <div class="action-btns">
+                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
                                 <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
                               </div>
                             </td>
@@ -1262,6 +1252,58 @@
                         }
                     }
                     //end of rendereing data logic
+
+                    //deletefunctionality
+                    $("#cart").on("click", ".delete-button", function () {
+                        var item = $(this).closest("tr");
+                        var item_id = item.find(".card_id").text().trim();
+                        var cartItemsinStorage = JSON.parse(localStorage.getItem('grncartdetails')) || [];
+                        cartItemsinStorage.splice(item_id - 1, 1);
+                        cartarray = cartItemsinStorage;
+                        localStorage.setItem('grncartdetails', JSON.stringify(cartItemsinStorage));
+                        renderCart(cartItemsinStorage);
+                        getBillSummary();
+                    });
+                    //endofdeletefunctionality
+
+                    //edit functionality  
+                    $("#cart").on("click", ".edit-button", function () {
+                        var item = $(this).closest("tr");
+                        var item_id = item.find(".card_id").text().trim();
+                        var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('grncartdetails')) || [];
+                        var selectedItem = UpdatecartItemsinStorage[item_id - 1];
+                        productId = selectedItem.productId;
+                        
+                        $("#medicinename").val(selectedItem.productname);
+                        $("#brand").val(selectedItem.brandname);
+                        $("#salt").val(selectedItem.salt);
+                        $("select[name = 'gst']").val(selectedItem.gst);
+                        $("#hsn").val(selectedItem.hsn);
+                        $("select[name='primary']").val(selectedItem.punit);
+                        populateSecondaryDropdown();
+                        $("select[name='secondary']").val(selectedItem.sunit);
+                        $("input[name='threshold']").val(selectedItem.moq);
+                        $("#categorySelect").val(selectedItem.category_id);
+
+                        $("#batchname").val(selectedItem.batch);
+                        $('[name="addexp"]').val('');
+                        $("#primarypopulate").text(selectedItem.punit);
+                        $("#secondarypopulate").text(selectedItem.sunit);
+                        $("#conversion").val(selectedItem.conversion);
+                        $("#price").val(selectedItem.mrp);
+                        $("#addpur").val(selectedItem.purchase);
+                        $("#free_scheme").val(selectedItem.free);
+                        $("#bulk_discount").val(selectedItem.bulk_discount);
+                        $("#base_price").text(selectedItem.base_price);
+                        $("input[name='quantity']").val(selectedItem.qty - selectedItem.free);
+
+                        UpdatecartItemsinStorage.splice(item_id - 1, 1);
+                        cartarray = UpdatecartItemsinStorage;
+                        localStorage.setItem('grncartdetails', JSON.stringify(UpdatecartItemsinStorage));
+                        renderCart(UpdatecartItemsinStorage);
+                    })
+                    //end of edit functionality
+
 
                     function getBillSummary() {
                         var totalAmt = 0;
