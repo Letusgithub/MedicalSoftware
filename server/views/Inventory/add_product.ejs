@@ -293,7 +293,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-3">
+                                            <!-- <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="free_scheme">Free</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
@@ -314,7 +314,7 @@
                                                             id="bulk_discount">
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <!-- <div class="row mb-3">
 
@@ -339,12 +339,6 @@
                                             <div class="col-sm-12 text-center">
                                                 <button type="submit" class="btn btn-primary"
                                                     id="submitbatch">Add</button>
-                                                <div>
-                                                    <div style=" color: blue; margin-top: 5px; display: none;"
-                                                        id="b_price">
-                                                        Base price: <span id="base_price"></span>
-                                                    </div>
-                                                </div>
                                             </div>
 
 
@@ -586,16 +580,7 @@
                         return (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
                     }
 
-                    // Calcuate Base Price
-                    function calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis) {
-                        var free_cf = 1 - (1 / ((1 + (gst / 100)) * (qty + free)));
-                        var bulkDis_cf = 1 - (bulkDis / ((1 + (gst / 100)) * 100));
 
-                        if (free == 0) { // Boundary condition
-                            return ptr * bulkDis_cf;
-                        }
-                        return ptr * free_cf * bulkDis_cf;;
-                    }
 
                     $("select[name='gst']").on("change", function () {
                         $("input[name='addmrp']").val(0)
@@ -620,38 +605,6 @@
 
                         $("input[name='addpur']").val(ptr.toFixed(2))
                     });
-
-                    $("input[name='addpur']").on("keyup", function () {
-                        var mrp = parseFloat($("#price").val());
-                        var gst = parseFloat($("select[name='gst']").val());
-                        var ptr = parseFloat($("#addpur").val());
-                        var qty = parseFloat($("input[name='addqty']").val());
-                        var free = parseFloat($("#free_scheme").val());
-                        var bulkDis = parseFloat($("#bulk_discount").val());
-
-                        var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
-
-                        var basePrice = calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis);
-
-                        $("#retailer_margin").text(retailerMargin.toFixed(2));
-                        $("#b_price").show();
-                        $("#base_price").text(basePrice.toFixed(2));
-                    })
-
-                    // Compute base price on change
-                    $("#free_scheme, #bulk_discount, input[name='addqty']").on("keyup", function () {
-                        var mrp = parseFloat($("#price").val());
-                        var gst = parseFloat($("select[name='gst']").val());
-                        var ptr = parseFloat($("#addpur").val());
-                        var qty = parseFloat($("input[name='addqty']").val());
-                        var free = parseFloat($("#free_scheme").val());
-                        var bulkDis = parseFloat($("#bulk_discount").val());
-
-                        var basePrice = calcuateBasePrice(mrp, ptr, gst, qty, free, bulkDis);
-
-                        $("#b_price").show();
-                        $("#base_price").text(basePrice.toFixed(2));
-                    })
 
                     //submit process after adding batch
                     $("#submitbatch").click(function () {
@@ -816,12 +769,12 @@
                                                 batch_name: $("#batchname").val(),
                                                 exp_date: exp,
                                                 conversion: $("#conversion").val(),
-                                                batch_qty: parseFloat($("input[name='addqty']").val()) + parseFloat($("input[name='free_scheme']").val()),
+                                                batch_qty: parseFloat($("input[name='addqty']").val()),
                                                 purchase_rate: $("input[name='addpur']").val(),
                                                 mrp: $("input[name='addmrp']").val(),
-                                                free: $("input[name='free_scheme']").val() || 0,
-                                                bulk_discount: $("input[name='bulk_discount']").val() || 0,
-                                                base_price: $("#base_price").text(),
+                                                free: 0,
+                                                bulk_discount: 0,
+                                                base_price: $("input[name='addpur']").val(),
                                                 shelf_label: $("input[name='addshelf']").val()
                                             }
                                             console.log(batchDetails);
@@ -890,6 +843,9 @@
                                         batch_qty: $("input[name='addqty']").val(),
                                         purchase_rate: $("input[name='addpur']").val(),
                                         mrp: $("input[name='addmrp']").val(),
+                                        free: 0,
+                                        bulk_discount: 0,
+                                        base_price: $("input[name='addpur']").val(),
                                         shelf_label: $("input[name='addshelf']").val()
                                     }
                                     console.log(batchDetails);
