@@ -617,6 +617,10 @@
                                 $("select[name='unitoption']").removeClass('is-invalid');
                             }
 
+                            if (parseFloat($("input[name='ptr']").val()) > parseFloat($("input[name='mrp']").val())) {
+                                return alert("Purchase Rate can't be greater than MRP");
+                            }
+
                             var product = $("input[name='productname']").val();
                             var brand = $("input[name='brand']").val();
                             var qty = $("input[name='quantity']").val();

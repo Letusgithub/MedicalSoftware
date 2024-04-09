@@ -402,8 +402,59 @@
                                                     </table>
                                                 </div>
                                                 <div class="row card-body">
-                                                    <div class="col-xl-8 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
-
+                                                    <div
+                                                        class="col-xl-8 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
+                                                        <table class="table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>GST%</th>
+                                                                    <th>Taxable Amt</th>
+                                                                    <th>CGST</th>
+                                                                    <th>SGST</th>
+                                                                    <th>Total GST</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="p-0">
+                                                                <tr>
+                                                                    <td>0%</td>
+                                                                    <td class="taxAmt0"></td>
+                                                                    <td class="cgst-0"></td>
+                                                                    <td class="sgst-0"></td>
+                                                                    <td class="totalGst0"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5%</td>
+                                                                    <td class="taxAmt5"></td>
+                                                                    <td class="cgst-5"></td>
+                                                                    <td class="sgst-5">
+                                                                        </td>
+                                                                    <td class="totalGst5"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>12%</td>
+                                                                    <td class="taxAmt12"></td>
+                                                                    <td class="cgst-12"></td>
+                                                                    <td class="sgst-12">
+                                                                        </tdid>
+                                                                    <td class="totalGst12"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>18%</td>
+                                                                    <td class="taxAmt18"></td>
+                                                                    <td class="cgst-18"></td>
+                                                                    <td class="sgst-18">
+                                                                        </tdid>
+                                                                    <td class="totalGst18"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Total</td>
+                                                                    <td class="taxAmtTotal"></td>
+                                                                    <td class="cgstTotal"></td>
+                                                                    <td class="sgstTotal"></td>
+                                                                    <td class="totalGst"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                     <div class="col-xl-4 col-md-12 col-sm-7 col-12">
                                                         <table>
@@ -421,7 +472,7 @@
                                                                     <td class="pe-3">Add CGST:</td>
                                                                     <td class="cgst"></td>
                                                                 </tr>
-                                                                
+
                                                                 <tr class="pb-3">
                                                                     <td class="pe-3">Add SGST:</td>
                                                                     <td class="sgst"></td>
@@ -734,7 +785,7 @@
                         var totalGST = 0;
                         var totalAmount = 0;
                         var lessDiscount = grnData.less_discount;
-                        var lessDiscountPercent = (lessDiscount / grnData.total) * 100; 
+                        var lessDiscountPercent = (lessDiscount / grnData.total) * 100;
                         var creditDebit = grnData.credit_debit || 0;
                         var transactions = [];
 
@@ -784,7 +835,7 @@
                         $(".lessDiscount").text(lessDiscount.toFixed(2));
                         $(".totalGross").text(totalGross.toFixed(2));
                         $(".credit_debit").text((creditDebit).toFixed(2));
-                        
+
 
                         // Initialize totals
                         var totals = {
@@ -825,17 +876,17 @@
 
                         // Display totals
                         for (var gstRate in totals) {
-                            $('#taxAmt' + gstRate).text((totals[gstRate].taxAmt).toFixed(2));
-                            $('#cgst-' + gstRate).text((totals[gstRate].cgst).toFixed(2));
-                            $('#sgst-' + gstRate).text((totals[gstRate].sgst).toFixed(2));
-                            $('#totalGst' + gstRate).text((totals[gstRate].totalGst).toFixed(2));
+                            $('.taxAmt' + gstRate).text((totals[gstRate].taxAmt).toFixed(2));
+                            $('.cgst-' + gstRate).text((totals[gstRate].cgst).toFixed(2));
+                            $('.sgst-' + gstRate).text((totals[gstRate].sgst).toFixed(2));
+                            $('.totalGst' + gstRate).text((totals[gstRate].totalGst).toFixed(2));
                         }
 
                         // Display grand totals
-                        $('#taxAmtTotal').text((totals.grandTotal.taxAmt).toFixed(2));
-                        $('#cgstTotal, .cgst').text((totals.grandTotal.cgst).toFixed(2));
-                        $('#sgstTotal, .sgst').text((totals.grandTotal.sgst).toFixed(2));
-                        $('#totalGst').text((totals.grandTotal.totalGst).toFixed(2));
+                        $('.taxAmtTotal').text((totals.grandTotal.taxAmt).toFixed(2));
+                        $('.cgstTotal, .cgst').text((totals.grandTotal.cgst).toFixed(2));
+                        $('.sgstTotal, .sgst').text((totals.grandTotal.sgst).toFixed(2));
+                        $('.totalGst').text((totals.grandTotal.totalGst).toFixed(2));
 
                         totalAmount = totalGross + totals.grandTotal.totalGst - lessDiscount + creditDebit;
                         $(".totalamount").text(totalAmount.toFixed(2));
@@ -850,10 +901,10 @@
                         $(".orgname").html(`${orgName}`);
 
                         $(".orgaddress").html(`
-                    ${orgAdd}</br>
-                    ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
-                    ${org.org_telephone}
-                `)
+                                ${orgAdd}</br>
+                                ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
+                                ${org.org_telephone}`
+                        )
                         $(".gstin").text(`GSTIN: ${org.org_gstin}`);
                         $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1}`)
                         $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2}`)
