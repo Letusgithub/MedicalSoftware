@@ -147,6 +147,7 @@
                                                                 class="form-control border" required>
                                                             <input type="text" id="dl1_ln" style="text-align: center;"
                                                                 placeholder="Lic. no." class="form-control border"
+                                                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                 minlength="6" maxlength="6" required>
                                                             <div class="invalid-feedback">
                                                                 Please enter valid DL number.
@@ -207,6 +208,7 @@
                                                                 class="form-control border" required>
                                                             <input type="text" id="dl2_ln" style="text-align: center;"
                                                                 placeholder="Lic. no." class="form-control border"
+                                                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                 minlength="6" maxlength="6" required>
                                                             <div class="invalid-feedback">
                                                                 Please enter valid DL number.

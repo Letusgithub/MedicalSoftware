@@ -130,7 +130,9 @@
                             <input type="text" id="dl1_ct" style="text-align: center;" placeholder="City"
                               class="form-control border" required>
                             <input type="text" id="dl1_ln" style="text-align: center;" placeholder="Lic. no."
-                              class="form-control border" minlength="6" maxlength="6" required>
+                              class="form-control border"
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                              minlength="6" maxlength="6" required>
                             <div class="invalid-feedback">
                               Please enter valid DL number.
                             </div>
@@ -184,7 +186,9 @@
                             <input type="text" id="dl2_ct" style="text-align: center;" placeholder="City"
                               class="form-control border" required>
                             <input type="text" id="dl2_ln" style="text-align: center;" placeholder="Lic. no."
-                              class="form-control border" minlength="6" maxlength="6" required>
+                              class="form-control border" 
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                              minlength="6" maxlength="6" required>
                             <div class="invalid-feedback">
                               Please enter valid DL number.
                             </div>
