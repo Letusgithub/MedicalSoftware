@@ -71,8 +71,9 @@
                                 <div>
 
                                   <input class="form-control" id="phonenumber" placeholder="Enter 10-digit number"
-                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                    type="number" maxlength="10" />
+                                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);  if (this.value.length > 0 && !/[6-9]/.test(this.value[0])) this.value = '';"
+                                  onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                  type="tel" maxlength="10" />
 
                                 </div>
                               </div>
@@ -360,12 +361,12 @@
           $("#discount").prop('readonly', true);
           $("#price").prop('readonly', true);
 
-          //gettin the current org id
 
+          //gettin the current org id
           var org = "<%= orgId %>";
 
-          // get customer data and show it in the autocomplete function
 
+          // get customer data and show it in the autocomplete function
           $.get(`/api/custorg/${org}`, function (data, status) {
 
             for (let i in data.data) {
@@ -421,6 +422,7 @@
           })
           //end of autocomplete function
 
+          
           //start of product cart 
           var product = [];
           var productId = -1;
