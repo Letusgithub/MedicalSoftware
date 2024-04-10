@@ -71,9 +71,9 @@
                                 <div>
 
                                   <input class="form-control" id="phonenumber" placeholder="Enter 10-digit number"
-                                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);  if (this.value.length > 0 && !/[6-9]/.test(this.value[0])) this.value = '';"
-                                  onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
-                                  type="tel" maxlength="10" />
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);  if (this.value.length > 0 && !/[6-9]/.test(this.value[0])) this.value = '';"
+                                    onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                    type="tel" maxlength="10" />
 
                                 </div>
                               </div>
@@ -123,7 +123,9 @@
                         <div class="col-md-1 col-6 mb-md-0 mb-3">
                           <div class=" has-validation">
                             <p class="mb-2 repeater-title" id="primaryunitname">P.Unit<span></span></p>
-                            <input type="number" class="form-control px-1" id="pUnit" min="0" />
+                            <input type="text" class="form-control px-1" id="pUnit"
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                              min="0" />
                             <div class="invalid-feedback">
                               Please enter quantity.
                             </div>
@@ -132,7 +134,8 @@
                         <div class="col-md-1 col-6 mb-md-0 mb-3" id="sUnit_input">
                           <div>
                             <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
-                            <input type="number" class="form-control px-1" id="sUnit" min="0" />
+                            <input type="text" class="form-control px-1" id="sUnit" min="0"
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;" />
                           </div>
                         </div>
                         <div class="col-md-2 col-12 mb-md-0 mb-3">
@@ -145,7 +148,8 @@
                         </div>
                         <div class="col-md-1 col-12 mb-md-0 mb-3">
                           <p class="mb-2 repeater-title">Disc%</p>
-                          <input type="number" class="form-control px-1" id="discount" placeholder="" min="0"
+                          <input type="text" class="form-control px-1" id="discount" placeholder="" min="0"
+                            onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                             max="100" />
                         </div>
 
@@ -422,7 +426,7 @@
           })
           //end of autocomplete function
 
-          
+
           //start of product cart 
           var product = [];
           var productId = -1;
