@@ -519,11 +519,10 @@
 
                                                             </div>
                                                             <div class="shop-info-child2" style="width: 41vw;">
-                                                                <p class="my-0 flno">FSSAI:</p>
                                                                 <p class="my-0 gstin">GSTIN:</p>
-                                                                <p class="my-0 dlno">D.L.no.:</p>
-
-
+                                                                <p class="my-0 dlno1">DL No 1:</p>
+                                                                <!-- <p class="my-0 dlno2">DL No 2:</p> -->
+                                                                <p class="my-0 flno">FSSAI:</p>
                                                             </div>
                                                         </div>
 
@@ -776,7 +775,7 @@
                         $(".vendoremail").text(`Email: ${grnData.vendor_email ? grnData.vendor_email : 'NA'}`)
                         $(".vendoradd").text(`Address: ${grnData.vendor_address ? grnData.vendor_address : 'NA'}`)
                         $(".vendorgst").text(`GSTIN: ${grnData.vendor_gstin ? grnData.vendor_gstin : 'NA'}`)
-                        $(".vendordl").text(`DL.no: ${grnData.vendor_dl_no_1 ? grnData.vendor_dl_no_1 : 'NA'}`)
+                        $(".vendordl").text(`DL 1: ${grnData.vendor_dl_no_1 ? grnData.vendor_dl_no_1 : 'NA'}`)
                         $(".vendorFssai").text(`FSSAI: ${grnData.vendor_fssai ? grnData.vendor_fssai : 'NA'}`)
 
                         var items = data.results;

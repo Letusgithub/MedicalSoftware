@@ -557,12 +557,12 @@
                         $(".orderdate").text(`Date: ${formattedDate}`);
 
                         $(".pono").text(`P.O.:${podata.po_id_main}`)
-                        $(".vendorname").text(`Name: ${podata.vendor_name}`)
-                        $(".vendormobile").text(`Mobile: ${podata.vendor_contact}`)
-                        $(".vendoremail").text(`Email: ${podata.vendor_email}`)
-                        $(".vendoradd").text(`Address: ${podata.vendor_address}`)
-                        $(".vendorgst").text(`GSTIN: ${podata.vendor_gstin}`)
-                        $(".vendordl").text(`DL.no: ${podata.vendor_dl_no_1}, ${podata.vendor_dl_no_2}`)
+                        $(".vendorname").text(`Name: ${podata.vendor_name ? podata.vendor_name : 'NA'}`)
+                        $(".vendormobile").text(`Mobile: ${podata.vendor_contact ? podata.vendor_contact : 'NA'}`)
+                        $(".vendoremail").text(`Email: ${podata.vendor_email ? podata.vendor_email : 'NA'}`)
+                        $(".vendoradd").text(`Address: ${podata.vendor_address ? podata.vendor_address : 'NA'}`)
+                        $(".vendorgst").text(`GSTIN: ${podata.vendor_gstin ? podata.vendor_gstin : 'NA'}`)
+                        $(".vendordl").text(`DL.no: ${podata.vendor_dl_no_1 ? podata.vendor_dl_no_1: 'NA'}, ${podata.vendor_dl_no_2 ? podata.vendor_dl_no_2: 'NA'}`)
                         var items = data.data
                         for (var i = 0; i < items.length; i++) {
 
@@ -600,10 +600,10 @@
                     ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
                     ${org.org_telephone}
                 `)
-                        $(".gstin").text(`GSTIN: ${org.org_gstin}`);
-                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1}`)
-                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2}`)
-                        $(".flno").text(`FSSAI: ${org.org_fssai_no}`)
+                        $(".gstin").text(`GSTIN: ${org.org_gstin ? org.org_gstin : 'NA'}`);
+                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1 ? data.data.org_dl_no_1 : 'NA'}`) 
+                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2 ? data.data.org_dl_no_2 : 'NA'}`)
+                        $(".flno").text(`FSSAI: ${org.org_fssai_no ? org.org_fssai_no : 'NA'}`)
                     })
                 })
             </script>
