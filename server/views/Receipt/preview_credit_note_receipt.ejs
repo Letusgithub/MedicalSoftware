@@ -744,13 +744,13 @@
                         $(".orderdate").text(`Date: ${formattedDate}`);
                         $(".crno").html(`Credit No:<br>${id}`)
 
-                        $(".vendorname").text(`Distributor Name: ${podata.vendor_name}`)
-                        $(".vendormobile").text(`Mobile: ${podata.vendor_contact}`)
-                        $(".vendoremail").text(`Email: ${podata.vendor_email}`)
-                        $(".vendoradd").text(`Address: ${podata.vendor_address}`)
-                        $(".vendorgst").text(`GSTIN: ${podata.vendor_gstin}`)
-                        $(".vendordl").text(`DL.no: ${podata.vendor_dl_no_1}`)
-                        $(".vendorFssai").text(`FSSAI: ${podata.vendor_fssai}`)
+                        $(".vendorname").text(`Distributor Name: ${podata.vendor_name ? podata.vendor_name : 'N/A'}`)
+                        $(".vendormobile").text(`Mobile: ${podata.vendor_contact ? podata.vendor_contact : 'N/A'}`)
+                        $(".vendoremail").text(`Email: ${podata.vendor_email ? podata.vendor_email : 'N/A'}`)
+                        $(".vendoradd").text(`Address: ${podata.vendor_address ? podata.vendor_address : 'N/A'}`)
+                        $(".vendorgst").text(`GSTIN: ${podata.vendor_gstin ? podata.vendor_gstin : 'N/A'}`)
+                        $(".vendordl").text(`DL.no: ${podata.vendor_dl_no_1 ? podata.vendor_dl_no_1 : 'N/A'}`)
+                        $(".vendorFssai").text(`FSSAI: ${podata.vendor_fssai ? podata.vendor_fssai : 'N/A'}`)
 
                         var items = data.data;
 
@@ -869,14 +869,14 @@
                         $(".orgname").html(`${orgName}`);
 
                         $(".orgaddress").html(`
-                    ${orgAdd}</br>
-                    ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
-                    ${org.org_telephone}
-                `)
-                        $(".gstin").text(`GSTIN: ${org.org_gstin}`);
-                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1}`)
-                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2}`)
-                        $(".flno").text(`FSSAI: ${org.org_fssai_no}`)
+                            ${orgAdd}</br>
+                            ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
+                            ${org.org_telephone}
+                        `);
+                        $(".gstin").text(`GSTIN: ${org.org_gstin ? org.org_gstin : 'N/A'}`);
+                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1 ? data.data.org_dl_no_1 : 'N/A'}`)
+                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2 ? data.data.org_dl_no_2 : 'N/A'}`)
+                        $(".flno").text(`FSSAI: ${org.org_fssai_no ? org.org_fssai_no : 'N/A'}`)
                     })
                 })
             </script>

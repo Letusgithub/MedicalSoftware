@@ -784,7 +784,7 @@
 
                         $(".additionaldisc").text(customer.total_dist);
                         $(".grandtotal").text(customer.grand_total);
-                        $(".doctorname").text(`Doctor : ${customer.doctor_name}`);
+                        $(".doctorname").text(`Doctor : ${customer.doctor_name ? customer.doctor_name : 'NA'}`);
                     })
 
                     $.get(`/api/org/<%=orgId%>`, function (data, status) {
@@ -798,10 +798,10 @@
                         ${data.data.org_telephone}
                     `)
 
-                        $(".gstin").text(`GSTIN : ${data.data.org_gstin}`);
-                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1}`)
-                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2}`)
-                        $(".flno").text(`FSSAI : ${data.data.org_fssai_no}`)
+                        $(".gstin").text(`GSTIN : ${data.data.org_gstin ? data.data.org_gstin : 'NA'}`);
+                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1 ? data.data.org_dl_no_1 : 'NA'}`);
+                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2 ? data.data.org_dl_no_2 : 'NA'}`)
+                        $(".flno").text(`FSSAI : ${data.data.org_fssai_no ? data.data.org_fssai_no : 'NA'}`);
 
                     })
 

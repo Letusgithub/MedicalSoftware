@@ -768,16 +768,16 @@
                         var formattedDate = invoiceDate.toLocaleDateString('en-US', options);
                         $(".orderdate").text(`Invoice Date: ${formattedDate}`);
 
-                        $(".paymentMethod").text(`Payment Mode: ${grnData.payment_method}`);
-                        $(".invoiceno").text(`Invoice No: ${grnData.vendor_invoice}`);
+                        $(".paymentMethod").text(`Payment Mode: ${grnData.payment_method ? grnData.payment_method : 'NA'}`);
+                        $(".invoiceno").text(`Invoice No: ${grnData.vendor_invoice ? grnData.vendor_invoice : 'NA'}`);
                         $(".grnno").text(`GRN:${id}`)
-                        $(".vendorname").text(`Distributor Name: ${grnData.vendor_name}`)
-                        $(".vendormobile").text(`Mobile: ${grnData.vendor_contact}`)
-                        $(".vendoremail").text(`Email: ${grnData.vendor_email}`)
-                        $(".vendoradd").text(`Address: ${grnData.vendor_address}`)
-                        $(".vendorgst").text(`GSTIN: ${grnData.vendor_gstin}`)
-                        $(".vendordl").text(`DL.no: ${grnData.vendor_dl_no_1}`)
-                        $(".vendorFssai").text(`FSSAI: ${grnData.vendor_fssai}`)
+                        $(".vendorname").text(`Distributor Name: ${grnData.vendor_name ? grnData.vendor_name : 'NA'}`)
+                        $(".vendormobile").text(`Mobile: ${grnData.vendor_contact ? grnData.vendor_contact : 'NA'}`)
+                        $(".vendoremail").text(`Email: ${grnData.vendor_email ? grnData.vendor_email : 'NA'}`)
+                        $(".vendoradd").text(`Address: ${grnData.vendor_address ? grnData.vendor_address : 'NA'}`)
+                        $(".vendorgst").text(`GSTIN: ${grnData.vendor_gstin ? grnData.vendor_gstin : 'NA'}`)
+                        $(".vendordl").text(`DL.no: ${grnData.vendor_dl_no_1 ? grnData.vendor_dl_no_1 : 'NA'}`)
+                        $(".vendorFssai").text(`FSSAI: ${grnData.vendor_fssai ? grnData.vendor_fssai : 'NA'}`)
 
                         var items = data.results;
 
@@ -906,10 +906,10 @@
                                 ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
                                 ${org.org_telephone}`
                         )
-                        $(".gstin").text(`GSTIN: ${org.org_gstin}`);
-                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1}`)
-                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2}`)
-                        $(".flno").text(`FSSAI: ${org.org_fssai_no}`)
+                        $(".gstin").text(`GSTIN: ${org.org_gstin ? org.org_gstin : 'NA'}`);
+                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1 ? data.data.org_dl_no_1 : 'NA'}`)
+                        $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2 ? data.data.org_dl_no_2 : 'NA'}`)
+                        $(".flno").text(`FSSAI: ${org.org_fssai_no ? org.org_fssai_no : 'NA'}`)
                     })
                 })
             </script>

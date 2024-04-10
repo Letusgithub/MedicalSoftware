@@ -207,8 +207,7 @@
                                                                 <div class="input-group has-validation">
                                                                     <select class="form-select" id="primaryDropdown"
                                                                         name="primary" required>
-                                                                        <option value="default" selected>Primary
-                                                                        </option>
+                                                                        <option value="default" selected>Primary</option>
                                                                         <option value="STP">STP</option>
                                                                         <option value="AMP">AMP</option>
                                                                         <option value="BOX">BOX</option>
@@ -346,11 +345,12 @@
                                                                 for="basic-icon-default-email">QTY</label>
                                                             <div class="col-sm-2 mb-3">
                                                                 <div class="input-group has-validation">
-                                                                    <input type="text" id="basic-icon-default-email"
+                                                                    <input type="text"
                                                                         class="form-control"
                                                                         placeholder="Enter quantity"
                                                                         onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                         id="addquantity" name="quantity" required>
+                                                                        <span class="input-group-text" id="getprimaryunit"></span>
                                                                     <div class="invalid-feedback">
                                                                         Please enter quantity.
                                                                     </div>
@@ -1708,6 +1708,7 @@
                                     alert("Not Created", error)
                                 }
                             })
+                            
                         }
                     })
 
