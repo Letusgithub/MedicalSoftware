@@ -170,7 +170,7 @@
                                             <div class="row mb-3">
 
 
-                                                <label class="col-sm-2 col-form-label "
+                                                <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">Batch No.</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group has-validation">
@@ -184,9 +184,9 @@
                                                 <label class="col-sm-2 col-form-label ps-4"
                                                     for="basic-icon-default-address">Exp Date</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group  has-validation">
+                                                    <div class="input-group has-validation">
                                                         <input class="form-control expiry-date-mask" type="text"
-                                                            name="addexp" placeholder="MM/YY" />
+                                                            name="addexp" placeholder="MM/YY" required />
                                                         <div class="invalid-feedback">
                                                             Please enter valid expiry date.
                                                         </div>
@@ -204,8 +204,9 @@
                                                             <%=data[0].primary_unit%>
                                                         </span>
                                                         <span class="input-group-text">=</span>
-                                                        <input type="number" class="form-control  rounded-0"
-                                                            id="conversion" />
+                                                        <input type="text" class="form-control rounded-0"
+                                                            onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            id="conversion" placeholder="Enter conversion" required />
                                                         <span class="input-group-text" id="secondarypopulate">
                                                             <%=data[0].secondary_unit%>
                                                         </span>
@@ -220,8 +221,11 @@
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <div class="input-group has-validation">
-                                                            <input type="number" class="form-control" name="addqty">
-                                                            <span class="input-group-text" id="getprimaryunit">
+                                                            <input type="text" class="form-control" name="addqty"
+                                                                placeholder="Enter quantity"
+                                                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                                required /> <span class="input-group-text"
+                                                                id="getprimaryunit">
                                                                 <%=data[0].primary_unit%>
                                                             </span>
                                                             <div class="invalid-feedback">
@@ -237,9 +241,10 @@
 
                                                 <label class="col-sm-2 col-form-label">MRP</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group has-validation">
+                                                    <div class="input-group  has-validation">
                                                         <input type="text" class="form-control" name="addmrp" id="price"
-                                                            placeholder="Eg- 100">
+                                                            onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            placeholder="Enter MRP" required />
                                                         <div class="invalid-feedback">
                                                             Please enter MRP.
                                                         </div>
@@ -251,7 +256,8 @@
                                                 <div class="col-sm-4">
                                                     <div class="input-group has-validation">
                                                         <input type="text" class="form-control" name="addpur"
-                                                            id="addpur" placeholder="Eg- 78">
+                                                            onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            id="addpur" placeholder="Enter Purchase rate" required />
                                                         <div class="invalid-feedback">
                                                             Please enter PTR.
                                                         </div>
@@ -340,170 +346,226 @@
         <%- include('../partials/footercode.ejs') %>
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
-                console.log('<%=data[0].product_id%>');
 
-                var orgID = '<%= orgId %>';
-                var productId = '<%=data[0].product_id%>';
+                $(document).ready(function () {
 
-                // Formatted expiry date input
-                var cleave = new Cleave('.expiry-date-mask', {
-                    date: true,
-                    datePattern: ['m', 'y']
-                });
+                    var orgID = '<%= orgId %>';
+                    var productId = '<%=data[0].product_id%>';
 
-                // Expiry date validation
-                $("[name='addexp']").on('change', function () {
-                    var input = $(this);
-                    var exp_date = input.val();
+                    // Hide validation messages on input
+                    $('input').each(function () {
+                        $(this).on('input', function () {
+                            if ($(this).val() == '') {
+                                $(this).addClass('is-invalid');
+                            } else {
+                                $(this).removeClass('is-invalid');
+                            }
+                        });
+                    });
+                    $('select:required').each(function () {
+                        $(this).on('input', function () {
+                            if ($(this).val() == 'default' || $(this).val() == null) {
+                                $(this).addClass('is-invalid');
+                            } else {
+                                $(this).removeClass('is-invalid');
+                            }
+                        });
+                    });
 
-                    var year = parseInt(exp_date.split('/')[1], 10);
-                    year = year < 70 ? 2000 + year : 1900 + year;
-                    var expiryDate = new Date(year, exp_date.split('/')[0] - 1);
+                    // Formatted expiry date input
+                    var cleave = new Cleave('.expiry-date-mask', {
+                        date: true,
+                        datePattern: ['m', 'y']
+                    });
 
-                    // Get the current year and month
-                    var today = new Date();
-                    var currentYear = today.getFullYear();
-                    var currentMonth = today.getMonth();
+                    // Expiry date validation
+                    $("[name='addexp']").on('change', function () {
+                        var input = $(this);
+                        var exp_date = input.val();
 
-                    if (expiryDate.getFullYear() < currentYear ||
-                        (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)) {
-                        $("[name='addexp']").val(null);
-                        $("[name='addexp']").addClass('is-invalid');
-                    } else {
-                        $(".invalid-feedback").hide();
-                    }
-                });
+                        var year = parseInt(exp_date.split('/')[1], 10);
+                        year = year < 70 ? 2000 + year : 1900 + year;
+                        var expiryDate = new Date(year, exp_date.split('/')[0] - 1);
 
-                // Calculate PTR
-                function calcuatePTR(mrp, gst, retailerMargin) {
-                    return (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
-                }
+                        // Get the current year and month
+                        var today = new Date();
+                        var currentYear = today.getFullYear();
+                        var currentMonth = today.getMonth();
 
-                $("input[name='addmrp']").on("keyup", function () {
-                    $("#r_margin").show();
-
-                    var mrp = parseFloat($("input[name='addmrp']").val());
-                    var gst = parseFloat($("input[name='gst']").val());
-                    var retailerMargin = parseFloat($("#retailer_margin").text());
-
-                    // Corrected PTR formula
-                    var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
-
-                    $("input[name='addpur']").val(ptr.toFixed(2))
-                });
-
-                $("input[name='addpur']").on("keyup", function () {
-                    var mrp = parseFloat($("input[name='addmrp']").val());
-                    var gst = parseFloat($("input[name='gst']").val());
-                    var ptr = parseFloat($("input[name='addpur']").val());
-
-                    var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
-
-                    $("#retailer_margin").text(retailerMargin.toFixed(2));
-                });
-
-
-
-                //submit process after adding batch
-                $("#submitbatch").click(function () {
-
-                    if ($("#batchname").val() == null || $("#batchname").val() == "") {
-                        $("#batchname").addClass('is-invalid');
-                        $("#batchname").focus();
-                        e.preventDefault();
-                    } else {
-                        $("#batchname").removeClass('is-invalid');
-                    }
-
-                    if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
-                        $('[name="addexp"]').addClass('is-invalid');
-                        $('[name="addexp"]').focus();
-                        e.preventDefault();
-                    } else {
-                        $('[name="addexp"]').removeClass('is-invalid');
-                    }
-
-                    if ($("#conversion").val() == "") {
-                        $("#conversion").addClass('is-invalid');
-                        $("#conversion").focus();
-                        e.preventDefault();
-                    } else {
-                        $("#conversion").removeClass('is-invalid');
-                    }
-                    if ($("input[name='addqty']").val() == "" || $("input[name='addqty']").val() == null) {
-                        $("input[name='addqty']").addClass('is-invalid');
-                        $("input[name='addqty']").focus();
-                        e.preventDefault();
-                    } else {
-                        $("input[name='addqty']").removeClass('is-invalid');
-                    }
-
-                    if ($("input[name='addmrp']").val() == "" || $("input[name='addmrp']").val() == null) {
-                        $("input[name='addmrp']").addClass('is-invalid');
-                        $("input[name='addmrp']").focus();
-                        e.preventDefault();
-                    } else {
-                        $("input[name='addmrp']").removeClass('is-invalid');
-                    }
-
-                    if ($("input[name='addpur']").val() == "" || $("input[name='addpur']").val() == null) {
-                        $("input[name='addpur']").addClass('is-invalid');
-                        $("input[name='addpur']").focus();
-                        e.preventDefault();
-                    } else {
-                        $("input[name='addpur']").removeClass('is-invalid');
-                    }
-
-                    if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
-                        return alert("Purchase Rate can't be greater than MRP");
-                    }
-
-                    // Convert expdate to yyyy-mm-dd format
-                    var exp = $("[name='addexp']").val();
-                    var year = parseInt(exp.split('/')[1], 10);
-                    year = year < 70 ? 2000 + year : 1900 + year;
-                    var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
-                    firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
-                    var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
-
-                    var batchDetails = {
-                        product_id: "<%=data[0].product_id%>",
-                        org_id: orgID,
-                        batch_name: $("#batchname").val(),
-                        exp_date: exp,
-                        conversion: $("#conversion").val(),
-                        batch_qty: parseFloat($("input[name='addqty']").val()),
-                        purchase_rate: $("input[name='addpur']").val(),
-                        mrp: $("input[name='addmrp']").val(),
-                        free: 0,
-                        bulk_discount: 0,
-                        base_price: $("input[name='addpur']").val(),
-                        shelf_label: $("input[name='addshelf']").val()
-                    }
-                    console.log(batchDetails);
-
-                    $('#loader').show();
-                    $.ajax({
-                        url: `/api/addbatch/`,
-                        type: 'POST',
-                        data: JSON.stringify(batchDetails),
-                        contentType: 'application/json',
-                        success: function (response) {
-
-                            $('#loader').hide();
-
-                            window.location.href = `/product_batch/${productId}`
-                            console.log(response);
-
-                        },
-                        error: function (error) {
-                            $('#loader').hide();
-                            console.log(error);
+                        if (expiryDate.getFullYear() < currentYear ||
+                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)) {
+                            $("[name='addexp']").val(null);
+                            $("[name='addexp']").addClass('is-invalid');
+                        } else {
+                            $(".invalid-feedback").hide();
                         }
+                    });
+
+                    //PTR < MRP Validation
+                    $("input[name='addpur']").on('change', function () {
+                        var ptr = parseFloat($("input[name='addpur']").val());
+                        var mrp = parseFloat($("input[name='addmrp']").val());
+
+                        if (ptr >= mrp) {
+                            $("input[name='addpur']").val(null);
+                            $("input[name='addpur']").addClass('is-invalid');
+                        } else {
+                            $(".invalid-feedback").hide();
+                        }
+                    });
+
+                    // Calculate PTR
+                    function calcuatePTR(mrp, gst, retailerMargin) {
+                        return (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+                    }
+
+                    $("input[name='addmrp']").on("keyup", function () {
+                        $("#r_margin").show();
+
+                        var mrp = parseFloat($("input[name='addmrp']").val());
+                        var gst = parseFloat($("input[name='gst']").val());
+                        var retailerMargin = parseFloat($("#retailer_margin").text());
+
+                        // Corrected PTR formula
+                        var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+
+                        $("input[name='addpur']").val(ptr.toFixed(2))
+                    });
+
+                    $("input[name='addpur']").on("keyup", function () {
+                        var mrp = parseFloat($("input[name='addmrp']").val());
+                        var gst = parseFloat($("input[name='gst']").val());
+                        var ptr = parseFloat($("input[name='addpur']").val());
+
+                        var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
+
+                        $("#retailer_margin").text(retailerMargin.toFixed(2));
+                    });
+
+
+
+                    //submit process after adding batch
+                    $("#submitbatch").click(function (e) {
+
+                        // Validations
+                        e.preventDefault();
+                        var isValid = true;
+                        $('input:required').each(function () {
+                            if ($(this).val() == '') {
+                                $(this).addClass('is-invalid');
+                                $(this).focus();
+                                isValid = false;
+                            } else {
+                                $(this).removeClass('is-invalid');
+                            }
+                        });
+
+                        $('select:required').each(function () {
+                            if ($(this).val() == 'default' || $(this).val() == null) {
+                                $(this).addClass('is-invalid');
+                                isValid = false;
+                            } else {
+                                $(this).removeClass('is-invalid');
+                            }
+                        });
+
+                        // if ($("#batchname").val() == null || $("#batchname").val() == "") {
+                        //     $("#batchname").addClass('is-invalid');
+                        //     $("#batchname").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("#batchname").removeClass('is-invalid');
+                        // }
+
+                        // if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
+                        //     $('[name="addexp"]').addClass('is-invalid');
+                        //     $('[name="addexp"]').focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $('[name="addexp"]').removeClass('is-invalid');
+                        // }
+
+                        // if ($("#conversion").val() == "") {
+                        //     $("#conversion").addClass('is-invalid');
+                        //     $("#conversion").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("#conversion").removeClass('is-invalid');
+                        // }
+                        // if ($("input[name='addqty']").val() == "" || $("input[name='addqty']").val() == null) {
+                        //     $("input[name='addqty']").addClass('is-invalid');
+                        //     $("input[name='addqty']").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("input[name='addqty']").removeClass('is-invalid');
+                        // }
+
+                        // if ($("input[name='addmrp']").val() == "" || $("input[name='addmrp']").val() == null) {
+                        //     $("input[name='addmrp']").addClass('is-invalid');
+                        //     $("input[name='addmrp']").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("input[name='addmrp']").removeClass('is-invalid');
+                        // }
+
+                        // if ($("input[name='addpur']").val() == "" || $("input[name='addpur']").val() == null) {
+                        //     $("input[name='addpur']").addClass('is-invalid');
+                        //     $("input[name='addpur']").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("input[name='addpur']").removeClass('is-invalid');
+                        // }
+
+                        // if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
+                        //     return alert("Purchase Rate can't be greater than MRP");
+                        // }
+
+                        // Convert expdate to yyyy-mm-dd format
+                        var exp = $("[name='addexp']").val();
+                        var year = parseInt(exp.split('/')[1], 10);
+                        year = year < 70 ? 2000 + year : 1900 + year;
+                        var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
+                        firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
+                        var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
+
+                        var batchDetails = {
+                            product_id: "<%=data[0].product_id%>",
+                            org_id: orgID,
+                            batch_name: $("#batchname").val(),
+                            exp_date: exp,
+                            conversion: $("#conversion").val(),
+                            batch_qty: parseFloat($("input[name='addqty']").val()),
+                            purchase_rate: $("input[name='addpur']").val(),
+                            mrp: $("input[name='addmrp']").val(),
+                            free: 0,
+                            bulk_discount: 0,
+                            base_price: $("input[name='addpur']").val(),
+                            shelf_label: $("input[name='addshelf']").val()
+                        }
+                        console.log(batchDetails);
+
+                        $('#loader').show();
+                        $.ajax({
+                            url: `/api/addbatch/`,
+                            type: 'POST',
+                            data: JSON.stringify(batchDetails),
+                            contentType: 'application/json',
+                            success: function (response) {
+
+                                $('#loader').hide();
+
+                                window.location.href = `/product_batch/${productId}`
+                                console.log(response);
+
+                            },
+                            error: function (error) {
+                                $('#loader').hide();
+                                console.log(error);
+                            }
+                        })
+
                     })
-
-                })
-
+                });
             </script>
 
     </body>
