@@ -37,52 +37,62 @@
 
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="vendor_name">Distributor
-                          Name</label>
+                          Name<span style="font-size: 15px; color: red">*</span></label>
                         <div class="col-sm-10">
-                          <div class="input-group input-group-merge">
+                          <div class="input-group has-validation">
                             <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                 class="bx bx-user"></i></span>
                             <input type="text" class="form-control" id="vendor_name" placeholder="" name="vendor_name"
-                              value="<%=vendor[0].vendor_name%>">
+                              value="<%=vendor[0].vendor_name%>" required>
+                            <div class="invalid-feedback">
+                              Please enter distributor name.
+                            </div>
                           </div>
                         </div>
                       </div>
 
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="vendor_contact">Contact
-                          Number</label>
-                        <div class="col-sm-10">
-                          <div class="input-group input-group-merge">
+                          Number<span style="font-size: 15px; color: red">*</span></label>
+                        <div class="col-sm-4">
+                          <div class="input-group has-validation">
                             <span id="basic-icon-default-phone2" class="input-group-text"><i
                                 class="bx bx-phone"></i></span>
                             <input type="text" id="vendor_contact" class="form-control phone-mask" placeholder=""
-                              name="vendor_contact" value="<%=vendor[0].vendor_contact%>">
+                              name="vendor_contact" value="<%=vendor[0].vendor_contact%>"
+                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);  if (this.value.length > 0 && !/[6-9]/.test(this.value[0])) this.value = '';"
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                              type="tel" maxlength="10" required>
+                            <div class="invalid-feedback">
+                              Please enter contact number.
+                            </div>
+                          </div>
+                        </div>
+
+                        <label class="col-sm-2 col-form-label ps-4" for="vendor_email">Email</label>
+                        <div class="col-sm-4">
+                          <div class="input-group has-validation">
+                            <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                            <input type="text" id="vendor_email" class="form-control" placeholder="email@example.com"
+                              name="vendor_email" value="<%=vendor[0].vendor_email%>">
+                            <div class="invalid-feedback">
+                              Please enter valid email.
+                            </div>
                           </div>
                         </div>
                       </div>
 
                       <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="vendor_email">Email</label>
-                        <div class="col-sm-10">
-                          <div class="input-group input-group-merge">
-                            <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                            <input type="text" id="vendor_email" class="form-control" placeholder="" name="vendor_email"
-                              value="<%=vendor[0].vendor_email%>">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row mb-2">
                         <label class="col-2 col-form-label" for="org_dl_no_1">DL Number 1<span
                             style="font-size: 15px; color: red">*</span></label>
                         <div class="col-4">
-                          <div class="input-group input-group-merge">
+                          <div class="input-group has-validation">
                             <span id="basic-icon-default-fullname2" class="input-group-text border"><i
                                 class='bx bx-detail'></i></span>
                             <input type="text" id="dl1_ft" value="20B" style="text-align: center;"
                               class="form-control border" readonly>
                             <select type="text" id="dl1_st" placeholder="State (eg:-MH)"
-                              class="form-control border px-1">
+                              class="form-control border px-1" required>
                               <option value="" selected> State</option>
                               <option value="AD">Andhra Pradesh</option>
                               <option value="AR"> Arunachal Pradesh</option>
@@ -118,22 +128,25 @@
                               <option value="WB"> West Bengal</option>
                             </select>
                             <input type="text" id="dl1_ct" style="text-align: center;" placeholder="City"
-                              class="form-control border">
+                              class="form-control border" required>
                             <input type="text" id="dl1_ln" style="text-align: center;" placeholder="Lic. no."
-                              class="form-control border" minlength="6" maxlength="6">
+                              class="form-control border" minlength="6" maxlength="6" required>
+                            <div class="invalid-feedback">
+                              Please enter valid DL number.
+                            </div>
                           </div>
                         </div>
 
                         <label class="col-2 col-form-label ps-4" for="org_dl_no_2">DL Number
                           2<span style="font-size: 15px; color: red">*</span></label>
                         <div class="col-4">
-                          <div class="input-group input-group-merge">
+                          <div class="input-group has-validation">
                             <span id="basic-icon-default-fullname2" class="input-group-text border"><i
                                 class='bx bx-detail'></i></span>
                             <input type="text" id="dl2_ft" value="21B" style="text-align: center;"
                               class="form-control border" readonly>
                             <select type="text" id="dl2_st" placeholder="State (eg:-MH)"
-                              class="form-control border px-1">
+                              class="form-control border px-1" required>
                               <option value="" selected> State</option>
                               <option value="AD">Andhra Pradesh</option>
                               <option value="AR"> Arunachal Pradesh</option>
@@ -169,21 +182,28 @@
                               <option value="WB"> West Bengal</option>
                             </select>
                             <input type="text" id="dl2_ct" style="text-align: center;" placeholder="City"
-                              class="form-control border">
+                              class="form-control border" required>
                             <input type="text" id="dl2_ln" style="text-align: center;" placeholder="Lic. no."
-                              class="form-control border" minlength="6" maxlength="6">
+                              class="form-control border" minlength="6" maxlength="6" required>
+                            <div class="invalid-feedback">
+                              Please enter valid DL number.
+                            </div>
                           </div>
                         </div>
                       </div>
 
                       <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN</label>
+                        <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span
+                            style="font-size: 15px; color: red">*</span></label>
                         <div class="col-sm-4">
-                          <div class="input-group input-group-merge">
+                          <div class="input-group has-validation">
                             <span id="basic-icon-default-phone2" class="input-group-text"><i
                                 class="bx bxs-bank"></i></span>
                             <input type="text" id="vendor_gstin" class="form-control phone-mask" placeholder=""
-                              name="vendor_gstin" value="<%=vendor[0].vendor_gstin %>">
+                              name="vendor_gstin" value="<%=vendor[0].vendor_gstin %>" required>
+                            <div class="invalid-feedback">
+                              Please enter valid GSTIN.
+                            </div>
                           </div>
                         </div>
 
@@ -206,7 +226,6 @@
                             <span class="input-group-text"></span>
                             <textarea type="text" id="vendor_address" class="form-control" placeholder=""
                               name="vendor_address"><%=vendor[0].vendor_address %></textarea>
-
                           </div>
                         </div>
                       </div>
@@ -219,10 +238,6 @@
 
                     </div>
                   </div>
-
-
-
-
                 </div>
                 <!-- / Content -->
 
@@ -246,73 +261,95 @@
 
       <script>
 
+        $(document).ready(function () {
+
+          var splitDL1;
+          var dl_no_1 = "<%=vendor[0].vendor_dl_no_1%>";
 
 
-        var splitDL1;
-        var dl_no_1 = "<%=vendor[0].vendor_dl_no_1%>";
+          if (dl_no_1 != '') {
 
-
-        if (dl_no_1 != '') {
-
-          splitDL1 = dl_no_1.split(/-/);
-          $("#dl1_st").val(splitDL1[1]);
-          $("#dl1_ct").val(splitDL1[2]);
-          $("#dl1_ln").val(splitDL1[3]);
-        }
-
-        var splitDL2;
-        var dl_no_2 = "<%=vendor[0].vendor_dl_no_2%>";
-        if (dl_no_2 != '') {
-
-          splitDL2 = dl_no_2.split(/-/);
-          $("#dl2_st").val(splitDL2[1]);
-          $("#dl2_ct").val(splitDL2[2]);
-          $("#dl2_ln").val(splitDL2[3]);
-        }
-        $("#vendor_email").change(function () {
-          var inputvalues = $(this).val();
-          var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-          if (!regex.test(inputvalues)) {
-            alert("invalid email id");
-          }
-        });
-
-
-        $("#submitbtn").click(function () {
-          if ($("#vendor_name").val() == '') {
-            return alert('Please fill "Vendor Name"');
+            splitDL1 = dl_no_1.split(/-/);
+            $("#dl1_st").val(splitDL1[1]);
+            $("#dl1_ct").val(splitDL1[2]);
+            $("#dl1_ln").val(splitDL1[3]);
           }
 
-          if ($("#vendor_contact").val().length < 10) {
-            return alert('Please fill valid Phone number');
+          var splitDL2;
+          var dl_no_2 = "<%=vendor[0].vendor_dl_no_2%>";
+          if (dl_no_2 != '') {
+
+            splitDL2 = dl_no_2.split(/-/);
+            $("#dl2_st").val(splitDL2[1]);
+            $("#dl2_ct").val(splitDL2[2]);
+            $("#dl2_ln").val(splitDL2[3]);
           }
-          var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
-          var vendor_dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
 
-          var vendorId = "<%= vendor[0].vendor_id %>";
-
-          $.ajax({
-            url: `/api/vendor/${vendorId}/update`,
-            type: 'POST',
-            data: JSON.stringify({
-              vendor_name: $("#vendor_name").val(),
-              vendor_address: $("#vendor_address").val(),
-              vendor_contact: $("#vendor_contact").val(),
-              vendor_gstin: $("#vendor_gstin").val(),
-              vendor_email: $("#vendor_email").val(),
-              vendor_dl_no_1: vendor_dl_no_1,
-              vendor_dl_no_2: vendor_dl_no_2,
-              vendor_fssai: $("#vendor_fssai").val()
-            }),
-            contentType: 'application/json',
-            success: function (response) {
-              window.location.href = '/vendor_list'
-            },
-            error: function (error) {
-              console.log(error);
+          $("#vendor_email").change(function () {
+            var inputvalues = $(this).val();
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test(inputvalues)) {
+              $("#vendor_email").addClass('is-invalid');
+              $("#vendor_email").focus();
+              e.preventDefault();
+            } else {
+              $("#vendor_email").removeClass('is-invalid');
             }
           })
-        })
+
+          $('input:required').each(function () {
+            $(this).on('input', function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+          });
+
+          $("#submitbtn").click(function (e) {
+
+            e.preventDefault();
+            var isValid = true;
+            $('input:required').each(function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+                isValid = false;
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+
+            if (isValid) {
+              var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
+              var vendor_dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
+
+              var vendorId = "<%= vendor[0].vendor_id %>";
+
+              $.ajax({
+                url: `/api/vendor/${vendorId}/update`,
+                type: 'POST',
+                data: JSON.stringify({
+                  vendor_name: $("#vendor_name").val(),
+                  vendor_address: $("#vendor_address").val(),
+                  vendor_contact: $("#vendor_contact").val(),
+                  vendor_gstin: $("#vendor_gstin").val(),
+                  vendor_email: $("#vendor_email").val(),
+                  vendor_dl_no_1: vendor_dl_no_1,
+                  vendor_dl_no_2: vendor_dl_no_2,
+                  vendor_fssai: $("#vendor_fssai").val()
+                }),
+                contentType: 'application/json',
+                success: function (response) {
+                  window.location.href = '/vendor_list'
+                },
+                error: function (error) {
+                  console.log(error);
+                }
+              })
+            }
+          })
+        });
       </script>
   </body>
 
