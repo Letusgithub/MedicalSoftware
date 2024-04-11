@@ -381,8 +381,9 @@
                                                             <tr>
                                                                 <th>S.N.</th>
                                                                 <th>Item</th>
-                                                                <th>HSN</th>
                                                                 <th>Batch</th>
+                                                                <th>HSN</th>
+                                                                <th>GST%</th>
                                                                 <th>Expiry</th>
                                                                 <th>MRP(₹)</th>
                                                                 <th>QTY</th>
@@ -390,9 +391,6 @@
                                                                 <th>PTR(₹)</th>
                                                                 <th>Dis%</th>
                                                                 <th>Gross Value(₹)</th>
-                                                                <th>GST%</th>
-                                                                <th>GST Value(₹)</th>
-                                                                <th>Amount(₹)</th>
 
                                                             </tr>
                                                         </thead>
@@ -581,8 +579,9 @@
                                                         <tr>
                                                             <th style="width: 2.27rem;">S.N.</th>
                                                             <th style="width: 11.29rem;">Item</th>
-                                                            <th style="width: 4.59rem;">HSN</th>
                                                             <th style="width: 4.4rem;">Batch</th>
+                                                            <th style="width: 4.59rem;">HSN</th>
+                                                            <th style="width: 3.61rem;">GST%</th>
                                                             <th style="width: 3.25rem;">Expiry</th>
                                                             <th style="width: 3.62rem;">MRP(₹)</th>
                                                             <th style="width: 3.1rem;">QTY</th>
@@ -590,9 +589,6 @@
                                                             <th style="width: 3.62rem;">PTR(₹)</th>
                                                             <th style="width: 3.61rem;">Dis%</th>
                                                             <th style="width: 3.61rem;">Gross Value(₹)</th>
-                                                            <th style="width: 3.61rem;">GST%</th>
-                                                            <th style="width: 3.61rem;">GST Value(₹)</th>
-                                                            <th style="width: 3.61rem;">Amount(₹)</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="cartitems">
@@ -810,8 +806,9 @@
                                     <tr>
                                         <td style="width: 2.27rem; height: 1rem;">${i + 1}</td>
                                         <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
-                                        <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
                                         <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
+                                        <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
+                                        <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
                                         <td style="width: 3.25rem; height: 1rem;">${expDate}</td>
                                         <td style="width: 3.62rem; height: 1rem;">${items[i].mrp}</td>
                                         <td style="width: 3.1rem; height: 1rem;">${items[i].qty - items[i].free}</td>
@@ -819,9 +816,6 @@
                                         <td style="width: 3.62rem; height: 1rem;">${items[i].purchase}</td>
                                         <td style="width: 3.61rem; height: 1rem;">${items[i].bulk_discount}</td>
                                         <td style="width: 3.61rem; height: 1rem;">${grossValue.toFixed(2)}</td>
-                                        <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
-                                        <td style="width: 3.61rem; height: 1rem;">${gstValue.toFixed(2)}</td>
-                                        <td style="width: 3.61rem; height: 1rem;">${amount.toFixed(2)}</td>
                                     </tr>`
 
                             $(".cartitems").append(cartHtml);

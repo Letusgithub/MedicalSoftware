@@ -768,7 +768,8 @@
                         var options = { year: 'numeric', month: 'long', day: 'numeric' };
                         var formattedDate = todayDate.toLocaleDateString('en-US', options);
                         $(".orderdate").text(`Date: ${formattedDate}`);
-                        $(".mop").text(customer.mop.toUpperCase() || 'NA');
+                        var mop = customer.mop || 'NA';
+                        $(".mop").text(mop.toUpperCase());
 
                         customerName = customer.cust_name;
                         customerNumber = customer.cust_telephone || 'NA';
@@ -836,16 +837,16 @@
 
                             cartHtml =
                                 `<tr>
-                            <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
-                            <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
-                            <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
-                            <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
-                            <td style="width: 3.25rem; height: 1rem;">${date}</td>
-                            <td style="width: 3.62rem; height: 1rem;">${items[i].unit_mrp}</td>
-                            <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
-                            <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
-                            <td style="width: 4.2rem; height: 1rem;">${items[i].saled_mrp}</td>
-                        </tr>`
+                                    <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                                    <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
+                                    <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
+                                    <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
+                                    <td style="width: 3.25rem; height: 1rem;">${date}</td>
+                                    <td style="width: 3.62rem; height: 1rem;">${items[i].unit_mrp}</td>
+                                    <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
+                                    <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
+                                    <td style="width: 4.2rem; height: 1rem;">${items[i].saled_mrp}</td>
+                                </tr>`
                             $(".cartitems").append(cartHtml);
 
                             totalGross += grossValue;
