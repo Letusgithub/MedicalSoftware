@@ -69,12 +69,13 @@
                           </div>
                         </div>
 
-                        <label class="col-sm-2 col-form-label ps-4" for="vendor_email">Email</label>
+                        <label class="col-sm-2 col-form-label ps-4" for="vendor_email">Email<span
+                            style="font-size: 15px; color: red">*</span></label>
                         <div class="col-sm-4">
                           <div class="input-group has-validation">
                             <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                             <input type="text" id="vendor_email" class="form-control" placeholder="email@example.com"
-                              name="vendor_email" value="<%=vendor[0].vendor_email%>">
+                              name="vendor_email" value="<%=vendor[0].vendor_email%>" required>
                             <div class="invalid-feedback">
                               Please enter valid email.
                             </div>
@@ -132,7 +133,7 @@
                             <input type="text" id="dl1_ln" style="text-align: center;" placeholder="Lic. no."
                               class="form-control border"
                               onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
-                              minlength="6" maxlength="6" required>
+                              required>
                             <div class="invalid-feedback">
                               Please enter valid DL number.
                             </div>
@@ -186,9 +187,9 @@
                             <input type="text" id="dl2_ct" style="text-align: center;" placeholder="City"
                               class="form-control border" required>
                             <input type="text" id="dl2_ln" style="text-align: center;" placeholder="Lic. no."
-                              class="form-control border" 
+                              class="form-control border"
                               onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
-                              minlength="6" maxlength="6" required>
+                              required>
                             <div class="invalid-feedback">
                               Please enter valid DL number.
                             </div>
@@ -204,8 +205,7 @@
                             <span id="basic-icon-default-phone2" class="input-group-text"><i
                                 class="bx bxs-bank"></i></span>
                             <input type="text" id="vendor_gstin" class="form-control phone-mask" placeholder=""
-                              name="vendor_gstin" value="<%=vendor[0].vendor_gstin %>" 
-                              minlength="15" maxlength="15"
+                              name="vendor_gstin" value="<%=vendor[0].vendor_gstin %>" minlength="15" maxlength="15"
                               required>
                             <div class="invalid-feedback">
                               Please enter valid GSTIN.
@@ -213,13 +213,17 @@
                           </div>
                         </div>
 
-                        <label class="col-sm-2 col-form-label ps-4" for="vendor_fssai">FSSAI</label>
+                        <label class="col-sm-2 col-form-label ps-4" for="vendor_fssai">FSSAI<span
+                            style="font-size: 15px; color: red">*</span></label>
                         <div class="col-sm-4">
-                          <div class="input-group input-group-merge">
+                          <div class="input-group has-validation">
                             <span id="basic-icon-default-phone2" class="input-group-text"><i
                                 class="bx bxs-bank"></i></span>
                             <input type="text" id="vendor_fssai" class="form-control phone-mask" placeholder=""
-                              name="vendor_fssai" value="<%=vendor[0].vendor_fssai %>">
+                              name="vendor_fssai" value="<%=vendor[0].vendor_fssai %>" required>
+                            <div class="invalid-feedback">
+                              Please enter valid FSSAI.
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -291,17 +295,19 @@
             $("#dl2_ln").val(splitDL2[3]);
           }
 
+          var isEmailValid = true;
           $("#vendor_email").change(function () {
             var inputvalues = $(this).val();
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             if (!regex.test(inputvalues)) {
               $("#vendor_email").addClass('is-invalid');
               $("#vendor_email").focus();
-              e.preventDefault();
+              isEmailValid = false;
             } else {
               $("#vendor_email").removeClass('is-invalid');
+              isEmailValid = true;
             }
-          })
+          });
 
           $('input:required').each(function () {
             $(this).on('input', function () {
@@ -327,6 +333,12 @@
             });
 
             if (isValid) {
+              if (!isEmailValid) {
+                $("#vendor_email").addClass('is-invalid');
+                $("#vendor_email").focus();
+                return;
+              }
+
               var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
               var vendor_dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
 
