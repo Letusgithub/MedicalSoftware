@@ -264,7 +264,6 @@
                                                             style="font-size: 15px; color: red">*</span></label>
                                                     <div class="col-sm-10">
                                                         <div class="input-group has-validation">
-                                                            <span class="input-group-text"></span>
                                                             <textarea type="text" id="vendor_address"
                                                                 class="form-control"
                                                                 placeholder="Enter distributor's address"
@@ -337,6 +336,16 @@
                         });
                     });
 
+                    $("#vendor_address").on('input', function () {
+                        if ($("#vendor_address").val() == '') {
+                            $("#vendor_address").addClass('is-invalid');
+                            isValid = false;
+                        } else {
+                            $("#vendor_address").removeClass('is-invalid');
+                        }
+                    });
+
+
                     // $("#dl2_ln").on('input', function () {
                     //     if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
                     //         $("#dl2_ln").val(null);
@@ -360,6 +369,13 @@
                                 $(this).removeClass('is-invalid');
                             }
                         });
+
+                        if ($("#vendor_address").val() == '') {
+                            $("#vendor_address").addClass('is-invalid');
+                            isValid = false;
+                        } else {
+                            $("#vendor_address").removeClass('is-invalid');
+                        }
 
                         if (isValid) {
                             if (!isEmailValid) {

@@ -232,10 +232,12 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="vendor_address">Address</label>
                         <div class="col-sm-10">
-                          <div class="input-group input-group-merge">
-                            <span class="input-group-text"></span>
+                          <div class="input-group has-validation">
                             <textarea type="text" id="vendor_address" class="form-control" placeholder=""
-                              name="vendor_address"><%=vendor[0].vendor_address %></textarea>
+                              name="vendor_address" required><%=vendor[0].vendor_address %></textarea>
+                            <div class="invalid-feedback">
+                              Please enter address.
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -319,6 +321,15 @@
             });
           });
 
+          $("#vendor_address").on('input', function () {
+            if ($("#vendor_address").val() == '') {
+              $("#vendor_address").addClass('is-invalid');
+              isValid = false;
+            } else {
+              $("#vendor_address").removeClass('is-invalid');
+            }
+          });
+
           $("#submitbtn").click(function (e) {
 
             e.preventDefault();
@@ -331,6 +342,13 @@
                 $(this).removeClass('is-invalid');
               }
             });
+
+            if ($("#vendor_address").val() == '') {
+              $("#vendor_address").addClass('is-invalid');
+              isValid = false;
+            } else {
+              $("#vendor_address").removeClass('is-invalid');
+            }
 
             if (isValid) {
               if (!isEmailValid) {
