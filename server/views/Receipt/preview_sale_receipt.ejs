@@ -791,7 +791,6 @@
 
                         var totalGross = 0;
                         var totalGST = 0;
-                        var totalAmount = 0;
                         var transactions = [];
 
 
@@ -801,8 +800,8 @@
                             var date = moment(datetime).format('MM/YYYY');
 
                             var grossValue = (items[i].saled_pri_qty_cart * items[i].unit_mrp + items[i].saled_sec_qty_cart * (items[i].unit_mrp / items[i].conversion)) / (1 + (items[i].gst / 100));
+                            console.log(items[i].saled_pri_qty_cart, items[i].unit_mrp, items[i].saled_sec_qty_cart, items[i].conversion, items[i].gst, grossValue);
                             var gstValue = grossValue * items[i].gst / 100;
-                            var amount = grossValue + gstValue;
 
                             var transaction = {
                                 grossAmount: grossValue,
@@ -828,7 +827,6 @@
 
                             totalGross += grossValue;
                             totalGST += gstValue;
-                            totalAmount += amount;
                         }
 
                         $(".cgst").text((totalGST / 2).toFixed(2));
