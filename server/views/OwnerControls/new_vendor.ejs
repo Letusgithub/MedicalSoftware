@@ -73,7 +73,7 @@
                                                                 onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                 type="tel" maxlength="10" required>
                                                             <div class="invalid-feedback">
-                                                                Please enter contact number.
+                                                                Please enter valid contact number.
                                                             </div>
                                                         </div>
                                                     </div>
@@ -96,11 +96,48 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span
+                                                            style="font-size: 15px; color: red">*</span></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group has-validation">
+                                                            <span id="basic-icon-default-phone2"
+                                                                class="input-group-text"><i
+                                                                    class="bx bxs-bank"></i></span>
+                                                            <input type="text" id="vendor_gstin"
+                                                                class="form-control phone-mask"
+                                                                placeholder="Enter valid GSTIN" name="vendor_gstin"
+                                                                minlength="15" maxlength="15" required>
+                                                            <div class="invalid-feedback">
+                                                                Please enter valid GSTIN.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <label class="col-sm-2 col-form-label ps-4"
+                                                        for="vendor_fssai">FSSAI<span
+                                                            style="font-size: 15px; color: red">*</span></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group has-validation">
+                                                            <span id="basic-icon-default-phone2"
+                                                                class="input-group-text"><i
+                                                                    class="bx bxs-bank"></i></span>
+                                                            <input type="text" id="vendor_fssai"
+                                                                class="form-control phone-mask"
+                                                                placeholder="Enter valid FSSAI" name="vendor_fssai"
+                                                                required>
+                                                            <div class="invalid-feedback">
+                                                                Please enter valid FSSAI.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
 
                                                 <div class="row mb-3">
                                                     <label class="col-sm-2 col-form-label" for="org_dl_no_1">DL Number
                                                         1<span style="font-size: 15px; color: red">*</span></label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-10">
                                                         <div class="input-group has-validation">
                                                             <span id="basic-icon-default-fullname2"
                                                                 class="input-group-text border"><i
@@ -147,7 +184,7 @@
                                                             <input type="text" id="dl1_ct" style="text-align: center;"
                                                                 value="NGP" placeholder="City"
                                                                 class="form-control border" required>
-                                                            <input type="text" id="dl1_ln" placeholder="Lic. no."
+                                                            <input type="text" id="dl1_ln" placeholder="Lic. no." style="text-align: center;"
                                                                 class="form-control border"
                                                                 onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                 required>
@@ -156,11 +193,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <label class="col-sm-2 col-form-label ps-4" for="org_dl_no_2">DL
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label" for="org_dl_no_2">DL
                                                         Number
                                                         2<span style="font-size: 15px; color: red">*</span></label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-10">
                                                         <div class="input-group has-validation">
                                                             <span id="basic-icon-default-fullname2"
                                                                 class="input-group-text border"><i
@@ -218,45 +256,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span
-                                                            style="font-size: 15px; color: red">*</span></label>
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group has-validation">
-                                                            <span id="basic-icon-default-phone2"
-                                                                class="input-group-text"><i
-                                                                    class="bx bxs-bank"></i></span>
-                                                            <input type="text" id="vendor_gstin"
-                                                                class="form-control phone-mask"
-                                                                placeholder="Enter valid GSTIN" name="vendor_gstin"
-                                                                minlength="15" maxlength="15" required>
-                                                            <div class="invalid-feedback">
-                                                                Please enter valid GSTIN.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <label class="col-sm-2 col-form-label ps-4"
-                                                        for="vendor_fssai">FSSAI<span
-                                                            style="font-size: 15px; color: red">*</span></label>
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group has-validation">
-                                                            <span id="basic-icon-default-phone2"
-                                                                class="input-group-text"><i
-                                                                    class="bx bxs-bank"></i></span>
-                                                            <input type="text" id="vendor_fssai"
-                                                                class="form-control phone-mask"
-                                                                placeholder="Enter valid FSSAI" name="vendor_fssai"
-                                                                required>
-                                                            <div class="invalid-feedback">
-                                                                Please enter valid FSSAI.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
 
                                                 <div class="row mb-3">
                                                     <label class="col-sm-2 col-form-label"
@@ -345,6 +344,19 @@
                         }
                     });
 
+                    //Validate mobile number
+                    var isContactValid = true;
+                    $("#vendor_contact").on("input", function () {
+                        var value = $(this).val();
+                        if (value.length < 10) {
+                            $(this).addClass("is-invalid");
+                            isContactValid = false;
+                        } else {
+                            $(this).removeClass("is-invalid");
+                            isContactValid = true;
+                        }
+                    });
+
 
                     // $("#dl2_ln").on('input', function () {
                     //     if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
@@ -381,6 +393,11 @@
                             if (!isEmailValid) {
                                 $("#vendor_email").addClass('is-invalid');
                                 $("#vendor_email").focus();
+                                return;
+                            }
+                            if (!isContactValid) {
+                                $("#vendor_contact").addClass('is-invalid');
+                                $("#vendor_contact").focus();    
                                 return;
                             }
 

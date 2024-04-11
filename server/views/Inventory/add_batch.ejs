@@ -90,6 +90,29 @@
                                             </div>
 
                                             <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-address">Unit</label>
+                                                <div class="col-sm-4 me-0">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="hsn" disabled
+                                                            value="<%=data[0].primary_unit%>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2 text-center mx-0 p-0">
+                                                    <p class="fs-4"></p>
+                                                </div>
+
+                                                <div class="col-sm-4 ms-0">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="hsn" disabled
+                                                            value="<%=data[0].secondary_unit%>">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
 
                                                 <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">GST (%)</label>
@@ -100,9 +123,7 @@
                                                     </div>
                                                 </div>
 
-
-
-                                                <label class="col-sm-2 col-form-label ps-4"
+                                                <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">HSN Code</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
@@ -112,30 +133,6 @@
                                                 </div>
 
 
-                                            </div>
-
-
-                                            <div class="row mb-2">
-                                                <label class="col-sm-2 col-form-label"
-                                                    for="basic-icon-default-address">Unit</label>
-                                                <div class="col-sm-4 me-0">
-                                                    <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control" name="hsn" disabled
-                                                            value="<%=data[0].primary_unit%>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-1 text-center mx-0 p-0">
-                                                    <p class="fs-4">-</p>
-                                                </div>
-
-                                                <div class="col-sm-4 ms-0">
-                                                    <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control" name="hsn" disabled
-                                                            value="<%=data[0].secondary_unit%>">
-                                                    </div>
-
-                                                </div>
                                             </div>
 
                                             <div class="row mb-3">
@@ -245,7 +242,7 @@
                                                     <div class="input-group  has-validation">
                                                         <input type="text" class="form-control" name="addmrp" id="price"
                                                             onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
-                                                            placeholder="Enter MRP" required />
+                                                            placeholder="Enter MRP Rate" required />
                                                         <div class="invalid-feedback">
                                                             Please enter MRP.
                                                         </div>
@@ -521,49 +518,54 @@
                         //     return alert("Purchase Rate can't be greater than MRP");
                         // }
 
-                        // Convert expdate to yyyy-mm-dd format
-                        var exp = $("[name='addexp']").val();
-                        var year = parseInt(exp.split('/')[1], 10);
-                        year = year < 70 ? 2000 + year : 1900 + year;
-                        var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
-                        firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
-                        var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
+                        if (isValid) {
 
-                        var batchDetails = {
-                            product_id: "<%=data[0].product_id%>",
-                            org_id: orgID,
-                            batch_name: $("#batchname").val(),
-                            exp_date: exp,
-                            conversion: $("#conversion").val(),
-                            batch_qty: parseFloat($("input[name='addqty']").val()),
-                            purchase_rate: $("input[name='addpur']").val(),
-                            mrp: $("input[name='addmrp']").val(),
-                            free: 0,
-                            bulk_discount: 0,
-                            base_price: $("input[name='addpur']").val(),
-                            shelf_label: $("input[name='addshelf']").val()
-                        }
-                        console.log(batchDetails);
 
-                        $('#loader').show();
-                        $.ajax({
-                            url: `/api/addbatch/`,
-                            type: 'POST',
-                            data: JSON.stringify(batchDetails),
-                            contentType: 'application/json',
-                            success: function (response) {
+                            // Convert expdate to yyyy-mm-dd format
+                            var exp = $("[name='addexp']").val();
+                            var year = parseInt(exp.split('/')[1], 10);
+                            year = year < 70 ? 2000 + year : 1900 + year;
+                            var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
+                            firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
+                            var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
 
-                                $('#loader').hide();
-
-                                window.location.href = `/product_batch/${productId}`
-                                console.log(response);
-
-                            },
-                            error: function (error) {
-                                $('#loader').hide();
-                                console.log(error);
+                            var batchDetails = {
+                                product_id: "<%=data[0].product_id%>",
+                                org_id: orgID,
+                                batch_name: $("#batchname").val(),
+                                exp_date: exp,
+                                conversion: $("#conversion").val(),
+                                batch_qty: parseFloat($("input[name='addqty']").val()),
+                                purchase_rate: $("input[name='addpur']").val(),
+                                mrp: $("input[name='addmrp']").val(),
+                                free: 0,
+                                bulk_discount: 0,
+                                base_price: $("input[name='addpur']").val(),
+                                shelf_label: $("input[name='addshelf']").val()
                             }
-                        })
+                            console.log(batchDetails);
+
+                            $('#loader').show();
+                            $.ajax({
+                                url: `/api/addbatch/`,
+                                type: 'POST',
+                                data: JSON.stringify(batchDetails),
+                                contentType: 'application/json',
+                                success: function (response) {
+
+                                    $('#loader').hide();
+
+                                    window.location.href = `/product_batch/${productId}`
+                                    console.log(response);
+
+                                },
+                                error: function (error) {
+                                    $('#loader').hide();
+                                    console.log(error);
+                                }
+                            })
+
+                        }
 
                     })
                 });

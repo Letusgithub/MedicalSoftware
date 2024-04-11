@@ -162,6 +162,55 @@
                                                             </div>
                                                         </div>
 
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-2 col-form-label"
+                                                                for="basic-icon-default-address">Unit</label>
+                                                            <div class="col-sm-4 me-0">
+                                                                <div class="input-group has-validation">
+                                                                    <select class="form-select" id="primaryDropdown"
+                                                                        name="primary" required>
+                                                                        <option value="default" selected>Primary</option>
+                                                                        <option value="STP">STP</option>
+                                                                        <option value="AMP">AMP</option>
+                                                                        <option value="BOX">BOX</option>
+                                                                        <option value="BTL">BTL</option>
+                                                                        <option value="PCS">PCS</option>
+                                                                        <option value="TUBE">TUBE</option>
+                                                                        <option value="DROP">DROP</option>
+                                                                        <option value="DRSP">DRSP (Dry Syrup)</option>
+                                                                        <option value="E/D">E/D (Eye Drop)</option>
+                                                                        <option value="EAR/D">EAR/D (Ear Drop)</option>
+                                                                        <option value="INJ">INJ (Injection)</option>
+                                                                        <option value="INH">INH (Inhaler)</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please select primary unit.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="col-sm-2 text-center mx-0 p-0">
+                                                                <p class="fs-4"></p>
+                                                            </div>
+
+                                                            <div class="col-sm-4 ms-0">
+                                                                <div class="input-group has-validation">
+                                                                    <select class="form-select" id="secondaryDropdown"
+                                                                        name="secondary" required>
+                                                                        <option value="default" selected>Secondary
+                                                                        </option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please select secondary unit.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+
+
                                                         <div class="row">
 
                                                             <label class="col-sm-2 col-form-label"
@@ -199,53 +248,6 @@
                                                             </div>
                                                         </div>
 
-
-                                                        <div class="row mb-2">
-                                                            <label class="col-sm-2 col-form-label"
-                                                                for="basic-icon-default-address">Unit</label>
-                                                            <div class="col-sm-4 me-0">
-                                                                <div class="input-group has-validation">
-                                                                    <select class="form-select" id="primaryDropdown"
-                                                                        name="primary" required>
-                                                                        <option value="default" selected>Primary</option>
-                                                                        <option value="STP">STP</option>
-                                                                        <option value="AMP">AMP</option>
-                                                                        <option value="BOX">BOX</option>
-                                                                        <option value="BTL">BTL</option>
-                                                                        <option value="PCS">PCS</option>
-                                                                        <option value="TUBE">TUBE</option>
-                                                                        <option value="DROP">DROP</option>
-                                                                        <option value="DRSP">DRSP (Dry Syrup)</option>
-                                                                        <option value="E/D">E/D (Eye Drop)</option>
-                                                                        <option value="EAR/D">EAR/D (Ear Drop)</option>
-                                                                        <option value="INJ">INJ (Injection)</option>
-                                                                        <option value="INH">INH (Inhaler)</option>
-                                                                    </select>
-                                                                    <div class="invalid-feedback">
-                                                                        Please select primary unit.
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="col-sm-1 text-center mx-0 p-0">
-                                                                <p class="fs-4">-</p>
-                                                            </div>
-
-                                                            <div class="col-sm-4 ms-0">
-                                                                <div class="input-group has-validation">
-                                                                    <select class="form-select" id="secondaryDropdown"
-                                                                        name="secondary" required>
-                                                                        <option value="default" selected>Secondary
-                                                                        </option>
-                                                                    </select>
-                                                                    <div class="invalid-feedback">
-                                                                        Please select secondary unit.
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
 
                                                         <div class="row">
 
@@ -341,9 +343,9 @@
                                                                 </div>
                                                             </div>
 
-                                                            <label class="col-sm-1 col-form-label"
+                                                            <label class="col-sm-2 col-form-label"
                                                                 for="basic-icon-default-email">QTY</label>
-                                                            <div class="col-sm-2 mb-3">
+                                                            <div class="col-sm-4 mb-3">
                                                                 <div class="input-group has-validation">
                                                                     <input type="text"
                                                                         class="form-control"
@@ -357,16 +359,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <label class="col-sm-1 col-form-label"
-                                                                for="free_scheme">Free</label>
-                                                            <div class="col-sm-2 mb-3">
-                                                                <div class="input-group input-group-merge">
-                                                                    <input type="text" class="form-control"
-                                                                        onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
-                                                                        name="free_scheme" id="free_scheme"
-                                                                        placeholder="Enter free quantity">
-                                                                </div>
-                                                            </div>
                                                         </div>
 
                                                         <div class="row">
@@ -376,7 +368,7 @@
                                                             <div class="col-sm-4 mb-3">
                                                                 <div class="input-group has-validation">
                                                                     <input type="text" class="form-control"
-                                                                        name="addmrp" placeholder="Enter MRP" id="price"
+                                                                        name="addmrp" placeholder="Enter MRP Rate" id="price"
                                                                         onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                         required>
                                                                     <div class="invalid-feedback">
@@ -420,6 +412,17 @@
                                                                         onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                         name="bulk_discount" id="bulk_discount"
                                                                         placeholder="Eg- 5%">
+                                                                </div>
+                                                            </div>
+
+                                                            <label class="col-sm-2 col-form-label"
+                                                                for="free_scheme">Free</label>
+                                                            <div class="col-sm-4 mb-3">
+                                                                <div class="input-group input-group-merge">
+                                                                    <input type="text" class="form-control"
+                                                                        onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                                        name="free_scheme" id="free_scheme"
+                                                                        placeholder="Enter free quantity">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -500,7 +503,6 @@
                                                 <div class="row m-0 p-0">
                                                     <h5 class="col-sm-5 card-header">CR/DR (₹) </h5>
                                                 </div>
-
                                                 <div class="card-body pt-0">
                                                     <div class="input-group has-validation">
                                                         <input type="text" class="form-control"
@@ -519,7 +521,6 @@
                                                 <div class="d-flex justify-content-between m-0 p-0">
                                                     <h5 class="card-header">Credit Period</h5>
                                                 </div>
-
                                                 <div class="card-body pt-0" id="creditPeriodInput">
                                                     <select class="form-select form-select">
                                                         <option value="0">0D</option>
@@ -537,7 +538,6 @@
                                                 <div class="d-flex justify-content-between m-0 p-0">
                                                     <h5 class="card-header">Less Discount</h5>
                                                 </div>
-
                                                 <div class="card-body pt-0">
                                                     <div class="input-group has-validation">
                                                         <input type="text" class="form-control" id="lessDiscount"
@@ -1696,6 +1696,15 @@
                                         }
                                     }
 
+                                    //Clear inputs
+                                    $('#vendorselect').val('default');
+                                    $('#vendorinvoicenumber').val('');
+                                    $("input[name='invoiceDate']").val('');
+                                    $("#creditPeriodInput").val('');
+                                    $("#lessDiscount").val('');
+                                    $("#creditAmt").val('');
+                                    $("#totalAmt").val('');
+
                                     setTimeout(() => {
                                         $('#loader').hide();
                                         localStorage.removeItem("grncartdetails");
@@ -1705,7 +1714,7 @@
                                 },
                                 error: function (error) {
                                     $('#loader').hide();
-                                    alert("Not Created", error)
+                                    alert("Not Created! Please refresh page", error)
                                 }
                             })
                             

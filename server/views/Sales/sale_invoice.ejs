@@ -50,11 +50,12 @@
                                 </h5>
                               </div>
                               <div class="card-body pt-0">
-                                <div>
-
+                                <div class="has-validation">
                                   <input type="text" class="form-control" id="customername"
-                                    placeholder="Enter customer name" />
-
+                                    placeholder="Enter customer name" required />
+                                  <div class="invalid-feedback">
+                                    Please enter customer name.
+                                  </div>
                                 </div>
                               </div>
 
@@ -68,13 +69,14 @@
                               <h5 class="card-header">Customer Mobile<span style="font-size: 20px; color: red">*</span>
                               </h5>
                               <div class="card-body">
-                                <div>
-
+                                <div class="has-validation">
                                   <input class="form-control" id="phonenumber" placeholder="Enter 10-digit number"
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);  if (this.value.length > 0 && !/[6-9]/.test(this.value[0])) this.value = '';"
                                     onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
-                                    type="tel" maxlength="10" />
-
+                                    type="tel" maxlength="10" required />
+                                  <div class="invalid-feedback">
+                                    Please enter valid mobile.
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -104,7 +106,8 @@
                       <div class="row w-100 m-0 p-0">
                         <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                           <p class="mb-2 repeater-title fw-bold">Item</p>
-                          <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name" />
+                          <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name"
+                            required />
                           <div class="invalid-feedback">
                             Please enter product name.
                           </div>
@@ -357,6 +360,31 @@
 
 
         $(document).ready(function () {
+
+          // Validation check on input
+          $('input:required').each(function () {
+            $(this).on('input', function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+          });
+
+          //Validate mobile number
+          var isMobileValid = false;
+          $("#phonenumber").on("input", function () {
+            var value = $(this).val();
+            if (value.length < 10) {
+              $(this).addClass("is-invalid");
+              isMobileValid = false;
+            } else {
+              $(this).removeClass("is-invalid");
+              isMobileValid = true;
+            }
+          });
+
           $("#brand").prop('readonly', true);
           $("#batch").prop('readonly', true);
           $("#expdate").prop('readonly', true);
@@ -613,32 +641,6 @@
             }
           })*/
 
-          // -ve inputs for inline item cant be entered
-          $('#price').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#pUnit').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#sUnit').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#discount').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#gst').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
 
           // Limit line item discount input to 0-100 range
           $('#discount').on('input', function () {
@@ -766,36 +768,48 @@
           var setLocalData;
           var getLocalData;
           var htmlData;
-          $("#addtocart").click(function () {
+          $("#addtocart").click(function (e) {
 
-            if ($("#customername").val() == '') {
-              $("#customername").addClass('is-invalid');
-              $("#customername").focus();
-              e.preventDefault();
-            } else {
-              $("#customername").removeClass('is-invalid');
-            }
+            e.preventDefault();
+            var isValid = true;
+            $('input:required').each(function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+                isValid = false;
+              } else {
+                $(this).removeClass('is-invalid');
+                isValid = true;
+              }
+            });
 
-            if ($("#phonenumber").val() == '') {
-              $("#phonenumber").addClass('is-invalid');
-              $("#phonenumber").focus();
-              e.preventDefault();
-            } else {
-              $("#phonenumber").removeClass('is-invalid');
-            }
+            // if ($("#customername").val() == '') {
+            //   $("#customername").addClass('is-invalid');
+            //   $("#customername").focus();
+            //   e.preventDefault();
+            // } else {
+            //   $("#customername").removeClass('is-invalid');
+            // }
 
-            if ($("#medicinename").val() == '') {
-              $("#medicinename").addClass('is-invalid');
-              $("#medicinename").focus();
-              e.preventDefault();
-            } else {
-              $("#medicinename").removeClass('is-invalid');
-            }
+            // if ($("#phonenumber").val() == '') {
+            //   $("#phonenumber").addClass('is-invalid');
+            //   $("#phonenumber").focus();
+            //   e.preventDefault();
+            // } else {
+            //   $("#phonenumber").removeClass('is-invalid');
+            // }
+
+            // if ($("#medicinename").val() == '') {
+            //   $("#medicinename").addClass('is-invalid');
+            //   $("#medicinename").focus();
+            //   e.preventDefault();
+            // } else {
+            //   $("#medicinename").removeClass('is-invalid');
+            // }
 
             if ($("#pUnit").val() == '') {
               $("#pUnit").addClass('is-invalid');
               $("#pUnit").focus();
-              e.preventDefault();
+              isValid = false;
             } else {
               $("#pUnit").removeClass('is-invalid');
             }
@@ -803,7 +817,7 @@
             if ($("#batch").val() == '') {
               $("#batch").addClass('is-invalid');
               $("#batch").focus();
-              e.preventDefault();
+              isValid = false;
             } else {
               $("#batch").removeClass('is-invalid');
             }
@@ -811,7 +825,7 @@
             if ($("#expdate").val() < new Date().toJSON().slice(0, 10)) {
               $("#expdate").addClass('is-invalid');
               $("#expdate").focus();
-              e.preventDefault();
+              isValid = false;
             } else {
               $("#expdate").removeClass('is-invalid');
             }
@@ -824,91 +838,98 @@
                 return alert("Don't have Enough Quantity!");
             }
 
-            var products = $("#medicinename").val();
-            var brand = $("#brand").val();
-            var priCartQty = priQty.val();
-            var secCartQty = secQty.val() || 0;
-            var mrp = priceInput.val();
-            var hsn = hsn_number;
-            var gst = gst_percent;
-            var disc = discInput.val() || 0;
-            var total = totalInput.val();
-            var shelflabel = $("#shelflabel").val();
-            var batch = $("#batchdroporinput #batchnumber").val() || $("#batch").val();
-            var exp = $("#expdate").val();
-            var selectedUnit = $("#unit").val();
+            if (isValid) {
+              var products = $("#medicinename").val();
+              var brand = $("#brand").val();
+              var priCartQty = priQty.val();
+              var secCartQty = secQty.val() || 0;
+              var mrp = priceInput.val();
+              var hsn = hsn_number;
+              var gst = gst_percent;
+              var disc = discInput.val() || 0;
+              var total = totalInput.val();
+              var shelflabel = $("#shelflabel").val();
+              var batch = $("#batchdroporinput #batchnumber").val() || $("#batch").val();
+              var exp = $("#expdate").val();
+              var selectedUnit = $("#unit").val();
 
 
-            cartarray.push({
-              batchId: batchIdwhenSelected,
-              productId: productId,
-              productname: products,
-              brand: brand,
-              shelflabel: shelflabel,
-              batch_name: batch,
-              expdate: exp,
-              priQty: priCartQty,
-              secQty: secCartQty,
-              conversion: conversion,
-              selectedUnit: selectedUnit,
-              mrp: mrp,
-              hsn: hsn,
-              gst: gst,
-              disc: disc,
-              total: total,
-              profitForEachProduct: profitForEachProduct,
-              timestamp: new Date().getTime()
-            })
+              cartarray.push({
+                batchId: batchIdwhenSelected,
+                productId: productId,
+                productname: products,
+                brand: brand,
+                shelflabel: shelflabel,
+                batch_name: batch,
+                expdate: exp,
+                priQty: priCartQty,
+                secQty: secCartQty,
+                conversion: conversion,
+                selectedUnit: selectedUnit,
+                mrp: mrp,
+                hsn: hsn,
+                gst: gst,
+                disc: disc,
+                total: total,
+                profitForEachProduct: profitForEachProduct,
+                timestamp: new Date().getTime()
+              })
 
-            setLocalData = JSON.stringify(cartarray);
+              setLocalData = JSON.stringify(cartarray);
 
-            console.log(cartarray);
+              console.log(cartarray);
 
-            localStorage.setItem("cartitems", setLocalData);
+              localStorage.setItem("cartitems", setLocalData);
 
-            //also add the customer data to local storage
-            var storeCustomerData = {
-              name: $("#customername").val(),
-              phone: $("#phonenumber").val()
-            };
+              //also add the customer data to local storage
+              var storeCustomerData = {
+                name: $("#customername").val(),
+                phone: $("#phonenumber").val()
+              };
 
-            localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
+              localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
 
-            // Reset item input fields
-            $("#medicinename").val("");
+              // Reset item input fields
+              $("#medicinename").val("");
+              $("#brand").val("");
+              $("#pUnit").val("").prop('readonly', true);
+              $("#primaryunitname span").hide();
+              $("#secondaryunitname span").hide();
+              $("#sUnit").val("").prop('readonly', true);
+              $("#price").val("").prop('readonly', true);
+              $("#discount").val("").prop('readonly', true);
+
+              $("#gst").val("")
+              $("#gst_input").hide();
+              $("#sUnit_input").show();
+
+              $("#total").val("");
+              $("#shelflabel").val("");
+              $("#batchdroporinput").empty();
+              $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+              $("#batch").prop('readonly', true);
+              $("#expdate").val("").prop('readonly', true);
+              $("#unit").empty();
+              $("#pack .unit").empty();
+              $("#message").empty();
+              $("#profit").text('');
+            }
+          })
+
+
+          // On input medicine name clear all the fields
+          $("#medicinename").on('input', function () {
             $("#brand").val("");
             $("#pUnit").val("").prop('readonly', true);
             $("#sUnit").val("").prop('readonly', true);
             $("#price").val("").prop('readonly', true);
             $("#discount").val("").prop('readonly', true);
-
-            $("#gst").val("")
-            $("#gst_input").hide();
-            $("#sUnit_input").show();
-
-            $("#total").val("");
+            $("#total").val("").prop('readonly', true);
             $("#shelflabel").val("");
             $("#batchdroporinput").empty();
             $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
-            $("#expdate").val("");
-            $("#unit").empty();
-            $("#pack .unit").empty();
-            $("#message").empty();
-            $("#profit").text('');
-          })
-
-          // On input medicine name clear all the fields
-          $("#medicinename").on('input', function () {
-            $("#brand").val("");
-            $("#pUnit").val("");
-            $("#sUnit").val("");
-            $("#price").val("");
-            $("#discount").val("");
-            $("#total").val("");
-            $("#shelflabel").val("");
-            $("#batchdroporinput").empty();
-            $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
-            $("#expdate").val("");
+            $("#batch").prop('readonly', true);
+            $("#expdate").val("").prop('readonly', true);
             $("#unit").empty();
             $("#pack .unit").empty();
             $("#message").empty();
@@ -1144,6 +1165,12 @@
           // post the data to the sales api
           var orderDetails;
           $("#submitorder").click(function () {
+
+            if (!isMobileValid) {
+              $("#phonenumber").addClass("is-invalid");
+              $("#phonenumber").focus();
+              return;
+            }
 
             $("#submitorder").prop('disabled', true);
 

@@ -84,9 +84,40 @@
                       </div>
 
                       <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span
+                            style="font-size: 15px; color: red">*</span></label>
+                        <div class="col-sm-4">
+                          <div class="input-group has-validation">
+                            <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                class="bx bxs-bank"></i></span>
+                            <input type="text" id="vendor_gstin" class="form-control phone-mask" placeholder=""
+                              name="vendor_gstin" value="<%=vendor[0].vendor_gstin %>" minlength="15" maxlength="15"
+                              required>
+                            <div class="invalid-feedback">
+                              Please enter valid GSTIN.
+                            </div>
+                          </div>
+                        </div>
+
+                        <label class="col-sm-2 col-form-label ps-4" for="vendor_fssai">FSSAI<span
+                            style="font-size: 15px; color: red">*</span></label>
+                        <div class="col-sm-4">
+                          <div class="input-group has-validation">
+                            <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                class="bx bxs-bank"></i></span>
+                            <input type="text" id="vendor_fssai" class="form-control phone-mask" placeholder=""
+                              name="vendor_fssai" value="<%=vendor[0].vendor_fssai %>" required>
+                            <div class="invalid-feedback">
+                              Please enter valid FSSAI.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
                         <label class="col-2 col-form-label" for="org_dl_no_1">DL Number 1<span
                             style="font-size: 15px; color: red">*</span></label>
-                        <div class="col-4">
+                        <div class="col-10">
                           <div class="input-group has-validation">
                             <span id="basic-icon-default-fullname2" class="input-group-text border"><i
                                 class='bx bx-detail'></i></span>
@@ -139,10 +170,11 @@
                             </div>
                           </div>
                         </div>
-
-                        <label class="col-2 col-form-label ps-4" for="org_dl_no_2">DL Number
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-2 col-form-label" for="org_dl_no_2">DL Number
                           2<span style="font-size: 15px; color: red">*</span></label>
-                        <div class="col-4">
+                        <div class="col-10">
                           <div class="input-group has-validation">
                             <span id="basic-icon-default-fullname2" class="input-group-text border"><i
                                 class='bx bx-detail'></i></span>
@@ -192,37 +224,6 @@
                               required>
                             <div class="invalid-feedback">
                               Please enter valid DL number.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="vendor_gstin">GSTIN<span
-                            style="font-size: 15px; color: red">*</span></label>
-                        <div class="col-sm-4">
-                          <div class="input-group has-validation">
-                            <span id="basic-icon-default-phone2" class="input-group-text"><i
-                                class="bx bxs-bank"></i></span>
-                            <input type="text" id="vendor_gstin" class="form-control phone-mask" placeholder=""
-                              name="vendor_gstin" value="<%=vendor[0].vendor_gstin %>" minlength="15" maxlength="15"
-                              required>
-                            <div class="invalid-feedback">
-                              Please enter valid GSTIN.
-                            </div>
-                          </div>
-                        </div>
-
-                        <label class="col-sm-2 col-form-label ps-4" for="vendor_fssai">FSSAI<span
-                            style="font-size: 15px; color: red">*</span></label>
-                        <div class="col-sm-4">
-                          <div class="input-group has-validation">
-                            <span id="basic-icon-default-phone2" class="input-group-text"><i
-                                class="bx bxs-bank"></i></span>
-                            <input type="text" id="vendor_fssai" class="form-control phone-mask" placeholder=""
-                              name="vendor_fssai" value="<%=vendor[0].vendor_fssai %>" required>
-                            <div class="invalid-feedback">
-                              Please enter valid FSSAI.
                             </div>
                           </div>
                         </div>
@@ -330,6 +331,20 @@
             }
           });
 
+          //Validate mobile number
+          var isContactValid = true;
+          $("#vendor_contact").on("input", function () {
+            var value = $(this).val();
+            if (value.length < 10) {
+              $(this).addClass("is-invalid");
+              isContactValid = false;
+            } else {
+              $(this).removeClass("is-invalid");
+              isContactValid = true;
+            }
+          });
+
+
           $("#submitbtn").click(function (e) {
 
             e.preventDefault();
@@ -354,6 +369,11 @@
               if (!isEmailValid) {
                 $("#vendor_email").addClass('is-invalid');
                 $("#vendor_email").focus();
+                return;
+              }
+              if (!isContactValid) {
+                $("#vendor_contact").addClass('is-invalid');
+                $("#vendor_contact").focus();
                 return;
               }
 
