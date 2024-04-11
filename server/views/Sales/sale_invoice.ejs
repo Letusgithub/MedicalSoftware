@@ -238,8 +238,11 @@
 
                       <label for="reference" class="col-3 form-label mb-0"><span
                           style="font-size: 20px; color: red">*</span>Reference</label>
-                      <div class="col-9 mb-2">
+                      <div class="col-9 mb-2 has-validation">
                         <input class="form-control" type="text" placeholder="Doctor/Hospital" id="reference" />
+                        <div class="invalid-feedback">
+                          Please enter doctor reference.
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -250,9 +253,7 @@
                     <h5 class="card-header"> Subtotal (₹)</h5>
                     <div class="card-body">
                       <div>
-
                         <input type="number" class="form-control" id="subtotal" readonly />
-
                       </div>
                     </div>
                   </div>
@@ -264,9 +265,7 @@
                     <h5 class="card-header">Additional Discount (₹)</h5>
                     <div class="card-body">
                       <div>
-
                         <input type="number" class="form-control" id="additionaldiscount" />
-
                       </div>
                     </div>
                   </div>
@@ -280,9 +279,7 @@
 
                     <div class="card-body pt-0">
                       <div>
-
                         <input type="number" class="form-control" id="finalamount" readonly />
-
                       </div>
                     </div>
                   </div>
@@ -292,15 +289,17 @@
                   <div class="card mb-4">
                     <h5 class="card-header">Mode of Payment</h5>
                     <div class="card-body">
-                      <div>
-                        <select class="form-select" id="mop" name="mop" aria-label="select mop">
+                      <div class="has-validation">
+                        <select class="form-select" id="mop" name="mop">
                           <option selected disabled>Select Option</option>
                           <option value="cash">Cash</option>
                           <option value="upi">UPI</option>
                           <option value="debit-card">Debit card</option>
                           <option value="credit-card">Credit card</option>
                         </select>
-
+                        <div class="invalid-feedback">
+                          Please select mode of payment.
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -362,7 +361,7 @@
         $(document).ready(function () {
 
           // Validation check on input
-          $('input:required').each(function () {
+          $('input').each(function () {
             $(this).on('input', function () {
               if ($(this).val() == '') {
                 $(this).addClass('is-invalid');
@@ -371,9 +370,18 @@
               }
             });
           });
+          $('select').each(function () {
+            $(this).on('input', function () {
+              if ($(this).val() == 'default' || $(this).val() == null) {
+                $(this).addClass('is-invalid');
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+          });
 
           //Validate mobile number
-          var isMobileValid = false;
+          var isMobileValid = true;
           $("#phonenumber").on("input", function () {
             var value = $(this).val();
             if (value.length < 10) {
@@ -782,30 +790,6 @@
               }
             });
 
-            // if ($("#customername").val() == '') {
-            //   $("#customername").addClass('is-invalid');
-            //   $("#customername").focus();
-            //   e.preventDefault();
-            // } else {
-            //   $("#customername").removeClass('is-invalid');
-            // }
-
-            // if ($("#phonenumber").val() == '') {
-            //   $("#phonenumber").addClass('is-invalid');
-            //   $("#phonenumber").focus();
-            //   e.preventDefault();
-            // } else {
-            //   $("#phonenumber").removeClass('is-invalid');
-            // }
-
-            // if ($("#medicinename").val() == '') {
-            //   $("#medicinename").addClass('is-invalid');
-            //   $("#medicinename").focus();
-            //   e.preventDefault();
-            // } else {
-            //   $("#medicinename").removeClass('is-invalid');
-            // }
-
             if ($("#pUnit").val() == '') {
               $("#pUnit").addClass('is-invalid');
               $("#pUnit").focus();
@@ -831,11 +815,18 @@
             }
 
             if (priQty.val() > availablePrimaryQty) {
-              return alert("Don't have Enough Quantity!");
+              isValid = false;
+              priQty.val("");
+              $("#pUnit").addClass('is-invalid');
+              // return alert("Don't have Enough Quantity!");
             }
             if (priQty.val() == availablePrimaryQty) {
-              if (secQty.val() > availableSecondaryQty)
-                return alert("Don't have Enough Quantity!");
+              if (secQty.val() > availableSecondaryQty) {
+                isValid = false;
+                secQty.val("");
+                $("#sUnit").addClass('is-invalid');
+              }
+              // return alert("Don't have Enough Quantity!");
             }
 
             if (isValid) {
@@ -1175,14 +1166,29 @@
             $("#submitorder").prop('disabled', true);
 
             if ($("#reference").val() == "") {
-              return alert("Add Doctor reference");
+              $("#reference").addClass("is-invalid");
+              $("#reference").focus();
+              return;
+            } else {
+              $("#reference").removeClass("is-invalid");
             }
+
             if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
-              return alert("PLEASE ADD SOME ITEMS FIRST");
+              $("#medicinename").addClass("is-invalid");
+              $("#medicinename").focus();
+              return;
+            } else {
+              $("#subtotal").removeClass("is-invalid");
             }
+
             if ($("#mop").val() == null) {
-              return alert("PLEASE SELECT MODE OF PAYMENT");
+              $("#mop").addClass("is-invalid");
+              $("#mop").focus();
+              return;
+            } else {
+              $("#mop").removeClass("is-invalid");
             }
+
             if (!$("#defaultCheck1").prop("checked")) {
               return alert("Please check the disclaimer before submitting.");
             }
