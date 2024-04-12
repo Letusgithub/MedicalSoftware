@@ -984,14 +984,14 @@
                     //  Clear input fields on product name change
                     $("input[name='productname']").on('input', function () {
                         productId = undefined;
-                        $("select[name = 'gst']").val('Select option').prop('disabled', false);;
+                        $("select[name = 'gst']").val('default').prop('disabled', false);;
                         $("#hsn").val('').prop('disabled', false);;
-                        $("select[name='primary']").val('Primary').prop('disabled', false);;
-                        $("select[name='secondary']").val('Secondary').prop('disabled', false);;
+                        $("select[name='primary']").val('default').prop('disabled', false);;
+                        $("select[name='secondary']").val('default').prop('disabled', false);;
                         $("input[name='threshold']").val("").prop('disabled', false);;
                         $("#brand").val('').prop('disabled', false);
                         $("#salt").val('').prop('disabled', false);
-                        $("select[name='category']").val('Select Category').prop('disabled', false);
+                        $("select[name='category']").val('default').prop('disabled', false);
                     })
 
                     // Get data when refresh
