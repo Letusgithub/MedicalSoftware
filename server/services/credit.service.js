@@ -93,7 +93,7 @@ module.exports = {
       Join vendor on cr.vendor_id = vendor.vendor_id
       Join sample on crdetails.product_id = sample.product_id
       Join batch on batch.batch_id = crdetails.batch_id_credit 
-      Join inventory inv on inv.product_id = crdetails.product_id AND inv.org_id = batch.org_id
+      Join inventory inv on inv.product_id = crdetails.product_id
       where cr.credit_invoice_id = ? and inv.org_id = ${orgId}
       `,
       [
