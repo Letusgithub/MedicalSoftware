@@ -733,7 +733,7 @@
                 $(document).ready(function () {
                     var id = '<%=id%>';
 
-                    $.get(`/api/getcreditnoteininvoice?id=${id}`, function (data, status) {
+                    $.get(`/api/getcreditnoteininvoice?id=${id}&org=<%=orgId%>`, function (data, status) {
                         var podata = data.data[0];
                         console.log('inside the credit note', data);
 
