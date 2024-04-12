@@ -192,106 +192,98 @@
                                     </div>
                                     <hr>
 
-                                    <div class="card mb-4">
+                                    <!-- Bordered Table -->
+                                    <div class="card mb-4 mx-0 px-0">
 
                                         <form class="form-main">
-                                            <div class="card-body form-block">
-                                                <div class="table-responsive text-nowrap ">
 
-                                                    <table class="table table-bordered">
+                                            <div class="card-body form-block mb-3">
 
-                                                    </table>
+                                                <div class="row w-100 m-0 p-0">
+                                                    <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
+                                                        <p class="mb-2 repeater-title fw-bold">Product</p>
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="Enter product name" name="productname" />
+                                                        <div class="invalid-feedback">
+                                                            Please enter product name.
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Brand name"
+                                                            name="brand" disabled />
+                                                    </div>
 
-                                                    <table class="table table-bordered">
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                                        <p class="mb-2 repeater-title">MRP</p>
+                                                        <input type="text" class="form-control px-1"
+                                                            placeholder="Enter MRP"
+                                                            onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            name="mrp" />
+                                                        <div class="invalid-feedback">
+                                                            Please enter MRP.
+                                                        </div>
+                                                    </div>
 
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="col-sm-3">Product Name</th>
-                                                                <th class="col-sm-2">Brand Name</th>
-                                                                <th class="col-sm">MRP</th>
-                                                                <th class="col-sm">PTR</th>
-                                                                <th class="col-sm-1">QTY</th>
-                                                                <th class="col-sm-2">Unit</th>
-                                                                <th class="col-sm">Amount</th>
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                                        <div class="has-validation">
+                                                            <p class="mb-2 repeater-title">PTR</p>
+                                                            <input type="text" class="form-control px-1"
+                                                                onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                                placeholder="Enter PTR" name="ptr" />
+                                                            <div class="invalid-feedback">
+                                                                Please enter PTR.
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="has-validation">
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="Enter product name"
-                                                                        name="productname" />
-                                                                    <div class="invalid-feedback">
-                                                                        Please enter product name.
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="" name="brand" />
-                                                                </td>
-                                                                <td class="has-validation">
-                                                                    <input type="number" class="form-control px-1"
-                                                                        placeholder="" name="mrp" />
-                                                                    <div class="invalid-feedback">
-                                                                        Please enter MRP.
-                                                                    </div>
-                                                                </td>
-                                                                <td class="has-validation">
-                                                                    <input type="number" class="form-control px-1"
-                                                                        placeholder="" name="ptr" />
-                                                                    <div class="invalid-feedback">
-                                                                        Please enter PTR.
-                                                                    </div>
-                                                                </td>
-                                                                <td class="has-validation">
-                                                                    <input type="number" class="form-control px-1"
-                                                                        placeholder="" name="quantity" />
-                                                                    <div class="invalid-feedback">
-                                                                        Please enter quantity.
-                                                                    </div>
-                                                                </td>
-                                                                <td class="has-validation">
-                                                                    <select class="form-select px-1"
-                                                                        id="exampleFormControlSelect1"
-                                                                        name="unitoption">
-                                                                        <option selected>Select Unit</option>
-                                                                        <option value="BOX">Box</option>
-                                                                        <option value="PACK">Packet</option>
-                                                                        <option value="STRIP">Strip</option>
-                                                                        <option value="BOTTLE">Bottle</option>
-                                                                        <option value="PCS">Piece</option>
-                                                                    </select>
-                                                                    <div class="invalid-feedback">
-                                                                        Please select unit.
-                                                                    </div>
-                                                                </td>
+                                                    <div class="col-md-1 col-12 mb-md-0 mb-3">
+                                                        <div class=" has-validation">
+                                                            <p class="mb-2 repeater-title">
+                                                                Quantity</p>
+                                                            <input type="text" class="form-control px-1" placeholder=""
+                                                                name="quantity"
+                                                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;" />
+                                                            <div class="invalid-feedback">
+                                                                Please enter quantity.
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                                <td>
-                                                                    <input type="number" class="form-control px-1"
-                                                                        placeholder="" name="amount" readonly />
-                                                                </td>
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                                        <div class="has-validation">
+                                                            <p class="mb-2 repeater-title">Unit</p>
+                                                            <select class="form-select px-1"
+                                                                id="exampleFormControlSelect1" name="unitoption">
+                                                                <option selected>Select Unit</option>
+                                                                <option value="BOX">Box</option>
+                                                                <option value="PACK">Packet</option>
+                                                                <option value="STRIP">Strip</option>
+                                                                <option value="BOTTLE">Bottle</option>
+                                                                <option value="PCS">Piece</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">
+                                                                Please select unit.
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                            </tr>
 
-                                                        </tbody>
-
-                                                    </table>
+                                                    <div class="col-md-1 col-12 pe-0">
+                                                        <p class="mb-2 repeater-title">Amount</p>
+                                                        <input type="text" class="form-control px-0" name="amount"
+                                                            placeholder="" min="0" readonly />
+                                                    </div>
                                                 </div>
+
                                             </div>
+
+
                                             <div class="buttonBox text-center pb-3">
-                                                <btn class="btn btn-primary" style="color: white;" id="addtocart">Add
-                                                </btn>
+                                                <btn class="btn btn-primary" style="color: white;" id="addtocart">Add to
+                                                    Cart</btn>
                                                 <input type="reset" class="btn btn-primary" style="color: white;"
                                                     value="Clear" />
-
                                             </div>
                                         </form>
-
-
-
                                     </div>
-                                    <!--/ Bordered Table -->
 
                                     <!-- PO Cart -->
                                     <div class="card ">
@@ -377,6 +369,26 @@
 
                     var cartarray = [];
                     $(document).ready(function () {
+
+                        // Validation check on input
+                        $('input').each(function () {
+                            $(this).on('input', function () {
+                                if ($(this).val() == '') {
+                                    $(this).addClass('is-invalid');
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                }
+                            });
+                        });
+                        $('select').each(function () {
+                            $(this).on('input', function () {
+                                if ($(this).val() == 'default' || $(this).val() == null) {
+                                    $(this).addClass('is-invalid');
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                }
+                            });
+                        });
 
                         // $("#vendor_name");
                         // $("#vendor_contact").prop('readonly', true);
@@ -564,6 +576,17 @@
                             amountInput.val(totalAmt.toFixed(2));
                         }
 
+                        //PTR < MRP Validation
+                        $("input[name='ptr']").on('change', function () {
+                            var ptr = parseFloat($("input[name='ptr']").val());
+                            var mrp = parseFloat($("input[name='mrp']").val());
+
+                            if (ptr >= mrp) {
+                                $("input[name='ptr']").val(null);
+                                $("input[name='ptr']").addClass('is-invalid');
+                            }
+                        });
+
                         var setLocalData;
                         var getLocalData;
                         var htmlData;
@@ -687,7 +710,7 @@
                             $("input[name='productname']").val(selectedItem.productname);
                             $("input[name='brand']").val(selectedItem.brand);
                             $("input[name='quantity']").val(selectedItem.qty);
-                            $("select[name='unitoption']").prop('selectedIndex', selectedItem.selectedUnit);
+                            $("select[name='unitoption']").val(selectedItem.selectedUnit);
                             $("input[name='ptr']").val(selectedItem.ptr);
                             $("input[name='amount']").val(selectedItem.amt);
                             $("input[name='mrp']").val(selectedItem.mrp);

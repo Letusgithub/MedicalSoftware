@@ -353,6 +353,22 @@
                                                     </table>
                                                 </div>
 
+                                                <div class="row card-body">
+                                                    <div
+                                                        class="col-xl-8 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
+                                                        
+                                                    </div>
+                                                    <div class="col-xl-4 col-md-12 col-sm-7 col-12">
+                                                        <table>
+                                                            <tbody>
+                                                                <tr class="pb-3">
+                                                                    <td class="pe-3">Total Amount(₹):</td>
+                                                                    <td class="grandtotal"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
 
                                                 <div class="card-body">
                                                     <div class="row">
@@ -487,12 +503,10 @@
                                                         </div>
                                                         <div class="cart-total">
                                                             <div class="d-flex justify-content-between my-2">
-                                                                <!-- <div>
-                                                                    Amount:
-                                                                </div>
                                                                 <div>
-                                                                    0.00
-                                                                </div> -->
+                                                                    Amount(₹):
+                                                                </div>
+                                                                <div class="grandtotal"> </div>
                                                             </div>
                                                         </div>
 
@@ -548,7 +562,7 @@
                         //var podata= data.result[0];
                         console.log('inside the po invoice', data);
 
-                        
+
                         var podata = data.data[0];
 
                         var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -562,29 +576,29 @@
                         $(".vendoremail").text(`Email: ${podata.vendor_email ? podata.vendor_email : 'NA'}`)
                         $(".vendoradd").text(`Address: ${podata.vendor_address ? podata.vendor_address : 'NA'}`)
                         $(".vendorgst").text(`GSTIN: ${podata.vendor_gstin ? podata.vendor_gstin : 'NA'}`)
-                        $(".vendordl").text(`DL.no: ${podata.vendor_dl_no_1 ? podata.vendor_dl_no_1: 'NA'}, ${podata.vendor_dl_no_2 ? podata.vendor_dl_no_2: 'NA'}`)
-                        var items = data.data
+                        $(".vendordl").text(`DL.no: ${podata.vendor_dl_no_1 ? podata.vendor_dl_no_1 : 'NA'}, ${podata.vendor_dl_no_2 ? podata.vendor_dl_no_2 : 'NA'}`)
+                        var items = data.data;
+
+                        var totalAmt = 0;
                         for (var i = 0; i < items.length; i++) {
 
-
-
+                            totalAmt += items[i].amount;
                             //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
                             cartHtml =
                                 `<tr>
-                        <td style="width: 2.27rem; height: 1rem;">${i + 1}</td>
-                        <td style="width: 12.8rem; height: 1rem;">${items[i].med_name}</td>
-                        <td style="width: 14.8rem; height: 1rem;">${items[i].mfd_mkt}</td>
-                        <td style="width: 6.82rem; height: 1rem;">${items[i].quantity}</td>
-                        <td style="width: 6.75rem; height: 1rem;">${items[i].unit}</td>
-                        <td style="width: 5.98rem; height: 1rem;">${items[i].ptr}</td>
-                        <td style="width: 5.98rem; height: 1rem;">${items[i].mrp}</td>
-                        <td style="width: 6.21rem; height: 1rem;">${items[i].amount}</td>
-                    </tr>`
-
+                                    <td style="width: 2.27rem; height: 1rem;">${i + 1}</td>
+                                    <td style="width: 12.8rem; height: 1rem;">${items[i].med_name}</td>
+                                    <td style="width: 14.8rem; height: 1rem;">${items[i].mfd_mkt}</td>
+                                    <td style="width: 6.82rem; height: 1rem;">${items[i].quantity}</td>
+                                    <td style="width: 6.75rem; height: 1rem;">${items[i].unit}</td>
+                                    <td style="width: 5.98rem; height: 1rem;">${items[i].ptr}</td>
+                                    <td style="width: 5.98rem; height: 1rem;">${items[i].mrp}</td>
+                                    <td style="width: 6.21rem; height: 1rem;">${items[i].amount}</td>
+                                </tr>`;
                             $(".cartitems").append(cartHtml);
 
                         }
-
+                        $(".grandtotal").text((totalAmt*1).toFixed(2));
                     })
 
                     $.get(`/api/org/<%=orgId%>`, function (data, status) {
@@ -596,12 +610,12 @@
                         $(".orgname").html(`${orgName}`);
 
                         $(".orgaddress").html(`
-                    ${orgAdd}</br>
-                    ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
-                    ${org.org_telephone}
-                `)
+                            ${orgAdd}</br>
+                            ${org.org_city}( ${org.org_state} ), ${org.org_pincode}</br>
+                            ${org.org_telephone}
+                        `)
                         $(".gstin").text(`GSTIN: ${org.org_gstin ? org.org_gstin : 'NA'}`);
-                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1 ? data.data.org_dl_no_1 : 'NA'}`) 
+                        $(".dlno1").text(`DL No 1: ${data.data.org_dl_no_1 ? data.data.org_dl_no_1 : 'NA'}`)
                         $(".dlno2").text(`DL No 2: ${data.data.org_dl_no_2 ? data.data.org_dl_no_2 : 'NA'}`)
                         $(".flno").text(`FSSAI: ${org.org_fssai_no ? org.org_fssai_no : 'NA'}`)
                     })
