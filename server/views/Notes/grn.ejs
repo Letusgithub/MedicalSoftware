@@ -169,7 +169,8 @@
                                                                 <div class="input-group has-validation">
                                                                     <select class="form-select" id="primaryDropdown"
                                                                         name="primary" required>
-                                                                        <option value="default" selected>Primary</option>
+                                                                        <option value="default" selected>Primary
+                                                                        </option>
                                                                         <option value="STP">STP</option>
                                                                         <option value="AMP">AMP</option>
                                                                         <option value="BOX">BOX</option>
@@ -347,12 +348,12 @@
                                                                 for="basic-icon-default-email">QTY</label>
                                                             <div class="col-sm-4 mb-3">
                                                                 <div class="input-group has-validation">
-                                                                    <input type="text"
-                                                                        class="form-control"
+                                                                    <input type="text" class="form-control"
                                                                         placeholder="Enter quantity"
                                                                         onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                         id="addquantity" name="quantity" required>
-                                                                        <span class="input-group-text" id="getprimaryunit"></span>
+                                                                    <span class="input-group-text"
+                                                                        id="getprimaryunit"></span>
                                                                     <div class="invalid-feedback">
                                                                         Please enter quantity.
                                                                     </div>
@@ -368,7 +369,8 @@
                                                             <div class="col-sm-4 mb-3">
                                                                 <div class="input-group has-validation">
                                                                     <input type="text" class="form-control"
-                                                                        name="addmrp" placeholder="Enter MRP Rate" id="price"
+                                                                        name="addmrp" placeholder="Enter MRP Rate"
+                                                                        id="price"
                                                                         onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                         required>
                                                                     <div class="invalid-feedback">
@@ -860,7 +862,8 @@
                         var currentMonth = today.getMonth();
 
                         if (expiryDate.getFullYear() < currentYear ||
-                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)) {
+                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth) ||
+                            expiryDate.getFullYear() > currentYear + 5) {
                             $("[name='addexp']").val(null);
                             $("[name='addexp']").addClass('is-invalid');
                         } else {
@@ -1715,7 +1718,7 @@
                                     alert("Not Created! Please refresh page", error)
                                 }
                             })
-                            
+
                         }
                     })
 

@@ -599,7 +599,8 @@
                         var currentMonth = today.getMonth();
 
                         if (expiryDate.getFullYear() < currentYear ||
-                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)) {
+                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)  ||
+                            expiryDate.getFullYear() > currentYear + 5) {
                             $("[name='addexp']").val(null);
                             $("[name='addexp']").addClass('is-invalid');
                         } else {
