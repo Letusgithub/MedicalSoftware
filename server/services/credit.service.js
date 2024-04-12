@@ -86,19 +86,19 @@ module.exports = {
     );
   },
 
-  getCreditNoteinInvoice: (id, callBack) => {
+  getCreditNoteinInvoice: (id, orgId, callBack) => {
     getPool().query(
       `SELECT DISTINCT vendor.*, crdetails.*, inv.*, batch.*,  sample.med_name FROM credit_note cr
       JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_id
       Join vendor on cr.vendor_id = vendor.vendor_id
       Join sample on crdetails.product_id = sample.product_id
       Join batch on batch.batch_id = crdetails.batch_id_credit 
-      Join inventory inv on inv.product_id = crdetails.product_id
-      where cr.credit_invoice_id = ?
-      
+      Join inventory inv on inv.product_id = crdetails.product_id AND inv.org_id = batch.org_id
+      where cr.credit_invoice_id = ? and inv.org_id = ?
       `,
       [
         id,
+        orgId,
       ],
       (error, results) => {
         if (error) {

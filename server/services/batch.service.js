@@ -109,11 +109,8 @@ module.exports = {
         inv.primary_unit as punit,
         inv.secondary_unit as sunit
         from cart_item cart
-
-        RIGHT JOIN batch bth
-        ON bth.batch_id = cart.batch_id
-        LEFT JOIN
-            inventory inv ON inv.product_id = bth.product_id AND inv.org_id = bth.org_id
+        RIGHT JOIN batch bth ON bth.batch_id = cart.batch_id
+        LEFT JOIN inventory inv ON inv.product_id = bth.product_id AND inv.org_id = bth.org_id
         where bth.org_id = ${orgId} and bth.product_id = ${prodId}
         group by bth.batch_id, punit,sunit ;
       `,

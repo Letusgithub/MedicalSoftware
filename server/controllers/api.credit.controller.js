@@ -71,7 +71,8 @@ exports.getINVDetailsinCreditNote = (req, res) => {
 
 exports.getCreditNoteInInvoice = (req, res) => {
   const id = req.query.id;
-  service.getCreditNoteinInvoice(id, (allError, allResult) => {
+  const orgId = req.query.org;
+  service.getCreditNoteinInvoice(id, orgId, (allError, allResult) => {
     if (allError) {
       console.log(allError);
     }
