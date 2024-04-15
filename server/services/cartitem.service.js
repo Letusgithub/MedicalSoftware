@@ -101,7 +101,7 @@ module.exports = {
       `select * from cart_item ci
       JOIN sample spl
       on ci.product_id = spl.product_id
-      Join batch bth on ci.product_id = bth.product_id
+      Join batch bth on ci.product_id = bth.product_id and ci.batch_id = bth.batch_id
       where order_id =?`,
       [id],
       (error, results) => {
