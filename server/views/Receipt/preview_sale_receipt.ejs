@@ -799,7 +799,7 @@
                             console.log(datetime);
                             var date = moment(datetime).format('MM/YYYY');
 
-                            var grossValue = ((items[i].saled_pri_qty_cart * items[i].unit_mrp + items[i].saled_sec_qty_cart * (items[i].unit_mrp / items[i].conversion)) * (1 - (items[i].unit_discount/100))/ (1 + (items[i].gst / 100));
+                            var grossValue = ((items[i].saled_pri_qty_cart * items[i].unit_mrp + items[i].saled_sec_qty_cart * (items[i].unit_mrp / items[i].conversion)) * (1 - (items[i].unit_discount/100)))/ (1 + (items[i].gst / 100));
                             console.log('conversion', items[i].conversion);
                             var gstValue = grossValue * items[i].gst / 100;
 
