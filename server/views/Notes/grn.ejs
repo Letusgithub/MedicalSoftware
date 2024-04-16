@@ -538,13 +538,13 @@
                                         <div class="col-md-4" id="lessDiscountBox">
                                             <div class="card mb-4">
                                                 <div class="d-flex justify-content-between m-0 p-0">
-                                                    <h5 class="card-header">Less Discount</h5>
+                                                    <h5 class="card-header">Less Discount (₹)</h5>
                                                 </div>
                                                 <div class="card-body pt-0">
                                                     <div class="input-group has-validation">
                                                         <input type="text" class="form-control" id="lessDiscount"
-                                                            onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
-                                                            name="lessDiscount" placeholder="Less Discount in (₹)" />
+                                                            onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            name="lessDiscount" placeholder="Less Discount in (₹)"/>
                                                         <div class="invalid-feedback">
                                                             Less Discount cannot be greater than total amount
                                                         </div>
@@ -1364,6 +1364,12 @@
                         if ($("#totalAmt").val() == 0 || $("#totalAmt").val() == '') {
                             $("#totalAmt").addClass('is-invalid');
                             $("#totalAmt").focus();
+                            isValid = false;
+                        }
+
+                        if ($("#lessDiscount").val() == 0 || $("#lessDiscount").val() == '') {
+                            $("#lessDiscount").addClass('is-invalid');
+                            $("#lessDiscount").focus();
                             isValid = false;
                         }
 
