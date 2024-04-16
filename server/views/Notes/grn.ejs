@@ -1374,9 +1374,9 @@
                             isValid = false;
                         }
 
-                        // if (!$("#defaultCheck1").prop("checked")) {
-                        //     return alert("Please check the disclaimer before submitting.");
-                        // }
+                        if (!$("#defaultCheck1").prop("checked")) {
+                            return alert("Please check the disclaimer before submitting.");
+                        }
 
                         if (isValid) {
                             $("#submitorder").prop('disabled', true);
