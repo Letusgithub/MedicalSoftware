@@ -735,7 +735,8 @@
                     let customerName;
                     let customerNumber;
                     let customerAdd;
-
+                    var addDisc;
+                    var subTotal;
 
 
                     $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
@@ -763,6 +764,9 @@
                         $(".additionaldisc").text(customer.total_dist);
                         $(".grandtotal").text(customer.grand_total);
                         $(".doctorname").text(`Doctor : ${customer.doctor_name ? customer.doctor_name : 'NA'}`);
+
+                        addDisc = customer.total_dist;
+                        subTotal = customer.subtotal;
                     })
 
                     $.get(`/api/org/<%=orgId%>`, function (data, status) {
@@ -791,6 +795,8 @@
 
                         var totalGross = 0;
                         var totalGST = 0;
+                        var addDiscPercent = ( addDisc / subTotal ) * 100;
+                        console.log(addDisc)
                         var transactions = [];
 
 
@@ -804,7 +810,7 @@
                             var gstValue = grossValue * items[i].gst / 100;
 
                             var transaction = {
-                                grossAmount: grossValue,
+                                grossAmount: grossValue * (1 - (addDiscPercent / 100)),
                                 gstRate: items[i].gst,
                             }
 
