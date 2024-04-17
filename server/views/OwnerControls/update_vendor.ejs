@@ -69,13 +69,12 @@
                           </div>
                         </div>
 
-                        <label class="col-sm-2 col-form-label ps-4" for="vendor_email">Email<span
-                            style="font-size: 15px; color: red">*</span></label>
+                        <label class="col-sm-2 col-form-label ps-4" for="vendor_email">Email</label>
                         <div class="col-sm-4">
                           <div class="input-group has-validation">
                             <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                             <input type="text" id="vendor_email" class="form-control" placeholder="email@example.com"
-                              name="vendor_email" value="<%=vendor[0].vendor_email%>" required>
+                              name="vendor_email" value="<%=vendor[0].vendor_email%>">
                             <div class="invalid-feedback">
                               Please enter valid email.
                             </div>
@@ -302,10 +301,12 @@
           $("#vendor_email").change(function () {
             var inputvalues = $(this).val();
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            if (!regex.test(inputvalues)) {
-              $("#vendor_email").addClass('is-invalid');
-              $("#vendor_email").focus();
-              isEmailValid = false;
+            if (inputvalues != '') {
+              if (!regex.test(inputvalues)) {
+                $("#vendor_email").addClass('is-invalid');
+                $("#vendor_email").focus();
+                isEmailValid = false;
+              }
             } else {
               $("#vendor_email").removeClass('is-invalid');
               isEmailValid = true;

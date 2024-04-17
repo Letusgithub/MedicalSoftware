@@ -79,15 +79,13 @@
                                                     </div>
 
                                                     <label class="col-sm-2 col-form-label ps-4"
-                                                        for="vendor_email">Email<span
-                                                            style="font-size: 15px; color: red">*</span></label>
+                                                        for="vendor_email">Email</label>
                                                     <div class="col-sm-4">
                                                         <div class="input-group has-validation">
                                                             <span class="input-group-text"><i
                                                                     class="bx bx-envelope"></i></span>
                                                             <input type="text" id="vendor_email" class="form-control"
-                                                                placeholder="email@example.com" name="vendor_email"
-                                                                required>
+                                                                placeholder="email@example.com" name="vendor_email">
                                                             <div class="invalid-feedback">
                                                                 Please enter valid email.
                                                             </div>
@@ -184,8 +182,8 @@
                                                             <input type="text" id="dl1_ct" style="text-align: center;"
                                                                 value="NGP" placeholder="City"
                                                                 class="form-control border" required>
-                                                            <input type="text" id="dl1_ln" placeholder="Lic. no." style="text-align: center;"
-                                                                class="form-control border"
+                                                            <input type="text" id="dl1_ln" placeholder="Lic. no."
+                                                                style="text-align: center;" class="form-control border"
                                                                 onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                 required>
                                                             <div class="invalid-feedback">
@@ -315,11 +313,14 @@
                     $("#vendor_email").change(function () {
                         var inputvalues = $(this).val();
                         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                        if (!regex.test(inputvalues)) {
-                            $("#vendor_email").addClass('is-invalid');
-                            $("#vendor_email").focus();
-                            isEmailValid = false;
-                        } else {
+                        if (inputvalues != '') {
+                            if (!regex.test(inputvalues)) {
+                                $("#vendor_email").addClass('is-invalid');
+                                $("#vendor_email").focus();
+                                isEmailValid = false;
+                            }
+                        }
+                        else {
                             $("#vendor_email").removeClass('is-invalid');
                             isEmailValid = true;
                         }
@@ -397,7 +398,7 @@
                             }
                             if (!isContactValid) {
                                 $("#vendor_contact").addClass('is-invalid');
-                                $("#vendor_contact").focus();    
+                                $("#vendor_contact").focus();
                                 return;
                             }
 
