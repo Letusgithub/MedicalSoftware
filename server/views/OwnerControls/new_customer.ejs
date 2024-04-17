@@ -42,7 +42,7 @@
                           <div class="input-group input-group-merge">
                             <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                 class="bx bx-user"></i></span>
-                            <input class="form-control" id="cust_name" placeholder="" name="cust_name" type="text"
+                            <input class="form-control" id="cust_name" placeholder="Please Enter customer name" name="cust_name" type="text"
                               required>
                           </div>
                         </div>
@@ -55,10 +55,32 @@
                           <div class="input-group input-group-merge">
                             <span id="basic-icon-default-phone2" class="input-group-text"><i
                                 class="bx bx-phone"></i></span>
-                            <input id="cust_telephone" class="form-control phone-mask" placeholder=""
+                            <input id="cust_telephone" class="form-control phone-mask" placeholder="Enter 10-digit mobile number"
                               name="cust_telephone"
-                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                              type="number" maxlength="10" required>
+                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);  if (this.value.length > 0 && !/[6-9]/.test(this.value[0])) this.value = '';"
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                              type="tel" maxlength="10" required>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="cust_email">Email</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                            <input type="text" id="cust_email" class="form-control" placeholder="customer@gmail.com" name="cust_email">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="cust_doctor">Family Doctor</label>
+                        <div class="col-sm-10">
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bx-plus-medical'></i></span>
+                            <input class="form-control" id="cust_doctor" placeholder="Enter family doctor name" name="cust_doctor" type="text"
+                              >
                           </div>
                         </div>
                       </div>
@@ -66,29 +88,13 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="cust_address">Address</label>
                         <div class="col-sm-10">
-                          <div class="input-group input-group-merge">
-                            <span class="input-group-text"><i class="bx bx-building"></i></span>
-                            <input type="text" id="cust_address" class="form-control" placeholder=""
-                              name="cust_address">
-
+                          <div class="input-group has-validation">
+                            <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bx-building-house'></i></span>
+                            <textarea type="text" id="cust_address" class="form-control"
+                              placeholder="Enter customer address" name="cust_address" ></textarea>
                           </div>
-
                         </div>
                       </div>
-
-
-                      <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="cust_email">Email</label>
-                        <div class="col-sm-10">
-                          <div class="input-group input-group-merge">
-                            <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                            <input type="text" id="cust_email" class="form-control" placeholder="" name="cust_email">
-                            <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
-                          </div>
-
-                        </div>
-                      </div>
-
 
                       <div class="row justify-content-end">
                         <div class="col-sm-10">
@@ -149,7 +155,8 @@
                 cust_name: $("#cust_name").val(),
                 cust_telephone: $("#cust_telephone").val(),
                 cust_email: $("#cust_email").val(),
-                cust_address: $("#cust_address").val()
+                cust_address: $("#cust_address").val(),
+                cust_doctor: $("#cust_doctor").val()
               }),
               contentType: 'application/json',
               success: function (response) {

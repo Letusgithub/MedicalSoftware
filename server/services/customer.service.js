@@ -4,27 +4,16 @@ const { getPool } = require('../config/database');
 
 module.exports = {
   create: (data, callback) => {
-    // const date_time = new Date();
-    // const date = (`0${date_time.getDate()}`).slice(-2);
-    // const month = (`0${date_time.getMonth() + 1}`).slice(-2);
-    // const year = date_time.getFullYear();
-
-    // const hours = date_time.getHours();
-    // const minutes = date_time.getMinutes();
-    // const seconds = date_time.getSeconds();
-
-    // const cust_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-    // const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-
     getPool().query(
-      `insert into customer_data(cust_name, org_id, cust_telephone, cust_address, cust_email)
-                    values(?,?,?,?,?)`,
+      `insert into customer_data(cust_name, org_id, cust_telephone, cust_address, cust_email, cust_doctor)
+                    values(?,?,?,?,?,?)`,
       [
         data.cust_name,
         data.org_id,
         data.cust_telephone,
         data.cust_address,
         data.cust_email,
+        data.cust_doctor,
       ],
       (error, results) => {
         if (error) {
@@ -88,26 +77,14 @@ module.exports = {
   },
 
   updateUser: (id, data, callback) => {
-    const date_time = new Date();
-    const date = (`0${date_time.getDate()}`).slice(-2);
-    const month = (`0${date_time.getMonth() + 1}`).slice(-2);
-    const year = date_time.getFullYear();
-
-    const hours = date_time.getHours();
-    const minutes = date_time.getMinutes();
-    const seconds = date_time.getSeconds();
-
-    const cust_created_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-    const cust_updated_date = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-
     getPool().query(
-      'update customer_data set cust_name=?, cust_telephone=?, cust_address=?, cust_email=?, updated_date=? where customer_id =?',
+      'update customer_data set cust_name=?, cust_telephone=?, cust_address=?, cust_email=?, cust_doctor=? where customer_id =?',
       [
         data.cust_name,
         data.cust_telephone,
         data.cust_address,
         data.cust_email,
-        cust_updated_date,
+        data.cust_doctor,
         id,
       ],
       (error, results, fields) => {

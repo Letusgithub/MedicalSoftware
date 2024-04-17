@@ -413,17 +413,20 @@
               customerData.push({
                 phone: JSON.stringify(data.data[i].cust_telephone),
                 name: data.data[i].cust_name,
+                cust_doctor: data.data[i].cust_doctor,
                 id: data.data[i].customer_id
               });
 
               autoCompleteDataNumber.push({
                 label: JSON.stringify(data.data[i].cust_telephone) + '(' + data.data[i].cust_name + ')',
-                value: JSON.stringify(data.data[i].cust_telephone)
+                value: JSON.stringify(data.data[i].cust_telephone),
+                cust_doctor: data.data[i].cust_doctor 
               });
 
               autoCompleteDataName.push({
                 label: data.data[i].cust_name + '(' + JSON.stringify(data.data[i].cust_telephone) + ')',
-                value: data.data[i].cust_name
+                value: data.data[i].cust_name,
+                cust_doctor: data.data[i].cust_doctor
               });
             }
 
@@ -438,6 +441,7 @@
                   var autopopulatedName = selectedCustomerNumber.match(/\(([^)]+)\)/)[1];
 
                   $("#customername").val(autopopulatedName);
+                  $("#reference").val(ui.item.cust_doctor);
                 }
               })
             }
@@ -454,6 +458,7 @@
                   var autopopulatedNumber = selectedCustomerName.match(/\(([^)]+)\)/)[1];
 
                   $("#phonenumber").val(autopopulatedNumber);
+                  $("#reference").val(ui.item.cust_doctor);
                 }
               })
             }
