@@ -364,7 +364,8 @@
                                                         <div
                                                             class="col-xl-4 col-md-12 col-sm-4 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
                                                             <p class="mb-1 vendorgst"></p>
-                                                            <p class="mb-1 vendordl"></p>
+                                                            <p class="mb-1 vendordl1"></p>
+                                                            <p class="mb-1 vendordl2"></p>
                                                             <p class="mb-1 vendorFssai"></p>
                                                             <p class="mb-1 paymentMethod"></p>
                                                         </div>
@@ -771,7 +772,8 @@
                         $(".vendoremail").text(`Email: ${grnData.vendor_email ? grnData.vendor_email : 'NA'}`)
                         $(".vendoradd").text(`Address: ${grnData.vendor_address ? grnData.vendor_address : 'NA'}`)
                         $(".vendorgst").text(`GSTIN: ${grnData.vendor_gstin ? grnData.vendor_gstin : 'NA'}`)
-                        $(".vendordl").text(`DL 1: ${grnData.vendor_dl_no_1 ? grnData.vendor_dl_no_1 : 'NA'}`)
+                        $(".vendordl1").text(`DL 1: ${grnData.vendor_dl_no_1 ? grnData.vendor_dl_no_1 : 'NA'}`)
+                        $(".vendordl2").text(`DL 2: ${grnData.vendor_dl_no_2 ? grnData.vendor_dl_no_2 : 'NA'}`)
                         $(".vendorFssai").text(`FSSAI: ${grnData.vendor_fssai ? grnData.vendor_fssai : 'NA'}`)
 
                         var items = data.results;
