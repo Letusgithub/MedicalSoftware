@@ -318,6 +318,9 @@
                                 $("#vendor_email").addClass('is-invalid');
                                 $("#vendor_email").focus();
                                 isEmailValid = false;
+                            } else {
+                                $("#vendor_email").removeClass('is-invalid');
+                                isEmailValid = true;
                             }
                         }
                         else {
