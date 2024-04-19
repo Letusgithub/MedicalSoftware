@@ -381,24 +381,17 @@
             var priQty = $("#pUnit");
             var secQty = $("#sUnit");
             var rateInput = $("#purchase_rate");
-            // var discInput = $("#discount");
             var totalInput = $("#total");
 
             priQty.on("input", calculateTotal);
             secQty.on("input", calculateTotal);
-            // discInput.on("input", calculateTotal);
 
             function calculateTotal() {
               var primaryqty = parseInt(priQty.val()) || 0;
-
               var secondaryqty = parseInt(secQty.val()) || 0;
-
               var rate = parseFloat(rateInput.val()) || 0;
 
-              console.log(rate);
-
               var total = primaryqty * rate + secondaryqty * rate / conversion;
-
 
               totalInput.val(total.toFixed(2));
             }
