@@ -7,8 +7,8 @@ const date_time = new Date();
 module.exports = {
   createDebitNote: (data, DebitInvoice, callback) => {
     getPool().query(
-      'insert into debit_note(debit_invoice_id,vendor_id,org_id, debit_amt) value(?,?,?,?)',
-      [DebitInvoice, data.vendor_id, data.org_id, data.debit_amt],
+      'insert into debit_note(debit_invoice_id,vendor_id,org_id, debit_amt, less_discount) value(?,?,?,?,?)',
+      [DebitInvoice, data.vendor_id, data.org_id, data.debit_amt, data.less_discount],
       (error, results) => {
         if (error) {
           return callback(error);
@@ -69,7 +69,7 @@ module.exports = {
 
   getDebitNoteinInvoice: (id, callBack) => {
     getPool().query(
-      `SELECT DISTINCT vendor.*, dbdetails.*, inv.*,  batch.*,  sample.med_name FROM debit_note db
+      `SELECT DISTINCT vendor.*, dbdetails.*, db.less_discount, db.debit_amt, inv.*,  batch.*,  sample.med_name FROM debit_note db
       JOIN debit_note_cart_details dbdetails ON db.debit_invoice_id = dbdetails.debit_invoice_id
       Join vendor on db.vendor_id = vendor.vendor_id
       Join sample on dbdetails.product_id = sample.product_id

@@ -163,6 +163,48 @@
 
 
                   <!-- / Content -->
+
+                  <div class="row d-flex justify-content-evenly mt-4">
+
+                    <div class="d-flex row m-0 p-0">
+                      <h4 class="col-sm-7 fw-bold py-3 mb-2">Summary</h4>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="card mb-4">
+                        <h5 class="card-header"> Total Amount (₹)</h5>
+                        <div class="card-body">
+                          <div class="has-validation">
+                            <input type="number" class="form-control" id="totalDebitAmt" readonly />
+                            <div class="invalid-feedback">
+                              Item cart empty cannot submit
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4" id="lessDiscountBox">
+                      <div class="card mb-4">
+                        <div class="d-flex justify-content-between m-0 p-0">
+                          <h5 class="card-header">Less Discount (₹)</h5>
+                        </div>
+                        <div class="card-body pt-0">
+                          <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="lessDiscount"
+                              onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                              name="lessDiscount" placeholder="Less Discount in (₹)" />
+                            <div class="invalid-feedback">
+                              Less Discount cannot be greater than total amount
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
                   <div class="text-center mt-3">
                     <button type="button" class="btn btn-primary" id="submitdebit">Submit</button>
                   </div>
@@ -282,7 +324,7 @@
                     availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
                     $("#pUnit").val(availablePrimaryQty);
                     $("#sUnit").val(availableSecondaryQty);
-                    priceMed = data.data[0].mrp;
+                    priceMed = data.data[0].purchase_rate;
                     $("#purchase_rate").val(priceMed);
                     calculateTotal();
 
@@ -470,13 +512,12 @@
             })
 
 
-
             // logic for redering cart data on addtocart click 
             $("#addtocart").on('click', function () {
               cartItems = JSON.parse(localStorage.getItem('debitnoteitems')) || [];
               console.log(cartItems);
               renderCart(cartItems);
-              //getSubTotal();
+              getCartSummary();
             });
 
             //deletefunctionality
@@ -488,6 +529,7 @@
               cartarray = cartItemsinStorage;
               localStorage.setItem('debitnoteitems', JSON.stringify(cartItemsinStorage));
               renderCart(cartItemsinStorage);
+              getCartSummary();
             });
             //endofdeletefunctionality
 
@@ -503,7 +545,7 @@
               $("#brand").val(selectedItem.brand);
               $("#pUnit").val(selectedItem.priQty);
               $("#sUnit").val(selectedItem.secQty);
-              $("#purchase_rate").val(selectedItem.mrp);
+              $("#purchase_rate").val(selectedItem.purchase_rate);
               $("#total").val(selectedItem.total);
 
               //getting all data for batches
@@ -575,7 +617,7 @@
               cartarray = UpdatecartItemsinStorage;
               localStorage.setItem('debitnoteitems', JSON.stringify(UpdatecartItemsinStorage));
               renderCart(UpdatecartItemsinStorage);
-
+              getCartSummary();
 
             })
             //end of edit functionality
@@ -608,10 +650,22 @@
             }
             //end of rendereing data logic
 
+            // Function for cart summary
+            function getCartSummary() {
+              var totalDebitAmt = 0;
+              var debitCarts = JSON.parse(localStorage.getItem('debitnoteitems'));
 
-
-
-
+              if (debitCarts.length != 0) {
+                for (let i in debitCarts) {
+                  totalDebitAmt += parseFloat(debitCarts[i].total);
+                }
+                console.log(totalDebitAmt);
+                $("#totalDebitAmt").val(totalDebitAmt.toFixed(2));
+              }
+              else if ( debitCarts.length == 0) {
+                $("#totalDebitAmt").val(0);
+              }
+            }
 
 
             // post the data to the debit note
@@ -620,6 +674,7 @@
 
               var debitCarts = JSON.parse(localStorage.getItem('debitnoteitems'));
               var debit_amt = 0;
+              var lessDiscount = $("#lessDiscount").val() || 0;
 
               for (let i in debitCarts) {
                 debit_amt += parseFloat(debitCarts[i].total);
@@ -638,7 +693,8 @@
                   vendor_id: vendorId,
                   pharmacyId: pharmacyDetails.pharmaId,
                   org_id: '<%=orgId%>',
-                  debit_amt: debit_amt.toFixed(2)
+                  debit_amt: debit_amt.toFixed(2),
+                  less_discount: lessDiscount
                 }),
 
                 contentType: 'application/json',

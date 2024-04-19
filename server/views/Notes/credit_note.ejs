@@ -76,14 +76,14 @@
                             <div class="invalid-feedback">
                               Please select a product.
                             </div>
-                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" readonly/>
+                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" readonly />
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Batch</p>
                             <div class="mb-2" id="batchdroporinput">
                               <input type="text" class="form-control" id="batch" placeholder="" />
                             </div>
-                            <input class="form-control" type="date" id="expdate" readonly/>
+                            <input class="form-control" type="date" id="expdate" readonly />
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
                             <div class="has-validation">
@@ -91,7 +91,7 @@
                               <input type="number" class="form-control px-1" id="pUnit" min="0" />
                               <div class="invalid-feedback">
                                 Please enter quantity.
-                            </div>
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
@@ -105,7 +105,8 @@
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Rate / P.Unit</p>
-                            <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0" readonly/>
+                            <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0"
+                              readonly />
                           </div>
 
                           <!-- <div class="col-md-1 col-12 mb-md-0 mb-3">
@@ -162,6 +163,46 @@
 
 
                   <!-- / Content -->
+                  <div class="row d-flex justify-content-evenly mt-4">
+
+                    <div class="d-flex row m-0 p-0">
+                      <h4 class="col-sm-7 fw-bold py-3 mb-2">Summary</h4>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="card mb-4">
+                        <h5 class="card-header"> Total Amount (₹)</h5>
+                        <div class="card-body">
+                          <div class="has-validation">
+                            <input type="number" class="form-control" id="totalCreditAmt" readonly />
+                            <div class="invalid-feedback">
+                              Item cart empty cannot submit
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4" id="lessDiscountBox">
+                      <div class="card mb-4">
+                        <div class="d-flex justify-content-between m-0 p-0">
+                          <h5 class="card-header">Less Discount (₹)</h5>
+                        </div>
+                        <div class="card-body pt-0">
+                          <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="lessDiscount"
+                              onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                              name="lessDiscount" placeholder="Less Discount in (₹)" />
+                            <div class="invalid-feedback">
+                              Less Discount cannot be greater than total amount
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
 
 
                   <div class="text-center mt-3">
@@ -483,7 +524,7 @@
               cartItems = JSON.parse(localStorage.getItem('creditnoteitems')) || [];
               console.log(cartItems);
               renderCart(cartItems);
-              //getSubTotal();
+              getCartSummary();
             });
 
             //deletefunctionality
@@ -495,6 +536,7 @@
               cartarray = cartItemsinStorage;
               localStorage.setItem('creditnoteitems', JSON.stringify(cartItemsinStorage));
               renderCart(cartItemsinStorage);
+              getCartSummary();
             });
             //endofdeletefunctionality
 
@@ -581,7 +623,7 @@
               cartarray = UpdatecartItemsinStorage;
               localStorage.setItem('creditnoteitems', JSON.stringify(UpdatecartItemsinStorage));
               renderCart(UpdatecartItemsinStorage);
-
+              getCartSummary();
 
             })
             //end of edit functionality
@@ -594,32 +636,48 @@
 
               for (var i = 0; i < items.length; i++) {
                 htmlData = `
-                                        <tr>
-                                            <td class="card_id">${i + 1}</td>
-                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
-                                            <td>${items[i].priQty}</td>
-                                            <td>${items[i].secQty}</td>
-                                            <td>${items[i].mrp}</td>
-                                            <td>${items[i].total}</td>
-                                            <td>
-                                            <div class="action-btns">
-                                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
-                                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        `
+                        <tr>
+                            <td class="card_id">${i + 1}</td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                            <td>${items[i].priQty}</td>
+                            <td>${items[i].secQty}</td>
+                            <td>${items[i].mrp}</td>
+                            <td>${items[i].total}</td>
+                            <td>
+                            <div class="action-btns">
+                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                            </div>
+                            </td>
+                        </tr>
+                        `
                 $('#itemcart').append(htmlData);
               }
             }
             //end of rendereing data logic
 
 
+            // Function for cart summary
+            function getCartSummary() {
+              var totalCreditAmt = 0;
+              var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
+
+              if (creditCarts.length != 0) {
+                for (let i in creditCarts) {
+                  totalCreditAmt += parseFloat(creditCarts[i].total);
+                }
+                $("#totalCreditAmt").val(totalCreditAmt.toFixed(2));
+              }
+              else if ( creditCarts.length == 0) {
+                $("#totalCreditAmt").val(0);
+              }
+            }
 
             // post the data to the credit note
             var creditInvoice;
             $("#submitcredit").click(function () {
               var credit_amt = 0;
+              var lessDiscount = $("#lessDiscount").val() || 0;
               var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
 
               for (let i in creditCarts) {
@@ -639,7 +697,8 @@
                   vendor_id: vendorId,
                   pharmacyId: pharmacyDetails.pharmaId,
                   org_id: '<%=orgId%>',
-                  credit_amt: credit_amt.toFixed(2)
+                  credit_amt: credit_amt.toFixed(2),
+                  less_discount: lessDiscount
                 }),
 
                 contentType: 'application/json',
@@ -732,4 +791,5 @@
           })
         </script>
   </body>
-</html>
+
+  </html>

@@ -11,13 +11,15 @@ module.exports = {
                   credit_invoice_id,
                   vendor_id,
                   org_id,
-                  credit_amt)
-                  value(?,?,?,?)`,
+                  credit_amt,
+                  less_discount)
+                  value(?,?,?,?,?)`,
       [
         creditInvoice,
         data.vendor_id,
         data.org_id,
         data.credit_amt,
+        data.less_discount,
       ],
       (error, results) => {
         if (error) {
@@ -88,7 +90,7 @@ module.exports = {
 
   getCreditNoteinInvoice: (id, orgId, callBack) => {
     getPool().query(
-      `SELECT DISTINCT vendor.*, crdetails.*, inv.*, batch.*,  sample.med_name FROM credit_note cr
+      `SELECT DISTINCT vendor.*, crdetails.*, cr.less_discount, cr.credit_amt, inv.*, batch.*,  sample.med_name FROM credit_note cr
       JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_id
       Join vendor on cr.vendor_id = vendor.vendor_id
       Join sample on crdetails.product_id = sample.product_id

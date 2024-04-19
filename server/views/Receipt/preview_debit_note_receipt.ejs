@@ -379,16 +379,14 @@
                                                             <tr>
                                                                 <th>S.N.</th>
                                                                 <th>Item</th>
-                                                                <th>HSN</th>
                                                                 <th>Batch</th>
+                                                                <th>HSN</th>
+                                                                <th>GST%</th>
                                                                 <th>Expiry</th>
                                                                 <th>MRP(₹)</th>
                                                                 <th>QTY</th>
                                                                 <th>PTR(₹)</th>
                                                                 <th>Gross Value(₹)</th>
-                                                                <th>GST%</th>
-                                                                <th>GST Value(₹)</th>
-                                                                <th>Amount(₹)</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="cartitems">
@@ -459,6 +457,10 @@
                                                                 <tr class="pb-3">
                                                                     <td class="pe-3">Total Gross(₹):</td>
                                                                     <td class="totalGross"></td>
+                                                                </tr>
+                                                                <tr class="pb-3">
+                                                                    <td class="pe-3">Less Discount(₹):</td>
+                                                                    <td class="lessDiscount"></td>
                                                                 </tr>
                                                                 <tr class="pb-3">
                                                                     <td class="pe-3">Add CGST:</td>
@@ -566,16 +568,14 @@
                                                         <tr>
                                                             <th style="width: 2.27rem;">S.N.</th>
                                                             <th style="width: 11.29rem;">Item</th>
-                                                            <th style="width: 4.59rem;">HSN</th>
                                                             <th style="width: 4.4rem;">Batch</th>
+                                                            <th style="width: 4.59rem;">HSN</th>
+                                                            <th style="width: 3.61rem;">GST%</th>
                                                             <th style="width: 3.25rem;">Expiry</th>
                                                             <th style="width: 3.62rem;">MRP(₹)</th>
                                                             <th style="width: 3.1rem;">QTY</th>
                                                             <th style="width: 3.62rem;">PTR(₹)</th>
                                                             <th style="width: 3.61rem;">Gross Value(₹)</th>
-                                                            <th style="width: 3.61rem;">GST%</th>
-                                                            <th style="width: 3.61rem;">GST Value(₹)</th>
-                                                            <th style="width: 3.61rem;">Amount(₹)</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="cartitems">
@@ -657,6 +657,12 @@
                                                                 </div>
                                                                 <div class="totalGross">
                                                                 </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between">
+                                                                <div class="label">
+                                                                    Less Discount(₹):
+                                                                </div>
+                                                                <div class="lessDiscount"></div>
                                                             </div>
                                                             <div class="d-flex justify-content-between">
                                                                 <div class="label">
@@ -751,6 +757,8 @@
                         var totalGross = 0;
                         var totalGST = 0;
                         var totalAmount = 0;
+                        var lessDiscount = podata.less_discount || 0;
+                        var lessDiscountPercent = (lessDiscount / podata.debit_amt) * 100;
 
                         var transactions = [];
 
@@ -766,7 +774,7 @@
                             var amount = grossValue + gstValue;
 
                             var transaction = {
-                                grossAmount: grossValue,
+                                grossAmount: grossValue * (1 - lessDiscountPercent / 100),
                                 gstRate: items[i].gst,
                             }
 
@@ -774,32 +782,28 @@
                             transactions.push(transaction);
 
                             cartHtml = `
-
                                 <tr>
                                     <td style="width: 2.27rem; height: 1rem;">${i + 1}</td>
                                     <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
-                                    <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
                                     <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
+                                    <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
+                                    <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
                                     <td style="width: 3.25rem; height: 1rem;">${expDate}</td>
                                     <td style="width: 3.62rem; height: 1rem;">${(items[i].mrp).toFixed(2)}</td>
                                     <td style="width: 3.1rem; height: 1rem;">${items[i].pri_unit_debit}:${items[i].sec_unit_debit}</td>
                                     <td style="width: 3.62rem; height: 1rem;">${(items[i].purchase_rate).toFixed(2)}</td>
                                     <td style="width: 3.61rem; height: 1rem;">${grossValue.toFixed(2)}</td>
-                                    <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
-                                    <td style="width: 3.61rem; height: 1rem;">${gstValue.toFixed(2)}</td>
-                                    <td style="width: 3.61rem; height: 1rem;">${amount.toFixed(2)}</td>
                                 </tr>`
                             $(".cartitems").append(cartHtml);
 
                             totalGross += grossValue;
                             totalGST += gstValue;
-                            totalAmount += amount;
-
                         }
-                        $(".totalcredit").text(totalAmount.toFixed(2));
+
                         $(".totalGross").text(totalGross.toFixed(2));
                         $(".cgst").text((totalGST / 2).toFixed(2));
                         $(".sgst").text((totalGST / 2).toFixed(2));
+                        $(".lessDiscount").text(lessDiscount.toFixed(2));
 
                         // Initialize totals
                         var totals = {
@@ -852,6 +856,8 @@
                         $('.sgstTotal').text((totals.grandTotal.sgst).toFixed(2));
                         $('.totalGst').text((totals.grandTotal.totalGst).toFixed(2));
 
+                        totalAmount = totalGross + totals.grandTotal.totalGst - lessDiscount;
+                        $(".totalcredit").text(totalAmount.toFixed(2));
                     });
 
                     $.get(`/api/org/<%=orgId%>`, function (data, status) {
