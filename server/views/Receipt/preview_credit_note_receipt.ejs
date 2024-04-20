@@ -807,8 +807,6 @@
 
                         }
                         $(".totalGross").text(totalGross.toFixed(2));
-                        $(".cgst").text((totalGST / 2).toFixed(2));
-                        $(".sgst").text((totalGST / 2).toFixed(2));
                         $(".lessDiscount").text(lessDiscount.toFixed(2));
 
                         // Initialize totals
@@ -858,8 +856,8 @@
 
                         // Display grand totals
                         $('.taxAmtTotal').text((totals.grandTotal.taxAmt).toFixed(2));
-                        $('.cgstTotal').text((totals.grandTotal.cgst).toFixed(2));
-                        $('.sgstTotal').text((totals.grandTotal.sgst).toFixed(2));
+                        $('.cgstTotal, .cgst').text((totals.grandTotal.cgst).toFixed(2));
+                        $('.sgstTotal, .sgst').text((totals.grandTotal.sgst).toFixed(2));
                         $('.totalGst').text((totals.grandTotal.totalGst).toFixed(2));
 
                         totalAmount = totalGross + totals.grandTotal.totalGst - lessDiscount;
