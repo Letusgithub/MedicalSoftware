@@ -484,41 +484,19 @@
                                             <h4 class="col-sm-7 fw-bold py-3 mb-2">Bill Summary</h4>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="card mb-4">
-                                                <h5 class="card-header"> Total Amount (₹)</h5>
+                                                <h5 class="card-header"> Total Gross (₹)</h5>
                                                 <div class="card-body">
                                                     <div class="has-validation">
-                                                        <input type="number" class="form-control" id="totalAmt"
+                                                        <input type="number" class="form-control" id="totalGross"
                                                             readonly />
-                                                        <div class="invalid-feedback">
-                                                            Item cart empty cannot submit
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-
-                                        <div class="col-md-4">
-                                            <div class="card mb-4">
-                                                <div class="row m-0 p-0">
-                                                    <h5 class="col-sm-5 card-header">CR/DR (₹) </h5>
-                                                </div>
-                                                <div class="card-body pt-0">
-                                                    <div class="input-group has-validation">
-                                                        <input type="text" class="form-control"
-                                                            onkeypress="javascript: if (!/[-0-9]/.test(String.fromCharCode(event.charCode))) return false;"
-                                                            id="creditAmt" placeholder="Enter CR/DR" />
-                                                        <div class="invalid-feedback">
-                                                            Credit Amount cannot be greater than subtotal
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4" id="creditPeriodInputBox" style="display: none;">
+                                        <div class="col-md-3" id="creditPeriodInputBox" style="display: none;">
                                             <div class="card mb-4">
                                                 <div class="d-flex justify-content-between m-0 p-0">
                                                     <h5 class="card-header">Credit Period</h5>
@@ -535,7 +513,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4" id="lessDiscountBox">
+                                        <div class="col-md-3" id="lessDiscountBox">
                                             <div class="card mb-4">
                                                 <div class="d-flex justify-content-between m-0 p-0">
                                                     <h5 class="card-header">Less Discount (₹)</h5>
@@ -544,7 +522,7 @@
                                                     <div class="input-group has-validation">
                                                         <input type="text" class="form-control" id="lessDiscount"
                                                             onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
-                                                            name="lessDiscount" placeholder="Less Discount in (₹)"/>
+                                                            name="lessDiscount" placeholder="Less Discount in (₹)" />
                                                         <div class="invalid-feedback">
                                                             Less Discount cannot be greater than total amount
                                                         </div>
@@ -554,6 +532,38 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-3">
+                                            <div class="card mb-4">
+                                                <div class="row m-0 p-0">
+                                                    <h5 class="card-header">CR/DR (₹) </h5>
+                                                </div>
+                                                <div class="card-body pt-0">
+                                                    <div class="input-group has-validation">
+                                                        <input type="text" class="form-control"
+                                                            onkeypress="javascript: if (!/[-0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            id="creditAmt" placeholder="Enter CR/DR" />
+                                                        <div class="invalid-feedback">
+                                                            Credit Amount cannot be greater than subtotal
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="card mb-4">
+                                                <h5 class="card-header"> Total Amount (₹)</h5>
+                                                <div class="card-body">
+                                                    <div class="has-validation">
+                                                        <input type="number" class="form-control" id="totalAmt"
+                                                            readonly />
+                                                        <div class="invalid-feedback">
+                                                            Item cart empty cannot submit
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-check mt-3 ps-0">
@@ -792,10 +802,16 @@
 
                         // Populate the dropdown with options
                         $.each(response.data, function (index, category) {
-                            categorySelect.append($('<option>', {
+                            var option = $('<option>', {
                                 value: category.category_id,
                                 text: category.category_name
-                            }));
+                            });
+
+                            if (category.category_name === 'Blank') {
+                                option.attr('selected', 'selected');
+                            }
+
+                            categorySelect.append(option);
                         });
                     }).fail(function (error) {
                         console.error("Error fetching categories:", error);
@@ -1011,6 +1027,11 @@
                         vendorId = vendorDataLocal.vendorId;
                         $("#vendorselect").val(vendorDataLocal.vendorId);
                         getDistributorDetails(vendorDataLocal.vendorId);
+                    } else {
+                        $("#totalGross").val(0);
+                        $("#lessDiscount").val(0);
+                        $("#creditAmt").val(0);
+                        $("#totalAmt").val(0);
                     }
                     renderRefreshCart(grnCartItems);
 
@@ -1033,7 +1054,7 @@
                                     <td>${items[i].punit}</td>
                                     <td>${items[i].gst}</td>
                                     <td>${items[i].bulk_discount}</td>
-                                    <td>${items[i].amt}</td>
+                                    <td>${items[i].gross_amt}</td>
                                     <td>
                                     <div class="action-btns">
                                         <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
@@ -1141,7 +1162,8 @@
                                 bulk_discount: bulk_discount,
                                 base_price: base_price,
                                 qty: quantity + free,
-                                amt: amount,
+                                gross_amt: grossValue,
+                                total_amt: amount,
                             })
                             console.log('cart details', cartarray);
 
@@ -1180,7 +1202,6 @@
                             $("#bulk_discount").val("");
                             $("#base_price").text("");
                             $("input[name='quantity']").val("");
-
                         }
 
                     })
@@ -1201,27 +1222,25 @@
                             var expDate = moment(datetime).format('MM/YYYY'); // Formating the expiry date
 
                             htmlData = `
-                          <tr>
-                            <td class="card_id">${i + 1}</td>
-                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
-                            <td>${items[i].batch}</td>
-                            <td>${expDate}</td>
-                            <td>${items[i].mrp}</td>
-                            <td>${items[i].purchase}</td>
-                            <td>${items[i].qty}</td>
-                            <td>${items[i].punit}</td>
-                            <td>${items[i].gst}</td>
-                            <td>${items[i].bulk_discount}</td>
-                            <td>${items[i].amt}</td>
-                            <td>
-                              <div class="action-btns">
-                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
-                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          `
-
+                                    <tr>
+                                        <td class="card_id">${i + 1}</td>
+                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                                        <td>${items[i].batch}</td>
+                                        <td>${expDate}</td>
+                                        <td>${items[i].mrp}</td>
+                                        <td>${items[i].purchase}</td>
+                                        <td>${items[i].qty}</td>
+                                        <td>${items[i].punit}</td>
+                                        <td>${items[i].gst}</td>
+                                        <td>${items[i].bulk_discount}</td>
+                                        <td>${items[i].gross_amt}</td>
+                                        <td>
+                                            <div class="action-btns">
+                                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>`
                             $('#cart').append(htmlData);
                         }
                     }
@@ -1281,25 +1300,38 @@
 
 
                     function getBillSummary() {
-                        var totalAmt = 0;
+
                         getAllData = JSON.parse(localStorage.getItem("grncartdetails")) || [];
 
                         if (getAllData.length != 0) {
-                            for (let i = 0; i < getAllData.length; i++) {
-                                totalAmt += parseFloat(getAllData[i].amt);
+                            var totalAmt = 0;
+                            var totalGross = 0;
+                            var totalGST = 0;
+                            var lessDiscount = parseFloat($("#lessDiscount").val()) || 0;
+                            var creditAmtInput = parseFloat($("#creditAmt").val()) || 0;
+                            
+                            for (let i=0; i< getAllData.length; i++){
+                                totalGross += parseFloat(getAllData[i].gross_amt);
                             }
+                            var lessDiscountPercent = (lessDiscount / totalGross) * 100;
+
+                            for (let i = 0; i < getAllData.length; i++) {
+                                totalGST += (getAllData[i].gross_amt * (1 - lessDiscountPercent / 100)) * getAllData[i].gst / 100;
+                            }
+                            $("#totalGross").val(totalGross.toFixed(2));
+
+                            totalAmt = totalGross + totalGST - lessDiscount + creditAmtInput;
                             $("#totalAmt").val(totalAmt.toFixed(2));
-                            // $("#finalamount").val(totalAmt.toFixed(2));
                         }
                         else if (getAllData.length == 0) {
+                            $("#totalGross").val(0);
                             $("#totalAmt").val(0);
-                            // $("#finalamount").val(0);
                         }
                     }
 
                     // Ensure credit Amount is not greater than total Amount and not less than zero
                     $('#creditAmt').on("input", function () {
-                        var getTotalAmt = parseFloat($("#totalAmt").val());
+                        var getTotalAmt = parseFloat($("#totalGross").val());
                         var creditAmtInput = parseFloat($(this).val());
 
                         if (Math.abs(creditAmtInput) > getTotalAmt) {
@@ -1307,27 +1339,30 @@
                             $('#creditAmt').focus();
                             $(this).val(getTotalAmt);
                         } else {
+                            getBillSummary();
                             $('#creditAmt').removeClass('is-invalid');
                         }
                     });
 
                     // Ensure less discount is not greater than total Amount and not less than zero
                     $('#lessDiscount').on("input", function () {
-                        var getTotalAmt = parseFloat($("#totalAmt").val());
+                        var getTotalAmt = parseFloat($("#totalGross").val());
                         var lessDiscountInput = parseFloat($(this).val());
+                        console.log(getTotalAmt, lessDiscountInput)
 
                         if (lessDiscountInput > getTotalAmt) {
                             $('#lessDiscount').addClass('is-invalid');
                             $('#lessDiscount').focus();
                             $(this).val(getTotalAmt);
                         } else {
+                            getBillSummary();
                             $('#lessDiscount').removeClass('is-invalid');
                         }
                     });
 
                     // Calculate final amount on input of additional discount
                     // $('#creditAmt').on("input", function () {
-                    //     var getTotalAmt = parseFloat(("#totalAmt").val());
+                    //     var getTotalAmt = parseFloat(("#totalGross").val());
                     //     var creditAmtInput = parseFloat($(this).val());
 
                     //     var finalAmount= getTotalAmt - creditAmtInput;
@@ -1362,13 +1397,13 @@
                             isValid = false;
                         }
 
-                        if ($("#totalAmt").val() == 0 || $("#totalAmt").val() == '') {
-                            $("#totalAmt").addClass('is-invalid');
-                            $("#totalAmt").focus();
+                        if ($("#totalGross").val() == 0 || $("#totalGross").val() == '') {
+                            $("#totalGross").addClass('is-invalid');
+                            $("#totalGross").focus();
                             isValid = false;
                         }
 
-                        if ($("#lessDiscount").val() == 0 || $("#lessDiscount").val() == '') {
+                        if ($("#lessDiscount").val() == '') {
                             $("#lessDiscount").addClass('is-invalid');
                             $("#lessDiscount").focus();
                             isValid = false;
@@ -1711,7 +1746,8 @@
                                     $("#creditPeriodInput").val('');
                                     $("#lessDiscount").val('');
                                     $("#creditAmt").val('');
-                                    $("#totalAmt").val('');
+                                    $("#totalGross").val('');
+                                    $("#totalAmt").val('')
 
                                     setTimeout(() => {
                                         $('#loader').hide();
