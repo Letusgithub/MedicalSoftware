@@ -27,8 +27,10 @@
                   <hr class="mb-4">
 
                   <!-- Loader GIF -->
-                  <div id="loader" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
-                    <div class="spinner-border spinner-border-lg text-primary" role="status" style="position: absolute; top: 50%; left: 50%;">
+                  <div id="loader"
+                    style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                    <div class="spinner-border spinner-border-lg text-primary" role="status"
+                      style="position: absolute; top: 50%; left: 50%;">
                       <span class="visually-hidden">Loading...</span>
                     </div>
                   </div>
@@ -199,7 +201,7 @@
                         <h5 class="card-header">Subtotal</h5>
                         <div class="card-body">
                           <div>
-                            <input type="text" class="form-control" id="returnsubtotal" readonly/>
+                            <input type="text" class="form-control" id="returnsubtotal" readonly />
                           </div>
                         </div>
                       </div>
@@ -327,7 +329,7 @@
               setTimeout(function () {
                 console.log('ui.item', ui.item);
                 productId = ui.item.product_id;
-                $.get(`/api/getbatchfrombatchid?id=${ui.item.saled_batch_id}`, function (data, status) {
+                $.get(`/api/getbatchfrombatchid?id=${ui.item.batch_id}`, function (data, status) {
 
                   console.log('batch data', data.data);
 
@@ -351,10 +353,6 @@
                   //poulate medname, brand, primary, sec
                   $("#medicinename").val(ui.item.med_name);
                   $('#brand').val(ui.item.mfd_mkt);
-                  $("#pUnit").val(ui.item.saled_pri_qty_cart);
-                  saledPrimaryQty = ui.item.saled_pri_qty_cart;
-                  $("#sUnit").val(ui.item.saled_sec_qty_cart);
-                  saledSecondaryQty = ui.item.saled_sec_qty_cart;
                   $("#pUnit").val(ui.item.saled_pri_qty_cart);
                   saledPrimaryQty = ui.item.saled_pri_qty_cart;
                   $("#sUnit").val(ui.item.saled_sec_qty_cart);
@@ -512,7 +510,6 @@
             localStorage.setItem('returncartitems', JSON.stringify(UpdatecartItemsinStorage));
             renderCart(UpdatecartItemsinStorage);
 
-
           })
           //end of edit functionality
 
@@ -618,54 +615,68 @@
                     return_dis: localCartStored[i].disc,
                     return_mrp: localCartStored[i].mrp,
                     return_total_cart: localCartStored[i].total,
-                    return_total_cart: localCartStored[i].total
                   }
 
                   // Push each AJAX request into the array
                   ajaxRequests.push(
                     $.ajax({
-                    url: `/api/updatebatchwhenreturn/`,
-                    type: 'POST',
-                    data: JSON.stringify({
-                      batch_id: localCartStored[i].batchIdReturned,
-                      org_id: org,
-                      return_pri_qty: localCartStored[i].priQty,
-                      return_sec_qty: localCartStored[i].secQty
-                    }),
-                    contentType: 'application/json',
-                    success: function (response) {
-                      console.log(response);
-                    },
-                    error: function (error) {
-                      console.log('error in updateing batch', error);
-                    }
-                  })
+                      url: `/api/updatebatchwhenreturn/`,
+                      type: 'POST',
+                      data: JSON.stringify({
+                        batch_id: localCartStored[i].batchIdReturned,
+                        org_id: org,
+                        return_pri_qty: localCartStored[i].priQty,
+                        return_sec_qty: localCartStored[i].secQty
+                      }),
+                      contentType: 'application/json',
+                      success: function (response) {
+                        console.log(response);
+                      },
+                      error: function (error) {
+                        console.log('error in updateing batch', error);
+                      }
+                    })
                   );
-                  
+
+                  ajaxRequests.push(
+                    $.ajax({
+                      url: `/api/updatesalesdetailsonreturn?salesInvoiceId=${returnItem.id}&orgId=${org}`,
+                      type: 'POST',
+                      data: JSON.stringify(updateCartdetails),
+                      contentType: 'application/json',
+                      success: function (response) {
+                        console.log(response);
+                      },
+                      error: function (error) {
+                        console.log(error);
+                      }
+                    })
+                  );
+
                   // Push each AJAX request into the array
                   ajaxRequests.push(
-                  $.ajax({
-                    url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}&batch=${localCartStored[i].batchIdReturned}`,
-                    type: 'POST',
-                    data: JSON.stringify(updateCartdetails),
-                    contentType: 'application/json',
-                    success: function (response) {
-                      console.log(response);
-                    },
-                    error: function (error) {
-                      console.log(error);
-                    }
-                  })
+                    $.ajax({
+                      url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}&batch=${localCartStored[i].batchIdReturned}`,
+                      type: 'POST',
+                      data: JSON.stringify(updateCartdetails),
+                      contentType: 'application/json',
+                      success: function (response) {
+                        console.log(response);
+                      },
+                      error: function (error) {
+                        console.log(error);
+                      }
+                    })
                   );
                 }
 
                 // Use $.when.apply() to wait for all AJAX requests to complete
                 $.when.apply($, ajaxRequests).done(function () {
-                      $('#loader').hide();
-                      localStorage.removeItem('returncartitems');
-                      window.location.href = `/return_receipt/${returninsertid}`;
+                  $('#loader').hide();
+                  localStorage.removeItem('returncartitems');
+                  window.location.href = `/return_receipt/${returninsertid}`;
                 });
-                
+
               },
               error: function (error) {
                 $('#loader').hide();

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  create, updateSalesDetails, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -82,6 +82,25 @@ module.exports = {
           result: results,
           invoiceId,
         });
+      });
+    });
+  },
+
+  updateSalesDetailsOnReturn: (req, res) => {
+    const salesInvoiceId = req.query.salesInvoiceId;
+    const orgId = req.query.orgId;
+    const data = req.body;
+    updateSalesDetails(salesInvoiceId, orgId, data, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'DB error',
+        });
+      }
+      res.status(200).json({
+        success: 1,
+        result: results,
       });
     });
   },

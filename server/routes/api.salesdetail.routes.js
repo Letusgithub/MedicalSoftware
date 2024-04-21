@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 const {
   getAllOrders, getInvoiceOrder, getRevenue, searchDates, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  updateSalesDetailsOnReturn,
 } = require('../controllers/api.salesdetail.controller');
 
 module.exports = (app) => {
@@ -19,6 +20,8 @@ module.exports = (app) => {
   app.get('/api/invoice', getInvoiceOrder);
   app.get('/api/searchinvoice', invoiceSales);
   app.get('/api/orderdetails/', getRevenue);
+
+  app.post('/api/updatesalesdetailsonreturn', updateSalesDetailsOnReturn);
 
   app.get('/api/getsalesidforreport/:id', getSalesIdforReport);
 

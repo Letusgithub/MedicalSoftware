@@ -29,6 +29,22 @@ module.exports = {
       },
     );
   },
+
+  updateSalesDetails: (salesInvoiceId, orgId, data, callback) => {
+    getPool().query(
+      `UPDATE order_details 
+      SET subtotal = subtotal - ${data.return_total_cart},
+      grand_total = grand_total - ${data.return_total_cart}
+      WHERE invoice_id_main = ? and org_id = ?`,
+      [salesInvoiceId,
+        orgId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
   searchTotalSales: (orgId, month, year, callback) => {
     getPool().query(
       `SELECT COUNT(*) as total_rows FROM order_details od

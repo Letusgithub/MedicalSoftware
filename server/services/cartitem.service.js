@@ -45,9 +45,9 @@ module.exports = {
   },
   getOrders: (id, callback) => {
     getPool().query(
-      `select * from cart_item cart
+      `select * from cart_item ci
       JOIN sample spl
-      on cart.product_id = spl.product_id
+      on ci.product_id = spl.product_id
       where main_invoice_id =?`,
       [id],
       (error, results) => {
@@ -58,14 +58,21 @@ module.exports = {
   },
   updateOrders: (data, salesInvoiceId, batchId, productId, callback) => {
     getPool().query(
-      'update cart_item set return_invoice_id=?, return_pri_qty=?, return_sec_qty=?, return_dis=?, return_mrp=?, return_total_cart=? where main_invoice_id =? and product_id=? and batch_id=?',
+      `update cart_item 
+       set return_invoice_id=?, 
+       saled_pri_qty_cart = saled_pri_qty_cart - ${data.return_pri_qty},
+       saled_sec_qty_cart = saled_sec_qty_cart - ${data.return_sec_qty},
+       saled_mrp = saled_mrp - ${data.return_total_cart},
+       return_pri_qty= return_pri_qty + ${data.return_pri_qty}, 
+       return_sec_qty= return_sec_qty + ${data.return_sec_qty},
+       return_total_cart = return_total_cart + ${data.return_total_cart},
+       return_dis = ?, 
+       return_mrp = ?
+       where main_invoice_id =? and product_id=? and batch_id=?`,
       [
         data.return_invoice_id,
-        data.return_pri_qty,
-        data.return_sec_qty,
         data.return_dis,
         data.return_mrp,
-        data.return_total_cart,
         salesInvoiceId,
         productId,
         batchId,
@@ -101,7 +108,7 @@ module.exports = {
       `select * from cart_item ci
       JOIN sample spl
       on ci.product_id = spl.product_id
-      Join batch bth on ci.product_id = bth.product_id and ci.batch_id = bth.batch_id
+      JOIN batch bth on ci.product_id = bth.product_id and ci.batch_id = bth.batch_id
       where order_id =?`,
       [id],
       (error, results) => {

@@ -137,11 +137,11 @@ module.exports = {
         on cd.customer_id = od.customer_id
         
         JOIN sample spl 
-        on ci.product_id = spl.sample_id
+        on ci.product_id = spl.product_id
         JOIN inventory inv
         on inv.product_id = ci.product_id
         JOIN batch bth
-        on ci.saled_batch_id = bth.batch_id
+        on ci.batch_id = bth.batch_id
         
         where rd.return_id=?`,
       [
