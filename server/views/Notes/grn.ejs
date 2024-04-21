@@ -740,6 +740,7 @@
                                 $("input[name='brand']").val(ui.item.mfd_mkt);
                                 $("input[name='salt']").val(ui.item.salt_composition);
                                 $("input[name='threshold']").val(1);
+                                $("select[name='category']").val(3)
                             }, 0)
                         }
                     }).data('ui-autocomplete')._renderItem = function (ul, item) {
@@ -807,7 +808,7 @@
                                 text: category.category_name
                             });
 
-                            if (category.category_name === 'Blank') {
+                            if (category.category_name === 'Allopathy') {
                                 option.attr('selected', 'selected');
                             }
 
