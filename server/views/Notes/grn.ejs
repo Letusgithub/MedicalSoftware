@@ -807,11 +807,6 @@
                                 value: category.category_id,
                                 text: category.category_name
                             });
-
-                            if (category.category_name === 'Allopathy') {
-                                option.attr('selected', 'selected');
-                            }
-
                             categorySelect.append(option);
                         });
                     }).fail(function (error) {

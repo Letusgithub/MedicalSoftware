@@ -470,6 +470,8 @@
                                 $("input[name='productname']").val(ui.item.med_name).prop('disabled', true);
                                 $("input[name='brand']").val(ui.item.mfd_mkt).prop('disabled', true);
                                 $("input[name='salt']").val(ui.item.salt_composition).prop('disabled', true);
+                                $("input[name='threshold']").val(1);
+                                $("select[name='category']").val(3)
                             }, 0)
                         }
                     }).data('ui-autocomplete')._renderItem = function (ul, item) {
