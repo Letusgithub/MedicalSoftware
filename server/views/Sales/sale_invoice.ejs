@@ -327,9 +327,6 @@
                 </a>
               </div>
 
-
-
-
               <div class="content-backdrop fade"></div>
           </div>
           <!-- Content wrapper -->
@@ -529,16 +526,7 @@
                     batchIdwhenSelected = null;
                     console.log('productInInventory', productInInventory);
 
-                    $("#pUnit").prop('readonly', false);
-                    $("#discount").prop('readonly', false);
-                    $("#batch").prop('readonly', false);
-                    $("#expdate").prop('readonly', false);
-                    $("#sUnit_input").hide();
-                    $("#gst_input").show();
-                    $("#price").prop('readonly', false);
-
                     calculateTotal();
-
                   } else {
                     productInInventory = true;
                     console.log('productInInventory', productInInventory);
@@ -1131,7 +1119,7 @@
             if (e.which == 45) {
               return false;
             }
-          });
+          });  
           $('#additionaldiscount').on("input", function () {
             var getSubTotalValue = $("#subtotal").val();
             var discountInput = parseFloat($(this).val());
@@ -1154,7 +1142,7 @@
             var discountprice = getSubTotalValue - discountInput;
             $("#finalamount").val(discountprice.toFixed(0));
           });
-
+          
           //allchanges done for footer total;
 
 
