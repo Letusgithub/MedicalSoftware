@@ -761,7 +761,7 @@
                         if (item.med_name) {
 
                             return $('<li>')
-                                .append('<div>' + item.med_name + '</div>')
+                                .append('<div>' + item.med_name + ' [' + item.pack_size +']' + '</div>')
                                 .appendTo(ul);
                         }
                         else {

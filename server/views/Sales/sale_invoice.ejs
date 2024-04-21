@@ -619,7 +619,7 @@
             if (item.med_name) {
 
               return $('<li>')
-                .append('<div>' + item.med_name + '(' + item.salt_composition + ')' + '</div>')
+                .append('<div>' + item.med_name + ' (' + item.salt_composition + ') ' + '[' + item.pack_size +']' + '</div>')
                 .appendTo(ul);
             }
             else {
