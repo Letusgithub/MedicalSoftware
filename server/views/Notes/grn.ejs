@@ -731,6 +731,19 @@
                                     var secondaryUnit = $("select[name='secondary']").val();
                                     $("#primarypopulate").text(`1 ${primaryUnit}`);
                                     $("#secondarypopulate").text(`${secondaryUnit}`);
+
+                                    // Remove validations
+                                    $('input:required').each(function () {
+                                        if ($(this).val() != '') {
+                                            $(this).removeClass('is-invalid');
+                                        } 
+                                    });
+
+                                    $('select:required').each(function () {
+                                        if ($(this).val() != 'default' || $(this).val() != null) {
+                                            $(this).removeClass('is-invalid');
+                                        } 
+                                    });
                                 }
                             })
 
@@ -1305,8 +1318,8 @@
                             var totalGST = 0;
                             var lessDiscount = parseFloat($("#lessDiscount").val()) || 0;
                             var creditAmtInput = parseFloat($("#creditAmt").val()) || 0;
-                            
-                            for (let i=0; i< getAllData.length; i++){
+
+                            for (let i = 0; i < getAllData.length; i++) {
                                 totalGross += parseFloat(getAllData[i].gross_amt);
                             }
                             var lessDiscountPercent = (lessDiscount / totalGross) * 100;
