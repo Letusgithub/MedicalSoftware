@@ -461,6 +461,19 @@
                                     var secondaryUnit = $("select[name='secondary']").val();
                                     $("#primarypopulate").text(`1 ${primaryUnit}`);
                                     $("#secondarypopulate").text(`${secondaryUnit}`);
+
+                                    // Remove validations
+                                    $('input:required').each(function () {
+                                        if ($(this).val() != '') {
+                                            $(this).removeClass('is-invalid');
+                                        } 
+                                    });
+
+                                    $('select:required').each(function () {
+                                        if ($(this).val() != 'default' || $(this).val() != null) {
+                                            $(this).removeClass('is-invalid');
+                                        } 
+                                    });
                                 }
                             })
 
