@@ -1155,7 +1155,7 @@
                             var batch = $("#batchname").val();
                             var conversion = $("#conversion").val();
                             var shelflabel = $("#shelflabel").val();
-                            var mrp = $("#price").val();
+                            var mrp = parseFloat($("#price").val());
                             var purchase = parseFloat($("#addpur").val());
                             var free = parseFloat($("#free_scheme").val()) || 0;
                             var bulk_discount = parseFloat($("#bulk_discount").val()) || 0;
