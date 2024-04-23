@@ -412,11 +412,11 @@
           $("#addtoreturncart").click(function () {
             var products = $("#medicinename").val();
             var brand = $("#brand").val();
-            var priQty = $("#pUnit").val() || 0;
-            var secQty = $("#sUnit").val() || 0;
-            var mrp = $("#price").val();
-            var disc = $("#discount").val();
-            var total = $("#total").val();
+            var priQty = parseFloat($("#pUnit").val()) || 0;
+            var secQty = parseFloat($("#sUnit").val()) || 0;
+            var mrp = parseFloat($("#price").val());
+            var disc = parseFloat($("#discount").val());
+            var total = parseFloat($("#total").val());
             var shelflabel = $("#shelflabel").val();
             var batch = $("#batch").val();
             var exp = $("#expdate").val();
