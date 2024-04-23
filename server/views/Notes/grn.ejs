@@ -732,28 +732,41 @@
                                     $("#primarypopulate").text(`1 ${primaryUnit}`);
                                     $("#secondarypopulate").text(`${secondaryUnit}`);
 
-                                    // Remove validations
+                                    // Remove validations for autopopulated fields
                                     $('input:required').each(function () {
                                         if ($(this).val() != '') {
                                             $(this).removeClass('is-invalid');
-                                        } 
+                                        }
                                     });
 
                                     $('select:required').each(function () {
                                         if ($(this).val() != 'default' || $(this).val() != null) {
                                             $(this).removeClass('is-invalid');
-                                        } 
+                                        }
                                     });
                                 }
                             })
 
                             setTimeout(function () {
                                 console.log(ui.item);
-                                $("input[name='productname']").val(ui.item.med_name);
-                                $("input[name='brand']").val(ui.item.mfd_mkt);
-                                $("input[name='salt']").val(ui.item.salt_composition);
+                                $("input[name='productname']").val(ui.item.med_name).prop('disabled', true);
+                                $("input[name='brand']").val(ui.item.mfd_mkt).prop('disabled', true);
+                                $("input[name='salt']").val(ui.item.salt_composition).prop('disabled', true);
                                 $("input[name='threshold']").val(1);
-                                $("select[name='category']").val(3)
+                                $("select[name='category']").val(3);
+
+                                // Remove validations for autopopulated fields
+                                $('input:required').each(function () {
+                                    if ($(this).val() != '') {
+                                        $(this).removeClass('is-invalid');
+                                    }
+                                });
+
+                                $('select:required').each(function () {
+                                    if ($(this).val() != 'default' || $(this).val() != null) {
+                                        $(this).removeClass('is-invalid');
+                                    }
+                                });
                             }, 0)
                         }
                     }).data('ui-autocomplete')._renderItem = function (ul, item) {
@@ -761,7 +774,7 @@
                         if (item.med_name) {
 
                             return $('<li>')
-                                .append('<div>' + item.med_name + ' [' + item.pack_size +']' + '</div>')
+                                .append('<div>' + item.med_name + ' [' + item.pack_size + ']' + '</div>')
                                 .appendTo(ul);
                         }
                         else {
@@ -798,6 +811,11 @@
                                 console.log(ui.item);
                                 $("input[name='hsn']").val(ui.item.hsn_code);
                                 $("select[name='gst']").val(ui.item.gst_rate);
+
+                                // Remove validations for autopopulated gst field
+                                if ($("select[name='gst']").val() != 'default' || $("select[name='gst']").val() != null) {
+                                    $("select[name='gst']").removeClass('is-invalid');
+                                }
                             }, 0)
                         }
 
@@ -1145,9 +1163,9 @@
                             var quantity = parseFloat($("input[name='quantity']").val());
 
                             //logic for calculating amount
-                            var grossValue = purchase * quantity * (1 - (bulk_discount / 100));
+                            var grossValue = (purchase * quantity * (1 - (bulk_discount / 100)));
                             var gstValue = grossValue * (gst / 100);
-                            var amount = (grossValue + gstValue).toFixed(2);
+                            var amount = (grossValue + gstValue);
 
                             cartarray.push({
                                 productId: productId,
@@ -1165,14 +1183,14 @@
                                 expdate: exp,
                                 conversion: conversion,
                                 shelflabel: shelflabel,
-                                mrp: mrp,
-                                purchase: purchase,
+                                mrp: mrp.toFixed(2),
+                                purchase: purchase.toFixed(2),
                                 free: free,
-                                bulk_discount: bulk_discount,
+                                bulk_discount: bulk_discount.toFixed(2),
                                 base_price: base_price,
                                 qty: quantity + free,
-                                gross_amt: grossValue,
-                                total_amt: amount,
+                                gross_amt: grossValue.toFixed(2),
+                                total_amt: amount.toFixed(2),
                             })
                             console.log('cart details', cartarray);
 

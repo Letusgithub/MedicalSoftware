@@ -462,17 +462,17 @@
                                     $("#primarypopulate").text(`1 ${primaryUnit}`);
                                     $("#secondarypopulate").text(`${secondaryUnit}`);
 
-                                    // Remove validations
+                                    // Remove validations if autopopulated
                                     $('input:required').each(function () {
                                         if ($(this).val() != '') {
                                             $(this).removeClass('is-invalid');
-                                        } 
+                                        }
                                     });
 
                                     $('select:required').each(function () {
                                         if ($(this).val() != 'default' || $(this).val() != null) {
                                             $(this).removeClass('is-invalid');
-                                        } 
+                                        }
                                     });
                                 }
                             })
@@ -484,7 +484,20 @@
                                 $("input[name='brand']").val(ui.item.mfd_mkt).prop('disabled', true);
                                 $("input[name='salt']").val(ui.item.salt_composition).prop('disabled', true);
                                 $("input[name='threshold']").val(1);
-                                $("select[name='category']").val(3)
+                                $("select[name='category']").val(3);
+
+                                // Remove validations for autopopulated fields
+                                $('input:required').each(function () {
+                                    if ($(this).val() != '') {
+                                        $(this).removeClass('is-invalid');
+                                    }
+                                });
+
+                                $('select:required').each(function () {
+                                    if ($(this).val() != 'default' || $(this).val() != null) {
+                                        $(this).removeClass('is-invalid');
+                                    }
+                                });
                             }, 0)
                         }
                     }).data('ui-autocomplete')._renderItem = function (ul, item) {
@@ -492,7 +505,7 @@
                         if (item.med_name) {
 
                             return $('<li>')
-                                .append('<div>' + item.med_name + ' [' + item.pack_size +']' + '</div>')
+                                .append('<div>' + item.med_name + ' [' + item.pack_size + ']' + '</div>')
                                 .appendTo(ul);
                         }
                         else {
@@ -528,6 +541,11 @@
                                 console.log(ui.item);
                                 $("input[name='hsn']").val(ui.item.hsn_code);
                                 $("select[name='gst']").val(ui.item.gst_rate);
+
+                                // Remove validations for autopopulated gst field
+                                if ($("select[name='gst']").val() != 'default' || $("select[name='gst']").val() != null) {
+                                    $("select[name='gst']").removeClass('is-invalid');
+                                }
                             }, 0)
                         }
 
@@ -614,7 +632,7 @@
                         var currentMonth = today.getMonth();
 
                         if (expiryDate.getFullYear() < currentYear ||
-                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)  ||
+                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth) ||
                             expiryDate.getFullYear() > currentYear + 5) {
                             $("[name='addexp']").val(null);
                             $("[name='addexp']").addClass('is-invalid');
