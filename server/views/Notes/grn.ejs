@@ -1124,6 +1124,9 @@
                         if (isValid) {
 
                             $("#r_margin").hide();
+                            $("input[name='productname']").prop('disabled', false);
+                            $("input[name='brand']").prop('disabled', false);
+                            $("input[name='salt']").prop('disabled', false);
                             $("select[name = 'gst']").prop('disabled', false);
                             $("#hsn").prop('disabled', false);
                             $("select[name='primary']").prop('disabled', false);
