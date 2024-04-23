@@ -725,8 +725,10 @@
                                     populateSecondaryDropdown();
                                     $("select[name='secondary']").val(items.secondary_unit).prop('disabled', true);
                                     $("input[name='threshold']").val(items.threshold).prop('disabled', true);
-                                    $("select[name='category']").val(items.category_id).prop('disabled', true);
-
+                                    $("select[name='category']").val(items.category_id);
+                                    if ($("select[name='category']").val() != null){
+                                        $("select[name='category']").prop('disabled', true);
+                                    } 
                                     var primaryUnit = $("select[name='primary']").val();
                                     var secondaryUnit = $("select[name='secondary']").val();
                                     $("#primarypopulate").text(`1 ${primaryUnit}`);
@@ -749,7 +751,7 @@
 
                             setTimeout(function () {
                                 console.log(ui.item);
-                                $("input[name='productname']").val(ui.item.med_name).prop('disabled', true);
+                                $("input[name='productname']").val(ui.item.med_name);
                                 $("input[name='brand']").val(ui.item.mfd_mkt).prop('disabled', true);
                                 $("input[name='salt']").val(ui.item.salt_composition).prop('disabled', true);
                                 $("input[name='threshold']").val(1);
