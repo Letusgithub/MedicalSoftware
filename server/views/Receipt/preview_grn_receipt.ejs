@@ -885,7 +885,7 @@
                         $('.totalGst').text((totals.grandTotal.totalGst).toFixed(2));
 
                         totalAmount = totalGross + totals.grandTotal.totalGst - lessDiscount + creditDebit;
-                        $(".totalamount").text(totalAmount.toFixed(2));
+                        $(".totalamount").text(totalAmount.toFixed(0));
                     })
 
                     $.get(`/api/org/<%=orgId%>`, function (data, status) {
