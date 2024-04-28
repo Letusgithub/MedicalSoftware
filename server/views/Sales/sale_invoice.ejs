@@ -309,14 +309,12 @@
               <!-- / Content -->
 
               <div class="mb-4">
-                <div class="form-check mt-3">
-                  <div>
-                    <input class="form-check-input mx-auto" type="checkbox" value="" id="defaultCheck1" checked>
-                    <label class="form-check-label mx-1" for="defaultCheck1">
-                      Disclaimer : Hereby I assure that product details given here is
-                      validated by this pharmacy .
-                    </label>
-                  </div>
+                <div class="form-check mt-3 d-flex justify-content-center align-items-center">
+                  <input class="form-check-input mx-1" type="checkbox" value="" id="defaultCheck1" checked>
+                  <label class="form-check-label mx-1" for="defaultCheck1">
+                    Disclaimer : Hereby I assure that product details given here is
+                    validated by this pharmacy .
+                  </label>
                 </div>
               </div>
 
@@ -417,7 +415,7 @@
               autoCompleteDataNumber.push({
                 label: JSON.stringify(data.data[i].cust_telephone) + '(' + data.data[i].cust_name + ')',
                 value: JSON.stringify(data.data[i].cust_telephone),
-                cust_doctor: data.data[i].cust_doctor 
+                cust_doctor: data.data[i].cust_doctor
               });
 
               autoCompleteDataName.push({
@@ -619,7 +617,7 @@
             if (item.med_name) {
 
               return $('<li>')
-                .append('<div>' + item.med_name + ' (' + item.salt_composition + ') ' + '[' + item.pack_size +']' + '</div>')
+                .append('<div>' + item.med_name + ' (' + item.salt_composition + ') ' + '[' + item.pack_size + ']' + '</div>')
                 .appendTo(ul);
             }
             else {
@@ -1119,7 +1117,7 @@
             if (e.which == 45) {
               return false;
             }
-          });  
+          });
           $('#additionaldiscount').on("input", function () {
             var getSubTotalValue = $("#subtotal").val();
             var discountInput = parseFloat($(this).val());
@@ -1142,7 +1140,7 @@
             var discountprice = getSubTotalValue - discountInput;
             $("#finalamount").val(discountprice.toFixed(0));
           });
-          
+
           //allchanges done for footer total;
 
 
