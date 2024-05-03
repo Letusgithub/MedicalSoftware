@@ -803,6 +803,14 @@
               $("#pUnit").removeClass('is-invalid');
             }
 
+            if ($("#pUnit").val() == 0 && $("#sUnit").val() == 0) {
+              $("#pUnit").addClass('is-invalid');
+              $("#pUnit").focus();
+              isValid = false;
+            } else {
+              $("#pUnit").removeClass('is-invalid');
+            }
+
             if ($("#batch").val() == '') {
               $("#batch").addClass('is-invalid');
               $("#batch").focus();
