@@ -437,6 +437,10 @@
 
                   $("#customername").val(autopopulatedName);
                   $("#reference").val(ui.item.cust_doctor);
+
+                  if ($("#phonenumber").val() != '') {
+                    $("#phonenumber").removeClass('is-invalid');
+                  }
                 }
               })
             }
@@ -454,7 +458,12 @@
 
                   $("#phonenumber").val(autopopulatedNumber);
                   $("#reference").val(ui.item.cust_doctor);
+
+                  if ($("#phonenumber").val() != '') {
+                    $("#phonenumber").removeClass('is-invalid');
+                  }
                 }
+
               })
             }
             //end of name logic
@@ -584,6 +593,11 @@
                     $("#price").val(priceMed);
                     //var batchId = $("#batchdroporinput #batchnumber").val();
                     //$("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
+
+                    // Remove validation if fields are populated
+                    if ($("#expdate").val() != '') {
+                      $("#expdate").removeClass('is-invalid');
+                    }
 
                     $("#batchdroporinput").on("change", "#batchnumber", function () {
                       var batchId = $("#batchdroporinput #batchnumber option:selected").attr('id');
