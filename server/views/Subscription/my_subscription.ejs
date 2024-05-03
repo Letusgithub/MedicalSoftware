@@ -58,7 +58,9 @@
                                                             <div class="plan-statistics">
                                                                 <div class="d-flex justify-content-between">
                                                                     <span class="fw-medium mb-2">Days</span>
-                                                                    <span class="fw-medium mb-2"><span id="remaining_days"></span> of <span id="plan_duration"></span> Days</span>
+                                                                    <span class="fw-medium mb-2"><span
+                                                                            id="remaining_days"></span> of <span
+                                                                            id="plan_duration"></span> Days</span>
                                                                 </div>
                                                                 <div class="progress">
                                                                     <div class="progress-bar" role="progressbar"
@@ -86,27 +88,30 @@
 
                                             <div class="card mb-4">
                                                 <!-- Billing Address -->
-                                                <h5 class="card-header">Billing Address</h5>
+                                                <h5 class="card-header">Billing Details</h5>
                                                 <div class="card-body">
                                                     <form id="formAccountSettings" onsubmit="return false">
                                                         <div class="row">
                                                             <div class="mb-3 col-sm-6">
-                                                                <label for="companyName" class="form-label">Company
+                                                                <label for="companyName" class="form-label">Pharmacy
                                                                     Name</label>
                                                                 <input type="text" id="companyName" name="companyName"
-                                                                    class="form-control" placeholder="Pharmacy name" />
+                                                                    class="form-control" placeholder="Pharmacy name"
+                                                                    value="<%=data[0].org_name%>" />
                                                             </div>
                                                             <div class="mb-3 col-sm-6">
-                                                                <label for="billingEmail" class="form-label">Billing
+                                                                <label for="billingEmail" class="form-label">
                                                                     Email</label>
                                                                 <input class="form-control" type="text"
                                                                     id="billingEmail" name="billingEmail"
-                                                                    placeholder="user@example.com" />
+                                                                    placeholder="user@example.com" 
+                                                                    value="<%=data[0].org_email%>"/>
                                                             </div>
                                                             <div class="mb-3 col-sm-6">
                                                                 <label for="vatNumber" class="form-label">GSTIN</label>
                                                                 <input class="form-control" type="text" id="vatNumber"
-                                                                    name="vatNumber" placeholder="Enter GSTIN" />
+                                                                    name="vatNumber" placeholder="Enter GSTIN"
+                                                                    value="<%=data[0].org_gstin%>" />
                                                             </div>
                                                             <div class="mb-3 col-sm-6">
                                                                 <label for="mobileNumber"
@@ -116,34 +121,41 @@
                                                                     <input class="form-control mobile-number"
                                                                         type="text" id="mobileNumber"
                                                                         name="mobileNumber"
-                                                                        placeholder="902 555 0111" />
+                                                                        placeholder="902 555 0111" 
+                                                                        value="<%=data[0].org_telephone%>"/>
                                                                 </div>
+                                                            </div>
+
+                                                            <div class="mb-3 col-sm-4">
+                                                                <label for="state" class="form-label">State</label>
+                                                                <input class="form-control" type="text" id="state"
+                                                                    name="state" placeholder="State" value="<%=data[0].org_state%>"/>
+                                                            </div>
+                                                            <div class="mb-3 col-sm-4">
+                                                                <label for="state" class="form-label">City</label>
+                                                                <input class="form-control" type="text" id="city"
+                                                                    name="city" placeholder="City" value="<%=data[0].org_city%>"/>
+                                                            </div>
+                                                            <div class="mb-3 col-sm-4">
+                                                                <label for="pinCode" class="form-label">Pin Code</label>
+                                                                <input type="text" class="form-control zip-code"
+                                                                    id="pinCode" name="pinCode" placeholder="231465"
+                                                                    maxlength="6" value="<%=data[0].org_pincode%>"/>
                                                             </div>
                                                             <div class="mb-3 col-12">
                                                                 <label for="billingAddress" class="form-label">Billing
                                                                     Address</label>
-                                                                <input type="text" class="form-control"
+                                                                <textarea type="text" class="form-control"
                                                                     id="billingAddress" name="billingAddress"
-                                                                    placeholder="Billing Address" />
-                                                            </div>
-                                                            <div class="mb-3 col-sm-6">
-                                                                <label for="state" class="form-label">State</label>
-                                                                <input class="form-control" type="text" id="state"
-                                                                    name="state" placeholder="Maharashtra" />
-                                                            </div>
-                                                            <div class="mb-3 col-sm-6">
-                                                                <label for="zipCode" class="form-label">Pin Code</label>
-                                                                <input type="text" class="form-control zip-code"
-                                                                    id="zipCode" name="zipCode" placeholder="231465"
-                                                                    maxlength="6" />
+                                                                    placeholder="Billing Address"><%=data[0].org_address%></textarea>
                                                             </div>
                                                         </div>
-                                                        <div class="mt-2">
+                                                        <!-- <div class="mt-2">
                                                             <button type="submit" class="btn btn-primary me-2">Save
                                                                 changes</button>
                                                             <button type="reset"
                                                                 class="btn btn-label-secondary">Discard</button>
-                                                        </div>
+                                                        </div> -->
                                                     </form>
                                                 </div>
                                                 <!-- /Billing Address -->
@@ -155,14 +167,11 @@
                                                     <table class="invoice-list-table table border-top">
                                                         <thead>
                                                             <tr>
-                                                                <th></th>
                                                                 <th>#ID</th>
-                                                                <th><i class='bx bx-trending-up'></i></th>
-                                                                <th>Client</th>
                                                                 <th>Total</th>
                                                                 <th class="text-truncate">Issued Date</th>
-                                                                <th>Balance</th>
-                                                                <th>Invoice Status</th>
+                                                                <th class="text-truncate">Expiry Date</th>
+                                                                <th>Status</th>
                                                                 <th class="cell-fit">Actions</th>
                                                             </tr>
                                                         </thead>
@@ -313,9 +322,6 @@
 
 
 
-
-
-
                                 <div class="content-backdrop fade"></div>
                             </div>
                             <!-- Content wrapper -->
@@ -355,7 +361,7 @@
                         let remaining_days = ((plan_end - current_date) / (1000 * 60 * 60 * 24));
                         $('#remaining_days').text(Math.floor(remaining_days));
 
-                        let percentage = Math.floor((remaining_days / plan_duration ) * 100);
+                        let percentage = Math.floor((remaining_days / plan_duration) * 100);
 
                         $('.progress-bar').css('width', percentage + '%').attr('aria-valuenow', percentage);
 

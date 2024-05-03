@@ -77,7 +77,18 @@ module.exports = async (app) => {
   });
 
   app.get('/my_subscription', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Subscription/my_subscription', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+    getPool().query(
+      'select * from organisation where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Subscription/my_subscription', {
+          data: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+        });
+      },
+    );
   });
 
   // Owner Control components
