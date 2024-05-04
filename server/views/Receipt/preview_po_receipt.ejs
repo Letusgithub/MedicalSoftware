@@ -582,7 +582,8 @@
                         var totalAmt = 0;
                         for (var i = 0; i < items.length; i++) {
 
-                            totalAmt += items[i].amount;
+                            totalAmt += parseFloat(items[i].amount);
+
                             //var total = items[i].mrp * items[i].quantity - items[i].mrp * items[i].quantity * (items[i].unit_discount) / 100;
                             cartHtml =
                                 `<tr>
