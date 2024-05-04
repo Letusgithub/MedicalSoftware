@@ -10,6 +10,7 @@ module.exports = (app) => {
   });
 
   app.get('/api/subscription/currentplan/:id', controller.getCurrentPlanDetails);
-  app.get('/api/subscription/subscribe', controller.subscribeToPlan);
+  app.post('/api/subscription/subscribe', controller.subscribeToPlan);
   app.get('/api/subscription/plans', controller.fetchAllPlans);
+  app.get('/api/subscription/billinghistory/:id', controller.getBillingHistory);
 };

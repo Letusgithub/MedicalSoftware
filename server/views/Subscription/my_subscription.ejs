@@ -93,9 +93,9 @@
                                                     <form id="formAccountSettings" onsubmit="return false">
                                                         <div class="row">
                                                             <div class="mb-3 col-sm-6">
-                                                                <label for="companyName" class="form-label">Pharmacy
+                                                                <label for="pharmacyName" class="form-label">Pharmacy
                                                                     Name</label>
-                                                                <input type="text" id="companyName" name="companyName"
+                                                                <input type="text" id="pharmacyName" name="pharmacyName"
                                                                     class="form-control" placeholder="Pharmacy name"
                                                                     value="<%=data[0].org_name%>" />
                                                             </div>
@@ -104,13 +104,13 @@
                                                                     Email</label>
                                                                 <input class="form-control" type="text"
                                                                     id="billingEmail" name="billingEmail"
-                                                                    placeholder="user@example.com" 
-                                                                    value="<%=data[0].org_email%>"/>
+                                                                    placeholder="user@example.com"
+                                                                    value="<%=data[0].org_email%>" />
                                                             </div>
                                                             <div class="mb-3 col-sm-6">
-                                                                <label for="vatNumber" class="form-label">GSTIN</label>
-                                                                <input class="form-control" type="text" id="vatNumber"
-                                                                    name="vatNumber" placeholder="Enter GSTIN"
+                                                                <label for="gstin" class="form-label">GSTIN</label>
+                                                                <input class="form-control" type="text" id="gstin"
+                                                                    name="gstin" placeholder="Enter GSTIN"
                                                                     value="<%=data[0].org_gstin%>" />
                                                             </div>
                                                             <div class="mb-3 col-sm-6">
@@ -120,27 +120,28 @@
                                                                     <span class="input-group-text">IND (+91)</span>
                                                                     <input class="form-control mobile-number"
                                                                         type="text" id="mobileNumber"
-                                                                        name="mobileNumber"
-                                                                        placeholder="902 555 0111" 
-                                                                        value="<%=data[0].org_telephone%>"/>
+                                                                        name="mobileNumber" placeholder="902 555 0111"
+                                                                        value="<%=data[0].org_telephone%>" />
                                                                 </div>
                                                             </div>
 
                                                             <div class="mb-3 col-sm-4">
                                                                 <label for="state" class="form-label">State</label>
                                                                 <input class="form-control" type="text" id="state"
-                                                                    name="state" placeholder="State" value="<%=data[0].org_state%>"/>
+                                                                    name="state" placeholder="State"
+                                                                    value="<%=data[0].org_state%>" />
                                                             </div>
                                                             <div class="mb-3 col-sm-4">
                                                                 <label for="state" class="form-label">City</label>
                                                                 <input class="form-control" type="text" id="city"
-                                                                    name="city" placeholder="City" value="<%=data[0].org_city%>"/>
+                                                                    name="city" placeholder="City"
+                                                                    value="<%=data[0].org_city%>" />
                                                             </div>
                                                             <div class="mb-3 col-sm-4">
                                                                 <label for="pinCode" class="form-label">Pin Code</label>
                                                                 <input type="text" class="form-control zip-code"
                                                                     id="pinCode" name="pinCode" placeholder="231465"
-                                                                    maxlength="6" value="<%=data[0].org_pincode%>"/>
+                                                                    maxlength="6" value="<%=data[0].org_pincode%>" />
                                                             </div>
                                                             <div class="mb-3 col-12">
                                                                 <label for="billingAddress" class="form-label">Billing
@@ -168,13 +169,15 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>#ID</th>
+                                                                <th>Plan</th>
                                                                 <th>Total</th>
                                                                 <th class="text-truncate">Issued Date</th>
                                                                 <th class="text-truncate">Expiry Date</th>
-                                                                <th>Status</th>
-                                                                <th class="cell-fit">Actions</th>
                                                             </tr>
                                                         </thead>
+                                                        <tbody id="billing_history">
+
+                                                        </tbody>
                                                     </table>
                                                 </div>
                                                 <!--/ Billing History -->
@@ -344,8 +347,31 @@
             <script>
                 $(document).ready(function () {
 
+                    $.get('/api/subscription/billinghistory/<%=orgId%>', function (data) {
+                        let items = data.data;
+                        for (var i = 0; i < items.length; i++) {
+
+                            let plan_end = new Date(items[i].plan_end);
+                            plan_end = plan_end.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                            let plan_start = new Date(items[i].plan_start);
+                            plan_start = plan_start.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                            htmlData = `
+                                <tr>
+                                    <td>${items[i].bill_id}</td>
+                                    <td>${items[i].plan_name}</td>
+                                    <td><strong>${items[i].amount}</strong></td>
+                                    <td>${plan_start}</td>
+                                    <td>${plan_end}</td>
+                                </tr>
+                                `
+                            $('#billing_history').append(htmlData);
+                        }
+                    });
+
                     $.get('/api/subscription/currentplan/<%=orgId%>', function (data) {
-                        console.log(data)
+
                         $('#plan_name').text(data.data[0].plan_name);
 
                         let current_date = new Date();
@@ -395,44 +421,91 @@
 
                     // Free Plan
                     $('#freePlanBtn').on('click', function () {
-                        $.get('/api/subscription/subscribe?planId=1&orgId=<%=orgId%>', function (data) {
-                            console.log(data);
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'You have successfully subscribed to Free Plan',
-                                icon: 'success',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Great!'
-                            })
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/subscription/subscribe?planId=1&orgId=<%=orgId%>',
+                            data: JSON.stringify({
+                                pharmacy_name: $('#pharmacyName').val(),
+                                billing_email: $('#billingEmail').val(),
+                                billing_gstin: $('#gstin').val(),
+                                billing_mobile: $('#mobileNumber').val(),
+                                billing_state: $('#state').val(),
+                                billing_city: $('#city').val(),
+                                billing_pincode: $('#pinCode').val(),
+                                billing_address: $('#billingAddress').val()
+                            }),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log(data);
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'You have successfully subscribed to Free Plan',
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Great!'
+                                })
+                            }
                         });
                     });
 
                     // Silver Plan
                     $('#silverPlanBtn').on('click', function () {
-                        $.get('/api/subscription/subscribe?planId=2&orgId=<%=orgId%>', function (data) {
-                            console.log(data);
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'You have successfully subscribed to Silver Plan',
-                                icon: 'success',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Great!'
-                            })
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/subscription/subscribe?planId=2&orgId=<%=orgId%>',
+                            data: JSON.stringify({
+                                pharmacy_name: $('#pharmacyName').val(),
+                                billing_email: $('#billingEmail').val(),
+                                billing_gstin: $('#gstin').val(),
+                                billing_mobile: $('#mobileNumber').val(),
+                                billing_state: $('#state').val(),
+                                billing_city: $('#city').val(),
+                                billing_pincode: $('#pinCode').val(),
+                                billing_address: $('#billingAddress').val()
+                            }),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log(data);
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'You have successfully subscribed to Silver Plan',
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Great!'
+                                })
+                            }
                         });
 
                     });
 
                     // Gold Plan
                     $('#goldPlanBtn').on('click', function () {
-                        $.get('/api/subscription/subscribe?planId=3&orgId=<%=orgId%>', function (data) {
-                            console.log(data);
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'You have successfully subscribed to Gold Plan',
-                                icon: 'success',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Great!'
-                            })
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/subscription/subscribe?planId=3&orgId=<%=orgId%>',
+                            data: JSON.stringify({
+                                pharmacy_name: $('#pharmacyName').val(),
+                                billing_email: $('#billingEmail').val(),
+                                billing_gstin: $('#gstin').val(),
+                                billing_mobile: $('#mobileNumber').val(),
+                                billing_state: $('#state').val(),
+                                billing_city: $('#city').val(),
+                                billing_pincode: $('#pinCode').val(),
+                                billing_address: $('#billingAddress').val()
+                            }),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log(data);
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'You have successfully subscribed to Gold Plan',
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Great!'
+                                })
+                            }
                         });
 
                     });
