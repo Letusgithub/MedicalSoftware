@@ -43,6 +43,7 @@ module.exports = {
       },
     );
   },
+
   getOrders: (id, callback) => {
     getPool().query(
       `select * from cart_item ci
@@ -56,13 +57,11 @@ module.exports = {
       },
     );
   },
+
   updateOrders: (data, salesInvoiceId, batchId, productId, callback) => {
     getPool().query(
       `update cart_item 
        set return_invoice_id=?, 
-       saled_pri_qty_cart = saled_pri_qty_cart - ${data.return_pri_qty},
-       saled_sec_qty_cart = saled_sec_qty_cart - ${data.return_sec_qty},
-       saled_mrp = saled_mrp - ${data.return_total_cart},
        return_pri_qty= return_pri_qty + ${data.return_pri_qty}, 
        return_sec_qty= return_sec_qty + ${data.return_sec_qty},
        return_total_cart = return_total_cart + ${data.return_total_cart},

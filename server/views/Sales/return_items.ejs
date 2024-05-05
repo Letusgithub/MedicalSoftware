@@ -353,10 +353,10 @@
                   //poulate medname, brand, primary, sec
                   $("#medicinename").val(ui.item.med_name);
                   $('#brand').val(ui.item.mfd_mkt);
-                  $("#pUnit").val(ui.item.saled_pri_qty_cart);
-                  saledPrimaryQty = ui.item.saled_pri_qty_cart;
-                  $("#sUnit").val(ui.item.saled_sec_qty_cart);
-                  saledSecondaryQty = ui.item.saled_sec_qty_cart;
+                  $("#pUnit").val(ui.item.saled_pri_qty_cart - ui.item.return_pri_qty);
+                  saledPrimaryQty = ui.item.saled_pri_qty_cart - ui.item.return_pri_qty;
+                  $("#sUnit").val(ui.item.saled_sec_qty_cart - ui.item.return_sec_qty);
+                  saledSecondaryQty = ui.item.saled_sec_qty_cart - ui.item.return_sec_qty;
                   $("#discount").val(ui.item.unit_discount);
                   calculateTotal();
                 })
@@ -634,21 +634,6 @@
                       },
                       error: function (error) {
                         console.log('error in updateing batch', error);
-                      }
-                    })
-                  );
-
-                  ajaxRequests.push(
-                    $.ajax({
-                      url: `/api/updatesalesdetailsonreturn?salesInvoiceId=${returnItem.id}&orgId=${org}`,
-                      type: 'POST',
-                      data: JSON.stringify(updateCartdetails),
-                      contentType: 'application/json',
-                      success: function (response) {
-                        console.log(response);
-                      },
-                      error: function (error) {
-                        console.log(error);
                       }
                     })
                   );

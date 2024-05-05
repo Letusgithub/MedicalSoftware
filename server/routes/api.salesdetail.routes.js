@@ -21,8 +21,6 @@ module.exports = (app) => {
   app.get('/api/searchinvoice', invoiceSales);
   app.get('/api/orderdetails/', getRevenue);
 
-  app.post('/api/updatesalesdetailsonreturn', updateSalesDetailsOnReturn);
-
   app.get('/api/getsalesidforreport/:id', getSalesIdforReport);
 
   app.get('/api/searchdates/', searchDates);
