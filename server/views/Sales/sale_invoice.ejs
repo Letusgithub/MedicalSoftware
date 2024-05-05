@@ -1245,7 +1245,7 @@
                   contentType: 'application/json',
                   success: function (response) {
                     console.log('inside the submit function', response);
-                    var salesId = response.result.insertId;
+                    var orderId = response.result.insertId;
                     var mainInvoiceId = response.invoiceId;
 
                     var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
@@ -1281,7 +1281,8 @@
 
                       var cartDetails = ({
                         product_id: orderDetails[i].productId,
-
+                        order_id: orderId,
+                        
                         product_name: orderDetails[i].productname,
                         batch_name: orderDetails[i].batch_name,
                         hsn: orderDetails[i].hsn,
@@ -1292,7 +1293,7 @@
                         saled_pri_qty: orderDetails[i].priQty,
                         saled_sec_qty: orderDetails[i].secQty,
                         main_invoice_id: mainInvoiceId,
-                        sales_invoice_id: salesId,
+                        
                         saled_batch_id: orderDetails[i].batchId,
                         unit_discount: orderDetails[i].disc,
                         saled_mrp: orderDetails[i].total
@@ -1324,7 +1325,7 @@
 
                       localStorage.removeItem("cartitems");
                       localStorage.removeItem("custdata");
-                      window.location.href = `/sale_receipt/${salesId}`
+                      window.location.href = `/sale_receipt/${orderId}`
                     });
 
                   },

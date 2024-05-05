@@ -13,7 +13,7 @@ module.exports = {
         data.saled_pri_qty,
         data.saled_sec_qty === '' ? 0 : data.saled_sec_qty,
         data.main_invoice_id,
-        data.sales_invoice_id,
+        data.order_id,
         data.saled_batch_id,
         data.unit_discount === '' ? 0 : data.unit_discount,
         data.saled_mrp,
