@@ -3,13 +3,14 @@ const { getPool } = require('../config/database');
 module.exports = {
   create: (data, callback) => {
     getPool().query(
-      `insert into batch(batch_name, product_id, vendor_id, org_id, exp_date, batch_qty, purchase_rate, mrp, free, bulk_discount, base_price, shelf_label, conversion, grn_id) 
-                                      values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into batch(batch_name, product_id, vendor_id, org_id, inventory_id, exp_date, batch_qty, purchase_rate, mrp, free, bulk_discount, base_price, shelf_label, conversion, grn_id) 
+                                      values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.batch_name,
         data.product_id,
         data.vendor_id,
         data.org_id,
+        data.inventory_id,
         data.exp_date,
         data.batch_qty,
         data.purchase_rate,

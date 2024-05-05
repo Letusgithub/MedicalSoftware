@@ -384,8 +384,9 @@
         <%- include('../partials/footercode.ejs') %>
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
-                var productId = null;
+                var productId;
                 var orgID = '<%= orgId %>';
+                var inventoryId; 
 
                 $(document).ready(function () {
 
@@ -449,6 +450,8 @@
                                 console.log('got this data from inventory', data);
                                 if (data.data.length == 1) {
                                     var items = data.data[0];
+                                    inventoryId = items.inventory_id;
+                                    console.log(inventoryId);
                                     $("select[name = 'gst']").val(items.gst).prop('disabled', true);
                                     $("#hsn").val(items.hsn).prop('disabled', true);
                                     $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
@@ -480,7 +483,7 @@
                             setTimeout(function () {
                                 console.log(ui.item);
                                 productId = ui.item.id;
-                                $("input[name='productname']").val(ui.item.med_name).prop('disabled', true);
+                                $("input[name='productname']").val(ui.item.med_name);
                                 $("input[name='brand']").val(ui.item.mfd_mkt).prop('disabled', true);
                                 $("input[name='salt']").val(ui.item.salt_composition).prop('disabled', true);
                                 $("input[name='threshold']").val(1);
@@ -512,6 +515,20 @@
                             return $('<li>').append('<div>No matching products found</div>').appendTo(ul);
                         }
                     };
+
+                    //  Clear input fields on product name change
+                    $("input[name='productname']").on('input', function () {
+                        productId = undefined;
+                        inventoryId = undefined;
+                        $("select[name = 'gst']").val('default').prop('disabled', false);;
+                        $("#hsn").val('').prop('disabled', false);;
+                        $("select[name='primary']").val('default').prop('disabled', false);;
+                        $("select[name='secondary']").val('default').prop('disabled', false);;
+                        $("input[name='threshold']").val("").prop('disabled', false);;
+                        $("#brand").val('').prop('disabled', false);
+                        $("#salt").val('').prop('disabled', false);
+                        $("select[name='category']").val('default').prop('disabled', false);
+                    })
 
                     //HSN-GST autocomplete
                     $("input[name='hsn']").autocomplete({
@@ -683,6 +700,7 @@
                         $("input[name='addpur']").val(ptr.toFixed(2))
                     });
 
+
                     //submit process after adding batch
                     $("#submitbatch").click(function (e) {
 
@@ -807,7 +825,7 @@
                         if (isValid) {
 
                             $('#loader').show();
-                            if (productId == null) {
+                            if (productId == undefined) {
                                 var customProductDetails = {
                                     org_id: orgID,
                                     med_name: $("input[name='productname']").val(),
@@ -851,10 +869,13 @@
                                             data: JSON.stringify(productDetails),
                                             contentType: 'application/json',
                                             success: function (response) {
+                                                inventoryId = response.data.insertId;
+
                                                 //add the batch to the respective product
                                                 var batchDetails = {
                                                     product_id: productId,
                                                     org_id: orgID,
+                                                    inventory_id: inventoryId,
                                                     batch_name: $("#batchname").val(),
                                                     exp_date: exp,
                                                     conversion: $("#conversion").val(),
@@ -922,10 +943,14 @@
                                     data: JSON.stringify(productDetails),
                                     contentType: 'application/json',
                                     success: function (response) {
+
+                                        inventoryId ? inventoryId : response.data.insertId;
+
                                         //add the batch to the respective product
                                         var batchDetails = {
                                             product_id: productId,
                                             org_id: orgID,
+                                            inventory_id: inventoryId,
                                             batch_name: $("#batchname").val(),
                                             exp_date: exp,
                                             conversion: $("#conversion").val(),
@@ -973,7 +998,7 @@
 
                 })
             </script>
-
+            
     </body>
 
     </html>

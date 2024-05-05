@@ -349,6 +349,8 @@
 
                     var orgID = '<%= orgId %>';
                     var productId = '<%=data[0].product_id%>';
+                    var inventoryId = '<%=data[0].inventory_id%>';
+                    console.log(inventoryId);
 
                     // Hide validation messages on input
                     $('input').each(function () {
@@ -533,6 +535,7 @@
                             var batchDetails = {
                                 product_id: "<%=data[0].product_id%>",
                                 org_id: orgID,
+                                inventory_id: inventoryId,
                                 batch_name: $("#batchname").val(),
                                 exp_date: exp,
                                 conversion: $("#conversion").val(),

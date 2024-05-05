@@ -597,6 +597,7 @@
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
                 var productId;
+                var inventoryId;
                 var orgID = '<%= orgId %>';
                 var customerData = [];
                 var autoCompleteDataNumber = [];
@@ -719,6 +720,8 @@
                                 if (data.data.length == 1) {
 
                                     var items = data.data[0];
+                                    inventoryId = items.inventory_id;
+                                    console.log(inventoryId);
                                     $("select[name = 'gst']").val(items.gst).prop('disabled', true);
                                     $("#hsn").val(items.hsn).prop('disabled', true);
                                     $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
@@ -1030,6 +1033,7 @@
                     //  Clear input fields on product name change
                     $("input[name='productname']").on('input', function () {
                         productId = undefined;
+                        inventoryId = undefined;
                         $("select[name = 'gst']").val('default').prop('disabled', false);;
                         $("#hsn").val('').prop('disabled', false);;
                         $("select[name='primary']").val('default').prop('disabled', false);;
@@ -1174,6 +1178,7 @@
 
                             cartarray.push({
                                 productId: productId,
+                                inventoryId: inventoryId,
                                 productname: products,
                                 brandname: brand,
                                 salt: salt,
@@ -1212,6 +1217,7 @@
                             localStorage.setItem("vendordata", JSON.stringify(storeDistributorData));
 
                             productId = undefined;
+                            inventoryId = undefined;
                             $("#medicinename").val("");
                             $("select[name = 'gst']").val('Select option');
                             $("#hsn").val("");
@@ -1524,9 +1530,12 @@
                                                         data: JSON.stringify(productDetails),
                                                         contentType: 'application/json',
                                                         success: function (response) {
+                                                            cartDetails[i].inventoryId = response.data.insertId;
+
                                                             var batchDetails = {
                                                                 product_id: cartDetails[i].productId,
                                                                 org_id: org,
+                                                                inventory_id: cartDetails[i].inventoryId,
                                                                 batch_name: cartDetails[i].batch,
                                                                 exp_date: cartDetails[i].expdate,
                                                                 conversion: cartDetails[i].conversion,
@@ -1626,9 +1635,12 @@
                                                         contentType: 'application/json',
                                                         success: function (response) {
 
+                                                            cartDetails[i].inventoryId = response.data.insertId;
+
                                                             var batchDetails = {
                                                                 product_id: cartDetails[i].productId,
                                                                 org_id: org,
+                                                                inventory_id: cartDetails[i].inventoryId,
                                                                 batch_name: cartDetails[i].batch,
                                                                 exp_date: cartDetails[i].expdate,
                                                                 conversion: cartDetails[i].conversion,
@@ -1705,6 +1717,7 @@
                                                     var batchDetails = {
                                                         product_id: cartDetails[i].productId,
                                                         org_id: org,
+                                                        inventory_id: cartDetails[i].inventoryId,
                                                         batch_name: cartDetails[i].batch,
                                                         exp_date: cartDetails[i].expdate,
                                                         conversion: cartDetails[i].conversion,
