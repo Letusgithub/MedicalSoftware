@@ -13,7 +13,7 @@ module.exports = (app) => {
   app.get('/api/getallinventory', controller.getAllInventory);
 
   app.post('/api/updateinventory/:id', controller.updateInventory);
-  app.delete('/inventory/', controller.deleteInventory);
+  app.get('/api/deleteinventory/:id', controller.deleteInventory);
   app.get('/api/getinventory', controller.getInventoryById);
   app.get('/inventory/:id', controller.getAllInventorysById);
 

@@ -62,10 +62,10 @@ module.exports = {
   },
 
   // Delete Inventory
-  delete: (data, callBack) => {
+  delete: (inventoryId, callBack) => {
     getPool().query(
-      'delete from inventory where batch_id = ?',
-      [data.batch_id],
+      'delete from inventory where inventory_id = ?',
+      [inventoryId],
       (error, results) => {
         if (error) {
           return callBack(error);
@@ -111,12 +111,12 @@ module.exports = {
 
   getAllInventory: (orgID, callBack) => {
     getPool().query(
-      `SELECT inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold, spl.*, COALESCE(SUM(bth.batch_qty-bth.saled_pri_qty), 0) AS batch_qty
+      `SELECT inv.product_id, inv.inventory_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold, spl.*, COALESCE(SUM(bth.batch_qty-bth.saled_pri_qty), 0) AS batch_qty
       FROM inventory AS inv
       JOIN sample AS spl ON inv.product_id = spl.product_id
       LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
       where inv.org_id=${orgID}
-      GROUP BY inv.product_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold
+      GROUP BY inv.product_id, inv.inventory_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold
       `,
       [],
       (error, results) => {

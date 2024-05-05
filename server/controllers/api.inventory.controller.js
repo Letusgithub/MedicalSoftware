@@ -60,8 +60,8 @@ exports.updateInventory = (req, res) => {
 };
 
 exports.deleteInventory = (req, res) => {
-  const data = req.body;
-  service.delete(data, (err, results) => {
+  const inventoryId = req.params.id;
+  service.delete(inventoryId, (err, results) => {
     if (err) {
       console.log(err);
       return;
@@ -72,7 +72,6 @@ exports.deleteInventory = (req, res) => {
         message: 'Record Not Found',
       });
     }
-
     return res.status(200).json({
       success: 1,
       message: 'Deleted successfully',
