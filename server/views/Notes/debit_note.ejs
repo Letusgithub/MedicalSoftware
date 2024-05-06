@@ -425,6 +425,14 @@
                 $("#pUnit").removeClass('is-invalid');
               }
 
+              if ($("#pUnit").val() == 0 && $("#sUnit").val() == 0) {
+                $("#pUnit").addClass('is-invalid');
+                $("#pUnit").focus();
+                e.preventDefault();
+              } else {
+                $("#pUnit").removeClass('is-invalid');
+              }
+
               if ($("#sUnit").val() == '') {
                 $("#sUnit").addClass('is-invalid');
                 $("#sUnit").focus();
@@ -653,7 +661,7 @@
                 console.log(totalDebitAmt);
                 $("#totalDebitAmt").val(totalDebitAmt.toFixed(2));
               }
-              else if ( debitCarts.length == 0) {
+              else if (debitCarts.length == 0) {
                 $("#totalDebitAmt").val(0);
               }
             }

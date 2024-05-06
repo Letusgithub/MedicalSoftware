@@ -427,6 +427,14 @@
                 $("#pUnit").removeClass('is-invalid');
               }
 
+              if ($("#pUnit").val() == 0 && $("#sUnit").val() == 0) {
+                $("#pUnit").addClass('is-invalid');
+                $("#pUnit").focus();
+                e.preventDefault();
+              } else {
+                $("#pUnit").removeClass('is-invalid');
+              }
+              
               if ($("#sUnit").val() == '') {
                 $("#sUnit").addClass('is-invalid');
                 $("#sUnit").focus();
