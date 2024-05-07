@@ -451,7 +451,7 @@
                                 if (data.data.length == 1) {
                                     var items = data.data[0];
                                     inventoryId = items.inventory_id;
-                                    console.log(inventoryId);
+
                                     $("select[name = 'gst']").val(items.gst).prop('disabled', true);
                                     $("#hsn").val(items.hsn).prop('disabled', true);
                                     $("select[name='primary']").val(items.primary_unit).prop('disabled', true);
@@ -944,7 +944,10 @@
                                     contentType: 'application/json',
                                     success: function (response) {
 
-                                        inventoryId ? inventoryId : response.data.insertId;
+                                        console.log(inventoryId);
+                                        console.log(response.data.insertId);
+
+                                        inventoryId =  inventoryId ? inventoryId : response.data.insertId;
 
                                         //add the batch to the respective product
                                         var batchDetails = {
