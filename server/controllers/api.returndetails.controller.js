@@ -124,7 +124,8 @@ module.exports = {
 
   getInvoiceOrder: (req, res) => {
     const id = req.query.id;
-    getOrderinInvoice(id, (error, results) => {
+    const orgId = req.query.orgId;
+    getOrderinInvoice(id, orgId, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({

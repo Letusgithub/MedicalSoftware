@@ -126,7 +126,7 @@ module.exports = {
     );
   },
 
-  getOrderinInvoice: (id, callback) => {
+  getOrderinInvoice: (id, orgId, callback) => {
     getPool().query(
       `select * from  return_details rd
         join cart_item ci
@@ -139,7 +139,7 @@ module.exports = {
         JOIN sample spl 
         on ci.product_id = spl.product_id
         JOIN inventory inv
-        on inv.product_id = ci.product_id
+        on inv.product_id = ci.product_id and inv.org_id = ${orgId}
         JOIN batch bth
         on ci.batch_id = bth.batch_id
         
