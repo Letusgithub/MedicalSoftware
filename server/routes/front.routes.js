@@ -317,7 +317,7 @@ module.exports = async (app) => {
   });
 
   app.get('/return_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/return_receipt', {
+    res.render('Receipt/preview_return_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
