@@ -1,5 +1,5 @@
 const {
-  create, getOrdersById, getOrders, updateOrders, getOrderCartInInvoice, getCartItemsInInvoice,
+  create, getOrdersById, getOrders, updateOrders, getCartItemsInInvoice,
 } = require('../services/cartitem.service');
 
 module.exports = {
@@ -61,21 +61,21 @@ module.exports = {
     });
   },
 
-  getOrderCartInInvoice: (req, res) => {
-    const id = req.params.id;
-    getOrderCartInInvoice(id, (err, results) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      return res.status(200).json({
-        success: 'gotorders',
-        data: results,
-      });
-    });
-  },
+  // getOrderCartInInvoice: (req, res) => {
+  //   const id = req.params.id;
+  //   getOrderCartInInvoice(id, (err, results) => {
+  //     if (err) {
+  //       console.log(err);
+  //       return;
+  //     }
+  //     return res.status(200).json({
+  //       success: 'gotorders',
+  //       data: results,
+  //     });
+  //   });
+  // },
 
-  getCartItemsInInvoice: (req, res) => {
+  getCartItemsInInvoice: (req, res) => { // get invoice data directly from cart_item table
     const id = req.params.id;
     getCartItemsInInvoice(id, (err, results) => {
       if (err) {

@@ -489,7 +489,7 @@
                                         <!-- Invoice -->
 
 
-                                        <div class="frame1 " id="html-content" style="display: none;">
+                                        <div class="frame1" id="html-content" style="display: none;">
                                             <div class="receipt-container">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
@@ -742,6 +742,7 @@
                     $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
                         var customer = data.result[0];
                         console.log('inside the invoice template', customer);
+                        
                         var todayDate = new Date(customer.sales_created_date);
                         var options = { year: 'numeric', month: 'long', day: 'numeric' };
                         var formattedDate = todayDate.toLocaleDateString('en-US', options);
@@ -806,7 +807,6 @@
                             var date = moment(datetime).format('MM/YYYY');
 
                             var grossValue = ((items[i].saled_pri_qty_cart * items[i].unit_mrp + items[i].saled_sec_qty_cart * (items[i].unit_mrp / items[i].conversion)) * (1 - (items[i].unit_discount/100)))/ (1 + (items[i].gst / 100));
-                            console.log('conversion', items[i].conversion);
                             var gstValue = grossValue * items[i].gst / 100;
 
                             var transaction = {
@@ -819,7 +819,7 @@
 
                             cartHtml =
                                 `<tr>
-                                    <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                                    <td style="width: 11.29rem; height: 1rem;">${items[i].product_name}</td>
                                     <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
                                     <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
                                     <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
