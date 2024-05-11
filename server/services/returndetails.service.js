@@ -3,9 +3,10 @@ const { getPool } = require('../config/database');
 module.exports = {
   createReturnOrder: (data, returnId, callback) => {
     getPool().query(
-      `insert into return_details(return_invoice_id, sales_invoice_id, return_subtotal, new_return_discount, return_amount, reason) 
-                                      values(?,?,?,?,?,?)`,
+      `insert into return_details(org_id, return_invoice_id, sales_invoice_id, return_subtotal, new_return_discount, return_amount, reason) 
+                                      values(?,?,?,?,?,?,?)`,
       [
+        data.org_id,
         returnId,
         data.sales_invoice_id,
         data.return_subtotal,
@@ -126,23 +127,14 @@ module.exports = {
     );
   },
 
-  getOrderinInvoice: (id, orgId, callback) => {
+  returnDetails: (id, callback) => {
     getPool().query(
       `select * from  return_details rd
-        join cart_item ci
-        on ci.return_invoice_id = rd.return_invoice_id 
         join order_details od 
         on od.invoice_id_main = rd.sales_invoice_id
         Join customer_data cd
         on cd.customer_id = od.customer_id
-        
-        JOIN sample spl 
-        on ci.product_id = spl.product_id
-        JOIN inventory inv
-        on inv.product_id = ci.product_id and inv.org_id = ${orgId}
-        JOIN batch bth
-        on ci.batch_id = bth.batch_id
-        
+
         where rd.return_id=?`,
       [
         id,

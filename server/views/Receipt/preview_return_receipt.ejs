@@ -514,7 +514,7 @@
                                                         Return Invoice
                                                     </div>
                                                     <div class="receipt-details">
-                                                        
+
                                                         <span class="salesinvoiceno">
                                                             Invoice no.:
                                                         </span>
@@ -693,7 +693,7 @@
                         $(".flno").text(`FSSAI : ${data.data.org_fssai_no ? data.data.org_fssai_no : 'NA'}`);
                     })
 
-                    $.get(`/api/getinvoiceorder?id=${id}&orgId=<%=orgId%>`, function (data, status) {
+                    $.get(`/api/getreturndetails?id=${id}&orgId=<%=orgId%>`, function (data, status) {
                         console.log(data);
                         var customer = data.result[0];
 
@@ -713,7 +713,12 @@
 
                         $(".doctorname").text(`Dr name: ${customer.doctor_name}`)
 
-                        var items = data.result;
+                    })
+
+                    // get all return cart items
+                    $.get(`/api/getreturncartitems?id=${id}&orgId=<%=orgId%>`, function (data, status) {
+                        console.log(data);
+                        var items = data.data;
 
                         for (var i = 0; i < items.length; i++) {
                             var datetime = items[i].exp_date;
@@ -722,88 +727,31 @@
 
                             cartHtml = `
                                         <tr>
-                                            <td style="width: 11.29rem; height: 1rem;">${items[i].med_name}</td>
+                                            <td style="width: 11.29rem; height: 1rem;">${items[i].product_name}</td>
                                             <td style="width: 3.1rem; height: 1rem;">${items[i].return_pri_qty}:${items[i].return_sec_qty}</td>
                                             <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
                                             <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
                                             <td style="width: 3.25rem; height: 1rem;">${date}</td>
                                             <td style="width: 3.62rem; height: 1rem;">${items[i].return_mrp}</td>
                                             <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
-                                            <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
-                                            <td style="width: 4.2rem; height: 1rem;">${items[i].return_total_cart}</td>
+                                            <td style="width: 3.91rem; height: 1rem;">${items[i].return_dis}</td>
+                                            <td style="width: 4.2rem; height: 1rem;">${items[i].return_total}</td>
                                         </tr>`
                             $(".cartitems").append(cartHtml);
                         }
                     })
 
-                    // Whatsapp Chat with customer
-                    $("#whatsappLink").click(function () {
-                        var protocol = window.location.protocol;
-                        var host = window.location.host;
-                        window.open(`https://api.whatsapp.com/send/?phone=91${customerNumber}&text=Thanks%20for%20your%20purchase%21%21%0AFind%20your%20sales%20invoice%20here%3A${protocol}%2F%2F${host}%2Fsales_invoice%3Finvoice_id%3D${id}%26org_id%3D${orgId}`, '_blank');
-                    })
-
-                    // Send Invoice functionality
-                    $('#sendInvoice').click(function () {
-                        $.ajax({
-                            url: `/api/whatsapp/pharmacy?invoiceid=${id}&org=<%= orgId %>`,
-                            type: 'POST',
-                            contentType: 'application/json',
-                            success: function (response) {
-                                console.log('Invoice sent', response)
-                            },
-                            error: function (error) {
-                                console.log('error in sending invoice', error);
-                            }
-                        })
-                    })
-
-                    $('#sendInvoiceToCustomer').on('click', function () {
-
-                        // Get the element you want to convert to PDF
+                    // Function to create PDF using html2pdf
+                    function createPDF() {
+                        // Get the HTML element you want to convert
                         var element = document.getElementById('html-content');
 
-                        // Use html2pdf to convert it
-                        html2pdf().from(element).outputPdf('blob').then(function (pdfData) {
-
-                            // Convert the Uint8Array to a Blob
-                            var pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
-
-                            var formData = new FormData();
-                            formData.append('file', pdfBlob);
-
-                            console.log(formData);
-
-                            $.ajax({
-                                url: `/api/whatsapp/customer?invoiceid=${id}&org=<%= orgId %>`,
-                                type: 'POST',
-                                data: formData,
-                                contentType: false,
-                                processData: false,
-                                success: function (response) {
-                                    console.log(response);
-                                },
-                                error: function (error) {
-                                    console.error(error);
-                                }
-                            });
-
-                        });
-                    });
-
-                })
-
-                // Function to create PDF using html2pdf
-                function createPDF() {
-                    // Get the HTML element you want to convert
-                    var element = document.getElementById('html-content');
-
-                    // Use html2pdf to generate the PDF
-                    return html2pdf(element)
-                        .from(element)
-                        .outputPdf();
-                }
-
+                        // Use html2pdf to generate the PDF
+                        return html2pdf(element)
+                            .from(element)
+                            .outputPdf();
+                    }
+                });
             </script>
             <script>
                 function CreatePDFfromHTML() {

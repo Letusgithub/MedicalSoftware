@@ -1,6 +1,6 @@
 const {
   createReturnOrder, getTotalReturns, searchDates, searchMonth, searchQuarter, searchYear,
-  getOrderinInvoice,
+  returnDetails,
 } = require('../services/returndetails.service');
 
 module.exports = {
@@ -122,10 +122,10 @@ module.exports = {
     });
   },
 
-  getInvoiceOrder: (req, res) => {
+  getReturnDetails: (req, res) => {
     const id = req.query.id;
-    const orgId = req.query.orgId;
-    getOrderinInvoice(id, orgId, (error, results) => {
+
+    returnDetails(id, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({

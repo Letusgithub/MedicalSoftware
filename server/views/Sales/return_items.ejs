@@ -310,6 +310,8 @@
           var primaryUnit;
           var secondaryUnit;
           var conversion;
+          var hsn;
+          var gst;
           var prevQty;
           var saledPrimaryQty;
           var saledSecondaryQty;
@@ -341,6 +343,7 @@
                   conversion = data.data[0].conversion;
                   batchIdReturned = data.data[0].batch_id;
 
+
                   //populate expiry date
                   var date = new Date(data.data[0].exp_date);
                   $("#expdate").val(date.toISOString().split('T')[0]);
@@ -358,6 +361,8 @@
                   $("#sUnit").val(ui.item.saled_sec_qty_cart - ui.item.return_sec_qty);
                   saledSecondaryQty = ui.item.saled_sec_qty_cart - ui.item.return_sec_qty;
                   $("#discount").val(ui.item.unit_discount);
+                  hsn = ui.item.hsn;
+                  gst = ui.item.gst;
                   calculateTotal();
                 })
               }, 0)
@@ -439,6 +444,8 @@
               batch: batch,
               batchIdReturned: batchIdReturned,
               conversion: conversion,
+              hsn: hsn,
+              gst: gst,
               expdate: exp,
               priQty: priQty,
               secQty: secQty,
@@ -590,6 +597,7 @@
 
             var returnDetails = {
               sales_invoice_id: returnItem.id,
+              org_id: org,
               return_subtotal: $("#returnsubtotal").val(),
               return_amount: $("#returnamount").val(),
               reason: returnReason
@@ -608,7 +616,7 @@
                 var ajaxRequests = [];
 
                 for (let i = 0; i < localCartStored.length; i++) {
-                  var updateCartdetails = {
+                  var updateCartItemdetails = {
                     return_invoice_id: returnInvoiceId,
                     return_pri_qty: localCartStored[i].priQty,
                     return_sec_qty: localCartStored[i].secQty,
@@ -643,7 +651,7 @@
                     $.ajax({
                       url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}&batch=${localCartStored[i].batchIdReturned}`,
                       type: 'POST',
-                      data: JSON.stringify(updateCartdetails),
+                      data: JSON.stringify(updateCartItemdetails),
                       contentType: 'application/json',
                       success: function (response) {
                         console.log(response);
@@ -653,6 +661,40 @@
                       }
                     })
                   );
+
+                  // Push each AJAX request into the array
+                  ajaxRequests.push(
+                    $.ajax({
+                      url: `/api/returncartitem/`,
+                      type: 'POST',
+                      data: JSON.stringify({
+                        return_id: returninsertid,
+                        return_invoice_id: returnInvoiceId,
+                        main_invoice_id: returnItem.id,
+                        batch_id: localCartStored[i].batchIdReturned,
+                        product_id: localCartStored[i].productId,
+                        product_name: localCartStored[i].productname,
+                        batch_name: localCartStored[i].batch,
+                        conversion: localCartStored[i].conversion,
+                        hsn: localCartStored[i].hsn,
+                        gst: localCartStored[i].gst,
+                        exp_date: localCartStored[i].expdate,
+                        return_pri_qty: localCartStored[i].priQty,
+                        return_sec_qty: localCartStored[i].secQty,
+                        return_dis: localCartStored[i].disc,
+                        return_mrp: localCartStored[i].mrp,
+                        return_total: localCartStored[i].total,
+                      }),
+                      contentType: 'application/json',
+                      success: function (response) {
+                        console.log(response);
+                      },
+                      error: function (error) {
+                        console.log(error);
+                      }
+                    })
+                  )
+
                 }
 
                 // Use $.when.apply() to wait for all AJAX requests to complete
