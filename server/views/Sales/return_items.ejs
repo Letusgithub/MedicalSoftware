@@ -83,9 +83,14 @@
                         <div class="row w-100 m-0 p-0">
                           <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                             <p class="mb-2 repeater-title fw-bold">Item</p>
-                            <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name" />
+                            <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name"
+                              required />
+                            <div class="invalid-feedback">
+                              Please enter product name.
+                            </div>
                             <input type="text" class="form-control" id="brand" placeholder="Brand Name" />
                           </div>
+
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Batch & Expiry</p>
                             <div class="mb-2" id="batchdroporinput">
@@ -96,13 +101,18 @@
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
                             <div>
                               <p class="mb-2 repeater-title" id="primaryunitname">P.Unit<span></span></p>
-                              <input type="number" class="form-control px-1" id="pUnit" min="0" />
+                              <input type="text" class="form-control px-1" id="pUnit" min="0"
+                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;" />
+                              <div class="invalid-feedback">
+                                Please enter quantity.
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3" id="sUnit_input">
                             <div>
                               <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
-                              <input type="number" class="form-control px-1" id="sUnit" min="0" />
+                              <input type="text" class="form-control px-1" id="sUnit" min="0"
+                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;" />
                             </div>
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
@@ -265,6 +275,26 @@
       <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
       <script>
         $(document).ready(function () {
+          // Validation check on input
+          $('input').each(function () {
+            $(this).on('input', function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+          });
+          $('select').each(function () {
+            $(this).on('input', function () {
+              if ($(this).val() == 'default' || $(this).val() == null) {
+                $(this).addClass('is-invalid');
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+          });
+
           $("#brand").prop('readonly', true);
           $("#batch").prop('readonly', true);
           $("#expdate").prop('readonly', true);
@@ -373,6 +403,21 @@
               .appendTo(ul);
           };
 
+          // On input medicine name clear all the fields
+          $("#medicinename").on('input', function () {
+            $("#brand").val("");
+            $("#pUnit").val("").prop('readonly', true);
+            $("#sUnit").val("").prop('readonly', true);
+            $("#price").val("").prop('readonly', true);
+            $("#discount").val("").prop('readonly', true);
+            $("#total").val("").prop('readonly', true);
+            $("#shelflabel").val("");
+            $("#batchdroporinput").empty();
+            $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+            $("#batch").prop('readonly', true);
+            $("#expdate").val("").prop('readonly', true);
+          })
+
           // -ve inputs for inline item cant be entered
           $('#pUnit').on('keypress', function (e) {
             if (e.which == 45) {
@@ -414,60 +459,91 @@
           var setLocalData;
           var getLocalData;
           var htmlData;
-          $("#addtoreturncart").click(function () {
-            var products = $("#medicinename").val();
-            var brand = $("#brand").val();
-            var priQty = parseFloat($("#pUnit").val()) || 0;
-            var secQty = parseFloat($("#sUnit").val()) || 0;
-            var mrp = parseFloat($("#price").val());
-            var disc = parseFloat($("#discount").val());
-            var total = parseFloat($("#total").val());
-            var shelflabel = $("#shelflabel").val();
-            var batch = $("#batch").val();
-            var exp = $("#expdate").val();
+          $("#addtoreturncart").click(function (e) {
+            e.preventDefault();
+            var isValid = true;
+            $('input:required').each(function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+                isValid = false;
+              } else {
+                $(this).removeClass('is-invalid');
+                isValid = true;
+              }
+            });
 
-            if (priQty > saledPrimaryQty) {
-              return alert("CANT ADD QUANTITY GREATER THAN SALED");
+            if ($("#pUnit").val() == '') {
+              $("#pUnit").addClass('is-invalid');
+              $("#pUnit").focus();
+              isValid = false;
+            } else {
+              $("#pUnit").removeClass('is-invalid');
             }
-            if (secQty > saledSecondaryQty) {
-              return alert("CANT ADD QUANTITY GREATER THAN SALED");
+
+            if ($("#pUnit").val() == 0 && $("#sUnit").val() == 0) {
+              $("#pUnit").addClass('is-invalid');
+              $("#pUnit").focus();
+              isValid = false;
+            } else {
+              $("#pUnit").removeClass('is-invalid');
             }
-            if (!products) {
-              return alert("PLEASE ADD THE RETURNED PRODUCT");
+
+            if (isValid) {
+
+              var products = $("#medicinename").val();
+              var brand = $("#brand").val();
+              var priQty = parseFloat($("#pUnit").val()) || 0;
+              var secQty = parseFloat($("#sUnit").val()) || 0;
+              var mrp = parseFloat($("#price").val());
+              var disc = parseFloat($("#discount").val());
+              var total = parseFloat($("#total").val());
+              var shelflabel = $("#shelflabel").val();
+              var batch = $("#batch").val();
+              var exp = $("#expdate").val();
+
+              if (priQty > saledPrimaryQty) {
+                return alert("CANT ADD QUANTITY GREATER THAN SALED");
+              }
+              if (secQty > saledSecondaryQty) {
+                return alert("CANT ADD QUANTITY GREATER THAN SALED");
+              }
+              if (!products) {
+                return alert("PLEASE ADD THE RETURNED PRODUCT");
+              }
+
+              cartarray.push({
+                productId: productId,
+                productname: products,
+                brand: brand,
+                shelflabel: shelflabel,
+                batch: batch,
+                batchIdReturned: batchIdReturned,
+                conversion: conversion,
+                hsn: hsn,
+                gst: gst,
+                expdate: exp,
+                priQty: priQty,
+                secQty: secQty,
+                mrp: mrp,
+                disc: disc,
+                total: total,
+                timestamp: new Date().getTime()
+              })
+
+              setLocalData = JSON.stringify(cartarray);
+
+              localStorage.setItem("returncartitems", setLocalData);
+              $("#medicinename").val("");
+              $("#brand").val("");
+              $("#pUnit").val("");
+              $("#sUnit").val("");
+              $("#price").val("");
+              $("#discount").val("");
+              $("#total").val("");
+              $("#shelflabel").val("");
+              $("#batch").val("");
+              $("#expdate").val("");
             }
-
-            cartarray.push({
-              productId: productId,
-              productname: products,
-              brand: brand,
-              shelflabel: shelflabel,
-              batch: batch,
-              batchIdReturned: batchIdReturned,
-              conversion: conversion,
-              hsn: hsn,
-              gst: gst,
-              expdate: exp,
-              priQty: priQty,
-              secQty: secQty,
-              mrp: mrp,
-              disc: disc,
-              total: total,
-              timestamp: new Date().getTime()
-            })
-
-            setLocalData = JSON.stringify(cartarray);
-
-            localStorage.setItem("returncartitems", setLocalData);
-            $("#medicinename").val("");
-            $("#brand").val("");
-            $("#pUnit").val("");
-            $("#sUnit").val("");
-            $("#price").val("");
-            $("#discount").val("");
-            $("#total").val("");
-            $("#shelflabel").val("");
-            $("#batch").val("");
-            $("#expdate").val("");
           });
 
           // logic for redering cart data on addtocart click 
