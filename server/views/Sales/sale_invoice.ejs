@@ -567,13 +567,6 @@
                     availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
                     availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
 
-                    /*
-                    $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
-                    $("#unit").append("<option>"+data.data[0].secondary_unit + "</option>");
-                    $("#pack .unit")
-                    .text(`1 ${data.data[0].primary_unit} of ${data.data[0].conversion} ${data.data[0].secondary_unit}`);
-                    */
-
                     $("#primaryunitname span").text(` (${primaryUnit})`);
                     $("#secondaryunitname span").text(` (${secondaryUnit})`);
 
@@ -633,21 +626,6 @@
             }
 
           };
-
-          //logic for selected units (discontinued)
-          /*
-          $("#unit").change(function(){
-            var getUnit = $(this).val();
-            if(getUnit === primaryUnit){
-              $("#price").val(priceMed);
-              calculateTotal();
-            }
-            else{
-              $("#price").val(priceMed/conversion);
-              calculateTotal();
-            }
-          })*/
-
 
           // Limit line item discount input to 0-100 range
           $('#discount').on('input', function () {
@@ -849,7 +827,6 @@
               var shelflabel = $("#shelflabel").val();
               var batch = $("#batchdroporinput #batchnumber").val() || $("#batch").val();
               var exp = $("#expdate").val();
-              var selectedUnit = $("#unit").val();
 
 
               cartarray.push({
@@ -863,7 +840,6 @@
                 priQty: priCartQty,
                 secQty: secCartQty,
                 conversion: conversion,
-                selectedUnit: selectedUnit,
                 mrp: mrp,
                 hsn: hsn,
                 gst: gst,
@@ -907,8 +883,6 @@
               $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
               $("#batch").prop('readonly', true);
               $("#expdate").val("").prop('readonly', true);
-              $("#unit").empty();
-              $("#pack .unit").empty();
               $("#message").empty();
               $("#profit").text('');
             }
@@ -928,8 +902,6 @@
             $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
             $("#batch").prop('readonly', true);
             $("#expdate").val("").prop('readonly', true);
-            $("#unit").empty();
-            $("#pack .unit").empty();
             $("#message").empty();
           })
 
