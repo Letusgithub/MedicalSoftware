@@ -5,9 +5,8 @@ const { getPool } = require('../config/database');
 module.exports = {
   create: (data, callback) => {
     getPool().query(
-
-      `insert into cart_item(product_id, saled_pri_qty_cart, saled_sec_qty_cart, main_invoice_id, order_id, batch_id, unit_discount, saled_mrp, product_name, batch_name, hsn, exp_date, gst, unit_mrp)
-        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into cart_item(product_id, saled_pri_qty_cart, saled_sec_qty_cart, main_invoice_id, order_id, batch_id, unit_discount, saled_mrp, product_name, batch_name, hsn, exp_date, gst, unit_mrp, conversion)
+        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.product_id,
         data.saled_pri_qty,
@@ -23,6 +22,7 @@ module.exports = {
         data.exp_date,
         data.gst,
         data.mrp,
+        data.conversion,
       ],
       (error, results) => {
         if (error) {
@@ -83,31 +83,28 @@ module.exports = {
     );
   },
 
-  getOrderCartInInvoice: (id, callback) => {
-    getPool().query(
-      `select * from cart_item ci
-      JOIN sample spl 
-      on ci.product_id = spl.product_id
-      JOIN inventory inv
-      on inv.product_id = ci.product_id
-      JOIN batch bth
-      on ci.batch_id = bth.batch_id
-      where order_id =?`,
-      [id],
-      (error, results) => {
-        if (error) return callback(error);
-        console.log('results', results);
-        return callback(null, results);
-      },
-    );
-  },
+  // getOrderCartInInvoice: (id, callback) => {
+  //   getPool().query(
+  //     `select * from cart_item ci
+  //     JOIN sample spl
+  //     on ci.product_id = spl.product_id
+  //     JOIN inventory inv
+  //     on inv.product_id = ci.product_id
+  //     JOIN batch bth
+  //     on ci.batch_id = bth.batch_id
+  //     where order_id =?`,
+  //     [id],
+  //     (error, results) => {
+  //       if (error) return callback(error);
+  //       console.log('results', results);
+  //       return callback(null, results);
+  //     },
+  //   );
+  // },
 
   getCartItemsInInvoice: (id, callback) => {
     getPool().query(
-      `select * from cart_item ci
-      JOIN sample spl
-      on ci.product_id = spl.product_id
-      JOIN batch bth on ci.product_id = bth.product_id and ci.batch_id = bth.batch_id
+      `select * from cart_item 
       where order_id =?`,
       [id],
       (error, results) => {
