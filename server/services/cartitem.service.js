@@ -61,17 +61,10 @@ module.exports = {
   updateOrders: (data, salesInvoiceId, batchId, productId, callback) => {
     getPool().query(
       `update cart_item 
-       set return_invoice_id=?, 
-       return_pri_qty= return_pri_qty + ${data.return_pri_qty}, 
-       return_sec_qty= return_sec_qty + ${data.return_sec_qty},
-       return_total_cart = return_total_cart + ${data.return_total_cart},
-       return_dis = ?, 
-       return_mrp = ?
+       set return_pri_qty= return_pri_qty + ${data.return_pri_qty}, 
+       return_sec_qty= return_sec_qty + ${data.return_sec_qty}
        where main_invoice_id =? and product_id=? and batch_id=?`,
       [
-        data.return_invoice_id,
-        data.return_dis,
-        data.return_mrp,
         salesInvoiceId,
         productId,
         batchId,

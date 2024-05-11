@@ -616,14 +616,6 @@
                 var ajaxRequests = [];
 
                 for (let i = 0; i < localCartStored.length; i++) {
-                  var updateCartItemdetails = {
-                    return_invoice_id: returnInvoiceId,
-                    return_pri_qty: localCartStored[i].priQty,
-                    return_sec_qty: localCartStored[i].secQty,
-                    return_dis: localCartStored[i].disc,
-                    return_mrp: localCartStored[i].mrp,
-                    return_total_cart: localCartStored[i].total,
-                  }
 
                   // Push each AJAX request into the array
                   ajaxRequests.push(
@@ -651,7 +643,10 @@
                     $.ajax({
                       url: `/api/updatecartitems?sales_invoice_id=${returnItem.id}&product_id=${localCartStored[i].productId}&batch=${localCartStored[i].batchIdReturned}`,
                       type: 'POST',
-                      data: JSON.stringify(updateCartItemdetails),
+                      data: JSON.stringify({
+                        return_pri_qty: localCartStored[i].priQty,
+                        return_sec_qty: localCartStored[i].secQty,
+                      }),
                       contentType: 'application/json',
                       success: function (response) {
                         console.log(response);
