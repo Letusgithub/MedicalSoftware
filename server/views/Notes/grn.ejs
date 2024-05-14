@@ -566,17 +566,15 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-check mt-3 ps-0">
-                                        <div>
-                                            <input class="form-check-input mx-auto" type="checkbox" id="defaultCheck1"
-                                                checked>
-                                            <label class="form-check-label mx-1" for="defaultCheck1">
-                                                Disclaimer : Hereby I assure that product details given here is
-                                                validated by this pharmacy .
-                                            </label>
-                                        </div>
-
+                                    <div class="form-check mt-3 d-flex justify-content-center align-items-center">
+                                        <input class="form-check-input mx-1" type="checkbox" value="" id="defaultCheck1"
+                                            checked>
+                                        <label class="form-check-label mx-1" for="defaultCheck1">
+                                            Disclaimer : Hereby I assure that product details given here is
+                                            validated by this pharmacy .
+                                        </label>
                                     </div>
+
                                     <div class="text-center mt-4">
                                         <a>
                                             <button class="btn btn-primary px-5" id="submitorder">Submit</button>
@@ -729,9 +727,9 @@
                                     $("select[name='secondary']").val(items.secondary_unit).prop('disabled', true);
                                     $("input[name='threshold']").val(items.threshold).prop('disabled', true);
                                     $("select[name='category']").val(items.category_id);
-                                    if ($("select[name='category']").val() != null){
+                                    if ($("select[name='category']").val() != null) {
                                         $("select[name='category']").prop('disabled', true);
-                                    } 
+                                    }
                                     var primaryUnit = $("select[name='primary']").val();
                                     var secondaryUnit = $("select[name='secondary']").val();
                                     $("#primarypopulate").text(`1 ${primaryUnit}`);
