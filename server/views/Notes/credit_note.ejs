@@ -434,7 +434,7 @@
               } else {
                 $("#pUnit").removeClass('is-invalid');
               }
-              
+
               if ($("#sUnit").val() == '') {
                 $("#sUnit").addClass('is-invalid');
                 $("#sUnit").focus();
@@ -509,13 +509,29 @@
               $("#shelflabel").val("");
               $("#batchdroporinput").empty();
               $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+              $("#batch").prop('readonly', true);
               $("#expdate").val("");
-              $("#unit").empty();
-              $("#pack .unit").empty();
               $("#message").empty();
               $("#primaryunitname span").text(``);
               $("#secondaryunitname span").text(``);
+            })
 
+            // On input medicine name clear all the fields
+            $("#medicinename").on('input', function () {
+              $("#brand").val("");
+              $("#pUnit").val("").prop('readonly', true);
+              $("#sUnit").val("").prop('readonly', true);
+              $("#purchase_rate").val("").prop('readonly', true);
+
+              $("#total").val("").prop('readonly', true);
+              $("#shelflabel").val("");
+              $("#batchdroporinput").empty();
+              $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+              $("#batch").prop('readonly', true);
+              $("#expdate").val("").prop('readonly', true);
+              $("#message").empty();
+              $("#primaryunitname span").text(``);
+              $("#secondaryunitname span").text(``);
             })
 
 
@@ -565,10 +581,8 @@
                   //batch dropdown
                   $("#batchdroporinput input").remove();
                   $("#batchdroporinput").append(
-                    `
-                                        <select class="form-select" id="batchnumber" aria-label="unit">
-                                        </select>
-                                        `
+                    `<select class="form-select" id="batchnumber" aria-label="unit">
+                    </select>`
                   )
 
                   data.data.map(function (value, key) {
@@ -669,7 +683,7 @@
                 }
                 $("#totalCreditAmt").val(totalCreditAmt.toFixed(2));
               }
-              else if ( creditCarts.length == 0) {
+              else if (creditCarts.length == 0) {
                 $("#totalCreditAmt").val(0);
               }
             }

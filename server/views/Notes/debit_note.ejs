@@ -505,11 +505,28 @@
               $("#batchdroporinput").empty();
               $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
               $("#expdate").val("");
-              $("#unit").empty();
-              $("#pack .unit").empty();
               $("#message").empty();
+              $("#primaryunitname span").text(``);
+              $("#secondaryunitname span").text(``);
             })
 
+            // On input medicine name clear all the fields
+            $("#medicinename").on('input', function () {
+              $("#brand").val("");
+              $("#pUnit").val("").prop('readonly', true);
+              $("#sUnit").val("").prop('readonly', true);
+              $("#purchase_rate").val("").prop('readonly', true);
+
+              $("#total").val("").prop('readonly', true);
+              $("#shelflabel").val("");
+              $("#batchdroporinput").empty();
+              $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+              $("#batch").prop('readonly', true);
+              $("#expdate").val("").prop('readonly', true);
+              $("#message").empty();
+              $("#primaryunitname span").text(``);
+              $("#secondaryunitname span").text(``);
+            })
 
             // logic for redering cart data on addtocart click 
             $("#addtocart").on('click', function () {
