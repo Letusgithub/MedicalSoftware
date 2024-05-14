@@ -697,9 +697,9 @@
                         console.log(data);
                         var customer = data.result[0];
 
-                        var customerName = customer.cust_name;
-                        var customerNumber = customer.cust_telephone;
-                        var customerAdd = customer.cust_address;
+                        var customerName = customer.cust_name || 'NA';
+                        var customerNumber = customer.cust_telephone || 'NA';
+                        var customerAdd = customer.cust_address || 'NA';
 
                         $(".customername").text(`Patient Name: ${customerName}`);
                         $(".customermobile").text(`Mobile: ${customerNumber}`);
