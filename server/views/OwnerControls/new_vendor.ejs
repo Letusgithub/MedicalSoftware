@@ -449,10 +449,14 @@
                                 contentType: 'application/json',
                                 success: function (response) {
                                     console.log(response);
+                                    if(response.success == 0){
+                                        return alert(response.message);
+                                    }
                                     window.location.href = '/vendor_list'
                                 },
                                 error: function (error) {
                                     console.log(error);
+
                                 }
                             })
                         }
