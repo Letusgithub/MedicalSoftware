@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 const service = require('../services/grn.service');
 
@@ -60,7 +61,7 @@ exports.getGRNreceipt = (req, res) => {
   });
 };
 
-exports.searchDates = (req,res) => {
+exports.searchDates = (req, res) => {
   const orgId = req.query.org;
   const from = req.query.from;
   const to = req.query.to;
@@ -76,10 +77,9 @@ exports.searchDates = (req,res) => {
       data: results,
     });
   });
-
 };
 
-exports.searchMonth = (req,res) => {
+exports.searchMonth = (req, res) => {
   const orgId = req.query.org;
   const month = req.query.month;
   service.searchMonth(orgId, month, (error, results) => {
@@ -94,10 +94,9 @@ exports.searchMonth = (req,res) => {
       data: results,
     });
   });
-
 };
 
-exports.searchYear = (req,res) => {
+exports.searchYear = (req, res) => {
   const orgId = req.query.org;
   const year = req.query.year;
   service.searchYear(orgId, year, (error, results) => {
@@ -112,10 +111,9 @@ exports.searchYear = (req,res) => {
       data: results,
     });
   });
-
 };
 
-exports.searchQuarter = (req,res) => {
+exports.searchQuarter = (req, res) => {
   const orgId = req.query.org;
   const quarter = req.query.quarter;
   let start; let
@@ -145,5 +143,4 @@ exports.searchQuarter = (req,res) => {
       data: results,
     });
   });
-
 };

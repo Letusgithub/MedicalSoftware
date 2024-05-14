@@ -3,17 +3,21 @@ const { getPool } = require('../config/database');
 module.exports = {
   create: (data, callback) => {
     getPool().query(
-      `insert into batch(batch_name, product_id, vendor_id, org_id, exp_date, batch_qty, purchase_rate, mrp, shelf_label, conversion, grn_id) 
-                                      values(?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into batch(batch_name, product_id, vendor_id, org_id, inventory_id, exp_date, batch_qty, purchase_rate, mrp, free, bulk_discount, base_price, shelf_label, conversion, grn_id) 
+                                      values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.batch_name,
         data.product_id,
         data.vendor_id,
         data.org_id,
+        data.inventory_id,
         data.exp_date,
         data.batch_qty,
         data.purchase_rate,
         data.mrp,
+        data.free,
+        data.bulk_discount,
+        data.base_price,
         data.shelf_label,
         data.conversion,
         data.grn_id,
@@ -26,6 +30,7 @@ module.exports = {
       },
     );
   },
+
   deleteBatch: (id, callback) => {
     getPool().query(
       'delete from batch where batch_id =?',
@@ -36,12 +41,14 @@ module.exports = {
       },
     );
   },
+
+  // Need to be corrected
   getBatch: (id, orgId, callback) => {
     getPool().query(
       `select distinct * from batch 
-      JOIN inventory inv
-      ON batch.product_id =  inv.product_id
-      where batch.product_id =? and batch.org_id =${orgId}`,
+      JOIN inventory inv ON batch.product_id =  inv.product_id
+      where batch.product_id =? and batch.org_id = ${orgId} and inv.org_id = ${orgId}
+      ORDER BY batch.exp_date ASC`,
       [id],
       (error, results) => {
         if (error) return callback(error);
@@ -49,6 +56,7 @@ module.exports = {
       },
     );
   },
+
   getBatchfromBatchId: (id, callback) => {
     getPool().query(
       'select * from batch where batch_id =?',
@@ -101,12 +109,9 @@ module.exports = {
         coalesce(sum(cart.saled_sec_qty),0) as sec,
         inv.primary_unit as punit,
         inv.secondary_unit as sunit
-        from newdata.cart_item cart
-
-        RIGHT JOIN newdata.batch bth
-        ON bth.batch_id = cart.saled_batch_id
-        LEFT JOIN
-            newdata.inventory inv ON inv.product_id = bth.product_id AND inv.org_id = bth.org_id
+        from cart_item cart
+        RIGHT JOIN batch bth ON bth.batch_id = cart.batch_id
+        LEFT JOIN inventory inv ON inv.product_id = bth.product_id AND inv.org_id = bth.org_id
         where bth.org_id = ${orgId} and bth.product_id = ${prodId}
         group by bth.batch_id, punit,sunit ;
       `,
@@ -227,13 +232,11 @@ module.exports = {
 
   getOrderStatistics: (orgId, callback) => {
     getPool().query(
-      `SELECT inv.primary_unit, inv.secondary_unit, sum(bth.saled_pri_qty) as pri, sum(bth.saled_sec_qty) as sec from newdata.inventory inv
-      JOIN newdata.batch bth on bth.product_id = inv.product_id
+      `SELECT inv.primary_unit, inv.secondary_unit, sum(bth.saled_pri_qty) as pri, sum(bth.saled_sec_qty) as sec from inventory inv
+      JOIN batch bth on bth.product_id = inv.product_id
       where inv.org_id = ?
       group by inv.primary_unit, inv.secondary_unit 
       ORDER BY pri DESC
-
-      
       `,
       [orgId],
       (error, results) => {

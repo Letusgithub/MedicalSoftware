@@ -33,7 +33,7 @@
                                     </div>
 
                                     <!-- New Vendor -->
-                                    <div class="card mb-2 mx-auto col-md-12">
+                                    <!-- <div class="card mb-2 mx-auto col-md-12">
                                         <div class="card-body ">
 
                                             <div class="row mb-3">
@@ -151,25 +151,28 @@
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- New Vendor -->
 
 
-                                    <!-- <div class="row">
+                                    <div class="row">
 
                                         <div class="col-md-6">
                                             <div class="card mb-4">
-                                                <h5 class="card-header">Vendor Name</h5>
-                                                <div class="card-body" id="vendorname">
+                                                <h5 class="card-header">Distributor Name</h5>
+                                                <div class="card-body has-validation" id="vendorname">
                                                     <select class="form-select" id="vendorselect"
                                                         aria-label="Default select example">
-                                                        <option selected>Select Vendor</option>
+                                                        <option selected>Select Distributor</option>
                                                         <%vendors.forEach(function(vendor) {%>
                                                             <option value="<%= vendor.vendor_id %>">
                                                                 <%= vendor.vendor_name %>
                                                             </option>
                                                             <%});%>
                                                     </select>
+                                                    <div class="invalid-feedback">
+                                                        Please select a distributor.
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,103 +189,101 @@
                                             </div>
                                         </div>
 
-                                    </div> -->
+                                    </div>
                                     <hr>
 
-                                    <div class="card mb-4">
+                                    <!-- Bordered Table -->
+                                    <div class="card mb-4 mx-0 px-0">
 
                                         <form class="form-main">
-                                            <div class="card-body form-block">
-                                                <div class="table-responsive text-nowrap ">
 
-                                                    <table class="table table-bordered">
+                                            <div class="card-body form-block mb-3">
 
-                                                    </table>
+                                                <div class="row w-100 m-0 p-0">
+                                                    <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
+                                                        <p class="mb-2 repeater-title fw-bold">Product</p>
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="Enter product name" name="productname" />
+                                                        <div class="invalid-feedback">
+                                                            Please enter product name.
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Brand name"
+                                                            name="brand" disabled />
+                                                    </div>
 
-                                                    <table class="table table-bordered">
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                                        <p class="mb-2 repeater-title">MRP</p>
+                                                        <input type="text" class="form-control px-1"
+                                                            placeholder="Enter MRP"
+                                                            onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            name="mrp" />
+                                                        <div class="invalid-feedback">
+                                                            Please enter MRP.
+                                                        </div>
+                                                    </div>
 
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="col-sm-3">Product Name</th>
-                                                                <th class="col-sm-2">Brand Name</th>
-                                                                <th class="col-sm">MRP</th>
-                                                                <th class="col-sm">PTR</th>
-                                                                <th class="col-sm-1">QTY</th>
-                                                                <th class="col-sm-2">Unit</th>
-                                                                <th class="col-sm">Amount</th>
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                                        <div class="has-validation">
+                                                            <p class="mb-2 repeater-title">PTR</p>
+                                                            <input type="text" class="form-control px-1"
+                                                                onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                                placeholder="Enter PTR" name="ptr" />
+                                                            <div class="invalid-feedback">
+                                                                Please enter PTR.
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        id="basic-default-name"
-                                                                        placeholder="Enter product name"
-                                                                        name="productname" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="brand" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="mrp" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="ptr" />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="quantity" />
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-select px-1"
-                                                                        id="exampleFormControlSelect1"
-                                                                        aria-label="Default select example"
-                                                                        name="unitoption">
-                                                                        <option selected>Select Unit</option>
-                                                                        <option value="BOX">Box</option>
-                                                                        <option value="PACK">Packet</option>
-                                                                        <option value="STRIP">Strip</option>
-                                                                        <option value="BOTTLE">Bottle</option>
-                                                                        <option value="PCS">Piece</option>
-                                                                    </select>
-                                                                </td>
+                                                    <div class="col-md-1 col-12 mb-md-0 mb-3">
+                                                        <div class=" has-validation">
+                                                            <p class="mb-2 repeater-title">
+                                                                Quantity</p>
+                                                            <input type="text" class="form-control px-1" placeholder=""
+                                                                name="quantity"
+                                                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;" />
+                                                            <div class="invalid-feedback">
+                                                                Please enter quantity.
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                                <td>
-                                                                    <input type="number" class="form-control px-1"
-                                                                        id="basic-default-name" placeholder=""
-                                                                        name="amount" readonly />
-                                                                </td>
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                                        <div class="has-validation">
+                                                            <p class="mb-2 repeater-title">Unit</p>
+                                                            <select class="form-select px-1"
+                                                                id="exampleFormControlSelect1" name="unitoption">
+                                                                <option selected>Select Unit</option>
+                                                                <option value="BOX">Box</option>
+                                                                <option value="PACK">Packet</option>
+                                                                <option value="STRIP">Strip</option>
+                                                                <option value="BOTTLE">Bottle</option>
+                                                                <option value="PCS">Piece</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">
+                                                                Please select unit.
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                            </tr>
 
-                                                        </tbody>
-
-                                                    </table>
+                                                    <div class="col-md-1 col-12 pe-0">
+                                                        <p class="mb-2 repeater-title">Amount</p>
+                                                        <input type="text" class="form-control px-0" name="amount"
+                                                            placeholder="" min="0" readonly />
+                                                    </div>
                                                 </div>
+
                                             </div>
+
+
                                             <div class="buttonBox text-center pb-3">
-                                                <btn class="btn btn-primary" style="color: white;" id="addtocart">Add
-                                                </btn>
+                                                <btn class="btn btn-primary" style="color: white;" id="addtocart">Add to
+                                                    Cart</btn>
                                                 <input type="reset" class="btn btn-primary" style="color: white;"
                                                     value="Clear" />
-
-
-
                                             </div>
                                         </form>
-
-
-
                                     </div>
-                                    <!--/ Bordered Table -->
 
                                     <!-- PO Cart -->
                                     <div class="card ">
@@ -368,134 +369,155 @@
 
                     var cartarray = [];
                     $(document).ready(function () {
-                        $("#vendor_name");
-                        $("#vendor_contact").prop('readonly', true);
-                        $("#vendor_email").prop('readonly', true);
-                        $("#vendor_address").prop('readonly', true);
-                        $("#vendor_gstin").prop('readonly', true);
-                        $("#dl1_st").prop('readonly', true);
-                        $("#dl1_ct").prop('readonly', true);
-                        $("#dl1_ln").prop('readonly', true);
-                        $("#dl2_st").prop('readonly', true);
-                        $("#dl2_ct").prop('readonly', true);
-                        $("#dl2_ln").prop('readonly', true);
-                        var vendorId = -1;
+
+                        // Validation check on input
+                        $('input').each(function () {
+                            $(this).on('input', function () {
+                                if ($(this).val() == '') {
+                                    $(this).addClass('is-invalid');
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                }
+                            });
+                        });
+                        $('select').each(function () {
+                            $(this).on('input', function () {
+                                if ($(this).val() == 'default' || $(this).val() == null) {
+                                    $(this).addClass('is-invalid');
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                }
+                            });
+                        });
+
+                        // $("#vendor_name");
+                        // $("#vendor_contact").prop('readonly', true);
+                        // $("#vendor_email").prop('readonly', true);
+                        // $("#vendor_address").prop('readonly', true);
+                        // $("#vendor_gstin").prop('readonly', true);
+                        // $("#dl1_st").prop('readonly', true);
+                        // $("#dl1_ct").prop('readonly', true);
+                        // $("#dl1_ln").prop('readonly', true);
+                        // $("#dl2_st").prop('readonly', true);
+                        // $("#dl2_ct").prop('readonly', true);
+                        // $("#dl2_ln").prop('readonly', true);
+                        // var vendorId = -1;
                         //autocomplete suggestion   
-                        $("#vendor_name").autocomplete({
-                            minLength: 5,
-                            source: function (request, response) {
+                        // $("#vendor_name").autocomplete({
+                        //     minLength: 3,
+                        //     source: function (request, response) {
 
-                                $.get('/api/getallvendors', function (data, status) {
+                        //         $.get('/api/getallvendors', function (data, status) {
 
-                                    let searchTerm = request.term;
-                                    let results = data.data.filter(item => item.vendor_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
-
-
-                                    if (results.length === 0) {
-                                        results.push({ vendor_name: null }); // Add a null item for the custom message
-                                    }
-
-                                    response(results);
-                                })
-
-                            },
-                            select: function (event, ui) {
-                                setTimeout(function () {
-                                    console.log(ui.item);
-                                    vendorId = ui.item.vendor_id;
-
-                                    var splitDL1;
-                                    var dl_no_1 = ui.item.vendor_dl_no_1;
-
-                                    if (dl_no_1 != '') {
-
-                                        splitDL1 = dl_no_1.split(/-/);
-                                        $("#dl1_st").val(splitDL1[1]);
-                                        $("#dl1_ct").val(splitDL1[2]);
-                                        $("#dl1_ln").val(splitDL1[3]);
-                                    }
-
-                                    var splitDL2;
-                                    var dl_no_2 = ui.item.vendor_dl_no_2;
-                                    if (dl_no_2 != '') {
-
-                                        splitDL2 = dl_no_2.split(/-/);
-                                        $("#dl2_st").val(splitDL2[1]);
-                                        $("#dl2_ct").val(splitDL2[2]);
-                                        $("#dl2_ln").val(splitDL2[3]);
-                                    }
-
-                                    $("#vendor_name").val(ui.item.vendor_name);
-                                    $("#vendor_contact").val(ui.item.vendor_contact);
-                                    $("#vendor_email").val(ui.item.vendor_email);
-                                    $("#vendor_address").val(ui.item.vendor_address);
-                                    $("#vendor_gstin").val(ui.item.vendor_gstin);
+                        //             let searchTerm = request.term;
+                        //             let results = data.data.filter(item => item.vendor_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
 
 
-                                }, 0)
-                            }
-                        }).data('ui-autocomplete')._renderItem = function (ul, item) {
+                        //             if (results.length === 0) {
+                        //                 results.push({ vendor_name: null }); // Add a null item for the custom message
+                        //             }
 
-                            if (item.vendor_name) {
-                                $("#vendor_contact").prop('readonly', true);
-                                $("#vendor_email").prop('readonly', true);
-                                $("#vendor_address").prop('readonly', true);
-                                $("#vendor_gstin").prop('readonly', true);
-                                $("#dl1_st").prop('readonly', true);
-                                $("#dl1_ct").prop('readonly', true);
-                                $("#dl1_ln").prop('readonly', true);
-                                $("#dl2_st").prop('readonly', true);
-                                $("#dl2_ct").prop('readonly', true);
-                                $("#dl2_ln").prop('readonly', true);
+                        //             response(results);
+                        //         })
 
-                                return $('<li>')
-                                    .append('<div>' + item.vendor_name + '</div>')
-                                    .appendTo(ul);
-                            }
-                            else {
-                                $("#vendor_contact").prop('readonly', false);
-                                $("#vendor_email").prop('readonly', false);
-                                $("#vendor_address").prop('readonly', false);
-                                $("#vendor_gstin").prop('readonly', false);
-                                $("#dl1_st").prop('readonly', false);
-                                $("#dl1_ct").prop('readonly', false);
-                                $("#dl1_ln").prop('readonly', false);
-                                $("#dl2_st").prop('readonly', false);
-                                $("#dl2_ct").prop('readonly', false);
-                                $("#dl2_ln").prop('readonly', false);
-                                return $('<li>').append('<option disabled>No Distributer With this Name. Please Add all the details of New Vendor Down</option>').appendTo(ul);
-                            }
+                        //     },
+                        //     select: function (event, ui) {
+                        //         setTimeout(function () {
+                        //             console.log(ui.item);
+                        //             vendorId = ui.item.vendor_id;
 
-                        };
+                        //             var splitDL1;
+                        //             var dl_no_1 = ui.item.vendor_dl_no_1;
+
+                        //             if (dl_no_1 != '') {
+
+                        //                 splitDL1 = dl_no_1.split(/-/);
+                        //                 $("#dl1_st").val(splitDL1[1]);
+                        //                 $("#dl1_ct").val(splitDL1[2]);
+                        //                 $("#dl1_ln").val(splitDL1[3]);
+                        //             }
+
+                        //             var splitDL2;
+                        //             var dl_no_2 = ui.item.vendor_dl_no_2;
+                        //             if (dl_no_2 != '') {
+
+                        //                 splitDL2 = dl_no_2.split(/-/);
+                        //                 $("#dl2_st").val(splitDL2[1]);
+                        //                 $("#dl2_ct").val(splitDL2[2]);
+                        //                 $("#dl2_ln").val(splitDL2[3]);
+                        //             }
+
+                        //             $("#vendor_name").val(ui.item.vendor_name);
+                        //             $("#vendor_contact").val(ui.item.vendor_contact);
+                        //             $("#vendor_email").val(ui.item.vendor_email);
+                        //             $("#vendor_address").val(ui.item.vendor_address);
+                        //             $("#vendor_gstin").val(ui.item.vendor_gstin);
 
 
-                        /*
-                                                $("#contact").text("Contact No :");
-                                                $("#email").text("Email :");
-                                                $("#dl_no").text("DL No. :");
-                                                $("#gstin").text("GSTIN :");
-                                                $("#address").text("Address :");
-                        
-                                                var vendorId = -1;
-                                                $('#vendorselect').change(function () {
-                                                    var selectedVendorId = $(this).val();
-                        
-                                                    $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
-                                                        var vendorDetails = data.data;
-                                                        console.log(vendorDetails);
-                                                        vendorId = vendorDetails.vendor_id;
-                                                        var number = `Contact: ${vendorDetails.vendor_contact}`
-                                                        var email = `Email : ${vendorDetails.vendor_email}`
-                                                        var dl_no = `DL No. : ${vendorDetails.vendor_dl_no}`
-                                                        var gstin = `GSTIN : ${vendorDetails.vendor_gstin}`
-                                                        var address = `Address : ${vendorDetails.vendor_address}`
-                                                        $("#contact").text(number);
-                                                        $("#email").text(email);
-                                                        $("#dl_no").text(dl_no);
-                                                        $("#gstin").text(gstin);
-                                                        $("#address").text(address);
-                                                    })
-                                                })*/
+                        //         }, 0)
+                        //     }
+                        // }).data('ui-autocomplete')._renderItem = function (ul, item) {
+
+                        //     if (item.vendor_name) {
+                        //         $("#vendor_contact").prop('readonly', true);
+                        //         $("#vendor_email").prop('readonly', true);
+                        //         $("#vendor_address").prop('readonly', true);
+                        //         $("#vendor_gstin").prop('readonly', true);
+                        //         $("#dl1_st").prop('readonly', true);
+                        //         $("#dl1_ct").prop('readonly', true);
+                        //         $("#dl1_ln").prop('readonly', true);
+                        //         $("#dl2_st").prop('readonly', true);
+                        //         $("#dl2_ct").prop('readonly', true);
+                        //         $("#dl2_ln").prop('readonly', true);
+
+                        //         return $('<li>')
+                        //             .append('<div>' + item.vendor_name + '</div>')
+                        //             .appendTo(ul);
+                        //     }
+                        //     else {
+                        //         $("#vendor_contact").prop('readonly', false);
+                        //         $("#vendor_email").prop('readonly', false);
+                        //         $("#vendor_address").prop('readonly', false);
+                        //         $("#vendor_gstin").prop('readonly', false);
+                        //         $("#dl1_st").prop('readonly', false);
+                        //         $("#dl1_ct").prop('readonly', false);
+                        //         $("#dl1_ln").prop('readonly', false);
+                        //         $("#dl2_st").prop('readonly', false);
+                        //         $("#dl2_ct").prop('readonly', false);
+                        //         $("#dl2_ln").prop('readonly', false);
+                        //         return $('<li>').append('<option disabled>No Distributer With this Name. Please Add all the details of New Vendor Down</option>').appendTo(ul);
+                        //     }
+
+                        // };
+
+
+
+                        $("#contact").text("Contact No :");
+                        $("#email").text("Email :");
+                        $("#dl_no").text("DL No. :");
+                        $("#gstin").text("GSTIN :");
+                        $("#address").text("Address :");
+
+                        var vendorId = -1;
+                        $('#vendorselect').change(function () {
+                            var selectedVendorId = $(this).val();
+
+                            $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
+                                var vendorDetails = data.data;
+                                console.log(vendorDetails);
+                                vendorId = vendorDetails.vendor_id;
+                                var number = `Contact: ${vendorDetails.vendor_contact}`
+                                var email = `Email : ${vendorDetails.vendor_email}`
+                                var dl_no = `DL No. : ${vendorDetails.vendor_dl_no_1}, ${vendorDetails.vendor_dl_no_2}`
+                                var gstin = `GSTIN : ${vendorDetails.vendor_gstin}`
+                                var address = `Address : ${vendorDetails.vendor_address}`
+                                $("#contact").text(number);
+                                $("#email").text(email);
+                                $("#dl_no").text(dl_no);
+                                $("#gstin").text(gstin);
+                                $("#address").text(address);
+                            })
+                        })
 
                         // autocomplete functionality
                         var productId = -1;
@@ -554,21 +576,72 @@
                             amountInput.val(totalAmt.toFixed(2));
                         }
 
+                        //PTR < MRP Validation
+                        $("input[name='ptr']").on('change', function () {
+                            var ptr = parseFloat($("input[name='ptr']").val());
+                            var mrp = parseFloat($("input[name='mrp']").val());
+
+                            if (ptr >= mrp) {
+                                $("input[name='ptr']").val(null);
+                                $("input[name='ptr']").addClass('is-invalid');
+                            }
+                        });
+
                         var setLocalData;
                         var getLocalData;
                         var htmlData;
                         $("#addtocart").click(function () {
 
+                            if ($("#vendorselect").val() == 'Select Distributor') {
+                                $("#vendorselect").addClass('is-invalid');
+                                $("#vendorselect").focus();
+                                e.preventDefault();
+                            } else {
+                                $("#vendorselect").removeClass('is-invalid');
+                            }
+
                             if ($("input[name='productname']").val() == '') {
-                                return alert('PLEASE ADD MEDICINE FIRST');
+                                $("input[name='productname']").addClass('is-invalid');
+                                $("input[name='productname']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='productname']").removeClass('is-invalid');
+                            }
+
+                            if ($("input[name='mrp']").val() == '') {
+                                $("input[name='mrp']").addClass('is-invalid');
+                                $("input[name='mrp']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='mrp']").removeClass('is-invalid');
+                            }
+
+                            if ($("input[name='ptr']").val() == '') {
+                                $("input[name='ptr']").addClass('is-invalid');
+                                $("input[name='ptr']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='ptr']").removeClass('is-invalid');
                             }
 
                             if ($("input[name='quantity']").val() == '') {
-                                return alert('PLEASE ADD QUANTITY FIRST');
+                                $("input[name='quantity']").addClass('is-invalid');
+                                $("input[name='quantity']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("input[name='quantity']").removeClass('is-invalid');
                             }
 
                             if ($("select[name='unitoption']").find('option:selected').text() == "Select Unit") {
-                                return alert('PLEASE ADD UNIT FIRST');
+                                $("select[name='unitoption']").addClass('is-invalid');
+                                $("select[name='unitoption']").focus();
+                                e.preventDefault();
+                            } else {
+                                $("select[name='unitoption']").removeClass('is-invalid');
+                            }
+
+                            if (parseFloat($("input[name='ptr']").val()) > parseFloat($("input[name='mrp']").val())) {
+                                return alert("Purchase Rate can't be greater than MRP");
                             }
 
                             var product = $("input[name='productname']").val();
@@ -596,14 +669,6 @@
 
                             localStorage.setItem("pocartitems", setLocalData);
 
-                            //also add the vendor data to local storage
-                            /*var storeCustomerData = {
-                                name: $("#customername").val(),
-                                phone: $("#phonenumber").val()
-                            };
-        
-                        localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
-            */
                             $("input[name='productname']").val("");
                             $("input[name='brand']").val("");
                             $("input[name='quantity']").val("");
@@ -645,7 +710,7 @@
                             $("input[name='productname']").val(selectedItem.productname);
                             $("input[name='brand']").val(selectedItem.brand);
                             $("input[name='quantity']").val(selectedItem.qty);
-                            $("select[name='unitoption']").prop('selectedIndex', selectedItem.selectedUnit);
+                            $("select[name='unitoption']").val(selectedItem.selectedUnit);
                             $("input[name='ptr']").val(selectedItem.ptr);
                             $("input[name='amount']").val(selectedItem.amt);
                             $("input[name='mrp']").val(selectedItem.mrp);
@@ -693,13 +758,6 @@
                         console.log($(`select[name="unitoption"] option[value=1]`).text());
                         var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
 
-                        $("#dl2_ln").on('input', function () {
-                            if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
-                                $("#dl2_ln").val(null);
-                                return alert(" DL Number 1  and DL Number 2 cannot be same");
-                            }
-                        });
-
                         $("#vendor_email").change(function () {
                             var inputvalues = $(this).val();
                             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -713,172 +771,71 @@
 
                             $('#loader').show();
 
-                            if (vendorId == -1) {
+                            var POdetails = {
+                                pharmacyId: pharmacyDetails.pharmaId,
+                                vendor_id: vendorId,
+                                org_id: '<%=orgId%>'
+                            }
 
-                                var vendor_dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
-                                var vendor_dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
+                            $.ajax({
+                                url: '/api/createpo/',
+                                method: 'POST',
+                                data: JSON.stringify(POdetails),
+                                contentType: 'application/json',
+                                success: function (response) {
+                                    var poinsertid = response.result.insertId;
+                                    console.log(poinsertid);
+                                    var poId = response.POId;
+                                    var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
 
-                                $.ajax({
-                                    url: `/api/vendor/`,
-                                    type: 'POST',
-                                    data: JSON.stringify({
-                                        org_id: "<%= orgId %>",
-                                        vendor_name: $("#vendor_name").val(),
-                                        vendor_address: $("#vendor_address").val(),
-                                        vendor_contact: $("#vendor_contact").val(),
-                                        vendor_gstin: $("#vendor_gstin").val(),
-                                        vendor_email: $("#vendor_email").val(),
-                                        vendor_dl_no_1: vendor_dl_no_1,
-                                        vendor_dl_no_2: vendor_dl_no_2
-                                    }),
-                                    contentType: 'application/json',
-                                    success: function (response) {
-                                        vendorId = response.results.insertId;
-                                        console.log(response.results.insertId);
-                                        //window.location.href = '/vendor_list'
+                                    // Array to hold all AJAX requests
+                                    var ajaxRequests = [];
 
-                                        var POdetails = {
-                                            pharmacyId: pharmacyDetails.pharmaId,
-                                            vendor_id: vendorId,
-                                            org_id: '<%=orgId%>'
+                                    for (let i = 0; i < POcarts.length; i++) {
+                                        var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
+                                        var POcartdetail = {
+                                            po_id_main: poId,
+                                            product_id: POcarts[i].productId,
+                                            quantity: POcarts[i].qty,
+                                            unit: unit,
+                                            ptr: POcarts[i].ptr,
+                                            amount: POcarts[i].amt,
+                                            mrp: POcarts[i].mrp
                                         }
+                                        console.log('cartdetails', POcartdetail);
 
-
-                                        $.ajax({
-                                            url: '/api/createpo/',
-                                            method: 'POST',
-                                            data: JSON.stringify(POdetails),
-                                            contentType: 'application/json',
-                                            success: function (response) {
-                                                var poinsertid = response.result.insertId;
-                                                console.log(poinsertid);
-                                                var poId = response.POId;
-                                                var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
-
-                                                // Array to hold all AJAX requests
-                                                var ajaxRequests = [];
-
-                                                for (let i = 0; i < POcarts.length; i++) {
-                                                    var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
-                                                    var POcartdetail = {
-                                                        po_id_main: poId,
-                                                        product_id: POcarts[i].productId,
-                                                        quantity: POcarts[i].qty,
-                                                        unit: unit,
-                                                        ptr: POcarts[i].ptr,
-                                                        amount: POcarts[i].amt,
-                                                        mrp: POcarts[i].mrp
-                                                    }
-                                                    console.log('cartdetails', POcartdetail);
-
-                                                    // Push the AJAX request for creating PO to the array
-                                                    ajaxRequests.push(
-                                                        $.ajax({
-                                                            url: '/api/createpocarts/',
-                                                            method: 'POST',
-                                                            data: JSON.stringify(POcartdetail),
-                                                            contentType: 'application/json',
-                                                            success: function (response) {
-                                                                console.log(response);
-                                                            },
-                                                            error: function (error) {
-                                                                console.log('Error:', error);
-                                                            }
-                                                        })
-                                                    )
-
+                                        // Push the AJAX request for creating PO to the array
+                                        ajaxRequests.push(
+                                            $.ajax({
+                                                url: '/api/createpocarts/',
+                                                method: 'POST',
+                                                data: JSON.stringify(POcartdetail),
+                                                contentType: 'application/json',
+                                                success: function (response) {
+                                                    console.log(response);
+                                                },
+                                                error: function (error) {
+                                                    console.log('Error:', error);
                                                 }
-
-                                                $.when.apply($, ajaxRequests).done(function () {
-                                                    $('#loader').hide();
-                                                    localStorage.removeItem('pocartitems');
-                                                    location.reload();
-                                                    window.location.href = `/po_receipt/${poinsertid}`
-                                                });
-                                            },
-                                            error: function (error) {
-                                                $('#loader').hide();
-                                                console.log('Error:', error);
-                                            }
-                                        });
-                                    },
-                                    error: function (error) {
-                                        $('#loader').hide();
-                                        console.log(error);
+                                            })
+                                        )
                                     }
-                                })
-                            }
-                            else {
 
-                                var POdetails = {
-                                    pharmacyId: pharmacyDetails.pharmaId,
-                                    vendor_id: vendorId,
-                                    org_id: '<%=orgId%>'
+                                    $.when.apply($, ajaxRequests).done(function () {
+                                        $('#loader').hide();
+                                        localStorage.removeItem('pocartitems');
+                                        location.reload();
+                                        window.location.href = `/po_receipt/${poinsertid}`
+                                    });
+
+                                },
+                                error: function (error) {
+                                    $('#loader').hide();
+                                    console.log('Error:', error);
                                 }
+                            });
 
-                                $.ajax({
-                                    url: '/api/createpo/',
-                                    method: 'POST',
-                                    data: JSON.stringify(POdetails),
-                                    contentType: 'application/json',
-                                    success: function (response) {
-                                        var poinsertid = response.result.insertId;
-                                        console.log(poinsertid);
-                                        var poId = response.POId;
-                                        var POcarts = JSON.parse(localStorage.getItem('pocartitems'));
-
-                                        // Array to hold all AJAX requests
-                                        var ajaxRequests = [];
-
-                                        for (let i = 0; i < POcarts.length; i++) {
-                                            var unit = $(`select[name="unitoption"] option[value=${POcarts[i].selectedUnit}]`).text();
-                                            var POcartdetail = {
-                                                po_id_main: poId,
-                                                product_id: POcarts[i].productId,
-                                                quantity: POcarts[i].qty,
-                                                unit: unit,
-                                                ptr: POcarts[i].ptr,
-                                                amount: POcarts[i].amt,
-                                                mrp: POcarts[i].mrp
-                                            }
-                                            console.log('cartdetails', POcartdetail);
-
-                                            // Push the AJAX request for creating PO to the array
-                                            ajaxRequests.push(
-                                                $.ajax({
-                                                    url: '/api/createpocarts/',
-                                                    method: 'POST',
-                                                    data: JSON.stringify(POcartdetail),
-                                                    contentType: 'application/json',
-                                                    success: function (response) {
-                                                        console.log(response);
-                                                    },
-                                                    error: function (error) {
-                                                        console.log('Error:', error);
-                                                    }
-                                                })
-                                            )
-                                        }
-
-                                        $.when.apply($, ajaxRequests).done(function () {
-                                            $('#loader').hide();
-                                            localStorage.removeItem('pocartitems');
-                                            location.reload();
-                                            window.location.href = `/po_receipt/${poinsertid}`
-                                        });
-
-                                    },
-                                    error: function (error) {
-                                        $('#loader').hide();
-                                        console.log('Error:', error);
-                                    }
-                                });
-                            }
                         })
-
-
-
-
 
                         /*
                         var vendorName = [];

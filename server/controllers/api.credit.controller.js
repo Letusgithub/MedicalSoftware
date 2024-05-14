@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 const service = require('../services/credit.service');
 
@@ -25,6 +26,15 @@ exports.createCreditNote = (req, res) => {
         status: 'success',
         credit_invoice_no: creditInvoiceId,
       });
+      // service.creditDetailsToTransactions(data, creditInvoiceId, (error, results) => {
+      //   if (error) {
+      //     console.log('error', error);
+      //     return res.status(500).json({
+      //       success: 0,
+      //       message: 'Db error',
+      //     });
+      //   }
+      // });
     });
   });
 };
@@ -61,7 +71,8 @@ exports.getINVDetailsinCreditNote = (req, res) => {
 
 exports.getCreditNoteInInvoice = (req, res) => {
   const id = req.query.id;
-  service.getCreditNoteinInvoice(id, (allError, allResult) => {
+  const orgId = req.query.org;
+  service.getCreditNoteinInvoice(id, orgId, (allError, allResult) => {
     if (allError) {
       console.log(allError);
     }

@@ -23,37 +23,43 @@
                   <h4 class="fw-bold py-3 mb-1">Credit Note</h4>
                   <hr class="mb-4">
 
-                  <div class="row">
+                  <form>
+                    <div class="row">
 
-                    <div class="col-md-6">
-                      <div class="card mb-4">
-                        <h5 class="card-header">Vendor Name</h5>
-                        <div class="card-body" id="vendorname">
-                          <select class="form-select" id="vendorselect" aria-label="Default select example">
-                            <option selected>Select Vendor</option>
-                            <%vendors.forEach(function(vendor) {%>
-                              <option value="<%= vendor.vendor_id %>">
-                                <%= vendor.vendor_name %>
-                              </option>
-                              <%});%>
-                          </select>
+                      <div class="col-md-6">
+                        <div class="card mb-4">
+                          <h5 class="card-header">Distributor Name</h5>
+                          <div class="card-body has-validation" id="vendorname">
+                            <select class="form-select" id="vendorselect" aria-label="Default select example">
+                              <option selected>Select Distributor</option>
+                              <%vendors.forEach(function(vendor) {%>
+                                <option value="<%= vendor.vendor_id %>">
+                                  <%= vendor.vendor_name %>
+                                </option>
+                                <%});%>
+                            </select>
+                            <div class="invalid-feedback">
+                              Please select a distributor.
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="col-md-6">
-                      <div class="card mb-4 py-1">
+                      <div class="col-md-6">
+                        <div class="card mb-4 py-1">
 
-                        <h6 class="card-header py-1" id="contact"></h6>
-                        <h6 class="card-header py-1" id="email"></h6>
-                        <h6 class="card-header py-1" id="dl_no"></h6>
-                        <h6 class="card-header py-1" id="gstin"></h6>
-                        <h6 class="card-header py-1" id="address"></h6>
+                          <h6 class="card-header py-1" id="contact"></h6>
+                          <h6 class="card-header py-1" id="email"></h6>
+                          <h6 class="card-header py-1" id="dl_no"></h6>
+                          <h6 class="card-header py-1" id="gstin"></h6>
+                          <h6 class="card-header py-1" id="address"></h6>
 
+                        </div>
                       </div>
+
                     </div>
 
-                  </div>
+                  </form>
                   <hr>
 
                   <!-- Bordered Table -->
@@ -64,41 +70,52 @@
                       <div class="card-body form-block mb-3">
 
                         <div class="row w-100 m-0 p-0">
-                          <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
+                          <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0 has-validation">
                             <p class="mb-2 repeater-title fw-bold">Item</p>
                             <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name" />
-                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" />
+                            <div class="invalid-feedback">
+                              Please select a product.
+                            </div>
+                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" readonly />
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Batch</p>
                             <div class="mb-2" id="batchdroporinput">
                               <input type="text" class="form-control" id="batch" placeholder="" />
                             </div>
-                            <input class="form-control" type="date" id="expdate" />
+                            <input class="form-control" type="date" id="expdate" readonly />
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
-                            <div>
+                            <div class="has-validation">
                               <p class="mb-2 repeater-title" id="primaryunitname">P.Unit<span></span></p>
                               <input type="number" class="form-control px-1" id="pUnit" min="0" />
+                              <div class="invalid-feedback">
+                                Please enter quantity.
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
-                            <div>
+                            <div class="has-validation">
                               <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
                               <input type="number" class="form-control px-1" id="sUnit" min="0" />
+                              <div class="invalid-feedback">
+                                Please enter quantity.
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
-                            <p class="mb-2 repeater-title">MRP / P.Unit</p>
-                            <input type="number" class="form-control" id="price" placeholder="" min="0" />
+                            <p class="mb-2 repeater-title">Rate / P.Unit</p>
+                            <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0"
+                              readonly />
                           </div>
-                          <div class="col-md-1 col-12 mb-md-0 mb-3">
+
+                          <!-- <div class="col-md-1 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Disc %</p>
                             <input type="number" class="form-control" id="discount" placeholder="" min="0" />
-                          </div>
+                          </div> -->
 
 
-                          <div class="col-md-1 col-6 pe-0">
+                          <div class="col-md-2 col-6 pe-0">
                             <p class="mb-2 repeater-title">Total</p>
                             <input type="text" class="form-control px-0" id="total" placeholder="" min="0" readonly />
                             <div style="font-size: smaller;"><span id="profit"></span></div>
@@ -130,37 +147,12 @@
                               <th class="col-7">Product name</th>
                               <th class="col-1" id="priqtycart">PQty</th>
                               <th class="col-1" id="secqtycart">SQty</th>
-                              <th class="col-1">MRP/PUnit</th>
-                              <!-- <th class="col-1">Disc %</th> -->
+                              <th class="col-1">Rate/PUnit</th>
                               <th class="col-1">Total</th>
                               <th class="col-1">Action</th>
-
-
                             </tr>
                           </thead>
                           <tbody id="itemcart">
-
-
-                            <!-- <tr>
-                                                            <td>1</td>
-                                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                                                <strong>Actapro Tablet</strong>
-                                                            </td>
-                                                            <td>Sun Pharmaceutical Industries Ltd</td>
-                                                            <td>10</td>
-                                                            <td>Box</td>
-                                                            <td>
-                                                                <div class="action-btns">
-                                                                    <button type="button" class="btn p-0 mx-2"><i
-                                                                            class='bx bxs-edit'></i></button>
-                                                                    <button type="button" class="btn p-0 mx-2"><i
-                                                                            class="bx bx-trash me-1"></i></button>
-                                                                </div>
-                                                            </td>
-                                                        </tr> -->
-
-
-
                           </tbody>
                         </table>
                       </div>
@@ -171,6 +163,46 @@
 
 
                   <!-- / Content -->
+                  <div class="row d-flex justify-content-evenly mt-4">
+
+                    <div class="d-flex row m-0 p-0">
+                      <h4 class="col-sm-7 fw-bold py-3 mb-2">Summary</h4>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="card mb-4">
+                        <h5 class="card-header"> Total Amount (₹)</h5>
+                        <div class="card-body">
+                          <div class="has-validation">
+                            <input type="number" class="form-control" id="totalCreditAmt" readonly />
+                            <div class="invalid-feedback">
+                              Item cart empty cannot submit
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4" id="lessDiscountBox">
+                      <div class="card mb-4">
+                        <div class="d-flex justify-content-between m-0 p-0">
+                          <h5 class="card-header">Less Discount (₹)</h5>
+                        </div>
+                        <div class="card-body pt-0">
+                          <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="lessDiscount"
+                              onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                              name="lessDiscount" placeholder="Less Discount in (₹)" />
+                            <div class="invalid-feedback">
+                              Less Discount cannot be greater than total amount
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
 
 
                   <div class="text-center mt-3">
@@ -258,7 +290,7 @@
               select: function (event, ui) {
                 setTimeout(function () {
                   console.log('the selected med', ui.item);
-                  productId = ui.item.sample_id;
+                  productId = ui.item.product_id;
 
                   //getting all the batches associated with the product
                   $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
@@ -296,8 +328,8 @@
                     availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
                     $("#pUnit").val(availablePrimaryQty);
                     $("#sUnit").val(availableSecondaryQty);
-                    priceMed = data.data[0].mrp;
-                    $("#price").val(priceMed);
+                    priceMed = data.data[0].purchase_rate;
+                    $("#purchase_rate").val(priceMed);
                     calculateTotal();
 
                     $("#primaryunitname span").text(` (${primaryUnit})`);
@@ -321,7 +353,7 @@
                       $("#shelflabel").val(data.data[batchId].shelf_label);
                       var date = new Date(data.data[batchId].exp_date);
                       $("#expdate").val(date.toISOString().split('T')[0]);
-                      $("#price").val(data.data[batchId].mrp);
+                      $("#purchase_rate").val(data.data[batchId].purchase_rate);
                       conversion = data.data[batchId].conversion;
 
                       availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
@@ -348,25 +380,18 @@
 
             var priQty = $("#pUnit");
             var secQty = $("#sUnit");
-            var priceInput = $("#price");
-            var discInput = $("#discount");
+            var rateInput = $("#purchase_rate");
             var totalInput = $("#total");
 
             priQty.on("input", calculateTotal);
             secQty.on("input", calculateTotal);
-            discInput.on("input", calculateTotal);
 
             function calculateTotal() {
               var primaryqty = parseInt(priQty.val()) || 0;
-
               var secondaryqty = parseInt(secQty.val()) || 0;
+              var rate = parseFloat(rateInput.val()) || 0;
 
-              var price = parseFloat(priceInput.val()) || 0;
-
-              console.log(price);
-
-              var total = primaryqty * price + secondaryqty * price / conversion;
-
+              var total = primaryqty * rate + secondaryqty * rate / conversion;
 
               totalInput.val(total.toFixed(2));
             }
@@ -378,23 +403,53 @@
             var htmlData;
             $("#addtocart").click(function () {
 
-              if ($("#vendorselect").val() == 'Select Vendor') {
-                return alert('PLEASE ADD VENDOR FIRST');
+              if ($("#vendorselect").val() == 'Select Distributor') {
+                $("#vendorselect").addClass('is-invalid');
+                $("#vendorselect").focus();
+                e.preventDefault();
+              } else {
+                $("#vendorselect").removeClass('is-invalid');
               }
 
-
               if ($("#medicinename").val() == '') {
-                return alert('PLEASE ADD MEDICINE FIRST');
+                $("#medicinename").addClass('is-invalid');
+                $("#medicinename").focus();
+                e.preventDefault();
+              } else {
+                $("#medicinename").removeClass('is-invalid');
               }
 
               if ($("#pUnit").val() == '') {
-                return alert('PLEASE ADD QUANTITY FIRST');
+                $("#pUnit").addClass('is-invalid');
+                $("#pUnit").focus();
+                e.preventDefault();
+              } else {
+                $("#pUnit").removeClass('is-invalid');
+              }
+
+              if ($("#pUnit").val() == 0 && $("#sUnit").val() == 0) {
+                $("#pUnit").addClass('is-invalid');
+                $("#pUnit").focus();
+                e.preventDefault();
+              } else {
+                $("#pUnit").removeClass('is-invalid');
+              }
+              
+              if ($("#sUnit").val() == '') {
+                $("#sUnit").addClass('is-invalid');
+                $("#sUnit").focus();
+                e.preventDefault();
+              } else {
+                $("#sUnit").removeClass('is-invalid');
               }
 
               if ($("#batch").val() == '') {
-                return alert('PLEASE ADD BATCH FIRST');
+                $("#batch").addClass('is-invalid');
+                $("#batch").focus();
+                e.preventDefault();
+              } else {
+                $("#batch").removeClass('is-invalid');
               }
-
 
 
               if (priQty.val() > availablePrimaryQty) {
@@ -410,7 +465,7 @@
               var brand = $("#brand").val();
               var priCartQty = priQty.val();
               var secCartQty = secQty.val();
-              var mrp = priceInput.val();
+              var mrp = rateInput.val();
 
               var total = totalInput.val();
 
@@ -448,7 +503,7 @@
               $("#brand").val("");
               $("#pUnit").val("");
               $("#sUnit").val("");
-              $("#price").val("");
+              $("#purchase_rate").val("");
 
               $("#total").val("");
               $("#shelflabel").val("");
@@ -458,6 +513,8 @@
               $("#unit").empty();
               $("#pack .unit").empty();
               $("#message").empty();
+              $("#primaryunitname span").text(``);
+              $("#secondaryunitname span").text(``);
 
             })
 
@@ -468,7 +525,7 @@
               cartItems = JSON.parse(localStorage.getItem('creditnoteitems')) || [];
               console.log(cartItems);
               renderCart(cartItems);
-              //getSubTotal();
+              getCartSummary();
             });
 
             //deletefunctionality
@@ -480,6 +537,7 @@
               cartarray = cartItemsinStorage;
               localStorage.setItem('creditnoteitems', JSON.stringify(cartItemsinStorage));
               renderCart(cartItemsinStorage);
+              getCartSummary();
             });
             //endofdeletefunctionality
 
@@ -495,7 +553,7 @@
               $("#brand").val(selectedItem.brand);
               $("#pUnit").val(selectedItem.priQty);
               $("#sUnit").val(selectedItem.secQty);
-              $("#price").val(selectedItem.mrp);
+              $("#purchase_rate").val(selectedItem.purchase_rate);
               $("#total").val(selectedItem.total);
 
               //getting all data for batches
@@ -539,8 +597,8 @@
                 $("#shelflabel").val(data.data[batchnumber].shelf_label);
 
                 //$("#batch").val(data.data[0].batch_id);
-                priceMed = data.data[batchnumber].mrp;
-                $("#price").val(priceMed);
+                priceMed = data.data[batchnumber].purchase_rate;
+                $("#purchase_rate").val(priceMed);
 
                 $("#batchdroporinput").on("change", "#batchnumber", function () {
                   var batchId = $("#batchdroporinput #batchnumber").val();
@@ -549,7 +607,7 @@
                   $("#shelflabel").val(data.data[batchId].shelf_label);
                   var date = new Date(data.data[batchId].exp_date);
                   $("#expdate").val(date.toISOString().split('T')[0]);
-                  $("#price").val(data.data[batchId].mrp);
+                  $("#purchase_rate").val(data.data[batchId].purchase_rate);
                   conversion = data.data[batchId].conversion;
 
                   availablePrimaryQty = data.data[batchId].batch_qty - data.data[batchId].saled_pri_qty;
@@ -560,14 +618,13 @@
                   calculateTotal();
                 })
 
-
               })
 
               UpdatecartItemsinStorage.splice(item_id - 1, 1);
               cartarray = UpdatecartItemsinStorage;
               localStorage.setItem('creditnoteitems', JSON.stringify(UpdatecartItemsinStorage));
               renderCart(UpdatecartItemsinStorage);
-
+              getCartSummary();
 
             })
             //end of edit functionality
@@ -580,37 +637,53 @@
 
               for (var i = 0; i < items.length; i++) {
                 htmlData = `
-                                        <tr>
-                                            <td class="card_id">${i + 1}</td>
-                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
-                                            <td>${items[i].priQty}</td>
-                                            <td>${items[i].secQty}</td>
-                                            <td>${items[i].mrp}</td>
-                                            <td>${items[i].total}</td>
-                                            <td>
-                                            <div class="action-btns">
-                                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
-                                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        `
+                        <tr>
+                            <td class="card_id">${i + 1}</td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${items[i].productname}</strong></td>
+                            <td>${items[i].priQty}</td>
+                            <td>${items[i].secQty}</td>
+                            <td>${items[i].mrp}</td>
+                            <td>${items[i].total}</td>
+                            <td>
+                            <div class="action-btns">
+                                <button type="button" id="edit-button" class="edit-button btn p-0 mx-2"><i class='bx bxs-edit'></i></button>
+                                <button type="button" class="delete-button btn p-0 mx-2"><i class="bx bx-trash me-1"></i></button>
+                            </div>
+                            </td>
+                        </tr>
+                        `
                 $('#itemcart').append(htmlData);
               }
             }
             //end of rendereing data logic
 
 
+            // Function for cart summary
+            function getCartSummary() {
+              var totalCreditAmt = 0;
+              var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
 
-
-
-
+              if (creditCarts.length != 0) {
+                for (let i in creditCarts) {
+                  totalCreditAmt += parseFloat(creditCarts[i].total);
+                }
+                $("#totalCreditAmt").val(totalCreditAmt.toFixed(2));
+              }
+              else if ( creditCarts.length == 0) {
+                $("#totalCreditAmt").val(0);
+              }
+            }
 
             // post the data to the credit note
             var creditInvoice;
             $("#submitcredit").click(function () {
-
+              var credit_amt = 0;
+              var lessDiscount = $("#lessDiscount").val() || 0;
               var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
+
+              for (let i in creditCarts) {
+                credit_amt += parseFloat(creditCarts[i].total);
+              }
 
               if (creditCarts == null || creditCarts.length == 0) {
                 return alert("Item Cart Empty");
@@ -625,6 +698,8 @@
                   vendor_id: vendorId,
                   pharmacyId: pharmacyDetails.pharmaId,
                   org_id: '<%=orgId%>',
+                  credit_amt: credit_amt.toFixed(2),
+                  less_discount: lessDiscount
                 }),
 
                 contentType: 'application/json',
@@ -659,7 +734,7 @@
                       sec_unit_credit: creditCarts[i].secQty,
                       credit_invoice_no: creditInvoice,
                       batch_id_credit: creditCarts[i].batchId,
-                      total_credit: creditCarts[i].total
+                      total_credit: creditCarts[i].total,
                     })
 
                     console.log('cartDetail for the saled product', cartDetails);
@@ -681,14 +756,11 @@
                   localStorage.removeItem("creditnotecartitems");
                   window.location.href = `/credit_note_receipt/${creditInvoice}`
 
-
                 },
                 error: function (error) {
                   alert("not Created", error)
                 }
               })
-
-
             })
 
 
@@ -716,15 +788,9 @@
                     console.log('Error:', error);
                 }
             });
- 
         */
           })
         </script>
-
-
-
-
   </body>
-
 
   </html>

@@ -90,38 +90,6 @@
                                             </div>
 
                                             <div class="row mb-3">
-
-                                                <label class="col-sm-2 col-form-label"
-                                                    for="basic-icon-default-companyname">GST (%)</label>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control"
-                                                            id="basic-icon-default-companyname" placeholder=""
-                                                            aria-label="John Doe"
-                                                            aria-describedby="basic-icon-default-companyname2"
-                                                            name="gst" disabled value="<%=data[0].gst%>">
-                                                    </div>
-                                                </div>
-
-
-
-                                                <label class="col-sm-2 col-form-label ps-4"
-                                                    for="basic-icon-default-companyname">HSN Code</label>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control"
-                                                            id="basic-icon-default-companyname" placeholder=""
-                                                            aria-label="John Doe"
-                                                            aria-describedby="basic-icon-default-companyname2"
-                                                            name="hsn" disabled value="<%=data[0].hsn%>">
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-
-                                            <div class="row mb-2">
                                                 <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-address">Unit</label>
                                                 <div class="col-sm-4 me-0">
@@ -131,8 +99,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-1 text-center mx-0 p-0">
-                                                    <p class="fs-4">-</p>
+                                                <div class="col-sm-2 text-center mx-0 p-0">
+                                                    <p class="fs-4"></p>
                                                 </div>
 
                                                 <div class="col-sm-4 ms-0">
@@ -145,6 +113,38 @@
                                             </div>
 
                                             <div class="row mb-3">
+
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-companyname">GST (%)</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" id="gst" name="gst"
+                                                            disabled value="<%=data[0].gst%>">
+                                                    </div>
+                                                </div>
+
+                                                <label class="col-sm-2 col-form-label"
+                                                    for="basic-icon-default-companyname">HSN Code</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" id="hsn" name="hsn"
+                                                            disabled value="<%=data[0].hsn%>">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="row mb-3">
+
+                                                <label class="col-sm-2 col-form-label" for="category">Category</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="category" disabled
+                                                            value="<%=data[0].category_name%>">
+                                                    </div>
+                                                </div>
+
                                                 <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">Reorder Level</label>
 
@@ -167,24 +167,27 @@
                                             <div class="row mb-3">
 
 
-                                                <label class="col-sm-2 col-form-label "
+                                                <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-companyname">Batch No.</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
-                                                        <input type="text" class="form-control" placeholder=""
-                                                            aria-label="" id="batchname" />
+                                                    <div class="input-group has-validation">
+                                                        <input type="text" class="form-control" id="batchname"
+                                                            placeholder="Eg- B6AEW8852" required />
+                                                        <div class="invalid-feedback">
+                                                            Please enter batch number.
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <label class="col-sm-2 col-form-label ps-4"
                                                     for="basic-icon-default-address">Exp Date</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-
-                                                        <input class="form-control" type="date" id="html5-date-input"
-                                                            name="addexp" />
+                                                    <div class="input-group has-validation">
+                                                        <input class="form-control expiry-date-mask" type="text"
+                                                            name="addexp" placeholder="MM/YY" required />
+                                                        <div class="invalid-feedback">
+                                                            Please enter valid expiry date.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -194,16 +197,20 @@
                                                     for="basic-icon-default-companyname">Conversion</label>
 
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
+                                                    <div class="input-group has-validation">
                                                         <span class="input-group-text" id="primarypopulate">
                                                             <%=data[0].primary_unit%>
                                                         </span>
                                                         <span class="input-group-text">=</span>
-                                                        <input type="number" class="form-control" placeholder=""
-                                                            aria-label="" id="conversion" />
+                                                        <input type="text" class="form-control rounded-0"
+                                                            onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            id="conversion" placeholder="Enter conversion" required />
                                                         <span class="input-group-text" id="secondarypopulate">
                                                             <%=data[0].secondary_unit%>
                                                         </span>
+                                                        <div class="invalid-feedback">
+                                                            Please enter conversion.
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -211,43 +218,78 @@
                                                     for="basic-icon-default-companyname">Quantity</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
-                                                        <input type="number" class="form-control" name="addqty">
-                                                        <span class="input-group-text" id="getprimaryunit">
-                                                            <%=data[0].primary_unit%>
-                                                        </span>
+                                                        <div class="input-group has-validation">
+                                                            <input type="text" class="form-control" name="addqty"
+                                                                placeholder="Enter quantity"
+                                                                onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                                required /> <span class="input-group-text"
+                                                                id="getprimaryunit">
+                                                                <%=data[0].primary_unit%>
+                                                            </span>
+                                                            <div class="invalid-feedback">
+                                                                Please enter quantity.
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-3  ">
+                                            <div class="row mb-3">
 
-                                                <label class="col-sm-2 col-form-label"
-                                                    for="basic-icon-default-companyname">MRP</label>
+                                                <label class="col-sm-2 col-form-label">MRP</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
-                                                        <input type="text" class="form-control" name="addmrp">
+                                                    <div class="input-group  has-validation">
+                                                        <input type="text" class="form-control" name="addmrp" id="price"
+                                                            onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            placeholder="Enter MRP Rate" required />
+                                                        <div class="invalid-feedback">
+                                                            Please enter MRP.
+                                                        </div>
                                                     </div>
                                                 </div>
-
-
 
                                                 <label class="col-sm-2 col-form-label ps-4"
                                                     for="basic-icon-default-companyname">PTR</label>
                                                 <div class="col-sm-4">
-                                                    <div class="input-group input-group-merge">
-                                                        <span id="basic-icon-default-companyname2"
-                                                            class="input-group-text"></span>
-                                                        <input type="text" class="form-control" name="addpur">
+                                                    <div class="input-group has-validation">
+                                                        <input type="text" class="form-control" name="addpur"
+                                                            onkeypress="javascript: if (!/[0-9.]/.test(String.fromCharCode(event.charCode))) return false;"
+                                                            id="addpur" placeholder="Enter Purchase rate" required />
+                                                        <div class="invalid-feedback">
+                                                            Please enter PTR.
+                                                        </div>
+                                                    </div>
+                                                    <div style="font-size: smaller; color:blue; margin-top: 5px; display: none;"
+                                                        id="r_margin">
+                                                        Retailer Margin: <span id="retailer_margin">20</span>%
                                                     </div>
                                                 </div>
 
                                             </div>
 
-                                            <div class="row mb-3">
+                                            <!-- <div class="row mb-3">
+
+                                                <label class="col-sm-2 col-form-label" for="free_scheme">Free</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="free_scheme"
+                                                            id="free_scheme">
+                                                    </div>
+                                                </div>
+
+                                                <label class="col-sm-2 col-form-label ps-4"
+                                                    for="bulk_discount">Discount(%)</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" name="bulk_discount"
+                                                            id="bulk_discount">
+                                                    </div>
+                                                </div>
+
+                                            </div> -->
+
+                                            <!-- <div class="row mb-3">
 
                                                 <label class="col-sm-2 col-form-label"
                                                     for="basic-icon-default-email">Shelf Label</label>
@@ -260,13 +302,18 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
-                                            <div class="row justify-content-end">
+                                            <!-- <div class="row justify-content-end">
                                                 <div class="col-sm-10">
                                                     <button type="submit" class="btn btn-primary"
                                                         id="submitbatch">Add</button>
                                                 </div>
+                                            </div> -->
+
+                                            <div class="col-sm-12 text-center">
+                                                <button type="submit" class="btn btn-primary"
+                                                    id="submitbatch">Add</button>
                                             </div>
 
 
@@ -297,121 +344,235 @@
         <%- include('../partials/footercode.ejs') %>
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <script>
-                console.log('<%=data[0].sample_id%>');
 
-                var orgID = '<%= orgId %>';
-                var productId = '<%=data[0].sample_id%>';
-                /*
-                $(document).ready(function(){
-                    if ('caches' in window) {
-                        caches.keys().then(name=>{
-                          if(name.length == 0){
-                            console.log('do something');
-                            caches.open('productCache').then((cache) => {
-                              cache.add('/api/allsample');
-                            })
-                          }
-                          else{
-                            console.log('do nothing');
-                          } 
-                        })    
-                    }
-    // autopopulate product
-                        $("input[name='productname']").autocomplete({
-                            minLength: 3,
-                            source: function(request, response) {
-                                if('caches' in  window){
-                                    caches.match(`/api/allsample`).then(res=>{
-                                        if(res){
-                                            res.json().then(data=>{
-                                                let searchTerm = request.term;
-                                                let results = data.result.filter(item =>item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0,10);
-                                                response(results);
-                                            })
-                                        }
-                                    });
-                                }
-                            },
-                            select: function(event, ui) {
-                                setTimeout(function(){
-                                    console.log(ui.item);
-                                    productId=ui.item.sample_id;
-                                    $("input[name='productname']").val(ui.item.med_name);
-                                    $("input[name='brand']").val(ui.item["mfd_mkt"]);
-                                    $("input[name='salt']").val(ui.item.salt_composition);
-                                },0)
+                $(document).ready(function () {
+
+                    var orgID = '<%= orgId %>';
+                    var productId = '<%=data[0].product_id%>';
+                    var inventoryId = '<%=data[0].inventory_id%>';
+                    console.log(inventoryId);
+
+                    // Hide validation messages on input
+                    $('input').each(function () {
+                        $(this).on('input', function () {
+                            if ($(this).val() == '') {
+                                $(this).addClass('is-invalid');
+                            } else {
+                                $(this).removeClass('is-invalid');
                             }
-                        }).data('ui-autocomplete')._renderItem = function(ul, item) {
-                            return $('<li>')
-                            .append('<div>' + item.med_name + '</div>')
-                            .appendTo(ul);
-                        };
-    //changes in stp and tabs
-                        $("select[name='primary'], select[name='secondary']").on("change", function(){
-                            //var primaryUnit = $("select[name='primary']").find('option:selected').text();
-                            //var secondaryUnit = $("select[name='secondary']").find('option:selected').text();
-                            var primaryUnit = $("select[name='primary']").val();
-                            var secondaryUnit = $("select[name='secondary']").val();
-    
-    
-                            $("#primarypopulate").text(`1 ${primaryUnit}`);
-                            $("#secondarypopulate").text(`${secondaryUnit}`);
-                            $("#getprimaryunit").text(primaryUnit);
-                        })
-    */
+                        });
+                    });
+                    $('select:required').each(function () {
+                        $(this).on('input', function () {
+                            if ($(this).val() == 'default' || $(this).val() == null) {
+                                $(this).addClass('is-invalid');
+                            } else {
+                                $(this).removeClass('is-invalid');
+                            }
+                        });
+                    });
 
-                $("input[name='addexp']").on('input', function () {
-                    var input = $(this);
-                    var exp_date = input.val();
-                    if (exp_date < new Date().toJSON().slice(0, 10)) {
-                        $("input[name='addexp']").val(null);
-                        return alert('PLEASE ADD CORRECT EXP Date FIRST');
-                    }
-                });
-                //submit process after adding batch
+                    // Formatted expiry date input
+                    var cleave = new Cleave('.expiry-date-mask', {
+                        date: true,
+                        datePattern: ['m', 'y']
+                    });
 
-                $("#submitbatch").click(function () {
+                    // Expiry date validation
+                    $("[name='addexp']").on('change', function () {
+                        var input = $(this);
+                        var exp_date = input.val();
 
-                    $('#loader').show();
+                        var year = parseInt(exp_date.split('/')[1], 10);
+                        year = year < 70 ? 2000 + year : 1900 + year;
+                        var expiryDate = new Date(year, exp_date.split('/')[0] - 1);
 
-                    if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
-                        return alert("Purchase Rate can't be greater than MRP");
-                    }
+                        // Get the current year and month
+                        var today = new Date();
+                        var currentYear = today.getFullYear();
+                        var currentMonth = today.getMonth();
 
-                    var batchDetails = {
-                        product_id: "<%=data[0].sample_id%>",
-                        org_id: orgID,
-                        batch_name: $("#batchname").val(),
-                        exp_date: $("input[name='addexp']").val(),
-                        conversion: $("#conversion").val(),
-                        batch_qty: $("input[name='addqty']").val(),
-                        purchase_rate: $("input[name='addpur']").val(),
-                        mrp: $("input[name='addmrp']").val(),
-                        shelf_label: $("input[name='addshelf']").val()
-                    }
-                    console.log(batchDetails);
-
-                    $.ajax({
-                        url: `/api/addbatch/`,
-                        type: 'POST',
-                        data: JSON.stringify(batchDetails),
-                        contentType: 'application/json',
-                        success: function (response) {
-
-                            $('#loader').hide();
-
-                            window.location.href=`/product_batch/${productId}`          
-                            console.log(response);
-
-                        },
-                        error: function (error) {
-                            $('#loader').hide();
-                            console.log(error);
+                        if (expiryDate.getFullYear() < currentYear ||
+                            (expiryDate.getFullYear() === currentYear && expiryDate.getMonth() < currentMonth)  ||
+                            expiryDate.getFullYear() > currentYear + 5) {
+                            $("[name='addexp']").val(null);
+                            $("[name='addexp']").addClass('is-invalid');
+                        } else {
+                            $(".invalid-feedback").hide();
                         }
+                    });
+
+                    //PTR < MRP Validation
+                    $("input[name='addpur']").on('change', function () {
+                        var ptr = parseFloat($("input[name='addpur']").val());
+                        var mrp = parseFloat($("input[name='addmrp']").val());
+
+                        if (ptr >= mrp) {
+                            $("input[name='addpur']").val(null);
+                            $("input[name='addpur']").addClass('is-invalid');
+                        } else {
+                            $(".invalid-feedback").hide();
+                        }
+                    });
+
+                    // Calculate PTR
+                    function calcuatePTR(mrp, gst, retailerMargin) {
+                        return (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+                    }
+
+                    $("input[name='addmrp']").on("keyup", function () {
+                        $("#r_margin").show();
+
+                        var mrp = parseFloat($("input[name='addmrp']").val());
+                        var gst = parseFloat($("input[name='gst']").val());
+                        var retailerMargin = parseFloat($("#retailer_margin").text());
+
+                        // Corrected PTR formula
+                        var ptr = (mrp - (mrp * (retailerMargin / 100))) / (1 + (gst / 100));
+
+                        $("input[name='addpur']").val(ptr.toFixed(2))
+                    });
+
+                    $("input[name='addpur']").on("keyup", function () {
+                        var mrp = parseFloat($("input[name='addmrp']").val());
+                        var gst = parseFloat($("input[name='gst']").val());
+                        var ptr = parseFloat($("input[name='addpur']").val());
+
+                        var retailerMargin = (((mrp - ptr) / mrp) * 100) - ((ptr / mrp) * gst);
+
+                        $("#retailer_margin").text(retailerMargin.toFixed(2));
+                    });
+
+
+
+                    //submit process after adding batch
+                    $("#submitbatch").click(function (e) {
+
+                        // Validations
+                        e.preventDefault();
+                        var isValid = true;
+                        $('input:required').each(function () {
+                            if ($(this).val() == '') {
+                                $(this).addClass('is-invalid');
+                                $(this).focus();
+                                isValid = false;
+                            } else {
+                                $(this).removeClass('is-invalid');
+                            }
+                        });
+
+                        $('select:required').each(function () {
+                            if ($(this).val() == 'default' || $(this).val() == null) {
+                                $(this).addClass('is-invalid');
+                                isValid = false;
+                            } else {
+                                $(this).removeClass('is-invalid');
+                            }
+                        });
+
+                        // if ($("#batchname").val() == null || $("#batchname").val() == "") {
+                        //     $("#batchname").addClass('is-invalid');
+                        //     $("#batchname").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("#batchname").removeClass('is-invalid');
+                        // }
+
+                        // if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
+                        //     $('[name="addexp"]').addClass('is-invalid');
+                        //     $('[name="addexp"]').focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $('[name="addexp"]').removeClass('is-invalid');
+                        // }
+
+                        // if ($("#conversion").val() == "") {
+                        //     $("#conversion").addClass('is-invalid');
+                        //     $("#conversion").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("#conversion").removeClass('is-invalid');
+                        // }
+                        // if ($("input[name='addqty']").val() == "" || $("input[name='addqty']").val() == null) {
+                        //     $("input[name='addqty']").addClass('is-invalid');
+                        //     $("input[name='addqty']").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("input[name='addqty']").removeClass('is-invalid');
+                        // }
+
+                        // if ($("input[name='addmrp']").val() == "" || $("input[name='addmrp']").val() == null) {
+                        //     $("input[name='addmrp']").addClass('is-invalid');
+                        //     $("input[name='addmrp']").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("input[name='addmrp']").removeClass('is-invalid');
+                        // }
+
+                        // if ($("input[name='addpur']").val() == "" || $("input[name='addpur']").val() == null) {
+                        //     $("input[name='addpur']").addClass('is-invalid');
+                        //     $("input[name='addpur']").focus();
+                        //     e.preventDefault();
+                        // } else {
+                        //     $("input[name='addpur']").removeClass('is-invalid');
+                        // }
+
+                        // if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
+                        //     return alert("Purchase Rate can't be greater than MRP");
+                        // }
+
+                        if (isValid) {
+
+
+                            // Convert expdate to yyyy-mm-dd format
+                            var exp = $("[name='addexp']").val();
+                            var year = parseInt(exp.split('/')[1], 10);
+                            year = year < 70 ? 2000 + year : 1900 + year;
+                            var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
+                            firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
+                            var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
+
+                            var batchDetails = {
+                                product_id: "<%=data[0].product_id%>",
+                                org_id: orgID,
+                                inventory_id: inventoryId,
+                                batch_name: $("#batchname").val(),
+                                exp_date: exp,
+                                conversion: $("#conversion").val(),
+                                batch_qty: parseFloat($("input[name='addqty']").val()),
+                                purchase_rate: $("input[name='addpur']").val(),
+                                mrp: $("input[name='addmrp']").val(),
+                                free: 0,
+                                bulk_discount: 0,
+                                base_price: $("input[name='addpur']").val(),
+                                shelf_label: $("input[name='addshelf']").val()
+                            }
+                            console.log(batchDetails);
+
+                            $('#loader').show();
+                            $.ajax({
+                                url: `/api/addbatch/`,
+                                type: 'POST',
+                                data: JSON.stringify(batchDetails),
+                                contentType: 'application/json',
+                                success: function (response) {
+
+                                    $('#loader').hide();
+
+                                    window.location.href = `/product_batch/${productId}`
+                                    console.log(response);
+
+                                },
+                                error: function (error) {
+                                    $('#loader').hide();
+                                    console.log(error);
+                                }
+                            })
+
+                        }
+
                     })
-
-                })
-
+                });
             </script>
 
     </body>

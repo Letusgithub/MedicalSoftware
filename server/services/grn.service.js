@@ -9,13 +9,23 @@ module.exports = {
                   vendor_id,
                   vendor_invoice,
                   total,
+                  invoice_date,
+                  credit_period,
+                  less_discount,
+                  credit_debit,
+                  payment_method,
                   org_id)
-                  value(?,?,?,?,?)`,
+                  value(?,?,?,?,?,?,?,?,?,?)`,
       [
         GRN,
         data.vendor_id,
         data.vendor_invoice,
         data.total,
+        data.invoice_date,
+        data.credit_period,
+        data.less_discount,
+        data.credit_debit,
+        data.payment_method,
         data.org_id,
       ],
       (error, results) => {
@@ -42,8 +52,8 @@ module.exports = {
   createGRNcarts: (data, callback) => {
     getPool().query(
 
-      `insert into grn_cart_details(grn_id, product_id, gst, hsn, punit, sunit, moq, batch_name, exp_Date, conversion, shelf_label, mrp, purchase, qty)
-        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into grn_cart_details(grn_id, product_id, gst, hsn, punit, sunit, moq, batch_name, exp_Date, conversion, shelf_label, mrp, purchase, qty, free, bulk_discount, base_price)
+        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.grn_id,
         data.product_id,
@@ -59,7 +69,9 @@ module.exports = {
         data.mrp,
         data.purchase,
         data.qty,
-
+        data.free,
+        data.bulk_discount,
+        data.base_price,
       ],
       (error, results) => {
         if (error) {
@@ -108,7 +120,7 @@ module.exports = {
       `SELECT grn.*, vendor.vendor_name
       FROM grn 
       JOIN vendor on vendor.vendor_id = grn.vendor_id
-      where MONTH(grn.created_date_grn)=? and grn.org_id = ${orgId} 
+      where MONTH(grn.created_date_grn)=? AND YEAR(grn.created_date_grn) = YEAR(CURDATE()) and grn.org_id = ${orgId} 
       `,
       [
         month,
@@ -125,7 +137,7 @@ module.exports = {
       `SELECT grn.*, vendor.vendor_name
       FROM grn 
       JOIN vendor ON vendor.vendor_id = grn.vendor_id
-      where MONTH(grn.created_date_grn)>=? and MONTH(grn.created_date_grn)<=? and grn.org_id = ${orgId} 
+      where MONTH(grn.created_date_grn)>=? and MONTH(grn.created_date_grn)<=? AND YEAR(grn.created_date_grn) = YEAR(CURDATE()) and grn.org_id = ${orgId} 
       `,
       [
         start,
@@ -159,10 +171,10 @@ module.exports = {
 
   getGRNreceipt: (id, callback) => {
     getPool().query(
-      `SELECT sample.med_name, grncd.*, vendor.*, grn.vendor_invoice, grn.total, grn.paid FROM grn
+      `SELECT sample.med_name, grncd.*, vendor.*, grn.vendor_invoice, grn.total, grn.paid, grn.invoice_date, grn.credit_period, grn.less_discount, grn.payment_method, grn.credit_debit FROM grn
       Join grn_cart_details grncd on grncd.grn_id = grn.grn_id
       Join vendor on vendor.vendor_id = grn.vendor_id
-      Join sample on grncd.product_id = sample.sample_id
+      Join sample on grncd.product_id = sample.product_id
       where grn.grn_id = ?
       `,
       [id],

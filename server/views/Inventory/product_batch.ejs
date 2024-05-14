@@ -53,7 +53,7 @@
 
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">Salt</label>
+                                                            for="salt">Salt</label>
                                                         <p class="fw-bold pb-0" id="salt">
                                                         </p>
                                                     </div>
@@ -62,14 +62,21 @@
                                                 <div class="col-md-3">
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">HSN Code</label>
+                                                            for="hsn">HSN Code</label>
                                                         <p class="fw-bold pb-0" id="hsncode"></p>
                                                     </div>
 
                                                     <div>
                                                         <label class="col-form-label"
-                                                            for="basic-icon-default-companyname">GST</label>
+                                                            for="gst">GST</label>
                                                         <p class="fw-bold pb-0" id="gst"></p>
+                                                    </div>
+
+                                                    <div>
+                                                        <label class="col-form-label"
+                                                            for="category">Category</label>
+                                                        <p class="fw-bold pb-0" id="category">
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -171,7 +178,7 @@
                     var productId = '<%= id %>'
                     console.log(productId)
 
-                    $.get(`/api/getinventory/${productId}`, function (data, status) {
+                    $.get(`/api/getinventory?productId=${productId}&orgId=<%=orgId%>`, function (data, status) {
                         var items = data.data[0];
                         console.log('in view batches', items);
                         $("#productname").text(items.med_name);
@@ -179,6 +186,7 @@
                         $("#brand").text(items.mfd_mkt);
                         $("#salt").text(items.salt_composition);
                         $("#gst").text(items.gst + '%');
+                        $("#category").text(items.category_name);
                         $("#product_img").attr('src', items.img_url);
 
 
@@ -189,7 +197,7 @@
                             for (let i = 0; i < batch.length; i++) {
 
                                 var date = new Date(batch[i].exp_date);
-                                var expdate = date.toISOString().split('T')[0];
+                                var expdate = moment(date).format('MM/YYYY');
                                 //var totalCost = batch[i].purchase_rate*batch[i].batch_qty;
                                 //<td>₹${batch[i].purchase_rate}</td>
                                 //<td>₹${totalCost}</td>

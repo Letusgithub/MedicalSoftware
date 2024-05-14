@@ -10,12 +10,16 @@ module.exports = {
       `insert into credit_note(
                   credit_invoice_id,
                   vendor_id,
-                  org_id)
-                  value(?,?,?)`,
+                  org_id,
+                  credit_amt,
+                  less_discount)
+                  value(?,?,?,?,?)`,
       [
         creditInvoice,
         data.vendor_id,
         data.org_id,
+        data.credit_amt,
+        data.less_discount,
       ],
       (error, results) => {
         if (error) {
@@ -29,7 +33,7 @@ module.exports = {
     getPool().query(
       `insert into credit_note_cart_details(
                   
-                  credit_invoice_no,
+                  credit_invoice_id,
                   product_id,
                   batch_id_credit,
                   pri_unit_credit,
@@ -69,7 +73,7 @@ module.exports = {
   getINVDetailsinCreditNote: (orgId, callBack) => {
     getPool().query(
       `SELECT * FROM inventory inv
-      JOIN sample spl ON inv.product_id = spl.sample_id
+      JOIN sample spl ON inv.product_id = spl.product_id
       where inv.org_id= ?
       `,
       [
@@ -84,16 +88,15 @@ module.exports = {
     );
   },
 
-  getCreditNoteinInvoice: (id, callBack) => {
+  getCreditNoteinInvoice: (id, orgId, callBack) => {
     getPool().query(
-      `SELECT DISTINCT vendor.*, crdetails.*, inv.hsn, inv.gst, batch.batch_name, batch.exp_date, batch.mrp,  sample.med_name FROM credit_note cr
-      JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_no
+      `SELECT DISTINCT vendor.*, crdetails.*, cr.less_discount, cr.credit_amt, inv.*, batch.*,  sample.med_name FROM credit_note cr
+      JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_id
       Join vendor on cr.vendor_id = vendor.vendor_id
-      Join sample on crdetails.product_id = sample.sample_id
+      Join sample on crdetails.product_id = sample.product_id
       Join batch on batch.batch_id = crdetails.batch_id_credit 
       Join inventory inv on inv.product_id = crdetails.product_id
-      where cr.credit_invoice_id = ?
-      
+      where cr.credit_invoice_id = ? and inv.org_id = ${orgId}
       `,
       [
         id,
@@ -111,7 +114,7 @@ module.exports = {
     getPool().query(
       `SELECT DISTINCT * FROM credit_note cn
       Join vendor on vendor.vendor_id = cn.vendor_id
-      where MONTH(cn.created_date_credit)=? and cn.org_id = ${orgId}
+      where MONTH(cn.created_date_credit)=? AND YEAR(cn.created_date_credit) = YEAR(CURDATE()) and cn.org_id = ${orgId}
       `,
       [
         month,
@@ -127,7 +130,7 @@ module.exports = {
     getPool().query(
       `SELECT DISTINCT * FROM credit_note cn
       Join vendor on vendor.vendor_id = cn.vendor_id
-      where MONTH(cn.created_date_credit)>=? and MONTH(cn.created_date_credit)<=? and cn.org_id = ${orgId} 
+      where MONTH(cn.created_date_credit)>=? and MONTH(cn.created_date_credit)<=? AND YEAR(cn.created_date_credit) = YEAR(CURDATE()) and cn.org_id = ${orgId} 
       `,
       [
         start,
@@ -188,5 +191,30 @@ module.exports = {
     );
   },
 
-
+  creditDetailsToTransactions: (data, creditInvoiceId, callBack) => {
+    getPool().query(
+      `insert into transactions(
+                  org_id,
+                  vendor_id,
+                  note_id,
+                  transaction_type,
+                  adjustment_amt,
+                  balance_amt)
+                  value(?,?,?,?,?,?)`,
+      [
+        data.org_id,
+        data.vendor_id,
+        creditInvoiceId,
+        'credit',
+        data.credit_amt,
+        data.credit_amt,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
 };

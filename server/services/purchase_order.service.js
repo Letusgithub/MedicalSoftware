@@ -113,7 +113,7 @@ module.exports = {
       JOIN po_items poi
       on poi.po_id_main = po.po_id_main
       JOIN sample spl
-      on spl.sample_id = poi.product_id
+      on spl.product_id = poi.product_id
       where po.po_id = ? `,
       [id],
       (error, results) => {

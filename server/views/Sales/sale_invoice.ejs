@@ -50,11 +50,12 @@
                                 </h5>
                               </div>
                               <div class="card-body pt-0">
-                                <div>
-
+                                <div class="has-validation">
                                   <input type="text" class="form-control" id="customername"
-                                    placeholder="Enter customer name" />
-
+                                    placeholder="Enter customer name" required />
+                                  <div class="invalid-feedback">
+                                    Please enter customer name.
+                                  </div>
                                 </div>
                               </div>
 
@@ -68,12 +69,14 @@
                               <h5 class="card-header">Customer Mobile<span style="font-size: 20px; color: red">*</span>
                               </h5>
                               <div class="card-body">
-                                <div>
-
+                                <div class="has-validation">
                                   <input class="form-control" id="phonenumber" placeholder="Enter 10-digit number"
-                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                    type="number" maxlength="10" />
-
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);  if (this.value.length > 0 && !/[6-9]/.test(this.value[0])) this.value = '';"
+                                    onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                                    type="tel" maxlength="10" required />
+                                  <div class="invalid-feedback">
+                                    Please enter valid mobile.
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -88,7 +91,7 @@
               </div>
 
               <div class="row mx-3">
-                <h4 class="fw-bold mb-2">Add Items</h4>
+                <h4 class="fw-bold mb-2">Add Products</h4>
 
                 <div id="message" class="d-flex justify-content-between mb-2"></div>
 
@@ -102,27 +105,40 @@
 
                       <div class="row w-100 m-0 p-0">
                         <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
-                          <p class="mb-2 repeater-title fw-bold">Item</p>
-                          <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name" />
+                          <p class="mb-2 repeater-title fw-bold">Product</p>
+                          <input type="text" class="form-control mb-2" id="medicinename" placeholder="Product Name"
+                            required />
+                          <div class="invalid-feedback">
+                            Please enter product name.
+                          </div>
                           <input type="text" class="form-control" id="brand" placeholder="Brand Name" />
                         </div>
                         <div class="col-md-2 col-12 mb-md-0 mb-3">
                           <p class="mb-2 repeater-title">Batch & Expiry</p>
-                          <div class="mb-2" id="batchdroporinput">
+                          <div class="mb-2  has-validation" id="batchdroporinput">
                             <input type="text" class="form-control" id="batch" placeholder="" />
+                            <div class="invalid-feedback">
+                              Please select batch.
+                            </div>
                           </div>
                           <input class="form-control" type="date" id="expdate" />
                         </div>
                         <div class="col-md-1 col-6 mb-md-0 mb-3">
-                          <div>
+                          <div class=" has-validation">
                             <p class="mb-2 repeater-title" id="primaryunitname">P.Unit<span></span></p>
-                            <input type="number" class="form-control px-1" id="pUnit" min="0" />
+                            <input type="text" class="form-control px-1" id="pUnit"
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
+                              min="0" />
+                            <div class="invalid-feedback">
+                              Please enter quantity.
+                            </div>
                           </div>
                         </div>
                         <div class="col-md-1 col-6 mb-md-0 mb-3" id="sUnit_input">
                           <div>
                             <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
-                            <input type="number" class="form-control px-1" id="sUnit" min="0" />
+                            <input type="text" class="form-control px-1" id="sUnit" min="0"
+                              onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;" />
                           </div>
                         </div>
                         <div class="col-md-2 col-12 mb-md-0 mb-3">
@@ -135,7 +151,8 @@
                         </div>
                         <div class="col-md-1 col-12 mb-md-0 mb-3">
                           <p class="mb-2 repeater-title">Disc%</p>
-                          <input type="number" class="form-control px-1" id="discount" placeholder="" min="0"
+                          <input type="text" class="form-control px-1" id="discount" placeholder="" min="0"
+                            onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                             max="100" />
                         </div>
 
@@ -212,17 +229,17 @@
 
               <div class="row mx-3">
 
-
-
                 <div class="d-flex row m-0 p-0">
                   <h4 class="col-sm-7 fw-bold py-3 mb-4">Order Summary</h4>
                   <div class="col-sm-5">
                     <div class="mb-1 row">
-
                       <label for="reference" class="col-3 form-label mb-0"><span
-                          style="font-size: 20px; color: red">*</span>Reference</label>
-                      <div class="col-9 mb-2">
+                        style="font-size: 20px; color: red">*</span>Reference</label>
+                      <div class="col-9 mb-2 has-validation">
                         <input class="form-control" type="text" placeholder="Doctor/Hospital" id="reference" />
+                        <div class="invalid-feedback">
+                          Please enter doctor reference.
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -233,23 +250,18 @@
                     <h5 class="card-header"> Subtotal (₹)</h5>
                     <div class="card-body">
                       <div>
-
                         <input type="number" class="form-control" id="subtotal" readonly />
-
                       </div>
                     </div>
                   </div>
                 </div>
 
-
                 <div class="col-md-3">
                   <div class="card mb-4">
-                    <h5 class="card-header">Additional Discount (₹)</h5>
+                    <h5 class="card-header">Add. Discount (₹)</h5>
                     <div class="card-body">
                       <div>
-
                         <input type="number" class="form-control" id="additionaldiscount" />
-
                       </div>
                     </div>
                   </div>
@@ -260,12 +272,9 @@
                     <div class="d-flex justify-content-between m-0 p-0">
                       <h5 class="card-header">Final Amount (₹)</h5>
                     </div>
-
                     <div class="card-body pt-0">
                       <div>
-
                         <input type="number" class="form-control" id="finalamount" readonly />
-
                       </div>
                     </div>
                   </div>
@@ -275,32 +284,31 @@
                   <div class="card mb-4">
                     <h5 class="card-header">Mode of Payment</h5>
                     <div class="card-body">
-                      <div>
-                        <select class="form-select" id="mop" name="mop" aria-label="select mop">
-                          <option selected disabled>Select Option</option>
-                          <option value="cash">Cash</option>
+                      <div class="has-validation">
+                        <select class="form-select" id="mop" name="mop">
+                          <option disabled>Select Option</option>
+                          <option value="cash" selected>Cash</option>
                           <option value="upi">UPI</option>
                           <option value="debit-card">Debit card</option>
                           <option value="credit-card">Credit card</option>
                         </select>
-
+                        <div class="invalid-feedback">
+                          Please select mode of payment.
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
               </div>
               <!-- / Content -->
 
               <div class="mb-4">
-                <div class="form-check mt-3">
-                  <div>
-                    <input class="form-check-input mx-auto" type="checkbox" value="" id="defaultCheck1" checked>
-                    <label class="form-check-label mx-1" for="defaultCheck1">
-                      Disclaimer : Hereby I assure that product details given here is
-                      validated by this pharmacy .
-                    </label>
-                  </div>
+                <div class="form-check mt-3 d-flex justify-content-center align-items-center">
+                  <input class="form-check-input mx-1" type="checkbox" value="" id="defaultCheck1" checked>
+                  <label class="form-check-label mx-1" for="defaultCheck1">
+                    Disclaimer : Hereby I assure that product details given here is
+                    validated by this pharmacy .
+                  </label>
                 </div>
               </div>
 
@@ -310,9 +318,6 @@
                   <div class="btn btn-primary px-5" id="submitorder">Submit</div>
                 </a>
               </div>
-
-
-
 
               <div class="content-backdrop fade"></div>
           </div>
@@ -343,6 +348,40 @@
 
 
         $(document).ready(function () {
+
+          // Validation check on input
+          $('input').each(function () {
+            $(this).on('input', function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+          });
+          $('select').each(function () {
+            $(this).on('input', function () {
+              if ($(this).val() == 'default' || $(this).val() == null) {
+                $(this).addClass('is-invalid');
+              } else {
+                $(this).removeClass('is-invalid');
+              }
+            });
+          });
+
+          //Validate mobile number
+          var isMobileValid = true;
+          $("#phonenumber").on("input", function () {
+            var value = $(this).val();
+            if (value.length < 10) {
+              $(this).addClass("is-invalid");
+              isMobileValid = false;
+            } else {
+              $(this).removeClass("is-invalid");
+              isMobileValid = true;
+            }
+          });
+
           $("#brand").prop('readonly', true);
           $("#batch").prop('readonly', true);
           $("#expdate").prop('readonly', true);
@@ -351,29 +390,32 @@
           $("#discount").prop('readonly', true);
           $("#price").prop('readonly', true);
 
-          //gettin the current org id
 
+          //gettin the current org id
           var org = "<%= orgId %>";
 
-          // get customer data and show it in the autocomplete function
 
+          // get customer data and show it in the autocomplete function
           $.get(`/api/custorg/${org}`, function (data, status) {
 
             for (let i in data.data) {
               customerData.push({
                 phone: JSON.stringify(data.data[i].cust_telephone),
                 name: data.data[i].cust_name,
+                cust_doctor: data.data[i].cust_doctor,
                 id: data.data[i].customer_id
               });
 
               autoCompleteDataNumber.push({
                 label: JSON.stringify(data.data[i].cust_telephone) + '(' + data.data[i].cust_name + ')',
-                value: JSON.stringify(data.data[i].cust_telephone)
+                value: JSON.stringify(data.data[i].cust_telephone),
+                cust_doctor: data.data[i].cust_doctor
               });
 
               autoCompleteDataName.push({
                 label: data.data[i].cust_name + '(' + JSON.stringify(data.data[i].cust_telephone) + ')',
-                value: data.data[i].cust_name
+                value: data.data[i].cust_name,
+                cust_doctor: data.data[i].cust_doctor
               });
             }
 
@@ -388,6 +430,11 @@
                   var autopopulatedName = selectedCustomerNumber.match(/\(([^)]+)\)/)[1];
 
                   $("#customername").val(autopopulatedName);
+                  $("#reference").val(ui.item.cust_doctor);
+
+                  if ($("#phonenumber").val() != '') {
+                    $("#phonenumber").removeClass('is-invalid');
+                  }
                 }
               })
             }
@@ -404,13 +451,20 @@
                   var autopopulatedNumber = selectedCustomerName.match(/\(([^)]+)\)/)[1];
 
                   $("#phonenumber").val(autopopulatedNumber);
+                  $("#reference").val(ui.item.cust_doctor);
+
+                  if ($("#phonenumber").val() != '') {
+                    $("#phonenumber").removeClass('is-invalid');
+                  }
                 }
+
               })
             }
             //end of name logic
 
           })
           //end of autocomplete function
+
 
           //start of product cart 
           var product = [];
@@ -473,16 +527,7 @@
                     batchIdwhenSelected = null;
                     console.log('productInInventory', productInInventory);
 
-                    $("#pUnit").prop('readonly', false);
-                    $("#discount").prop('readonly', false);
-                    $("#batch").prop('readonly', false);
-                    $("#expdate").prop('readonly', false);
-                    $("#sUnit_input").hide();
-                    $("#gst_input").show();
-                    $("#price").prop('readonly', false);
-
                     calculateTotal();
-
                   } else {
                     productInInventory = true;
                     console.log('productInInventory', productInInventory);
@@ -522,13 +567,6 @@
                     availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
                     availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
 
-                    /*
-                    $("#unit").append("<option>"+ data.data[0].primary_unit+ "</option>");
-                    $("#unit").append("<option>"+data.data[0].secondary_unit + "</option>");
-                    $("#pack .unit")
-                    .text(`1 ${data.data[0].primary_unit} of ${data.data[0].conversion} ${data.data[0].secondary_unit}`);
-                    */
-
                     $("#primaryunitname span").text(` (${primaryUnit})`);
                     $("#secondaryunitname span").text(` (${secondaryUnit})`);
 
@@ -542,6 +580,11 @@
                     $("#price").val(priceMed);
                     //var batchId = $("#batchdroporinput #batchnumber").val();
                     //$("#batchdroporinput #batchstock").text(`Stock: ${data.data[batchId].batch_qty}`)
+
+                    // Remove validation if fields are populated
+                    if ($("#expdate").val() != '') {
+                      $("#expdate").removeClass('is-invalid');
+                    }
 
                     $("#batchdroporinput").on("change", "#batchnumber", function () {
                       var batchId = $("#batchdroporinput #batchnumber option:selected").attr('id');
@@ -575,7 +618,7 @@
             if (item.med_name) {
 
               return $('<li>')
-                .append('<div>' + item.med_name + '(' + item.salt_composition + ')' + '</div>')
+                .append('<div>' + item.med_name + ' (' + item.salt_composition + ') ' + '[' + item.pack_size + ']' + '</div>')
                 .appendTo(ul);
             }
             else {
@@ -583,47 +626,6 @@
             }
 
           };
-
-          //logic for selected units (discontinued)
-          /*
-          $("#unit").change(function(){
-            var getUnit = $(this).val();
-            if(getUnit === primaryUnit){
-              $("#price").val(priceMed);
-              calculateTotal();
-            }
-            else{
-              $("#price").val(priceMed/conversion);
-              calculateTotal();
-            }
-          })*/
-
-          // -ve inputs for inline item cant be entered
-          $('#price').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#pUnit').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#sUnit').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#discount').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
-          $('#gst').on('keypress', function (e) {
-            if (e.which == 45) {
-              return false;
-            }
-          });
 
           // Limit line item discount input to 0-100 range
           $('#discount').on('input', function () {
@@ -699,7 +701,6 @@
             console.log('ptr', purchaseRate);
             console.log('conversionF', conversion);
             console.log('gst', gst_percent);
-            //console.log('profit after discount', parseFloat(totalQtyAfterDisc - profit));
 
             totalInput.val(totalQtyAfterDisc.toFixed(2));
           }
@@ -752,127 +753,155 @@
           var setLocalData;
           var getLocalData;
           var htmlData;
-          $("#addtocart").click(function () {
+          $("#addtocart").click(function (e) {
 
-            if ($("#phonenumber").val() == '') {
-              return alert('Please fill "Customer Phone number"');
-            }
-
-            if ($("#customername").val() == '') {
-              return alert('Please fill "Customer Name"');
-            }
-
-            if ($("#medicinename").val() == '') {
-              return alert('Enter "Medicine Name"');
-            }
+            e.preventDefault();
+            var isValid = true;
+            $('input:required').each(function () {
+              if ($(this).val() == '') {
+                $(this).addClass('is-invalid');
+                isValid = false;
+              } else {
+                $(this).removeClass('is-invalid');
+                isValid = true;
+              }
+            });
 
             if ($("#pUnit").val() == '') {
-              return alert('Enter Quantity');
+              $("#pUnit").addClass('is-invalid');
+              $("#pUnit").focus();
+              isValid = false;
+            } else {
+              $("#pUnit").removeClass('is-invalid');
+            }
+
+            if ($("#pUnit").val() == 0 && $("#sUnit").val() == 0) {
+              $("#pUnit").addClass('is-invalid');
+              $("#pUnit").focus();
+              isValid = false;
+            } else {
+              $("#pUnit").removeClass('is-invalid');
             }
 
             if ($("#batch").val() == '') {
-              return alert('Select Batch');
+              $("#batch").addClass('is-invalid');
+              $("#batch").focus();
+              isValid = false;
+            } else {
+              $("#batch").removeClass('is-invalid');
             }
 
             if ($("#expdate").val() < new Date().toJSON().slice(0, 10)) {
-              return alert("Can't proceed with Expired product");
+              $("#expdate").addClass('is-invalid');
+              $("#expdate").focus();
+              isValid = false;
+            } else {
+              $("#expdate").removeClass('is-invalid');
             }
 
             if (priQty.val() > availablePrimaryQty) {
-              return alert("Don't have Enough Quantity!");
+              isValid = false;
+              priQty.val("");
+              $("#pUnit").addClass('is-invalid');
+              // return alert("Don't have Enough Quantity!");
             }
             if (priQty.val() == availablePrimaryQty) {
-              if (secQty.val() > availableSecondaryQty)
-                return alert("Don't have Enough Quantity!");
+              if (secQty.val() > availableSecondaryQty) {
+                isValid = false;
+                secQty.val("");
+                $("#sUnit").addClass('is-invalid');
+              }
+              // return alert("Don't have Enough Quantity!");
             }
 
-            var products = $("#medicinename").val();
-            var brand = $("#brand").val();
-            var priCartQty = priQty.val();
-            var secCartQty = secQty.val() || 0;
-            var mrp = priceInput.val();
-            var hsn = hsn_number;
-            var gst = gst_percent;
-            var disc = discInput.val();
-            var total = totalInput.val();
-            var shelflabel = $("#shelflabel").val();
-            var batch = $("#batchdroporinput #batchnumber").val() || $("#batch").val();
-            var exp = $("#expdate").val();
-            var selectedUnit = $("#unit").val();
+            if (isValid) {
+              var products = $("#medicinename").val();
+              var brand = $("#brand").val();
+              var priCartQty = priQty.val();
+              var secCartQty = secQty.val() || 0;
+              var mrp = priceInput.val();
+              var hsn = hsn_number;
+              var gst = gst_percent;
+              var disc = discInput.val() || 0;
+              var total = totalInput.val();
+              var shelflabel = $("#shelflabel").val();
+              var batch = $("#batchdroporinput #batchnumber").val() || $("#batch").val();
+              var exp = $("#expdate").val();
 
 
-            cartarray.push({
-              batchId: batchIdwhenSelected,
-              productId: productId,
-              productname: products,
-              brand: brand,
-              shelflabel: shelflabel,
-              batch_name: batch,
-              expdate: exp,
-              priQty: priCartQty,
-              secQty: secCartQty,
-              conversion: conversion,
-              selectedUnit: selectedUnit,
-              mrp: mrp,
-              hsn:hsn,
-              gst: gst,
-              disc: disc,
-              total: total,
-              profitForEachProduct: profitForEachProduct,
-              timestamp: new Date().getTime()
-            })
+              cartarray.push({
+                batchId: batchIdwhenSelected,
+                productId: productId,
+                productname: products,
+                brand: brand,
+                shelflabel: shelflabel,
+                batch_name: batch,
+                expdate: exp,
+                priQty: priCartQty,
+                secQty: secCartQty,
+                conversion: conversion,
+                mrp: mrp,
+                hsn: hsn,
+                gst: gst,
+                disc: disc,
+                total: total,
+                profitForEachProduct: profitForEachProduct,
+                timestamp: new Date().getTime()
+              })
 
-            setLocalData = JSON.stringify(cartarray);
+              setLocalData = JSON.stringify(cartarray);
 
-            console.log(cartarray);
+              console.log(cartarray);
 
-            localStorage.setItem("cartitems", setLocalData);
+              localStorage.setItem("cartitems", setLocalData);
 
-            //also add the customer data to local storage
-            var storeCustomerData = {
-              name: $("#customername").val(),
-              phone: $("#phonenumber").val()
-            };
+              //also add the customer data to local storage
+              var storeCustomerData = {
+                name: $("#customername").val(),
+                phone: $("#phonenumber").val()
+              };
 
-            localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
+              localStorage.setItem("custdata", JSON.stringify(storeCustomerData));
 
-            // Reset item input fields
-            $("#medicinename").val("");
+              // Reset item input fields
+              $("#medicinename").val("");
+              $("#brand").val("");
+              $("#pUnit").val("").prop('readonly', true);
+              $("#primaryunitname span").hide();
+              $("#secondaryunitname span").hide();
+              $("#sUnit").val("").prop('readonly', true);
+              $("#price").val("").prop('readonly', true);
+              $("#discount").val("").prop('readonly', true);
+
+              $("#gst").val("")
+              $("#gst_input").hide();
+              $("#sUnit_input").show();
+
+              $("#total").val("");
+              $("#shelflabel").val("");
+              $("#batchdroporinput").empty();
+              $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+              $("#batch").prop('readonly', true);
+              $("#expdate").val("").prop('readonly', true);
+              $("#message").empty();
+              $("#profit").text('');
+            }
+          })
+
+
+          // On input medicine name clear all the fields
+          $("#medicinename").on('input', function () {
             $("#brand").val("");
             $("#pUnit").val("").prop('readonly', true);
             $("#sUnit").val("").prop('readonly', true);
             $("#price").val("").prop('readonly', true);
             $("#discount").val("").prop('readonly', true);
-
-            $("#gst").val("")
-            $("#gst_input").hide();
-            $("#sUnit_input").show();
-
-            $("#total").val("");
+            $("#total").val("").prop('readonly', true);
             $("#shelflabel").val("");
             $("#batchdroporinput").empty();
             $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
-            $("#expdate").val("");
-            $("#unit").empty();
-            $("#pack .unit").empty();
-            $("#message").empty();
-            $("#profit").text('');
-          })
-
-          // On input medicine name clear all the fields
-          $("#medicinename").on('input', function () {
-            $("#brand").val("");
-            $("#pUnit").val("");
-            $("#sUnit").val("");
-            $("#price").val("");
-            $("#discount").val("");
-            $("#total").val("");
-            $("#shelflabel").val("");
-            $("#batchdroporinput").empty();
-            $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
-            $("#expdate").val("");
-            $("#unit").empty();
-            $("#pack .unit").empty();
+            $("#batch").prop('readonly', true);
+            $("#expdate").val("").prop('readonly', true);
             $("#message").empty();
           })
 
@@ -907,11 +936,12 @@
             $("#brand").val(selectedItem.brand);
             $("#pUnit").val(selectedItem.priQty).prop('readonly', false);
             $("#sUnit").val(selectedItem.secQty).prop('readonly', false);
-            $("#price").val(selectedItem.mrp).prop('readonly', false);
+            $("#price").val(selectedItem.mrp);
             $("#discount").val(selectedItem.disc).prop('readonly', false);
-            $("expdate").val(selectedItem.expdate);
+            var expdate = new Date(selectedItem.expdate);
+            $("#expdate").val(expdate.toISOString().split('T')[0]);
             $("#gst").val(selectedItem.gst).prop('readonly', false);
-            $("#total").val(selectedItem.total).prop('readonly', false);
+            $("#total").val(selectedItem.total);
 
 
             //getting all data for batches dropdown
@@ -924,9 +954,9 @@
                 $("#batchdroporinput input").remove();
                 $("#batchdroporinput").append(
                   `
-                      <select class="form-select" id="batchnumber" aria-label="unit">
-                      </select>
-                      `
+                  <select class="form-select" id="batchnumber" aria-label="unit">
+                  </select>
+                  `
                 )
 
                 data.data.map(function (value, key) {
@@ -968,32 +998,14 @@
                 conversion = data.data[batchId].conversion;
                 calculateTotal();
               })
-
-
             })
 
             //$("#shelflabel").val(selectedItem.shelflabel);
-            //$("#expdate").val(selectedItem.expdate);
-            /* if(selectedItem.selectedUnit){
- 
-               $("#unit").append("<option>"+ selectedItem.selectedUnit+"</option>");
-               if(selectedItem.primaryUnit === selectedItem.selectedUnit){
-                 $("#unit").append("<option>"+ selectedItem.secondaryUnit + "</option>");
-               }
-               else{
-                 $("#unit").append("<option>"+ selectedItem.primaryUnit + "</option>");
-               }
-               
-               $("#pack .unit")
-               .text(`1 ${selectedItem.primaryUnit} of ${selectedItem.conversion} ${selectedItem.secondaryUnit}`);
-             }*/
 
             UpdatecartItemsinStorage.splice(item_id - 1, 1);
             cartarray = UpdatecartItemsinStorage;
             localStorage.setItem('cartitems', JSON.stringify(UpdatecartItemsinStorage));
             renderCart(UpdatecartItemsinStorage);
-
-
           })
           //end of edit functionality
 
@@ -1064,7 +1076,7 @@
               }
 
               $("#subtotal").val(subtotal.toFixed(2));
-              $("#finalamount").val(subtotal.toFixed(0));
+              $("#finalamount").val(subtotal.toFixed(2));
 
               $("#totalprofit").text(`Profit: ₹${totalProfit.toFixed(2)}`);
               if (totalProfit < 0) {
@@ -1095,7 +1107,6 @@
             }
           });
           $('#additionaldiscount').on("input", function () {
-
             var getSubTotalValue = $("#subtotal").val();
             var discountInput = parseFloat($(this).val());
 
@@ -1125,13 +1136,36 @@
           var orderDetails;
           $("#submitorder").click(function () {
 
+            if (!isMobileValid) {
+              $("#phonenumber").addClass("is-invalid");
+              $("#phonenumber").focus();
+              return;
+            }
+
             $("#submitorder").prop('disabled', true);
 
             if ($("#reference").val() == "") {
-              return alert("Add Doctor reference");
+              $("#reference").addClass("is-invalid");
+              $("#reference").focus();
+              return;
+            } else {
+              $("#reference").removeClass("is-invalid");
             }
+
             if ($("#subtotal").val() == 0 || $("#subtotal").val() == '') {
-              return alert("PLEASE ADD SOME ITEMS FIRST");
+              $("#medicinename").addClass("is-invalid");
+              $("#medicinename").focus();
+              return;
+            } else {
+              $("#subtotal").removeClass("is-invalid");
+            }
+
+            if ($("#mop").val() == null) {
+              $("#mop").addClass("is-invalid");
+              $("#mop").focus();
+              return;
+            } else {
+              $("#mop").removeClass("is-invalid");
             }
 
             if (!$("#defaultCheck1").prop("checked")) {
@@ -1183,7 +1217,7 @@
                   contentType: 'application/json',
                   success: function (response) {
                     console.log('inside the submit function', response);
-                    var salesId = response.result.insertId;
+                    var orderId = response.result.insertId;
                     var mainInvoiceId = response.invoiceId;
 
                     var orderDetails = JSON.parse(localStorage.getItem("cartitems"));
@@ -1219,7 +1253,8 @@
 
                       var cartDetails = ({
                         product_id: orderDetails[i].productId,
-
+                        order_id: orderId,
+                        
                         product_name: orderDetails[i].productname,
                         batch_name: orderDetails[i].batch_name,
                         hsn: orderDetails[i].hsn,
@@ -1230,10 +1265,11 @@
                         saled_pri_qty: orderDetails[i].priQty,
                         saled_sec_qty: orderDetails[i].secQty,
                         main_invoice_id: mainInvoiceId,
-                        sales_invoice_id: salesId,
+                        
                         saled_batch_id: orderDetails[i].batchId,
                         unit_discount: orderDetails[i].disc,
-                        saled_mrp: orderDetails[i].total
+                        saled_mrp: orderDetails[i].total,
+                        conversion: orderDetails[i].conversion,
                       })
 
                       console.log('cartDetail for the saled product', cartDetails);
@@ -1262,7 +1298,7 @@
 
                       localStorage.removeItem("cartitems");
                       localStorage.removeItem("custdata");
-                      window.location.href = `/sale_receipt/${salesId}`
+                      window.location.href = `/sale_receipt/${orderId}`
                     });
 
                   },

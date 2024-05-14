@@ -76,6 +76,21 @@ module.exports = async (app) => {
     );
   });
 
+  app.get('/my_subscription', checkAuth, fetchOrgId, (req, res) => {
+    getPool().query(
+      'select * from organisation where org_id = ?',
+      [req.org_id],
+      (error, results) => {
+        if (error) {
+          return res.send({ status: 'error', error });
+        }
+        res.render('Subscription/my_subscription', {
+          data: results, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
+        });
+      },
+    );
+  });
+
   // Owner Control components
   app.get('/employee_master', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
@@ -211,28 +226,16 @@ module.exports = async (app) => {
     res.render('Inventory/product_stock', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
   });
 
-  // app.get('/update_product/:id', checkAuth, fetchOrgId, (req, res) => {
-  //   console.log('herr', JSON.stringify(req.params.id));
-  //   getPool().query(
-  //     `select * from inventory where product_id= ? and org_id = ${req.org_id}`,
-  //     [req.params.id],
-
-  //     (error, results) => {
-  //       if (error) {
-  //         return res.send({ status: 'error', error });
-  //       }
-  //       res.render('Inventory/update_product', { data: results });
-  //     },
-  //   );
-  // });
+  app.get('/near_expiry_list', checkAuth, fetchOrgId, (req, res) => {
+    res.render('Inventory/near-expiry-list', { orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name });
+  });
 
   app.get('/update_addproduct/:id', checkAuth, fetchOrgId, (req, res) => {
-    console.log('here', JSON.stringify(req.params.id));
     getPool().query(
       `select * from inventory inv
-      JOIN sample spl 
-      on spl.sample_id = inv.product_id
-      where product_id= ? and org_id = ${req.org_id}`,
+      JOIN sample spl on spl.product_id = inv.product_id
+      LEFT JOIN category cat on cat.category_id = inv.category_id
+      where spl.product_id= ? and org_id = ${req.org_id}`,
       [req.params.id],
 
       (error, results) => {
@@ -259,9 +262,9 @@ module.exports = async (app) => {
   app.get('/add_batch/:id', checkAuth, fetchOrgId, (req, res) => {
     getPool().query(
       `select * from inventory inv
-      JOIN sample spl 
-      on spl.sample_id = inv.product_id
-      where product_id= ? and org_id = ${req.org_id}`,
+      JOIN sample spl on spl.product_id = inv.product_id
+      LEFT JOIN category cat on cat.category_id = inv.category_id
+      where spl.product_id= ? and org_id = ${req.org_id}`,
 
       [req.params.id],
 
@@ -302,47 +305,41 @@ module.exports = async (app) => {
   app.get('/sale_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
     console.log('got the id', req.params.id);
     console.log(req.org_id);
-    res.render('Receipt/new_sales_receipt', {
+    res.render('Receipt/preview_sale_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
 
   app.get('/sales_invoice', (req, res) => {
-    res.render('Receipt/preview_sale_receipt', {
+    res.render('Receipt/sale_receipt', {
       id: req.query.invoice_id, orgId: req.query.org_id,
     });
   });
 
   app.get('/return_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/return_receipt', {
+    res.render('Receipt/preview_return_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
 
   app.get('/po_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/po_receipt', {
+    res.render('Receipt/preview_po_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
 
   app.get('/credit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/credit_note_receipt', {
+    res.render('Receipt/preview_credit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
   app.get('/debit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/debit_note_receipt', {
+    res.render('Receipt/preview_debit_note_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });
   app.get('/grn_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/grn_receipt', {
-      id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
-    });
-  });
-
-  app.get('/debit_note_receipt/:id', checkAuth, fetchOrgId, (req, res) => {
-    res.render('Receipt/debit_note_receipt', {
+    res.render('Receipt/preview_grn_receipt', {
       id: req.params.id, orgId: req.org_id, orgName: req.org_name, ownerName: req.owner_name,
     });
   });

@@ -68,14 +68,14 @@
                       </div>
                     </a>
 
-                    <a class="col-xs-6 col-sm-6 col-lg-3 mb-3" href="/purchase_order">
+                    <a class="col-xs-6 col-sm-6 col-lg-3 mb-3" href="/grn">
                       <div class="card card-border-shadow-info h-100">
                         <div class="card-body py-3">
                           <div class="d-flex align-items-center mb-2 pb-1">
                             <div class="avatar me-2">
                               <span class="avatar-initial rounded bg-label-info"><i class="bx bx-time-five"></i></span>
                             </div>
-                            <h4 class="ms-1 mb-0">Purchase Order</h4>
+                            <h4 class="ms-1 mb-0">Purchase Bill</h4>
                           </div>
                         </div>
                       </div>
@@ -411,26 +411,6 @@
         var reload = true;
 
         $(document).ready(function () {
-
-
-
-          if ('caches' in window) {
-            caches.keys().then(name => {
-              if (name.length == 0) {
-
-                console.log('do something');
-                caches.open('productCache').then((cache) => {
-                  cache.add('/api/allsample').then(
-
-                  );
-                })
-              }
-              else {
-                console.log('do nothing');
-              }
-            })
-          }
-
 
           var result;
           const ctx = $("#myChart");

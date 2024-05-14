@@ -27,6 +27,7 @@ require('./server/routes/api.owner.routes')(app);
 require('./server/routes/api.ref.routes')(app);
 require('./server/routes/api.inventory.routes')(app);
 require('./server/routes/api.product.routes')(app);
+require('./server/routes/api.category.routes')(app);
 require('./server/routes/api.vendor.routes')(app);
 require('./server/routes/api.order.routes')(app);
 require('./server/routes/api.customer.routes')(app);
@@ -34,6 +35,7 @@ require('./server/routes/api.auth.routes')(app);
 require('./server/routes/api.salesdetail.routes')(app);
 require('./server/routes/api.cartitem.routes')(app);
 require('./server/routes/api.returndetails.routes')(app);
+require('./server/routes/api.returncartitem.routes')(app);
 require('./server/routes/api.batch.routes')(app);
 require('./server/routes/api.purchase_order.routes')(app);
 require('./server/routes/api.credit.routes')(app);
@@ -42,10 +44,16 @@ require('./server/routes/api.grn.routes')(app);
 require('./server/routes/api.financials.routes')(app);
 require('./server/routes/api.itemSearch.routes')(app);
 require('./server/routes/api.whatsappMsg.route')(app);
+require('./server/routes/api.hsn_gst.routes')(app);
+require('./server/routes/api.transaction.routes')(app);
+require('./server/routes/api.subscription.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);
 require('./server/routes/front.auth.routes')(app);
+
+// CRON Jobs
+require('./server/cron-jobs/cron.notifications');
 
 initialisePool().then(() => {
   app.listen(process.env.PORT || 4800, () => {

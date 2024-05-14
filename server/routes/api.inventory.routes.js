@@ -13,9 +13,16 @@ module.exports = (app) => {
   app.get('/api/getallinventory', controller.getAllInventory);
 
   app.post('/api/updateinventory/:id', controller.updateInventory);
-  app.delete('/inventory/', controller.deleteInventory);
-  app.get('/api/getinventory/:id', controller.getInventoryById);
+  app.get('/api/deleteinventory/:id', controller.deleteInventory);
+  app.get('/api/getinventory', controller.getInventoryById);
   app.get('/inventory/:id', controller.getAllInventorysById);
 
   app.get('/api/checkbyid', controller.checkById);
+
+  app.get('/api/nextThreeMonthExp/:id', controller.next3MonthsExpiry);
+  app.get('/api/lastThreeMonthExp/:id', controller.last3MonthsExpiry);
+  app.get('/api/thisMonthExp/:id', controller.thisMonthExpiry);
+
+  // Temporary API for testing email sending
+  app.get('/api/email', controller.createAllNearExpiryReports);
 };

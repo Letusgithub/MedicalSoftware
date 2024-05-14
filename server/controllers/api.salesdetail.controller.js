@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, autoComplete, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -289,21 +289,6 @@ module.exports = {
       }
       return res.status(200).json({
         status: 'success',
-        data: results,
-      });
-    });
-  },
-
-  autoComplete: (req, res) => {
-    const input = req.query.med;
-    autoComplete(input, (error, results) => {
-      if (error) {
-        return res.status(500).json({
-          status: 'error',
-          message: error,
-        });
-      }
-      return res.status(200).json({
         data: results,
       });
     });
