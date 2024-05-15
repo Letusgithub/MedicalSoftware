@@ -917,6 +917,8 @@
                                     },
                                 })
                             } else {
+                                console.log(inventoryId);
+
                                 var productDetails = {
                                     product_id: productId,
                                     org_id: orgID,
@@ -943,9 +945,6 @@
                                     data: JSON.stringify(productDetails),
                                     contentType: 'application/json',
                                     success: function (response) {
-
-                                        console.log(inventoryId);
-                                        console.log(response.data.insertId);
 
                                         inventoryId =  inventoryId ? inventoryId : response.data.insertId;
 
