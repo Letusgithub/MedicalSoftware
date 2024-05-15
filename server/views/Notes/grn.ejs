@@ -1125,6 +1125,18 @@
                             }
                         });
 
+                        if (parseInt($("#addquantity").val()) == 0) {
+                            $("#addquantity").addClass('is-invalid');
+                            $("#addquantity").focus();
+                            isValid = false;
+                        }
+
+                        if (parseFloat($("#price").val()) == 0) {
+                            $("#price").addClass('is-invalid');
+                            $("#price").focus();
+                            isValid = false;
+                        }
+
                         if (isValid) {
 
                             $("#r_margin").hide();

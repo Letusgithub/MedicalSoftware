@@ -219,7 +219,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="input-group input-group-merge">
                                                         <div class="input-group has-validation">
-                                                            <input type="text" class="form-control" name="addqty"
+                                                            <input type="text" class="form-control" name="addqty" id="addqty"
                                                                 placeholder="Enter quantity"
                                                                 onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                                 required /> <span class="input-group-text"
@@ -470,56 +470,21 @@
                             }
                         });
 
-                        // if ($("#batchname").val() == null || $("#batchname").val() == "") {
-                        //     $("#batchname").addClass('is-invalid');
-                        //     $("#batchname").focus();
-                        //     e.preventDefault();
-                        // } else {
-                        //     $("#batchname").removeClass('is-invalid');
-                        // }
+                        if (parseInt($("#addqty").val()) == 0) {
+                            $("#addqty").addClass('is-invalid');
+                            $("#addqty").focus();
+                            isValid = false;
+                        } else {
+                            $("#addqty").removeClass('is-invalid');
+                        }
 
-                        // if ($('[name="addexp"]').val() == null || $('[name="addexp"]').val() == "") {
-                        //     $('[name="addexp"]').addClass('is-invalid');
-                        //     $('[name="addexp"]').focus();
-                        //     e.preventDefault();
-                        // } else {
-                        //     $('[name="addexp"]').removeClass('is-invalid');
-                        // }
-
-                        // if ($("#conversion").val() == "") {
-                        //     $("#conversion").addClass('is-invalid');
-                        //     $("#conversion").focus();
-                        //     e.preventDefault();
-                        // } else {
-                        //     $("#conversion").removeClass('is-invalid');
-                        // }
-                        // if ($("input[name='addqty']").val() == "" || $("input[name='addqty']").val() == null) {
-                        //     $("input[name='addqty']").addClass('is-invalid');
-                        //     $("input[name='addqty']").focus();
-                        //     e.preventDefault();
-                        // } else {
-                        //     $("input[name='addqty']").removeClass('is-invalid');
-                        // }
-
-                        // if ($("input[name='addmrp']").val() == "" || $("input[name='addmrp']").val() == null) {
-                        //     $("input[name='addmrp']").addClass('is-invalid');
-                        //     $("input[name='addmrp']").focus();
-                        //     e.preventDefault();
-                        // } else {
-                        //     $("input[name='addmrp']").removeClass('is-invalid');
-                        // }
-
-                        // if ($("input[name='addpur']").val() == "" || $("input[name='addpur']").val() == null) {
-                        //     $("input[name='addpur']").addClass('is-invalid');
-                        //     $("input[name='addpur']").focus();
-                        //     e.preventDefault();
-                        // } else {
-                        //     $("input[name='addpur']").removeClass('is-invalid');
-                        // }
-
-                        // if (parseFloat($("input[name='addpur']").val()) > parseFloat($("input[name='addmrp']").val())) {
-                        //     return alert("Purchase Rate can't be greater than MRP");
-                        // }
+                        if (parseFloat($("#price").val()) == 0) {
+                            $("#price").addClass('is-invalid');
+                            $("#price").focus();
+                            isValid = false;
+                        } else {
+                            $("#price").removeClass('is-invalid');
+                        }
 
                         if (isValid) {
 
