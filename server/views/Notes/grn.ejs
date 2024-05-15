@@ -581,9 +581,6 @@
                                         </a>
                                     </div>
                                 </div>
-
-
-
                             </div>
 
                     </div>
@@ -605,7 +602,7 @@
                 var batchIdwhenSelected;
                 var availablePrimaryQty;
                 var availableSecondaryQty;
-                localStorage.removeItem('grnitems');
+
                 var cartarray = [];
                 $(document).ready(function () {
 
@@ -1045,7 +1042,6 @@
                     // Get data when refresh
                     var grnCartItems = JSON.parse(localStorage.getItem('grncartdetails')) || [];
                     var vendorDataLocal = JSON.parse(localStorage.getItem('vendordata')) || [];
-                    console.log(vendorDataLocal)
 
                     if (grnCartItems.length != 0) {
                         $("#vendorinvoicenumber").val((vendorDataLocal.vendorInvoiceNo));
@@ -1069,6 +1065,7 @@
                     function renderRefreshCart(items) {
                         $('#cart').empty();
                         for (var i = 0; i < items.length; i++) {
+                            cartarray.push(items[i]);
 
                             var datetime = items[i].expdate;
                             var expDate = moment(datetime).format('MM/YYYY'); // Formating the expiry date
