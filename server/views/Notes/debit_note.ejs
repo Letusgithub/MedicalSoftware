@@ -82,7 +82,7 @@
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Batch</p>
                             <div class="mb-2" id="batchdroporinput">
-                              <input type="text" class="form-control" id="batch" placeholder="" />
+                              <input type="text" class="form-control" id="batch" placeholder="" readonly/>
                             </div>
 
                             <input class="form-control" type="date" id="expdate" readonly />
@@ -90,7 +90,7 @@
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
                             <div class="has-validation">
                               <p class="mb-2 repeater-title" id="primaryunitname">P.Unit<span></span></p>
-                              <input type="number" class="form-control px-1" id="pUnit" min="0" />
+                              <input type="number" class="form-control px-1" id="pUnit" min="0" readonly/>
                               <div class="invalid-feedback">
                                 Please enter quantity.
                               </div>
@@ -99,7 +99,7 @@
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
                             <div class="has-validation">
                               <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
-                              <input type="number" class="form-control px-1" id="sUnit" min="0" />
+                              <input type="number" class="form-control px-1" id="sUnit" min="0" readonly/>
                               <div class="invalid-feedback">
                                 Please enter quantity.
                               </div>
@@ -322,8 +322,8 @@
 
                     availablePrimaryQty = data.data[0].batch_qty - data.data[0].saled_pri_qty;
                     availableSecondaryQty = (data.data[0].conversion - data.data[0].saled_sec_qty) == data.data[0].conversion ? 0 : data.data[0].conversion - data.data[0].saled_sec_qty;
-                    $("#pUnit").val(availablePrimaryQty);
-                    $("#sUnit").val(availableSecondaryQty);
+                    $("#pUnit").val(availablePrimaryQty).prop('readonly', false);;
+                    $("#sUnit").val(availableSecondaryQty).prop('readonly', false);;
                     priceMed = data.data[0].purchase_rate;
                     $("#purchase_rate").val(priceMed);
                     calculateTotal();
@@ -496,14 +496,15 @@
 
               $("#medicinename").val("");
               $("#brand").val("");
-              $("#pUnit").val("");
-              $("#sUnit").val("");
+              $("#pUnit").val("").prop('readonly', true);
+              $("#sUnit").val("").prop('readonly', true);
               $("#purchase_rate").val("");
 
               $("#total").val("");
               $("#shelflabel").val("");
               $("#batchdroporinput").empty();
-              $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`)
+              $("#batchdroporinput").append(`<input type="text" class="form-control" id="batch" placeholder="" />`);
+              $("#batch").prop('readonly', true);
               $("#expdate").val("");
               $("#message").empty();
               $("#primaryunitname span").text(``);
@@ -559,8 +560,8 @@
               productId = selectedItem.productId;
               $("#medicinename").val(selectedItem.productname);
               $("#brand").val(selectedItem.brand);
-              $("#pUnit").val(selectedItem.priQty);
-              $("#sUnit").val(selectedItem.secQty);
+              $("#pUnit").val(selectedItem.priQty).prop('readonly', false);
+              $("#sUnit").val(selectedItem.secQty).prop('readonly', false);
               $("#purchase_rate").val(selectedItem.purchase_rate);
               $("#total").val(selectedItem.total);
 
@@ -573,10 +574,8 @@
                   //batch dropdown
                   $("#batchdroporinput input").remove();
                   $("#batchdroporinput").append(
-                    `
-                                        <select class="form-select" id="batchnumber" aria-label="unit">
-                                        </select>
-                                        `
+                    `<select class="form-select" id="batchnumber" aria-label="unit">
+                     </select>`
                   )
 
                   data.data.map(function (value, key) {
