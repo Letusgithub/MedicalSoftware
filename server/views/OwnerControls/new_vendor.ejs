@@ -145,7 +145,7 @@
                                                                 readonly>
                                                             <select type="text" id="dl1_st" placeholder="State (eg:-MH)"
                                                                 class="form-control border px-1" required>
-                                                                <option value=""> State</option>
+                                                                <option value="" disabled> State</option>
                                                                 <option value="AD">Andhra Pradesh</option>
                                                                 <option value="AR"> Arunachal Pradesh</option>
                                                                 <option value="AS"> Assam</option>
@@ -206,7 +206,7 @@
                                                                 readonly>
                                                             <select type="text" id="dl2_st" placeholder="State (eg:-MH)"
                                                                 class="form-control border px-1" required>
-                                                                <option value=""> State</option>
+                                                                <option value="" disabled> State</option>
                                                                 <option value="AD">Andhra Pradesh</option>
                                                                 <option value="AR"> Arunachal Pradesh</option>
                                                                 <option value="AS"> Assam</option>
@@ -449,10 +449,14 @@
                                 contentType: 'application/json',
                                 success: function (response) {
                                     console.log(response);
+                                    if(response.success == 0){
+                                        return alert(response.message);
+                                    }
                                     window.location.href = '/vendor_list'
                                 },
                                 error: function (error) {
                                     console.log(error);
+
                                 }
                             })
                         }

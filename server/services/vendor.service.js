@@ -133,4 +133,18 @@ module.exports = {
 
     );
   },
+
+  // Check if GSTIN already exists for a pharmacy
+  checkGstinByOrgId: (orgId, gstin, callBack) => {
+    getPool().query(
+      'SELECT * FROM vendor WHERE org_id = ? AND vendor_gstin = ?',
+      [orgId, gstin],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
 };
