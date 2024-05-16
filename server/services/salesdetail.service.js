@@ -30,6 +30,19 @@ module.exports = {
     );
   },
 
+  cancelSalesInvoice: (orderId, orgId, callback) => {
+    getPool().query(
+      'UPDATE order_details SET status = "cancelled" WHERE order_id = ? and org_id = ?',
+      [orderId, orgId],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
   searchTotalSales: (orgId, month, year, callback) => {
     getPool().query(
       `SELECT COUNT(*) as total_rows FROM order_details od

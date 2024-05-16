@@ -3,7 +3,10 @@
 /* eslint-disable max-len */
 const {
   create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatch,
+  retrieveBatchOnCancel,
 } = require('../services/batch.service');
+
+const { getOrdersById } = require('../services/cartitem.service');
 
 module.exports = {
   create: (req, res) => {
@@ -54,6 +57,7 @@ module.exports = {
       });
     });
   },
+
   getBatchfromBatchId: (req, res) => {
     const id = req.query.id;
     getBatchfromBatchId(id, (err, results) => {
@@ -94,6 +98,38 @@ module.exports = {
       return res.status(200).json({
         success: 'Updated',
         data: updateResults,
+      });
+    });
+  },
+
+  updateOnCancelSalesInvoice: (req, res) => {
+    const orderId = req.query.orderId;
+    getOrdersById(orderId, (orderDetailsErr, orderDetailsResults) => {
+      if (orderDetailsErr) {
+        console.error(orderDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      orderDetailsResults.forEach((order) => {
+        const data = {
+          batchId: order.batch_id,
+          saledPriQty: order.saled_pri_qty_cart,
+          saledSecQty: order.saled_sec_qty_cart,
+        };
+        retrieveBatchOnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
       });
     });
   },

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const {
-  create, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  create, cancelSalesInvoice, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -86,6 +86,42 @@ module.exports = {
     });
   },
 
+  cancelSalesInvoice: (req, res) => {
+    const orderId = req.query.orderId;
+    const orgId = req.query.orgId;
+
+    getInvoiceOrder(orderId, orgId, (error, order) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order',
+        });
+      }
+
+      // Check if the order is already cancelled
+      if (order.status === 'cancelled') {
+        return res.status(400).json({
+          success: 0,
+          message: 'Order is already cancelled',
+        });
+      }
+      // If the order is not cancelled, proceed with cancellation
+      cancelSalesInvoice(orderId, orgId, (cancelError, results) => {
+        if (cancelError) {
+          console.log(cancelError);
+          return res.status(500).json({
+            success: 0,
+            message: 'No Orders Found',
+          });
+        }
+        res.status(200).json({
+          success: 1,
+          result: results,
+        });
+      });
+    });
+  },
   getAllOrders: (req, res) => {
     const id = req.params.id;
     getAllOrders(id, (error, results) => {
