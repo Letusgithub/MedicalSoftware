@@ -1,5 +1,6 @@
 const {
   createReturnOrder, searchDates, searchMonth, searchQuarter, searchYear, getReturnDetails,
+  cancelReturnInvoice,
 } = require('../controllers/api.returndetails.controller');
 
 module.exports = (app) => {
@@ -17,4 +18,6 @@ module.exports = (app) => {
   app.get('/api/searchyearreturn/', searchYear);
 
   app.get('/api/getreturndetails', getReturnDetails);
+
+  app.get('/api/cancelReturnInvoice', cancelReturnInvoice);
 };

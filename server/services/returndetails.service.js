@@ -147,4 +147,14 @@ module.exports = {
     );
   },
 
+  cancelReturnInvoice: (returnId, orgId, callback) => {
+    getPool().query(
+      'UPDATE return_details SET return_status = "cancelled" WHERE return_id = ? AND org_id = ?',
+      [returnId, orgId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
 };

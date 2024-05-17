@@ -1,6 +1,7 @@
 const {
   createReturnOrder, getTotalReturns, searchDates, searchMonth, searchQuarter, searchYear,
   returnDetails,
+  cancelReturnInvoice,
 } = require('../services/returndetails.service');
 
 module.exports = {
@@ -136,6 +137,39 @@ module.exports = {
       res.status(200).json({
         success: 1,
         result: results,
+      });
+    });
+  },
+
+  cancelReturnInvoice: (req, res) => {
+    const returnId = req.query.returnId;
+    const orgId = req.query.orgId;
+    returnDetails(returnId, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving return details',
+        });
+      }
+      if (results.return_status === 'cancelled') {
+        return res.status(200).json({
+          success: 0,
+          message: 'Return already cancelled',
+        });
+      }
+      cancelReturnInvoice(returnId, orgId, (cancelError) => {
+        if (cancelError) {
+          console.log(cancelError);
+          return res.status(500).json({
+            success: 0,
+            message: 'Error cancelling return',
+          });
+        }
+        return res.status(200).json({
+          success: 1,
+          message: 'Return successfully cancelled',
+        });
       });
     });
   },
