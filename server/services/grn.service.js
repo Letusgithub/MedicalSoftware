@@ -171,7 +171,7 @@ module.exports = {
 
   getGRNreceipt: (id, callback) => {
     getPool().query(
-      `SELECT sample.med_name, grncd.*, vendor.*, grn.vendor_invoice, grn.total, grn.paid, grn.invoice_date, grn.credit_period, grn.less_discount, grn.payment_method, grn.credit_debit FROM grn
+      `SELECT sample.med_name, grncd.*, vendor.*, grn.vendor_invoice, grn.total, grn.paid, grn.invoice_date, grn.credit_period, grn.less_discount, grn.payment_method, grn.credit_debit, grn.status FROM grn
       Join grn_cart_details grncd on grncd.grn_id = grn.grn_id
       Join vendor on vendor.vendor_id = grn.vendor_id
       Join sample on grncd.product_id = sample.product_id
@@ -181,6 +181,41 @@ module.exports = {
       (error, results) => {
         if (error) return callback(error);
 
+        return callback(null, results);
+      },
+    );
+  },
+
+  getGrnById: (grnId, callback) => {
+    getPool().query(
+      `SELECT * FROM grn 
+       WHERE grn_id = ?`,
+      [grnId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results[0]);
+      },
+    );
+  },
+
+  getGrnCartItemsById: (grnId, callback) => {
+    getPool().query(
+      `SELECT * FROM grn_cart_details 
+       WHERE grn_id = ?`,
+      [grnId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  cancelGRN: (grnId, callback) => {
+    getPool().query(
+      'UPDATE grn SET status = "cancelled" WHERE grn_id = ?',
+      [grnId],
+      (error, results) => {
+        if (error) return callback(error);
         return callback(null, results);
       },
     );

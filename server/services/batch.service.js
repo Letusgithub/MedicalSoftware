@@ -121,6 +121,21 @@ module.exports = {
     );
   },
 
+  retrieveBatchOnGrnCancel: (data, callback) => {
+    getPool().query(
+      'DELETE FROM batch WHERE grn_id = ?',
+      [
+        data.grnId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
   getRemQtyafterSales: (orgId, prodId, callBack) => {
     getPool().query(
       `
