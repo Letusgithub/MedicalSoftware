@@ -193,3 +193,21 @@ exports.getPOReceipt = (req, res) => {
     });
   });
 };
+
+exports.cancelPurchaseOrder = (req, res) => {
+  const poId = req.query.poId;
+  const orgId = req.query.orgId;
+  service.cancelPurchaseOrder(poId, orgId, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        success: 0,
+        message: 'Db error',
+      });
+    }
+    return res.status(200).json({
+      success: 1,
+      data: results,
+    });
+  });
+};

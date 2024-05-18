@@ -229,4 +229,15 @@ module.exports = {
       },
     );
   },
+
+  cancelPurchaseOrder: (poId, orgId, callback) => {
+    getPool().query(
+      'UPDATE purchase_order SET po_status = "cancelled" WHERE po_id = ? AND org_id = ?',
+      [poId, orgId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
 };
