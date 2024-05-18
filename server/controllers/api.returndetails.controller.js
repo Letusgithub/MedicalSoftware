@@ -60,7 +60,9 @@ module.exports = {
   searchMonth: (req, res) => {
     const orgId = req.query.org;
     const month = req.query.month;
-    searchMonth(orgId, month, (error, results) => {
+    const year = req.query.year;
+
+    searchMonth(orgId, month, year, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
@@ -94,6 +96,8 @@ module.exports = {
   searchQuarter: (req, res) => {
     const orgId = req.query.org;
     const quarter = req.query.quarter;
+    const year = req.query.year;
+
     let start;
     let end;
     if (quarter === '1') {
@@ -109,7 +113,7 @@ module.exports = {
       start = 1;
       end = 3;
     }
-    searchQuarter(orgId, start, end, (error, results) => {
+    searchQuarter(orgId, start, end, year, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
