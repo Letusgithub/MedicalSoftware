@@ -143,6 +143,11 @@
         $(document).ready(function () {
 
           $('input[name="radio"][value="monthly"]').on('click', function () {
+            // Clear previous inputs
+            $("input[name='fromdate']").val('');
+            $("input[name='todate']").val('');
+            $("#reportcart").empty();
+
             if ($(this).is(':checked')) {
               $("#dropdown").html(`
                     <div class="card-body">
@@ -180,6 +185,11 @@
           });
 
           $('input[name="radio"][value="quarterly"]').on('click', function () {
+            // Clear previous inputs
+            $("input[name='fromdate']").val('');
+            $("input[name='todate']").val('');
+            $("#reportcart").empty();
+
             if ($(this).is(':checked')) {
               $("#dropdown").html(`
                 <div class="card-body">
@@ -208,6 +218,11 @@
           });
 
           $('input[name="radio"][value="yearly"]').on('click', function () {
+            // Clear previous inputs
+            $("input[name='fromdate']").val('');
+            $("input[name='todate']").val('');
+            $("#reportcart").empty();
+            
             if ($(this).is(':checked')) {
               $("#dropdown").html(`
                     <div class="card-body ">

@@ -114,12 +114,13 @@
                 <script>
                     $(document).ready(function () {
                         $('input[name="radio"][value="monthly"]').on('click', function () {
-                            // Clear the date range inputs
-                            $('#fromdate').val('');
-                            $('#todate').val('');
+                            // Clear previous inputs
+                            $("input[name='fromdate']").val('');
+                            $("input[name='todate']").val('');
+                            $("#reportcart").empty();
 
                             if ($(this).is(':checked')) {
-                                
+
                                 $("#dropdown").html(`
                                 <div class="card-body">
                                     <div class="row justify-content-center">
@@ -156,50 +157,57 @@
                         });
 
                         $('input[name="radio"][value="quarterly"]').on('click', function () {
-
+                            // Clear previous inputs
+                            $("input[name='fromdate']").val('');
+                            $("input[name='todate']").val('');
+                            $("#reportcart").empty();
 
                             if ($(this).is(':checked')) {
                                 $("#dropdown").html(`
-                    <div class="card-body">
-                        <div class="row justify-content-center">
-                            <div class="col-md-6 col-12  text-center mb-2">
-                                <select class="form-select" id="selectquarter" aria-label="Default select example">
-                                    <option selected>Please Select</option>
-                                    <option value="1">April-June</option>
-                                    <option value="2">July-Sept</option>
-                                    <option value="3">Oct-Dec</option>
-                                    <option value="4">Jan-March</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-12 text-center mb-2">
-                                <select class="form-select" id="quarter-selectyear" aria-label="Default select example" >
-                                    <option selected value="">Please Select</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    `);
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-6 col-12  text-center mb-2">
+                                                <select class="form-select" id="selectquarter" aria-label="Default select example">
+                                                    <option selected>Please Select</option>
+                                                    <option value="1">April-June</option>
+                                                    <option value="2">July-Sept</option>
+                                                    <option value="3">Oct-Dec</option>
+                                                    <option value="4">Jan-March</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 text-center mb-2">
+                                                <select class="form-select" id="quarter-selectyear" aria-label="Default select example" >
+                                                    <option selected value="">Please Select</option>
+                                                    <option value="2022">2022</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    `);
                             }
-
                         });
 
                         $('input[name="radio"][value="yearly"]').on('click', function () {
+                            // Clear previous inputs
+                            $("input[name='fromdate']").val('');
+                            $("input[name='todate']").val('');
+                            $("#reportcart").empty();
+                            
                             if ($(this).is(':checked')) {
                                 $("#dropdown").html(`
-                        <div class="card-body ">
-                            <div class="col-md-12 text-center mb-2">
-                                <select class="form-select" id="selectyear" aria-label="Default select example" style="width: 100%;">
-                                    <option selected value="">Please Select</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                </select>
-                            </div>
-                        </div>
-                    `);
+                                    <div class="card-body ">
+                                        <div class="col-md-12 text-center mb-2">
+                                            <select class="form-select" id="selectyear" aria-label="Default select example" style="width: 100%;">
+                                                <option selected value="">Please Select</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                `);
                             }
                         });
 
