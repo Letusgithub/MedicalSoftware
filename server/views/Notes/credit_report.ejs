@@ -27,44 +27,44 @@
 
                   <div>
                     <div class="card mb-4">
-                        <div class="row align-items-center flex ">
-                            <div class="col-md-2  text-center">
-                                <!-- <div class="card-header mb-2">From Date</div> -->
-                                <h5 class="card-header mb-2">From Date</h5>
-                            </div>
-                            <div class="col-md-4 ">
-                                <div class="card-header">
-                                    <input class="form-control" type="date" id="html5-date-input" name="fromdate" />
-                                </div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <h5 class="card-header mb-2">To Date</h5>
-                            </div>
-                            <div class="col-md-4 ">
-                                <div class="card-header">
-                                    <input class="form-control" type="date" id="html5-date-input" name="todate" />
-                                </div>
-                            </div>
+                      <div class="row align-items-center flex ">
+                        <div class="col-md-2  text-center">
+                          <!-- <div class="card-header mb-2">From Date</div> -->
+                          <h5 class="card-header mb-2">From Date</h5>
                         </div>
+                        <div class="col-md-4 ">
+                          <div class="card-header">
+                            <input class="form-control" type="date" id="html5-date-input" name="fromdate" />
+                          </div>
+                        </div>
+                        <div class="col-md-2 text-center">
+                          <h5 class="card-header mb-2">To Date</h5>
+                        </div>
+                        <div class="col-md-4 ">
+                          <div class="card-header">
+                            <input class="form-control" type="date" id="html5-date-input" name="todate" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     <div class="card mb-4">
-                        <div class="row">
-                            <div class="col-md-4 text-center">
-                                <h5 class="card-header"><input type="radio" name="radio" value="monthly" > Monthly</h5>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <h5 class="card-header"><input type="radio" name="radio" value="quarterly"> Quarterly</h5>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <h5 class="card-header"><input type="radio" name="radio" value="yearly"> Yearly</h5>
-                            </div>
+                      <div class="row">
+                        <div class="col-md-4 text-center">
+                          <h5 class="card-header"><input type="radio" name="radio" value="monthly"> Monthly</h5>
                         </div>
+                        <div class="col-md-4 text-center">
+                          <h5 class="card-header"><input type="radio" name="radio" value="quarterly"> Quarterly</h5>
+                        </div>
+                        <div class="col-md-4 text-center">
+                          <h5 class="card-header"><input type="radio" name="radio" value="yearly"> Yearly</h5>
+                        </div>
+                      </div>
 
-                        <div id="dropdown"></div>
+                      <div id="dropdown"></div>
                     </div>
 
-            </div>
+                  </div>
 
                   <div class="text-center mb-4">
                     <button type="button" class="btn btn-primary" id="generatereport">Generate Report</button>
@@ -139,20 +139,23 @@
     <%- include('../partials/footercode.ejs') %>
       <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
       <script>
-        var fromDate;
-        var toDate;
 
         $(document).ready(function () {
 
           $('input[name="radio"][value="monthly"]').on('click', function () {
+            // Clear previous inputs
+            $("input[name='fromdate']").val('');
+            $("input[name='todate']").val('');
+            $("#reportcart").empty();
+
             if ($(this).is(':checked')) {
-                $("#dropdown").html(`
+              $("#dropdown").html(`
                     <div class="card-body">
                         <div class="row justify-content-center">
   
-                            <div class="col-md-6 col-12  text-center mb-2">
+                          <div class="col-md-6 col-12  text-center mb-2">
                                 <select class="form-select" id="selectmonth" aria-label="Default select example">
-                                    <option selected>Please Select</option>
+                                    <option selected value="">Please Select</option>
                                     <option value="1">January</option>
                                     <option value="2">February</option>
                                     <option value="3">March</option>
@@ -168,24 +171,29 @@
                                 </select>
                             </div>
                             <div class="col-md-6 col-12  text-center mb-2">
-                                <select class="form-select" id="selectyear" aria-label="Default select example">
-                                    <option selected>Please Select</option>
-                                    <option value="1">2022</option>
-                                    <option value="1">2023</option>
+                                <select class="form-select" id="month-selectyear" aria-label="Default select example">
+                                    <option selected value="">Please Select</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
                                 </select>
                             </div>
                         </div>    
                     </div>
                 `);
             }
-        });
-  
-        $('input[name="radio"][value="quarterly"]').on('click', function () {
-  
-  
+          });
+
+          $('input[name="radio"][value="quarterly"]').on('click', function () {
+              // Clear previous inputs
+              $("input[name='fromdate']").val('');
+              $("input[name='todate']").val('');
+              $("#reportcart").empty();
+
+
             if ($(this).is(':checked')) {
-                $("#dropdown").html(`
-                <div class="card-body">
+              $("#dropdown").html(`
+              <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-md-6 col-12  text-center mb-2">
                             <select class="form-select" id="selectquarter" aria-label="Default select example">
@@ -197,35 +205,42 @@
                             </select>
                         </div>
                         <div class="col-md-6 col-12 text-center mb-2">
-                            <select class="form-select" id="selectyear" aria-label="Default select example" >
-                                <option selected>Please Select</option>
-                                <option value="1">2022</option>
-                                <option value="1">2023</option>
+                            <select class="form-select" id="quarter-selectyear" aria-label="Default select example" >
+                                <option selected value="">Please Select</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 `);
             }
-            
-        });
-  
-        $('input[name="radio"][value="yearly"]').on('click', function () {
+
+          });
+
+          $('input[name="radio"][value="yearly"]').on('click', function () {
+              // Clear previous inputs
+              $("input[name='fromdate']").val('');
+              $("input[name='todate']").val('');
+              $("#reportcart").empty();
+
             if ($(this).is(':checked')) {
-                $("#dropdown").html(`
+              $("#dropdown").html(`
                     <div class="card-body ">
                         <div class="col-md-12 text-center mb-2">
                             <select class="form-select" id="selectyear" aria-label="Default select example" style="width: 100%;">
-                                <option selected>Please Select</option>
-                                <option value="1">2022</option>
-                                <option value="1">2023</option>
+                                <option selected value="">Please Select</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
                             </select>
                         </div>
                     </div>
                 `);
             }
-        });
-  
+          });
+
 
           $("#dropdown_month .card-body, #dropdown_quarter .card-body, #dropdown_year .card-body").hide();
           $('input[name="radio"]').on('click', function () {
@@ -238,9 +253,11 @@
 
           });
 
-          $(document).on('change', '#selectmonth', function () {
-            var month = $(this).val();
-            $.get(`/api/searchmonthcredit?org=<%=orgId%>&month=${month}`, function (data, status) {
+          $(document).on('change', '#selectmonth, #month-selectyear', function () {
+            var month = $("#selectmonth").val();
+            var year = $("#month-selectyear").val();
+
+            $.get(`/api/searchmonthcredit?org=<%=orgId%>&month=${month}&year=${year}`, function (data, status) {
               $("#reportcart").empty();
               var items = data.data;
               console.log(items);
@@ -267,9 +284,11 @@
             })
           })
 
-          $(document).on('change', '#selectquarter', function () {
-            var quarter = $(this).val();
-            $.get(`/api/searchquartercredit?org=<%=orgId%>&quarter=${quarter}`, function (data, status) {
+          $(document).on('change', '#selectquarter, #quarter-selectyear', function () {
+            var quarter = $("#selectquarter").val();
+            var year = $("#quarter-selectyear").val();
+
+            $.get(`/api/searchquartercredit?org=<%=orgId%>&quarter=${quarter}&year=${year}`, function (data, status) {
               $("#reportcart").empty();
               var items = data.data;
               console.log(items);
@@ -297,8 +316,8 @@
           })
 
           $(document).on('change', '#selectyear', function () {
-            var year = $(this).find('option:selected').text();
-            console.log(year);
+            var year = $("#selectyear").val();
+            
             $.get(`/api/searchyearcredit?org=<%=orgId%>&year=${year}`, function (data, status) {
               $("#reportcart").empty();
               var items = data.data;
@@ -404,32 +423,42 @@
 
       <style>
         @media (max-width: 767px) {
-            
-              .card-body.d-flex .row.w-100 {
-                  flex-direction: row; /* Ensure row direction */
-                  justify-content: start; /* Center the content */
-                  align-items: flex-start;
-              }
-              .col-6 {
-                  flex: 0 0 50%; /* Make each input take up 50% of the width */
-                  max-width: 50%;
-                  
-              }
-              .text-center select {
-                  width: 100%; /* Ensure the select input takes full width */
-              }
-              .card-header {
-                  font-size: 0.75em; /* Adjust the font size as needed */
-                  display: flex;
-                  justify-content: flex-start; /* Align content to the left */
-                  align-items: flex-start;
-                  padding: 10px;
-              }
-              .card-header input{
-                  margin-right: 0.5rem;
-              }
+
+          .card-body.d-flex .row.w-100 {
+            flex-direction: row;
+            /* Ensure row direction */
+            justify-content: start;
+            /* Center the content */
+            align-items: flex-start;
+          }
+
+          .col-6 {
+            flex: 0 0 50%;
+            /* Make each input take up 50% of the width */
+            max-width: 50%;
+
+          }
+
+          .text-center select {
+            width: 100%;
+            /* Ensure the select input takes full width */
+          }
+
+          .card-header {
+            font-size: 0.75em;
+            /* Adjust the font size as needed */
+            display: flex;
+            justify-content: flex-start;
+            /* Align content to the left */
+            align-items: flex-start;
+            padding: 10px;
+          }
+
+          .card-header input {
+            margin-right: 0.5rem;
+          }
         }
-    </style>
+      </style>
 
   </body>
 
