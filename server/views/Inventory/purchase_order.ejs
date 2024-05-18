@@ -390,108 +390,6 @@
                             });
                         });
 
-                        // $("#vendor_name");
-                        // $("#vendor_contact").prop('readonly', true);
-                        // $("#vendor_email").prop('readonly', true);
-                        // $("#vendor_address").prop('readonly', true);
-                        // $("#vendor_gstin").prop('readonly', true);
-                        // $("#dl1_st").prop('readonly', true);
-                        // $("#dl1_ct").prop('readonly', true);
-                        // $("#dl1_ln").prop('readonly', true);
-                        // $("#dl2_st").prop('readonly', true);
-                        // $("#dl2_ct").prop('readonly', true);
-                        // $("#dl2_ln").prop('readonly', true);
-                        // var vendorId = -1;
-                        //autocomplete suggestion   
-                        // $("#vendor_name").autocomplete({
-                        //     minLength: 3,
-                        //     source: function (request, response) {
-
-                        //         $.get('/api/getallvendors', function (data, status) {
-
-                        //             let searchTerm = request.term;
-                        //             let results = data.data.filter(item => item.vendor_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
-
-
-                        //             if (results.length === 0) {
-                        //                 results.push({ vendor_name: null }); // Add a null item for the custom message
-                        //             }
-
-                        //             response(results);
-                        //         })
-
-                        //     },
-                        //     select: function (event, ui) {
-                        //         setTimeout(function () {
-                        //             console.log(ui.item);
-                        //             vendorId = ui.item.vendor_id;
-
-                        //             var splitDL1;
-                        //             var dl_no_1 = ui.item.vendor_dl_no_1;
-
-                        //             if (dl_no_1 != '') {
-
-                        //                 splitDL1 = dl_no_1.split(/-/);
-                        //                 $("#dl1_st").val(splitDL1[1]);
-                        //                 $("#dl1_ct").val(splitDL1[2]);
-                        //                 $("#dl1_ln").val(splitDL1[3]);
-                        //             }
-
-                        //             var splitDL2;
-                        //             var dl_no_2 = ui.item.vendor_dl_no_2;
-                        //             if (dl_no_2 != '') {
-
-                        //                 splitDL2 = dl_no_2.split(/-/);
-                        //                 $("#dl2_st").val(splitDL2[1]);
-                        //                 $("#dl2_ct").val(splitDL2[2]);
-                        //                 $("#dl2_ln").val(splitDL2[3]);
-                        //             }
-
-                        //             $("#vendor_name").val(ui.item.vendor_name);
-                        //             $("#vendor_contact").val(ui.item.vendor_contact);
-                        //             $("#vendor_email").val(ui.item.vendor_email);
-                        //             $("#vendor_address").val(ui.item.vendor_address);
-                        //             $("#vendor_gstin").val(ui.item.vendor_gstin);
-
-
-                        //         }, 0)
-                        //     }
-                        // }).data('ui-autocomplete')._renderItem = function (ul, item) {
-
-                        //     if (item.vendor_name) {
-                        //         $("#vendor_contact").prop('readonly', true);
-                        //         $("#vendor_email").prop('readonly', true);
-                        //         $("#vendor_address").prop('readonly', true);
-                        //         $("#vendor_gstin").prop('readonly', true);
-                        //         $("#dl1_st").prop('readonly', true);
-                        //         $("#dl1_ct").prop('readonly', true);
-                        //         $("#dl1_ln").prop('readonly', true);
-                        //         $("#dl2_st").prop('readonly', true);
-                        //         $("#dl2_ct").prop('readonly', true);
-                        //         $("#dl2_ln").prop('readonly', true);
-
-                        //         return $('<li>')
-                        //             .append('<div>' + item.vendor_name + '</div>')
-                        //             .appendTo(ul);
-                        //     }
-                        //     else {
-                        //         $("#vendor_contact").prop('readonly', false);
-                        //         $("#vendor_email").prop('readonly', false);
-                        //         $("#vendor_address").prop('readonly', false);
-                        //         $("#vendor_gstin").prop('readonly', false);
-                        //         $("#dl1_st").prop('readonly', false);
-                        //         $("#dl1_ct").prop('readonly', false);
-                        //         $("#dl1_ln").prop('readonly', false);
-                        //         $("#dl2_st").prop('readonly', false);
-                        //         $("#dl2_ct").prop('readonly', false);
-                        //         $("#dl2_ln").prop('readonly', false);
-                        //         return $('<li>').append('<option disabled>No Distributer With this Name. Please Add all the details of New Vendor Down</option>').appendTo(ul);
-                        //     }
-
-                        // };
-
-
-
                         $("#contact").text("Contact No :");
                         $("#email").text("Email :");
                         $("#dl_no").text("DL No. :");
@@ -624,7 +522,7 @@
                                 $("input[name='ptr']").removeClass('is-invalid');
                             }
 
-                            if ($("input[name='quantity']").val() == '') {
+                            if ($("input[name='quantity']").val() == '' || $("input[name='quantity']").val() == '0') {
                                 $("input[name='quantity']").addClass('is-invalid');
                                 $("input[name='quantity']").focus();
                                 e.preventDefault();
