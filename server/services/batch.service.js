@@ -136,6 +136,26 @@ module.exports = {
     );
   },
 
+  retrieveBatchOnReturnCancel: (data, callBack) => {
+    getPool().query(
+      `UPDATE batch SET 
+        saled_pri_qty = saled_pri_qty + ?, 
+        saled_sec_qty = saled_sec_qty + ? 
+        WHERE batch_id = ?`,
+      [
+        data.returnPriQty,
+        data.returnSecQty,
+        data.batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
   getRemQtyafterSales: (orgId, prodId, callBack) => {
     getPool().query(
       `

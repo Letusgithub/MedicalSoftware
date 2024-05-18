@@ -234,12 +234,12 @@ module.exports = {
     );
   },
 
-  searchMonth: (orgId, month, callback) => {
+  searchMonth: (orgId, month, year, callback) => {
     getPool().query(
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      where MONTH(od.sales_created_date) = ${month} AND YEAR(od.sales_created_date) = YEAR(CURDATE()) AND cd.org_id = ${orgId} 
+      where MONTH(od.sales_created_date) = ${month} AND YEAR(od.sales_created_date) = ${year} AND cd.org_id = ${orgId} 
       `,
       (error, results) => {
         if (error) return callback(error);
@@ -248,12 +248,12 @@ module.exports = {
     );
   },
 
-  searchQuarter: (orgId, start, end, callback) => {
+  searchQuarter: (orgId, start, end, year, callback) => {
     getPool().query(
       `SELECT * FROM order_details od
       JOIN customer_data cd 
       ON od.customer_id = cd.customer_id
-      where MONTH(od.sales_created_date)>= ${start} and MONTH(od.sales_created_date)<= ${end} AND YEAR(od.sales_created_date) = YEAR(CURDATE()) and cd.org_id = ${orgId} 
+      where MONTH(od.sales_created_date)>= ${start} and MONTH(od.sales_created_date)<= ${end} AND YEAR(od.sales_created_date) = ${year} and cd.org_id = ${orgId} 
       `,
       (error, results) => {
         if (error) return callback(error);

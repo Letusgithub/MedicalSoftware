@@ -5,10 +5,12 @@ const {
   create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatch,
   retrieveBatchOnCancel,
   retrieveBatchOnGrnCancel,
+  retrieveBatchOnReturnCancel,
 } = require('../services/batch.service');
 
 const { getOrdersById } = require('../services/cartitem.service');
 const { getGrnCartItemsById } = require('../services/grn.service');
+const { fetchReturnCartItems } = require('../services/returncartitem.service');
 
 module.exports = {
   create: (req, res) => {
@@ -154,6 +156,38 @@ module.exports = {
           batchQty: item.qty,
         };
         retrieveBatchOnGrnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
+      });
+    });
+  },
+
+  updateBatchOnCancelReturnInvoice: (req, res) => {
+    const returnId = req.query.returnId;
+    fetchReturnCartItems(returnId, (returnDetailsErr, returnDetailsResults) => {
+      if (returnDetailsErr) {
+        console.error(returnDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      returnDetailsResults.forEach((item) => {
+        const data = {
+          batchId: item.batch_id,
+          returnPriQty: item.return_pri_qty,
+          returnSecQty: item.return_sec_qty,
+        };
+        retrieveBatchOnReturnCancel(data, (updateError) => {
           if (updateError) {
             console.error(updateError);
             return res.status(500).json({

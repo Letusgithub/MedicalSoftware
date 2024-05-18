@@ -1,6 +1,7 @@
 const {
   createReturnOrder, getTotalReturns, searchDates, searchMonth, searchQuarter, searchYear,
   returnDetails,
+  cancelReturnInvoice,
 } = require('../services/returndetails.service');
 
 module.exports = {
@@ -59,7 +60,9 @@ module.exports = {
   searchMonth: (req, res) => {
     const orgId = req.query.org;
     const month = req.query.month;
-    searchMonth(orgId, month, (error, results) => {
+    const year = req.query.year;
+
+    searchMonth(orgId, month, year, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
@@ -93,6 +96,8 @@ module.exports = {
   searchQuarter: (req, res) => {
     const orgId = req.query.org;
     const quarter = req.query.quarter;
+    const year = req.query.year;
+
     let start;
     let end;
     if (quarter === '1') {
@@ -108,7 +113,7 @@ module.exports = {
       start = 1;
       end = 3;
     }
-    searchQuarter(orgId, start, end, (error, results) => {
+    searchQuarter(orgId, start, end, year, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
@@ -136,6 +141,39 @@ module.exports = {
       res.status(200).json({
         success: 1,
         result: results,
+      });
+    });
+  },
+
+  cancelReturnInvoice: (req, res) => {
+    const returnId = req.query.returnId;
+    const orgId = req.query.orgId;
+    returnDetails(returnId, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving return details',
+        });
+      }
+      if (results.return_status === 'cancelled') {
+        return res.status(200).json({
+          success: 0,
+          message: 'Return already cancelled',
+        });
+      }
+      cancelReturnInvoice(returnId, orgId, (cancelError) => {
+        if (cancelError) {
+          console.log(cancelError);
+          return res.status(500).json({
+            success: 0,
+            message: 'Error cancelling return',
+          });
+        }
+        return res.status(200).json({
+          success: 1,
+          message: 'Return successfully cancelled',
+        });
       });
     });
   },

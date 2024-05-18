@@ -1,5 +1,6 @@
 const {
   create, getOrdersById, getOrders, updateOrders, getCartItemsInInvoice,
+  updateCartItemOnReturnCancel,
 } = require('../controllers/api.cartitem.controller');
 
 module.exports = (app) => {
@@ -17,4 +18,6 @@ module.exports = (app) => {
   app.get('/api/getcartitemsininvoice/:id', getCartItemsInInvoice); // get invoice data directly from cart_item table
   app.get('/api/cartmainid/:id', getOrders);
   app.post('/api/updatecartitems', updateOrders);
+
+  app.get('/api/updatecartoncancelreturninvoice', updateCartItemOnReturnCancel);
 };
