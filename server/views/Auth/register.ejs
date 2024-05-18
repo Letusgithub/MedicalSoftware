@@ -13,7 +13,8 @@
             <div class="authentication-inner row m-0">
 
                 <!-- Left Text -->
-                <div class="d-none d-lg-flex col-lg-4 align-items-center justify-content-end p-5 pe-0"  style="background-color: #7F82FF;">
+                <div class="d-none d-lg-flex col-lg-4 align-items-center justify-content-end p-5 pe-0"
+                    style="background-color: #7F82FF;">
                     <div class="w-px-400">
                         <img src="/img/backgrounds/create-account-light.png" class="img-fluid" alt="multi-steps"
                             width="600" data-app-dark-img="illustrations/create-account-dark.png"
@@ -36,24 +37,24 @@
                                         <span>Enter Your Pharmacy Details</span>
                                     </div>
                                     <div class="row g-3 d-flex justify-content-center">
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 has-validation">
                                             <label class="form-label" for="org_name">Pharmacy name</label>
                                             <input type="text" id="org_name" name="org_name" class="form-control"
                                                 required />
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 has-validation">
                                             <label class="form-label" for="owner_name">Owner name</label>
                                             <input type="text" id="owner_name" name="owner_name" class="form-control"
                                                 required />
                                         </div>
                                         <div class="col-sm-10">
                                             <label class="form-label" for="org_dl_no_1">DL No. 1</label>
-                                            <div class="input-group">
+                                            <div class="input-group has-validation">
                                                 <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                         class='bx bx-detail'></i></span>
                                                 <input type="text" id="dl1_ft" value="20" class="form-control" readonly>
                                                 <select type="text" id="dl1_st" class="form-select">
-                                                    <option selected> State</option>
+                                                    <option value="" disabled> State</option>
                                                     <option value="AD">Andhra Pradesh</option>
                                                     <option value="AR"> Arunachal Pradesh</option>
                                                     <option value="AS"> Assam</option>
@@ -70,7 +71,7 @@
                                                     <option value="KL"> Kerala</option>
                                                     <option value="LD"> Lakshadweep Islands</option>
                                                     <option value="MP"> Madhya Pradesh</option>
-                                                    <option value="MH"> Maharashtra</option>
+                                                    <option value="MH" selected> Maharashtra</option>
                                                     <option value="MN"> Manipur</option>
                                                     <option value="ML"> Meghalaya</option>
                                                     <option value="MZ"> Mizoram</option>
@@ -87,8 +88,7 @@
                                                     <option value="UK"> Uttarakhand</option>
                                                     <option value="WB"> West Bengal</option>
                                                 </select>
-                                                <input type="text" id="dl1_ct" placeholder="Zone"
-                                                    class="form-control">
+                                                <input type="text" id="dl1_ct" placeholder="Zone" class="form-control" required>
                                                 <!-- <select type="text" id="dl1_ct" class="form-select">
                                                     <option selected>Zone</option>
                                                     <option value="AH1">AHMEDNAGAR ZONE 1</option>
@@ -155,17 +155,17 @@
                                                     <option value="YEO">YAVATMAL</option>
                                                 </select> -->
                                                 <input type="text" id="dl1_ln" placeholder="License No."
-                                                    class="form-control" minlength="6" maxlength="6">
+                                                    class="form-control" minlength="6" maxlength="6" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-10">
                                             <label class="form-label" for="org_dl_no_2">DL No. 2</label>
-                                            <div class="input-group">
+                                            <div class="input-group has-validation">
                                                 <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                         class='bx bx-detail'></i></span>
                                                 <input type="text" id="dl2_ft" value="21" class="form-control" readonly>
                                                 <select type="text" id="dl2_st" class="form-select">
-                                                    <option selected> State</option>
+                                                    <option value="" disabled> State</option>
                                                     <option value="AD">Andhra Pradesh</option>
                                                     <option value="AR"> Arunachal Pradesh</option>
                                                     <option value="AS"> Assam</option>
@@ -182,7 +182,7 @@
                                                     <option value="KL"> Kerala</option>
                                                     <option value="LD"> Lakshadweep Islands</option>
                                                     <option value="MP"> Madhya Pradesh</option>
-                                                    <option value="MH"> Maharashtra</option>
+                                                    <option value="MH" selected > Maharashtra</option>
                                                     <option value="MN"> Manipur</option>
                                                     <option value="ML"> Meghalaya</option>
                                                     <option value="MZ"> Mizoram</option>
@@ -199,8 +199,7 @@
                                                     <option value="UK"> Uttarakhand</option>
                                                     <option value="WB"> West Bengal</option>
                                                 </select>
-                                                <input type="text" id="dl2_ct" placeholder="Zone"
-                                                    class="form-control">
+                                                <input type="text" id="dl2_ct" placeholder="Zone" class="form-control" required>
                                                 <!-- <select type="text" id="dl2_ct" class="form-select">
                                                     <option selected>Zone</option>
                                                     <option value="AH1">AHMEDNAGAR ZONE 1</option>
@@ -267,21 +266,21 @@
                                                     <option value="YEO">YAVATMAL</option>
                                                 </select> -->
                                                 <input type="text" id="dl2_ln" placeholder="License No."
-                                                    class="form-control" minlength="6" maxlength="6">
+                                                    class="form-control" minlength="6" maxlength="6" required>
                                             </div>
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 has-validation">
                                             <label class="form-label" for="org_pincode">Pincode</label>
                                             <input type="number" id="org_pincode" name="org_pincode"
-                                                class="form-control" />
+                                                class="form-control" required />
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 has-validation">
                                             <label class="form-label" for="org_address">Address</label>
                                             <textarea type="text" id="org_address" name="org_address"
                                                 class="form-control" required></textarea>
 
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 has-validation">
                                             <hr class="mb-4">
                                             <div class="card overflow-hidden mb-2" style="height: 230px;">
                                                 <h6 class="card-header py-3 border">TERMS AND CONDITIONS</h6>
@@ -321,15 +320,44 @@
 
             <%- include('../partials/footercode.ejs') %>
 
-            <!-- Page JS -->
-            <script src="/js/pages-auth-two-steps.js"></script>
-            <script src="/js/extended-ui-perfect-scrollbar.js"></script>
+                <!-- Page JS -->
+                <script src="/js/pages-auth-two-steps.js"></script>
+                <script src="/js/extended-ui-perfect-scrollbar.js"></script>
 
-            <script>
-                $(document).ready(function () {
+                <script>
+                    $(document).ready(function () {
+                        // Validation check on input
+                        $('input').each(function () {
+                            $(this).on('input', function () {
+                                if ($(this).val() == '') {
+                                    $(this).addClass('is-invalid');
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                }
+                            });
+                        });
+                        $('select').each(function () {
+                            $(this).on('input', function () {
+                                if ($(this).val() == 'default' || $(this).val() == null) {
+                                    $(this).addClass('is-invalid');
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                }
+                            });
+                        });
 
-                    var lat;
-                    var long;
+                        // Validate address
+                        $("#org_address").on('input', function () {
+                            if ($("#org_address").val() == '') {
+                                $("#org_address").addClass('is-invalid');
+                                isValid = false;
+                            } else {
+                                $("#org_address").removeClass('is-invalid');
+                            }
+                        });
+
+                        var lat;
+                        var long;
 
                         if ("geolocation" in navigator) {
                             navigator.geolocation.getCurrentPosition(function (position) {
@@ -340,12 +368,12 @@
                             console.log("Geolocation does not work in this browser");
                         }
 
-                    $("#dl2_ln").on('input', function () {
-                        if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
-                            $("#dl2_ln").val(null);
-                            return alert(" DL Number 1  and DL Number 2 cannot be same");
-                        }
-                    });
+                        $("#dl2_ln").on('input', function () {
+                            if ($("#dl1_ln").val() == $("#dl2_ln").val()) {
+                                $("#dl2_ln").val(null);
+                                return alert(" DL Number 1  and DL Number 2 cannot be same");
+                            }
+                        });
 
                         var city;
                         var state;
@@ -370,15 +398,33 @@
                         })
 
 
-                    $("#submitPharmacyDetails").click(function () {
-                        if (!$("#defaultCheck1").prop("checked")) {
-                            return alert("Please check Terms and Conditions before submitting.");
-                        }
-                        var dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
-                        var dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
+                        $("#submitPharmacyDetails").click(function (e) {
+                            e.preventDefault();
+                            var isValid = true;
+                            $('input:required').each(function () {
+                                if ($(this).val() == '') {
+                                    $(this).addClass('is-invalid');
+                                    isValid = false;
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                }
+                            });
 
-                            if ($("#org_name").val() && $("#owner_name").val() && dl_no_1 && dl_no_2 && $("#org_pincode").val() && $("#org_address").val()) {
+                            if ($("#org_address").val() == '') {
+                                $("#org_address").addClass('is-invalid');
+                                isValid = false;
+                            } else {
+                                $("#org_address").removeClass('is-invalid');
+                            }
 
+
+                            if (!$("#defaultCheck1").prop("checked")) {
+                                return alert("Please check Terms and Conditions before submitting.");
+                            }
+                            var dl_no_1 = $("#dl1_ft").val().toString() + '-' + $("#dl1_st").val().toString() + '-' + $("#dl1_ct").val().toString() + '-' + $("#dl1_ln").val().toString();
+                            var dl_no_2 = $("#dl2_ft").val().toString() + '-' + $("#dl2_st").val().toString() + '-' + $("#dl2_ct").val().toString() + '-' + $("#dl2_ln").val().toString();
+
+                            if (isValid) {
                                 $.ajax({
                                     url: `/api/auth/register`,
                                     type: 'POST',
@@ -403,11 +449,9 @@
                                         console.log('error', error);
                                     }
                                 })
-                            }
-                            else {
-                                alert("Please fill all inputs")
-                            }
 
+
+                            }
 
                         })
 
