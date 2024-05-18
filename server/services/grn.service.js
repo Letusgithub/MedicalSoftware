@@ -115,12 +115,12 @@ module.exports = {
     );
   },
 
-  searchMonth: (orgId, month, callback) => {
+  searchMonth: (orgId, month, year, callback) => {
     getPool().query(
       `SELECT grn.*, vendor.vendor_name
       FROM grn 
       JOIN vendor on vendor.vendor_id = grn.vendor_id
-      where MONTH(grn.created_date_grn)=? AND YEAR(grn.created_date_grn) = YEAR(CURDATE()) and grn.org_id = ${orgId} 
+      where MONTH(grn.created_date_grn)=? AND YEAR(grn.created_date_grn) = ${year} and grn.org_id = ${orgId} 
       `,
       [
         month,
@@ -132,12 +132,12 @@ module.exports = {
     );
   },
 
-  searchQuarter: (orgId, start, end, callback) => {
+  searchQuarter: (orgId, start, end, year, callback) => {
     getPool().query(
       `SELECT grn.*, vendor.vendor_name
       FROM grn 
       JOIN vendor ON vendor.vendor_id = grn.vendor_id
-      where MONTH(grn.created_date_grn)>=? and MONTH(grn.created_date_grn)<=? AND YEAR(grn.created_date_grn) = YEAR(CURDATE()) and grn.org_id = ${orgId} 
+      where MONTH(grn.created_date_grn)>=? and MONTH(grn.created_date_grn)<=? AND YEAR(grn.created_date_grn) = ${year} and grn.org_id = ${orgId} 
       `,
       [
         start,
