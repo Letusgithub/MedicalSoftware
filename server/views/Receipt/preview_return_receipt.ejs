@@ -8,54 +8,85 @@
         <style>
             /* new changes */
 
+            #html-content {
+                    
+                    margin: 0; /* Center align */
+                }
+
+
             @media (max-width: 767px) {
                 #html-content {
-                    width: 100%;
-                    margin: 0 0; /* Center align */
+                    width: 92%;
+                    margin: 0 0;
+                    /* Center align */
                 }
             }
 
-            .table-of-receipt th, .table-of-receipt td{
-                padding: 0px; /* Adjust padding as needed */
+            .table-bordered th,
+            .table-bordered td {
+                padding: 3px;
+                /* Adjust padding as needed */
+                /*padding-left: 5px;*/
+                /*padding-right: 5px;*/
+                text-align: center;
+                /* Center align text */
+            }
+
+            .table-bordered th {
+                background-color: #f8f9fa;
+                /* Optional: Add background color for headers */
+                border-top: none;
+            }
+
+            .table-of-receipt th,
+            .table-of-receipt td {
+                padding: 0px;
+                /* Adjust padding as needed */
                 padding-left: 1px;
                 padding-right: 1px;
-                text-align: center; /* Center align text */
+                text-align: center;
+                /* Center align text */
                 margin: 0;
                 padding-top: -5px;
                 margin-top: -10px;
 
             }
-            
+
             .btn-custom {
-                flex: 1; /* Make the buttons take equal space */
-                margin: 0 4px; /* Adjust the horizontal spacing */
-                height: 40px; /* Set a fixed height for both buttons */
+                flex: 1;
+                /* Make the buttons take equal space */
+                margin: 0 4px;
+                /* Adjust the horizontal spacing */
+                height: 40px;
+                /* Set a fixed height for both buttons */
                 display: flex;
                 padding: 4px;
-                align-items: center; /* Center the text vertically */
-                justify-content: center !important; /* Center the text horizontally */
-                white-space: nowrap; /* Prevent text from wrapping */
+                align-items: center;
+                /* Center the text vertically */
+                justify-content: center !important;
+                /* Center the text horizontally */
+                white-space: nowrap;
+                /* Prevent text from wrapping */
             }
+
             /* new changes */
             .frame1 {
-                /*width: 60rem;*/
-                height: 36.7rem;
+                width: 55rem;
+                height: 39rem;
                 background: #FFF;
                 padding: 15px;
-                border: 0.2px solid #1E1E1E;
-                width: 52.2365rem;
             }
 
             .receipt-container {
                 /* background-image: url("/images/receipt-bg3.png"); */
-                padding-right: 10px;
-                padding-left: 10px;
+                padding-right: 15px;
+                padding-left: 15px;
                 margin-right: auto;
                 margin-left: auto;
 
                 position: relative;
-                width: 30.2365rem;
-                height: 31.97663rem;
+                width: 50.2365rem;
+                height: 35.97663rem;
                 flex-shrink: 0;
                 border: 0.2px solid #1E1E1E;
             }
@@ -173,22 +204,12 @@
                 margin-bottom: 0;
             }
 
-            @media(max-width: 767px){
-                .cart-table {
-                    
-                    left: -4rem;
-                    width: 50.2365rem;
-        
-                }
-            }
-
             .cart-table {
                 position: relative;
-                width: 52.2365rem;
+                width: 50.2365rem;
                 height: 14.56863rem;
                 border: 0.05rem solid #1E1E1E;
-                left: -2.6rem;
-               
+                left: -1rem;
                 margin-top: 0.75rem;
             }
 
@@ -200,7 +221,7 @@
                 font-weight: 600;
                 line-height: normal;
                 margin: auto;
-                
+
                 padding-right: 2rem;
 
                 border: 0.05rem solid #1E1E1E;
@@ -210,7 +231,7 @@
                 border-left: 1px solid #000;
                 border-right: 1px solid #000;
                 border-top: none !important;
-                
+
                 padding-right: 2rem;
 
                 color: #000;
@@ -351,7 +372,8 @@
 
     <body>
         <!-- Layout wrapper -->
-        <div class="layout-wrapper layout-content-navbar" style="background-image:url(/images/receipt-bg3.png);">
+        <div class="layout-wrapper layout-content-navbar"
+            style="background-image: linear-gradient(rgba(232, 231, 231, 0.5), rgba(232, 231, 231, 0.5)), url(/images/receipt-bg3.png);">
             <div class="layout-container">
                 <!-- sidebar imported -->
                 <%- include('../partials/sidebar.ejs') %>
@@ -371,8 +393,8 @@
                                         <!-- Invoice responsive template -->
 
                                         <div class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4">
-                                            <div class="watermark" style="display: none;"></div>
                                             <div class="card invoice-preview-card">
+                                                <div class="watermark" style="display: none;"></div>
                                                 <div class="card-body pb-0 text-center">
                                                     <h3 class="text-body fw-bold">Return Invoice</h3>
                                                     <hr class="my-0">
@@ -387,7 +409,7 @@
                                                             <p class="mb-1 shopaddress"></p>
                                                         </div>
                                                         <div class="col-xl-6 col-md-12 col-sm-5 col-12 mt-2">
-                                                            
+
                                                             <div class="mb-0">
                                                                 <span class="fw-medium dlno1"></span>
                                                             </div>
@@ -546,9 +568,9 @@
                                         <!-- Invoice -->
 
 
-                                        <div class="frame1" id="html-content" style="display: none;">
-                                            <div class="container">
-                                                <div class="watermark-receipt" style="display: none;"></div>
+                                        <div class="frame1" id="html-content" style="display: block;">
+                                            <div class="receipt-container">
+                                                <div class="watermark-receipt" style="display: block;"></div>
                                                 <div class="d-flex justify-content-between">
                                                     <div>
                                                         <div class="shop-name orgname">
@@ -722,19 +744,19 @@
                                                         id="whatsappLink">
                                                         WhatsApp
                                                     </button> -->
-                                                    <button class="btn btn-label-secondary btn-custom d-grid w-100" type="button"
-                                                        onclick="history.back()">
+                                                    <button class="btn btn-label-secondary btn-custom d-grid w-100"
+                                                        type="button" onclick="history.back()">
                                                         Back
                                                     </button>
                                                     <div>
-                                                        <button class="btn btn-label-danger btn-custom d-grid w-100" type="button"
-                                                            id="cancelReceipt">Cancel Receipt</button>
+                                                        <button class="btn btn-label-danger btn-custom d-grid w-100"
+                                                            type="button" id="cancelReceipt">Cancel Receipt</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        
+
                                         <!-- /Invoice Actions -->
                                     </div>
 
@@ -931,7 +953,7 @@
                         }
                         pdf.save("Invoice.pdf");
 
-                        
+
                         // Reset the width after PDF generation
                         if (isMobile) {
                             $("#html-content").css("width", originalWidth);
