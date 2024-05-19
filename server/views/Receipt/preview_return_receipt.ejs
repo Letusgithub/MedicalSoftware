@@ -1,28 +1,61 @@
 <%- include('../partials/headercode.ejs') %>
 
     <head>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
         <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <style>
+            /* new changes */
+
+            @media (max-width: 767px) {
+                #html-content {
+                    width: 100%;
+                    margin: 0 0; /* Center align */
+                }
+            }
+
+            .table-of-receipt th, .table-of-receipt td{
+                padding: 0px; /* Adjust padding as needed */
+                padding-left: 1px;
+                padding-right: 1px;
+                text-align: center; /* Center align text */
+                margin: 0;
+                padding-top: -5px;
+                margin-top: -10px;
+
+            }
+            
+            .btn-custom {
+                flex: 1; /* Make the buttons take equal space */
+                margin: 0 4px; /* Adjust the horizontal spacing */
+                height: 40px; /* Set a fixed height for both buttons */
+                display: flex;
+                padding: 4px;
+                align-items: center; /* Center the text vertically */
+                justify-content: center !important; /* Center the text horizontally */
+                white-space: nowrap; /* Prevent text from wrapping */
+            }
+            /* new changes */
             .frame1 {
-                width: 55rem;
-                height: 39rem;
+                /*width: 60rem;*/
+                height: 36.7rem;
                 background: #FFF;
                 padding: 15px;
+                border: 0.2px solid #1E1E1E;
+                width: 52.2365rem;
             }
 
             .receipt-container {
                 /* background-image: url("/images/receipt-bg3.png"); */
-                padding-right: 15px;
-                padding-left: 15px;
+                padding-right: 10px;
+                padding-left: 10px;
                 margin-right: auto;
                 margin-left: auto;
 
                 position: relative;
-                width: 50.2365rem;
-                height: 35.97663rem;
+                width: 30.2365rem;
+                height: 31.97663rem;
                 flex-shrink: 0;
                 border: 0.2px solid #1E1E1E;
             }
@@ -140,12 +173,22 @@
                 margin-bottom: 0;
             }
 
+            @media(max-width: 767px){
+                .cart-table {
+                    
+                    left: -4rem;
+                    width: 50.2365rem;
+        
+                }
+            }
+
             .cart-table {
                 position: relative;
-                width: 50.2365rem;
+                width: 52.2365rem;
                 height: 14.56863rem;
                 border: 0.05rem solid #1E1E1E;
-                left: -1rem;
+                left: -2.6rem;
+               
                 margin-top: 0.75rem;
             }
 
@@ -157,6 +200,8 @@
                 font-weight: 600;
                 line-height: normal;
                 margin: auto;
+                
+                padding-right: 2rem;
 
                 border: 0.05rem solid #1E1E1E;
             }
@@ -165,6 +210,8 @@
                 border-left: 1px solid #000;
                 border-right: 1px solid #000;
                 border-top: none !important;
+                
+                padding-right: 2rem;
 
                 color: #000;
                 font-size: 0.625rem;
@@ -319,7 +366,7 @@
                                 <!-- Content -->
 
                                 <div class="container-xxl flex-grow-1 container-p-y">
-                                    <div class="row invoice-preview">
+                                    <div class="row invoice-preview  justify-content-center">
 
                                         <!-- Invoice responsive template -->
 
@@ -339,18 +386,19 @@
                                                             </div>
                                                             <p class="mb-1 shopaddress"></p>
                                                         </div>
-                                                        <div class="col-xl-6 col-md-12 col-sm-5 col-12">
-                                                            <div class="mb-2">
-                                                                <span class="fw-medium gstin"></span>
-                                                            </div>
-                                                            <div class="mb-2">
+                                                        <div class="col-xl-6 col-md-12 col-sm-5 col-12 mt-2">
+                                                            
+                                                            <div class="mb-0">
                                                                 <span class="fw-medium dlno1"></span>
                                                             </div>
-                                                            <div class="mb-2">
+                                                            <div class="mb-0">
                                                                 <span class="fw-medium dlno2"></span>
                                                             </div>
-                                                            <div class="mb-2">
+                                                            <div class="mb-0">
                                                                 <span class="fw-medium flno"></span>
+                                                            </div>
+                                                            <div class="mb-0">
+                                                                <span class="fw-medium gstin"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -360,16 +408,16 @@
                                                     <div class="row p-sm-3 p-0">
                                                         <div
                                                             class="col-xl-6 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
-                                                            <h6 class="pb-2">Invoice To:</h6>
-                                                            <p class="mb-1 customername fw-bold"></p>
-                                                            <p class="mb-1 shippingadd"></p>
-                                                            <p class="mb-1 customermobile"></p>
+                                                            <h6 class="pb-1">Invoice To:</h6>
+                                                            <p class="mb-0 customername fw-bold"></p>
+                                                            <p class="mb-0 shippingadd"></p>
+                                                            <p class="mb-0 customermobile"></p>
                                                             <p class="mb-0 doctorname"></p>
                                                         </div>
                                                         <div class="col-xl-6 col-md-12 col-sm-7 col-12">
-                                                            <h6 class="pb-2">Invoice Details:</h6>
-                                                            <p class="mb-1 fw-bold salesinvoiceno"></p>
-                                                            <p class="mb-1 fw-bold returninvoiceno"></p>
+                                                            <h6 class="pb-1">Invoice Details:</h6>
+                                                            <p class="mb-0 fw-bold salesinvoiceno"></p>
+                                                            <p class="mb-0 fw-bold returninvoiceno"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -389,7 +437,7 @@
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody class="cartitems">
+                                                        <tbody class="cartitems py-0 my-0">
                                                             <!-- <tr>
                                                                 <td class="text-nowrap">Vuexy Admin </td>
                                                                 <td class="text-nowrap">HTML </td>
@@ -483,10 +531,10 @@
                                                         <div>
                                                             <span>“GET WELL SOON BY DAWA.AI”</span>
                                                         </div>
-                                                        <div>
+                                                        <!-- <div>
                                                             <button type="button" class="btn btn-label-danger"
                                                                 id="cancelReceipt">Cancel Receipt</button>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -555,21 +603,21 @@
                                                     </div>
 
                                                 </div>
-                                                <table class="cart-table">
+                                                <table class="cart-table table-of-receipt">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 11.29rem;">Item</th>
-                                                            <th style="width: 3.1rem;">QTY</th>
+                                                            <th style="width: 7.29rem;">Item</th>
+                                                            <th style="width: 3.1rem;">Quantity</th>
                                                             <th style="width: 4.59rem;">HSN</th>
                                                             <th style="width: 4.4rem;">Batch</th>
-                                                            <th style="width: 3.25rem;">Exp.</th>
+                                                            <th style="width: 3.25rem;">Expiry</th>
                                                             <th style="width: 3.62rem;">MRP(₹)</th>
                                                             <th style="width: 3.61rem;">GST%</th>
-                                                            <th style="width: 3.91rem;">Discount%</th>
+                                                            <th style="width: 2.91rem;">Discount%</th>
                                                             <th style="width: 4.2rem;">Total(₹)</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="cartitems">
+                                                    <tbody class="cartitems py-0 my-0 justify-content-center ">
                                                         <!-- <tr>
                                                             <td style="width: 2.27rem; height: 1rem;">1</td>
                                                             <td style="width: 11.29rem; height: 1rem;">wyx</td>
@@ -659,14 +707,14 @@
                                         <!-- /Invoice -->
 
                                         <!-- Invoice Actions -->
-                                        <div class="col-xl-3 col-md-4 col-12 invoice-actions">
-                                            <div class="card">
-                                                <div class="card-body">
+                                        <div class="col-xl-4 col-md-6 col-12 invoice-actions">
+                                            <div class="pt-3 mx-3 d-flex justify-content-center">
+                                                <div class="d-flex justify-content-center mx-5 px-5">
                                                     <!-- <button class="btn btn-primary d-grid w-100 mb-3" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
                                                     <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
                                                   </button> -->
                                                     <button
-                                                        class="btn btn-primary btn-label-secondary d-grid w-100 mb-3"
+                                                        class="btn btn-primary btn-custom btn-label-secondary d-grid w-100 mb-3 "
                                                         type="button" onclick="CreatePDFfromHTML()">
                                                         Download
                                                     </button>
@@ -674,13 +722,19 @@
                                                         id="whatsappLink">
                                                         WhatsApp
                                                     </button> -->
-                                                    <button class="btn btn-label-secondary d-grid w-100" type="button"
+                                                    <button class="btn btn-label-secondary btn-custom d-grid w-100" type="button"
                                                         onclick="history.back()">
                                                         Back
                                                     </button>
+                                                    <div>
+                                                        <button class="btn btn-label-danger btn-custom d-grid w-100" type="button"
+                                                            id="cancelReceipt">Cancel Receipt</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        
                                         <!-- /Invoice Actions -->
                                     </div>
 
@@ -763,14 +817,14 @@
 
                             cartHtml = `
                                         <tr>
-                                            <td style="width: 11.29rem; height: 1rem;">${items[i].product_name}</td>
+                                            <td style="width: 6.29rem; height: 1rem;">${items[i].product_name}</td>
                                             <td style="width: 3.1rem; height: 1rem;">${items[i].return_pri_qty}:${items[i].return_sec_qty}</td>
                                             <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
                                             <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
                                             <td style="width: 3.25rem; height: 1rem;">${date}</td>
                                             <td style="width: 3.62rem; height: 1rem;">${items[i].return_mrp}</td>
                                             <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
-                                            <td style="width: 3.91rem; height: 1rem;">${items[i].return_dis}</td>
+                                            <td style="width: 2.91rem; height: 1rem;">${items[i].return_dis}</td>
                                             <td style="width: 4.2rem; height: 1rem;">${items[i].return_total}</td>
                                         </tr>`
                             $(".cartitems").append(cartHtml);
@@ -849,6 +903,14 @@
             <script>
                 function CreatePDFfromHTML() {
                     $("#html-content").show();
+
+                    // Adjust the content width for PDF generation
+                    var originalWidth = $("#html-content").width();
+                    var isMobile = window.innerWidth <= 767;
+                    if (isMobile) {
+                        $("#html-content").css("width", "100%");
+                    }
+
                     var HTML_Width = $("#html-content").width();
                     var HTML_Height = $("#html-content").height();
                     var top_left_margin = 30;
@@ -868,6 +930,13 @@
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
                         }
                         pdf.save("Invoice.pdf");
+
+                        
+                        // Reset the width after PDF generation
+                        if (isMobile) {
+                            $("#html-content").css("width", originalWidth);
+                        }
+
                         $("#html-content").hide();
                     });
                 }
