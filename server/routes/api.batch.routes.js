@@ -4,6 +4,7 @@ const {
   updateOnCancelSalesInvoice,
   updateBatchOnCancelGRN,
   updateBatchOnCancelReturnInvoice,
+  updateBatchOnCancelCRN,
 } = require('../controllers/api.batch.controller');
 
 module.exports = (app) => {
@@ -31,4 +32,5 @@ module.exports = (app) => {
   app.get('/api/updatebatchoncancelsalesinvoice', updateOnCancelSalesInvoice);
   app.get('/api/updatebatchoncancelgrn', updateBatchOnCancelGRN);
   app.get('/api/updatebatchoncancelreturninvoice', updateBatchOnCancelReturnInvoice);
+  app.get('/api/updatebatchoncancelcrn', updateBatchOnCancelCRN);
 };

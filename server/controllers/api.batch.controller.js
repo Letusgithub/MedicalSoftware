@@ -6,9 +6,11 @@ const {
   retrieveBatchOnCancel,
   retrieveBatchOnGrnCancel,
   retrieveBatchOnReturnCancel,
+  retrieveBatchOnCrnCancel,
 } = require('../services/batch.service');
 
 const { getOrdersById } = require('../services/cartitem.service');
+const { getCrnCartItemsById } = require('../services/credit.service');
 const { getGrnCartItemsById } = require('../services/grn.service');
 const { fetchReturnCartItems } = require('../services/returncartitem.service');
 
@@ -188,6 +190,38 @@ module.exports = {
           returnSecQty: item.return_sec_qty,
         };
         retrieveBatchOnReturnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
+      });
+    });
+  },
+
+  updateBatchOnCancelCRN: (req, res) => {
+    const creditInvoiceId = req.query.creditInvoiceId;
+    getCrnCartItemsById(creditInvoiceId, (crnDetailsErr, crnDetailsResults) => {
+      if (crnDetailsErr) {
+        console.error(crnDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      crnDetailsResults.forEach((item) => {
+        const data = {
+          batchId: item.batch_id_credit,
+          creditPriQty: item.pri_unit_credit,
+          creditSecQty: item.sec_unit_credit,
+        };
+        retrieveBatchOnCrnCancel(data, (updateError) => {
           if (updateError) {
             console.error(updateError);
             return res.status(500).json({

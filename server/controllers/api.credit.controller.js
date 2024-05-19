@@ -170,3 +170,38 @@ exports.searchDates = (req, res) => {
     });
   });
 };
+
+exports.cancelCreditNote = (req, res) => {
+  const creditInvoiceId = req.query.creditInvoiceId;
+  const orgId = req.query.orgId;
+  service.getCreditNote(creditInvoiceId, orgId, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: 'some error',
+      });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({
+        message: 'Credit Note not found',
+      });
+    }
+    if (results[0].status === 'cancelled') {
+      return res.status(400).json({
+        message: 'Credit Note already cancelled',
+      });
+    }
+    service.cancelCreditNote(creditInvoiceId, orgId, (cancelError) => {
+      if (cancelError) {
+        console.log(cancelError);
+        return res.status(500).json({
+          message: 'some error',
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        message: 'Credit Note cancelled successfuly',
+      });
+    });
+  });
+};
