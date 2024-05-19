@@ -67,15 +67,15 @@ module.exports = {
     );
   },
 
-  getDebitNoteinInvoice: (id, callBack) => {
+  getDebitNoteinInvoice: (id, orgId, callBack) => {
     getPool().query(
-      `SELECT DISTINCT vendor.*, dbdetails.*, db.less_discount, db.debit_amt, inv.*,  batch.*,  sample.med_name FROM debit_note db
+      `SELECT DISTINCT vendor.*, dbdetails.*, db.less_discount, db.debit_amt, db.debit_status, inv.*,  batch.*,  sample.med_name FROM debit_note db
       JOIN debit_note_cart_details dbdetails ON db.debit_invoice_id = dbdetails.debit_invoice_id
       Join vendor on db.vendor_id = vendor.vendor_id
       Join sample on dbdetails.product_id = sample.product_id
       Join batch on batch.batch_id = dbdetails.batch_id_debit 
       Join inventory inv on inv.product_id = dbdetails.product_id
-      where db.debit_invoice_id = ?
+      where db.debit_invoice_id = ? and inv.org_id = ${orgId}
       `,
       [
         id,
@@ -201,6 +201,55 @@ module.exports = {
           return callBack(error);
         }
         return callBack(null, results);
+      },
+    );
+  },
+
+  getDebitNote: (debitInvoiceId, orgId, callback) => {
+    getPool().query(
+      `SELECT * FROM debit_note WHERE 
+      debit_invoice_id = ? and org_id = ?`,
+      [
+        debitInvoiceId,
+        orgId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
+  cancelDebitNote: (debitInvoiceId, orgId, callback) => {
+    getPool().query(
+      `UPDATE debit_note SET debit_status = 'cancelled' WHERE 
+      debit_invoice_id = ? and org_id = ?`,
+      [
+        debitInvoiceId,
+        orgId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
+  getDrnCartItemsById: (debitInvoiceId, callback) => {
+    getPool().query(
+      'SELECT * FROM debit_note_cart_details WHERE debit_invoice_id = ?',
+      [
+        debitInvoiceId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
       },
     );
   },

@@ -18,4 +18,6 @@ module.exports = (app) => {
   app.get('/api/searchmonthdebit/', controller.searchMonth);
   app.get('/api/searchquarterdebit/', controller.searchQuarter);
   app.get('/api/searchyeardebit/', controller.searchYear);
+
+  app.get('/api/cancelDebitNote', controller.cancelDebitNote);
 };

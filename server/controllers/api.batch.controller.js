@@ -7,10 +7,12 @@ const {
   retrieveBatchOnGrnCancel,
   retrieveBatchOnReturnCancel,
   retrieveBatchOnCrnCancel,
+  retrieveBatchOnDrnCancel,
 } = require('../services/batch.service');
 
 const { getOrdersById } = require('../services/cartitem.service');
 const { getCrnCartItemsById } = require('../services/credit.service');
+const { getDrnCartItemsById } = require('../services/debit.service');
 const { getGrnCartItemsById } = require('../services/grn.service');
 const { fetchReturnCartItems } = require('../services/returncartitem.service');
 
@@ -222,6 +224,38 @@ module.exports = {
           creditSecQty: item.sec_unit_credit,
         };
         retrieveBatchOnCrnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
+      });
+    });
+  },
+
+  updateBatchOnCancelDRN: (req, res) => {
+    const debitInvoiceId = req.query.debitInvoiceId;
+    getDrnCartItemsById(debitInvoiceId, (drnDetailsErr, drnDetailsResults) => {
+      if (drnDetailsErr) {
+        console.error(drnDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      drnDetailsResults.forEach((item) => {
+        const data = {
+          batchId: item.batch_id_debit,
+          debitPriQty: item.pri_unit_debit,
+          debitSecQty: item.sec_unit_debit,
+        };
+        retrieveBatchOnDrnCancel(data, (updateError) => {
           if (updateError) {
             console.error(updateError);
             return res.status(500).json({
