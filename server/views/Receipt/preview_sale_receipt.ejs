@@ -7,52 +7,79 @@
         <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <style>
-
-
-
             /* ------------------------------------------------- */
 
-                /* Default width for larger screens */
-                #html-content {
-                    
-                    margin: 0; /* Center align */
-                }
+            /* Default width for larger screens */
+            #html-content {
+
+                margin: 0;
+                /* Center align */
+            }
 
             /* Adjustments for mobile devices */
             @media (max-width: 767px) {
                 #html-content {
                     width: 92%;
-                    margin: 0 0; /* Center align */
+                    margin: 0 0;
+                    /* Center align */
                 }
             }
 
-                .table-bordered th, .table-bordered td {
-                    padding: 3px; /* Adjust padding as needed */
-                    /*padding-left: 5px;*/
-                    /*padding-right: 5px;*/
-                    text-align: center; /* Center align text */
-                }
-                .table-bordered th {
-                    background-color: #f8f9fa; /* Optional: Add background color for headers */
-                    border-top: none;
-                }
-                .table-of-receipt th, .table-of-receipt td{
-                    padding: 0px; /* Adjust padding as needed */
-                    padding-left: 1px;
-                    padding-right: 1px;
-                    text-align: center; /* Center align text */
-                    margin: 0;
-                    padding-top: -5px;
-                    margin-top: -10px;
+            .table-bordered th,
+            .table-bordered td {
+                padding: 3px;
+                /* Adjust padding as needed */
+                /*padding-left: 5px;*/
+                /*padding-right: 5px;*/
+                text-align: center;
+                /* Center align text */
+            }
 
-                }
+            .table-bordered th {
+                background-color: #f8f9fa;
+                /* Optional: Add background color for headers */
+                border-top: none;
+            }
 
-                .cartitems tr, td{
-                    margin-top:0 !important;
-                    margin-bottom: 0 !important;
-                    padding-top: 0 !important;
-                    padding-bottom: 0 !important;
-                }
+            .table-of-receipt th,
+            .table-of-receipt td {
+                padding: 0px;
+                /* Adjust padding as needed */
+                padding-left: 1px;
+                padding-right: 1px;
+                text-align: center;
+                /* Center align text */
+                margin: 0;
+                padding-top: -5px;
+                margin-top: -10px;
+
+            }
+
+            .cartitems tr,
+            td {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .btn-custom {
+                flex: 1;
+                /* Make the buttons take equal space */
+                margin: 0 4px;
+                /* Adjust the horizontal spacing */
+                height: 40px;
+                /* Set a fixed height for both buttons */
+                display: flex;
+                padding: 4px;
+                align-items: center;
+                /* Center the text vertically */
+                justify-content: center !important;
+                /* Center the text horizontally */
+                white-space: nowrap;
+                /* Prevent text from wrapping */
+            }
+
             /* ------------------------------------------------- */
             .frame1 {
                 width: 55rem;
@@ -184,7 +211,7 @@
                 height: 0.78725rem;
                 flex-direction: column;
                 flex-shrink: 0;
-                
+
                 margin-bottom: 0;
             }
 
@@ -207,7 +234,7 @@
                 margin: auto;
 
                 border: 0.05rem solid #1E1E1E;
-                
+
             }
 
             .cart-table tbody td {
@@ -222,7 +249,7 @@
                 font-weight: 400;
                 line-height: 0.875rem;
                 text-transform: uppercase;
-                margin-top:0 !important;
+                margin-top: 0 !important;
                 margin-bottom: 0 !important;
                 padding-top: 0 !important;
                 padding-bottom: 0 !important;
@@ -367,7 +394,8 @@
 
     <body>
         <!-- Layout wrapper -->
-        <div class="layout-wrapper layout-content-navbar" style="background-image: linear-gradient(rgba(232, 231, 231, 0.5), rgba(232, 231, 231, 0.5)), url(/images/receipt-bg3.png);">
+        <div class="layout-wrapper layout-content-navbar"
+            style="background-image: linear-gradient(rgba(232, 231, 231, 0.5), rgba(232, 231, 231, 0.5)), url(/images/receipt-bg3.png);">
             <div class="layout-container">
                 <!-- sidebar imported -->
                 <%- include('../partials/sidebar.ejs') %>
@@ -381,8 +409,6 @@
                             <div class="content-wrapper">
                                 <!-- Content -->
                                 <div class="container-xxl flex-grow-1 container-p-y">
-
-
                                     <div class="row invoice-preview justify-content-center">
 
                                         <!-- Invoice responsive template -->
@@ -558,10 +584,6 @@
                                                         <div class="justify-content-center">
                                                             <span>“GET WELL SOON BY DAWA.AI”</span>
                                                         </div>
-                                                        <div>
-                                                            <button type="button" class="btn btn-label-danger"
-                                                                id="cancelReceipt">Cancel Receipt</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -706,17 +728,17 @@
                                                             <div class="receipt-tnc">
                                                                 <div class="mx-5">
                                                                     <div>Terms & Conditions</div>
-                                                                    <p >Confirm Medicines from your Doctor before
+                                                                    <p>Confirm Medicines from your Doctor before
                                                                         use
                                                                     </p>
-                                                                        
-                                                                        <!-- <p>I/We declare that this invoice shows
+
+                                                                    <!-- <p>I/We declare that this invoice shows
                                                                             actual
                                                                             price of goods and services and that all
                                                                             particulars are true and correct.</p> -->
-                                                
+
                                                                 </div>
-                                                                
+
 
 
                                                             </div>
@@ -776,31 +798,35 @@
                                         <!-- /Invoice -->
 
                                         <!-- Invoice Actions -->
-                                        <div class="col-xl-3 col-md-4 col-12 invoice-actions">
+                                        <div class="col-xl-4 col-md-6 col-12 invoice-actions">
                                             <div class="pt-3">
-                                                <div class="d-flex justify-content-center">
-                                                    <!-- <button class="btn btn-primary d-grid w-100 mb-3" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                                                    <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
-                                                  </button> -->
-                                                    <button
-                                                        class="btn btn-primary btn-label-secondary d-grid w-100 mb-3 mx-1"
-                                                        type="button" onclick="CreatePDFfromHTML()">
-                                                        Download
-                                                    </button>
-                                                    <button class="btn btn-success d-grid w-100 mb-3 mx-1" type="button"
-                                                        id="whatsappLink">
-                                                        WhatsApp
-                                                    </button>
-                                                    <!-- <button class="btn btn-label-secondary d-grid w-100" type="button"
-                                                        onclick="history.back()">
-                                                        Back
-                                                    </button> -->
+                                                <div class="d-flex flex-md-row flex-column justify-content-center">
+                                                    <div class="p-1">
+                                                        <button id="printButton" class="btn btn-primary btn-label-secondary d-grid w-100 mb-3 mx-1" type="button">
+                                                            Print
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <button class="btn btn-primary btn-label-secondary btn-custom d-grid w-100 mb-3" id="downloadButton">
+                                                            Download
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <button class="btn btn-success btn-custom d-grid w-100 mb-3" type="button" id="whatsappLink">
+                                                            WhatsApp
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <button class="btn btn-label-danger btn-custom d-grid w-100" type="button" id="cancelReceipt">
+                                                            Cancel Receipt
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /Invoice Actions -->
-                                    </div>
 
+                                    </div>
                                 </div>
                                 <!-- / Content -->
                             </div>
@@ -825,6 +851,48 @@
                     var addDisc;
                     var subTotal;
 
+                    $('#downloadButton').click(function () {
+                        $.ajax({
+                            url: `/api/v2/salesReceipt/${id}/pdf`,
+                            method: 'GET',
+                            xhrFields: {
+                                responseType: 'blob' // Important for binary data
+                            },
+                            success: function (data) {
+                                var blob = new Blob([data], { type: 'application/pdf' });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = 'sales-receipt.pdf';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            },
+                            error: function (err) {
+                                console.error('Error downloading the receipt:', err);
+                            }
+                        });
+                    });
+
+                    $('#printButton').click(function () {
+                        $.ajax({
+                            url: `/api/v2/salesReceipt/${id}/pdf`,
+                            method: 'GET',
+                            xhrFields: {
+                                responseType: 'blob' // Important for binary data
+                            },
+                            success: function (data) {
+                                var blob = new Blob([data], { type: 'application/pdf' });
+                                var url = window.URL.createObjectURL(blob);
+                                var printWindow = window.open(url, '_blank', 'width=800,height=600');
+                                printWindow.onload = function () {
+                                    printWindow.print();
+                                }
+                            },
+                            error: function (err) {
+                                console.error('Error downloading the receipt:', err);
+                            }
+                        });
+                    });
 
                     $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
                         var customer = data.result[0];
@@ -1029,7 +1097,6 @@
                         })
                     });
 
-
                     // Whatsapp Chat with customer
                     $("#whatsappLink").click(function () {
                         var protocol = window.location.protocol;
@@ -1155,14 +1222,14 @@
             <script>
                 function CreatePDFfromHTML() {
                     $("#html-content").show();
-                
+
                     // Adjust the content width for PDF generation
                     var originalWidth = $("#html-content").width();
                     var isMobile = window.innerWidth <= 767;
                     if (isMobile) {
                         $("#html-content").css("width", "100%");
                     }
-                
+
                     var HTML_Width = $("#html-content").width();
                     var HTML_Height = $("#html-content").height();
                     var top_left_margin = 30;
@@ -1170,9 +1237,9 @@
                     var PDF_Height = (PDF_Width * 1.7) + (top_left_margin * 2);
                     var canvas_image_width = HTML_Width;
                     var canvas_image_height = HTML_Height;
-                
+
                     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-                
+
                     html2canvas($("#html-content")[0]).then(function (canvas) {
                         var imgData = canvas.toDataURL("image/jpeg", 1.0);
                         var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
@@ -1182,16 +1249,16 @@
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
                         }
                         pdf.save("Invoice.pdf");
-                
+
                         // Reset the width after PDF generation
                         if (isMobile) {
                             $("#html-content").css("width", originalWidth);
                         }
-                
+
                         $("#html-content").hide();
                     });
                 }
-                
+
             </script>
 
     </body>
