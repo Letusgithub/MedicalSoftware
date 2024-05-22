@@ -104,4 +104,45 @@ module.exports = {
       gstBreakup: totals,
     };
   },
+
+  getReturnReceipt: async (returnId) => {
+    const pool = getPool().promise();
+
+    const [returnDetails] = await pool.query(
+      `SELECT * FROM return_details rd
+      JOIN order_details od 
+      ON od.invoice_id_main = rd.sales_invoice_id
+      WHERE rd.return_id = ?`,
+      [returnId],
+    );
+
+    if (returnDetails.length === 0) {
+      throw new Error('Return details not found');
+    }
+
+    const [orgDetails] = await pool.query(
+      `SELECT * FROM organisation
+        WHERE org_id = ?`,
+      [returnDetails[0].org_id],
+    );
+
+    const [customerDetails] = await pool.query(
+      `SELECT * FROM customer_data
+      WHERE customer_id = ?`,
+      [returnDetails[0].customer_id],
+    );
+
+    const [items] = await pool.query(
+      `SELECT * FROM return_cart_item
+      WHERE return_id = ?`,
+      [returnId],
+    );
+
+    return {
+      orgDetails: orgDetails[0],
+      returnDetails: returnDetails[0],
+      customerDetails: customerDetails[0],
+      returnCartItems: items,
+    };
+  },
 };

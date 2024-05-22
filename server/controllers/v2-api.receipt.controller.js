@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const ejs = require('ejs');
 const moment = require('moment');
-const { getSalesReceipt } = require('../services/v2-receipt.service');
+const { getSalesReceipt, getReturnReceipt } = require('../services/v2-receipt.service');
 
 module.exports = {
   getSalesReceipt: async (req, res) => {
@@ -43,6 +43,52 @@ module.exports = {
 
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', 'attachment; filename=sales-receipt.pdf');
+      res.send(pdf);
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getReturnReceipt: async (req, res) => {
+    const returnId = req.params.id;
+    try {
+      const returnReceipt = await getReturnReceipt(returnId);
+      res.status(200).json({
+        success: true,
+        data: returnReceipt,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getReturnReceiptPDF: async (req, res) => {
+    const returnId = req.params.id;
+    try {
+      const returnReceipt = await getReturnReceipt(returnId);
+
+      // Generate HTML content from data using EJS template
+      const template = path.resolve(__dirname, '../views/template/return_receipt.ejs');
+      const html = await ejs.renderFile(template, { data: returnReceipt, moment });
+
+      // Launch puppeteer and generate PDF
+      const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
+      const page = await browser.newPage();
+      await page.setContent(html);
+
+      const pdf = await page.pdf({ format: 'A4' });
+      await browser.close();
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=return-receipt.pdf');
       res.send(pdf);
     } catch (error) {
       res.status(500).json({

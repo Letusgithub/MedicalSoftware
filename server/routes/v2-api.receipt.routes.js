@@ -1,4 +1,7 @@
-const { getSalesReceipt, getSalesReceiptPDF } = require('../controllers/v2-api.receipt.controller');
+const {
+  getSalesReceipt, getSalesReceiptPDF,
+  getReturnReceipt, getReturnReceiptPDF,
+} = require('../controllers/v2-api.receipt.controller');
 
 module.exports = (app) => {
   app.use((req, res, next) => {
@@ -11,4 +14,7 @@ module.exports = (app) => {
 
   app.get('/api/v2/salesReceipt/:id', getSalesReceipt);
   app.get('/api/v2/salesReceipt/:id/pdf', getSalesReceiptPDF);
+
+  app.get('/api/v2/returnReceipt/:id', getReturnReceipt);
+  app.get('/api/v2/returnReceipt/:id/pdf', getReturnReceiptPDF);
 };
