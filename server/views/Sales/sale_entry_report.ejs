@@ -142,6 +142,16 @@
 
         $(document).ready(function () {
 
+          // Default from date - to date
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0');
+          var yyyy = today.getFullYear();
+          today = yyyy + '-' + mm + '-' + dd;
+          $("input[name='fromdate']").val(today);
+          $("input[name='todate']").val(today);
+
+          
           $('input[name="radio"][value="monthly"]').on('click', function () {
             // Clear previous inputs
             $("input[name='fromdate']").val('');
@@ -222,7 +232,7 @@
             $("input[name='fromdate']").val('');
             $("input[name='todate']").val('');
             $("#reportcart").empty();
-            
+
             if ($(this).is(':checked')) {
               $("#dropdown").html(`
                     <div class="card-body ">
@@ -310,7 +320,7 @@
 
           $(document).on('change', '#selectyear', function () {
             var year = $("#selectyear").val();
-            
+
             $.get(`/api/searchyear?org=<%=orgId%>&year=${year}`, function (data, status) {
               $("#reportcart").empty();
               var items = data.data;

@@ -141,6 +141,16 @@
 
         $(document).ready(function () {
 
+          // Default from date - to date
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0');
+          var yyyy = today.getFullYear();
+          today = yyyy + '-' + mm + '-' + dd;
+          $("input[name='fromdate']").val(today);
+          $("input[name='todate']").val(today);
+
+
           $('input[name="radio"][value="monthly"]').on('click', function () {
             // Clear previous inputs
             $("input[name='fromdate']").val('');
