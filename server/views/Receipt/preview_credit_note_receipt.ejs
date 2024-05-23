@@ -746,7 +746,7 @@
                                                     </div>
                                                     <div class="p-1" id="cancelReceipt">
                                                         <button class="btn btn-label-danger btn-custom d-grid w-100"
-                                                            type="button" id="cancelReceipt">
+                                                            type="button">
                                                             Cancel Receipt
                                                         </button>
                                                     </div>
@@ -783,7 +783,7 @@
                                 var blob = new Blob([data], { type: 'application/pdf' });
                                 var link = document.createElement('a');
                                 link.href = window.URL.createObjectURL(blob);
-                                link.download = 'return-receipt.pdf';
+                                link.download = 'credit-note-receipt.pdf';
                                 document.body.appendChild(link);
                                 link.click();
                                 document.body.removeChild(link);
