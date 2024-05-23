@@ -145,4 +145,120 @@ module.exports = {
       returnCartItems: items,
     };
   },
+
+  getGrnReceipt: async (grnId) => {
+    const pool = getPool().promise();
+    const transactions = [];
+
+    const [grnDetails] = await pool.query(
+      `SELECT * FROM grn
+        WHERE grn_id = ?`,
+      [grnId],
+    );
+
+    if (grnDetails.length === 0) {
+      throw new Error('GRN details not found');
+    }
+
+    const [items] = await pool.query(
+      `SELECT sample.med_name, grncd.* FROM grn_cart_details grncd
+        JOIN sample ON grncd.product_id = sample.product_id
+        WHERE grn_id = ?`,
+      [grnId],
+    );
+
+    const [orgDetails] = await pool.query(
+      `SELECT * FROM organisation
+        WHERE org_id = ?`,
+      [grnDetails[0].org_id],
+    );
+
+    const [vendorDetails] = await pool.query(
+      `SELECT * FROM vendor
+        WHERE vendor_id = ?`,
+      [grnDetails[0].vendor_id],
+    );
+
+    let totalGross = 0;
+    let totalGST = 0;
+    let totalAmount = 0;
+    const lessDiscountPercent = (grnDetails[0].less_discount / grnDetails[0].total) * 100;
+
+    items.forEach((item) => {
+      // eslint-disable-next-line max-len
+      const grossValue = (item.qty - item.free) * item.purchase * (1 - item.bulk_discount / 100);
+      const gstValue = grossValue * (item.gst / 100);
+
+      const transaction = {
+        grossAmount: grossValue * (1 - (lessDiscountPercent / 100)),
+        gstRate: item.gst,
+      };
+      transactions.push(transaction);
+
+      totalGross += grossValue;
+      totalGST += gstValue;
+    });
+
+    const totals = {
+      0: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      5: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      12: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      18: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      total: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      grandTotal: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+    };
+
+    // Calculate totals
+    transactions.forEach((transaction) => {
+      // If this GST rate hasn't been seen before, add it to totals
+      if (!(transaction.gstRate in totals)) {
+        totals[transaction.gstRate] = {
+          taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+        };
+      }
+
+      const gstAmount = transaction.grossAmount * (transaction.gstRate / 100);
+      const cgst = gstAmount / 2;
+      const sgst = gstAmount / 2;
+
+      totals[transaction.gstRate].taxAmt += transaction.grossAmount;
+      totals[transaction.gstRate].cgst += cgst;
+      totals[transaction.gstRate].sgst += sgst;
+      totals[transaction.gstRate].totalGst += gstAmount;
+
+      totals.total.taxAmt += transaction.grossAmount;
+      totals.total.cgst += cgst;
+      totals.total.sgst += sgst;
+      totals.total.totalGst += gstAmount;
+
+      totals.grandTotal.taxAmt += transaction.grossAmount;
+      totals.grandTotal.cgst += cgst;
+      totals.grandTotal.sgst += sgst;
+      totals.grandTotal.totalGst += gstAmount;
+    });
+
+    totalAmount = totalGross + totalGST - grnDetails[0].less_discount + grnDetails[0].credit_debit;
+    return {
+      orgDetails: orgDetails[0],
+      grnDetails: grnDetails[0],
+      vendorDetails: vendorDetails[0],
+      grnCartItems: items,
+      gstBreakup: totals,
+      totalGross,
+      totalGST,
+      totalAmount,
+    };
+  },
 };

@@ -15,7 +15,6 @@
             .container {
                 position: relative;
                 width: 50.2365rem;
-                height: 35.97663rem;
                 flex-shrink: 0;
                 border: 0.2px solid #1E1E1E;
 
@@ -68,14 +67,12 @@
             .shop-info-child1 {
                 display: flex;
                 width: 12.21775rem;
-                height: 2.80238rem;
                 flex-direction: column;
                 flex-shrink: 0;
             }
 
             .shop-info-child2 {
                 width: 13.933rem;
-                height: 2.86188rem;
                 flex-shrink: 0;
                 margin-left: 55px;
             }
@@ -123,7 +120,6 @@
 
             .receipt-details {
                 width: 11.61225rem;
-                height: 2.77413rem;
                 flex-shrink: 0;
 
                 color: #1E1E1E;
@@ -185,7 +181,6 @@
                 position: relative;
                 left: -1rem;
                 width: 25.03875rem;
-                height: 10.05rem;
 
                 color: #000;
                 font-size: 0.625rem;
@@ -218,7 +213,6 @@
             .footer-1 {
                 position: relative;
                 left: -1.05rem;
-                top: -0.05rem;
                 width: 20.9rem;
                 height: 10.15rem;
                 border: 0.05rem solid #1E1E1E;
@@ -275,7 +269,6 @@
             .cart-summary {
                 height: 7.32rem;
                 font-size: 1rem;
-                border-bottom: 0.05rem solid #1E1E1E;
             }
 
             .cart-summary .label {
@@ -289,7 +282,6 @@
 
             .line-1 {
                 left: -1rem;
-                width: 48.11925rem;
                 height: 0rem;
                 flex-shrink: 0;
                 color: #1E1E1E;
@@ -325,7 +317,8 @@
 
     <body>
         <!-- Layout wrapper -->
-        <div class="layout-wrapper layout-content-navbar" style="background-image:url(/images/receipt-bg3.png);">
+        <div class="layout-wrapper layout-content-navbar"
+            style="background-image: linear-gradient(rgba(232, 231, 231, 0.5), rgba(232, 231, 231, 0.5)), url(/images/receipt-bg3.png);">
             <div class="layout-container">
                 <!-- sidebar imported -->
                 <%- include('../partials/sidebar.ejs') %>
@@ -340,27 +333,27 @@
                                 <!-- Content -->
 
                                 <div class="container-xxl flex-grow-1 container-p-y">
-                                    <div class="row invoice-preview">
+                                    <div class="row invoice-preview justify-content-center">
 
                                         <!-- Invoice responsive template -->
 
-                                        <div class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4">
-                                            <div class="watermark" style="display: none;"></div>
+                                        <div class="col-xl-11 col-md-12 col-12 mb-md-0 mb-4">
                                             <div class="card invoice-preview-card">
+                                                <div class="watermark" style="display: none;"></div>
                                                 <div class="card-body pb-0 text-center">
                                                     <h3 class="text-body fw-bold">Goods Received Note</h3>
                                                     <hr class="my-0">
                                                 </div>
                                                 <div class="card-body">
                                                     <div
-                                                        class="row flex-xl-row flex-md-column flex-sm-row flex-column p-sm-3 p-0">
-                                                        <div class="col-xl-6 col-md-12 col-sm-5 col-12 mb-xl-0 mb-4">
+                                                        class="row flex-xl-row flex-md-row flex-sm-row flex-column p-sm-3 p-0">
+                                                        <div class="col-xl-6 col-md-6 col-sm-5 col-12 mb-xl-0 mb-4">
                                                             <div class="d-flex mb-3 gap-2">
                                                                 <span class="orgname fs-4 text-body fw-bold"></span>
                                                             </div>
                                                             <p class="mb-1 orgaddress"></p>
                                                         </div>
-                                                        <div class="col-xl-6 col-md-12 col-sm-5 col-12">
+                                                        <div class="col-xl-6 col-md-6 col-sm-5 col-12">
                                                             <div class="mb-2">
                                                                 <span class="fw-medium gstin"></span>
                                                             </div>
@@ -380,21 +373,21 @@
                                                 <div class="card-body">
                                                     <div class="row p-sm-3 p-0">
                                                         <div
-                                                            class="col-xl-4 col-md-12 col-sm-4 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
+                                                            class="col-xl-4 col-md-4 col-sm-4 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
                                                             <p class="mb-1 vendorname fw-bold"></p>
                                                             <p class="mb-1 vendormobile"></p>
                                                             <p class="mb-1 vendoremail"></p>
                                                             <p class="mb-0 vendoradd"></p>
                                                         </div>
                                                         <div
-                                                            class="col-xl-4 col-md-12 col-sm-4 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
+                                                            class="col-xl-4 col-md-4 col-sm-4 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
                                                             <p class="mb-1 vendorgst"></p>
                                                             <p class="mb-1 vendordl1"></p>
                                                             <p class="mb-1 vendordl2"></p>
                                                             <p class="mb-1 vendorFssai"></p>
                                                             <p class="mb-1 paymentMethod"></p>
                                                         </div>
-                                                        <div class="col-xl-4 col-md-12 col-sm-4 col-12">
+                                                        <div class="col-xl-4 col-md-4 col-sm-4 col-12">
                                                             <p class="mb-1 invoiceno"></p>
                                                             <p class="mb-1 orderdate"></p>
                                                             <p class="mb-1 grnno"></p>
@@ -427,7 +420,7 @@
                                                 </div>
                                                 <div class="row card-body">
                                                     <div
-                                                        class="col-xl-8 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
+                                                        class="col-xl-8 col-md-8 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
                                                         <table class="table-bordered">
                                                             <thead>
                                                                 <tr>
@@ -480,7 +473,7 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <div class="col-xl-4 col-md-12 col-sm-7 col-12">
+                                                    <div class="col-xl-4 col-md-4 col-sm-5 col-12">
                                                         <table>
                                                             <tbody>
 
@@ -521,10 +514,6 @@
                                                         <div>
                                                             <span>“GRN GENERATED BY DAWA.AI”</span>
                                                         </div>
-                                                        <div>
-                                                            <button type="button" class="btn btn-label-danger"
-                                                                id="cancelReceipt">Cancel Receipt</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -550,7 +539,7 @@
                                                             <div class="shop-info-child2" style="width: 41vw;">
                                                                 <p class="my-0 gstin">GSTIN:</p>
                                                                 <p class="my-0 dlno1">DL No 1:</p>
-                                                                <!-- <p class="my-0 dlno2">DL No 2:</p> -->
+                                                                <p class="my-0 dlno2">DL No 2:</p>
                                                                 <p class="my-0 flno">FSSAI:</p>
                                                             </div>
                                                         </div>
@@ -584,7 +573,10 @@
                                                         <p class="vendorgst">
                                                             GSTIN:
                                                         </p>
-                                                        <p class="vendordl">
+                                                        <p class="vendordl1">
+                                                            D.L.no.:
+                                                        </p>
+                                                        <p class="vendordl2">
                                                             D.L.no.:
                                                         </p>
                                                         <p class="vendorFssai">
@@ -605,7 +597,7 @@
                                                     </div>
 
                                                 </div>
-                                                <table class="cart-table">
+                                                <table class="cart-table text-center">
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 2.27rem;">S.N.</th>
@@ -626,7 +618,7 @@
                                                     </tbody>
                                                 </table>
                                                 <div class="d-flex flex-row">
-                                                    <table class="footer-gst-distribution">
+                                                    <table class="footer-gst-distribution text-center">
                                                         <thead>
                                                             <tr>
                                                                 <th>GST%</th>
@@ -731,6 +723,7 @@
                                                             </div>
 
                                                         </div>
+                                                        <hr class="line-1">
                                                         <div class="cart-total">
                                                             <div class="d-flex justify-content-between my-2">
                                                                 <div>
@@ -751,22 +744,34 @@
                                         <!-- /Invoice -->
 
                                         <!-- Invoice Actions -->
-                                        <div class="col-xl-3 col-md-4 col-12 invoice-actions">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <button
-                                                        class="btn btn-primary btn-label-secondary d-grid w-100 mb-3"
-                                                        type="button" onclick="CreatePDFfromHTML()">
-                                                        Download
-                                                    </button>
-                                                    <!-- <button class="btn btn-label-secondary d-grid w-100" type="button"
-                                                        onclick="history.back()">
-                                                        Back
-                                                    </button> -->
+                                        <div class="col-xl-4 col-md-6 col-12 invoice-actions">
+                                            <div class="pt-3">
+                                                <div class="d-flex flex-md-row flex-column justify-content-center">
+                                                    <div class="p-1">
+                                                        <button id="printButton"
+                                                            class="btn btn-primary btn-label-secondary d-grid w-100 mb-3 mx-1"
+                                                            type="button">
+                                                            Print
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <button
+                                                            class="btn btn-primary btn-label-secondary btn-custom d-grid w-100 mb-3"
+                                                            id="downloadButton">
+                                                            Download
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1" id="cancelReceipt">
+                                                        <button class="btn btn-label-danger btn-custom d-grid w-100"
+                                                            type="button" id="cancelReceipt">
+                                                            Cancel Receipt
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /Invoice Actions -->
+
                                     </div>
 
                                 </div>
@@ -784,6 +789,49 @@
             <script>
                 $(document).ready(function () {
                     var id = '<%=id%>';
+
+                    $('#downloadButton').click(function () {
+                        $.ajax({
+                            url: `/api/v2/grnReceipt/${id}/pdf`,
+                            method: 'GET',
+                            xhrFields: {
+                                responseType: 'blob' // Important for binary data
+                            },
+                            success: function (data) {
+                                var blob = new Blob([data], { type: 'application/pdf' });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = 'return-receipt.pdf';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            },
+                            error: function (err) {
+                                console.error('Error downloading the receipt:', err);
+                            }
+                        });
+                    });
+
+                    $('#printButton').click(function () {
+                        $.ajax({
+                            url: `/api/v2/grnReceipt/${id}/pdf`,
+                            method: 'GET',
+                            xhrFields: {
+                                responseType: 'blob' // Important for binary data
+                            },
+                            success: function (data) {
+                                var blob = new Blob([data], { type: 'application/pdf' });
+                                var url = window.URL.createObjectURL(blob);
+                                var printWindow = window.open(url, '_blank', 'width=800,height=600');
+                                printWindow.onload = function () {
+                                    printWindow.print();
+                                }
+                            },
+                            error: function (err) {
+                                console.error('Error downloading the receipt:', err);
+                            }
+                        });
+                    });
 
                     $.get(`/api/getgrnreceipts/${id}`, function (data, status) {
                         var grnData = data.results[0];
