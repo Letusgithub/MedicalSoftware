@@ -350,7 +350,7 @@
     <div class="frame1" id="html-content">
         <div class="receipt-container">
             <div class="watermark-receipt"
-                style="display:<%= data.returnDetails.status === 'cancelled' ? 'block' : 'none' %>">CANCELLED</div>
+                style="display:<%= data.returnDetails.status === 'cancelled' || data.returnDetails.return_status === 'cancelled' ? 'block' : 'none' %>">CANCELLED</div>
             <div class="d-flex justify-content-between">
                 <div>
                     <div class="shop-name pharmacyName">
