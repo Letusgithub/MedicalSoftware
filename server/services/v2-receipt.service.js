@@ -261,4 +261,50 @@ module.exports = {
       totalAmount,
     };
   },
+
+  getPoReceipt: async (poId) => {
+    const pool = getPool().promise();
+    let totalPoAmount = 0;
+
+    const [poDetails] = await pool.query(
+      `SELECT * FROM purchase_order
+        WHERE po_id = ?`,
+      [poId],
+    );
+
+    if (poDetails.length === 0) {
+      throw new Error('PO details not found');
+    }
+
+    const [items] = await pool.query(
+      `SELECT sample.med_name, sample.mfd_mkt, po_items.* FROM po_items
+        JOIN sample ON po_items.product_id = sample.product_id
+        WHERE po_id_main = ?`,
+      [poDetails[0].po_id_main],
+    );
+
+    const [orgDetails] = await pool.query(
+      `SELECT * FROM organisation
+        WHERE org_id = ?`,
+      [poDetails[0].org_id],
+    );
+
+    const [vendorDetails] = await pool.query(
+      `SELECT * FROM vendor
+        WHERE vendor_id = ?`,
+      [poDetails[0].vendor_id],
+    );
+
+    items.forEach((item) => {
+      totalPoAmount += parseFloat(item.amount);
+    });
+
+    return {
+      orgDetails: orgDetails[0],
+      vendorDetails: vendorDetails[0],
+      poDetails: poDetails[0],
+      poItems: items,
+      totalPoAmount: totalPoAmount.toFixed(2),
+    };
+  },
 };

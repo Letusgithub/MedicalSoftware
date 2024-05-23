@@ -3,6 +3,8 @@ const {
   getReturnReceipt, getReturnReceiptPDF,
   getGrnReceipt,
   getGrnReceiptPDF,
+  getPoReceipt,
+  getPoReceiptPDF,
 } = require('../controllers/v2-api.receipt.controller');
 
 module.exports = (app) => {
@@ -22,4 +24,7 @@ module.exports = (app) => {
 
   app.get('/api/v2/grnReceipt/:id', getGrnReceipt);
   app.get('/api/v2/grnReceipt/:id/pdf', getGrnReceiptPDF);
+
+  app.get('/api/v2/poReceipt/:id', getPoReceipt);
+  app.get('/api/v2/poReceipt/:id/pdf', getPoReceiptPDF);
 };
