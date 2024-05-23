@@ -5,6 +5,7 @@ const ejs = require('ejs');
 const moment = require('moment');
 const {
   getSalesReceipt, getReturnReceipt, getGrnReceipt, getPoReceipt,
+  getCreditNoteReceipt,
 } = require('../services/v2-receipt.service');
 
 module.exports = {
@@ -183,6 +184,52 @@ module.exports = {
 
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', 'attachment; filename=po-receipt.pdf');
+      res.send(pdf);
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getCreditNoteReceipt: async (req, res) => {
+    const creditNoteId = req.params.id;
+    try {
+      const creditNoteReceipt = await getCreditNoteReceipt(creditNoteId);
+      res.status(200).json({
+        success: true,
+        data: creditNoteReceipt,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getCreditNoteReceiptPDF: async (req, res) => {
+    const creditNoteId = req.params.id;
+    try {
+      const creditNoteReceipt = await getCreditNoteReceipt(creditNoteId);
+
+      // Generate HTML content from data using EJS template
+      const template = path.resolve(__dirname, '../views/template/credit_note_receipt.ejs');
+      const html = await ejs.renderFile(template, { data: creditNoteReceipt, moment });
+
+      // Launch puppeteer and generate PDF
+      const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
+      const page = await browser.newPage();
+      await page.setContent(html);
+
+      const pdf = await page.pdf({ format: 'A4' });
+      await browser.close();
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=credit-note-receipt.pdf');
       res.send(pdf);
     } catch (error) {
       res.status(500).json({

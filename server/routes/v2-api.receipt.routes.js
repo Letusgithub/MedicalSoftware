@@ -5,6 +5,8 @@ const {
   getGrnReceiptPDF,
   getPoReceipt,
   getPoReceiptPDF,
+  getCreditNoteReceipt,
+  getCreditNoteReceiptPDF,
 } = require('../controllers/v2-api.receipt.controller');
 
 module.exports = (app) => {
@@ -27,4 +29,7 @@ module.exports = (app) => {
 
   app.get('/api/v2/poReceipt/:id', getPoReceipt);
   app.get('/api/v2/poReceipt/:id/pdf', getPoReceiptPDF);
+
+  app.get('/api/v2/creditNoteReceipt/:id', getCreditNoteReceipt);
+  app.get('/api/v2/creditNoteReceipt/:id/pdf', getCreditNoteReceiptPDF);
 };
