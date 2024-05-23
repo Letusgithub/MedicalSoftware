@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 const {
-  create, cancelSalesInvoice, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  create, cancelSalesInvoice, getAllOrders, getInvoiceOrder, getRevenue, searchDates, createNewMonth, updateMonthCount, getMonthCount, invoiceSales, mainId, searchTotalSales, getTotalSumfromSales, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  getSalesForDay,
+  getSalesForMonth,
+  getSalesForYear,
 } = require('../services/salesdetail.service');
 
 module.exports = {
@@ -176,23 +179,6 @@ module.exports = {
     });
   },
 
-  // allSamples: (req, res) => {
-  //   const id = req.params.id;
-  //   allSamples((error, results) => {
-  //     if (error) {
-  //       console.log(error);
-  //       return res.status(500).json({
-  //         success: 0,
-  //         message: 'No Orders Found',
-  //       });
-  //     }
-  //     // console.log(results);
-  //     res.status(200).json({
-  //       result: results,
-  //     });
-  //   });
-  // },
-
   getInvoiceOrder: (req, res) => {
     const salesId = req.query.invoiceid;
     const orgId = req.query.org;
@@ -345,29 +331,74 @@ module.exports = {
     });
   },
 
-  salesMadePrevDay: (req, res) => {
+  calculateGrowthPerDay: async (req, res) => { // Async function
     const orgId = req.query.org;
-    salesMadePrevDay(orgId, (err, results) => {
-      if (err) console.log(err);
-      console.log(results);
-      res.status(200).json({
-        results,
-      });
+
+    const today = new Date().toISOString();
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString();
+    console.log(today, yesterday);
+
+    const totalSalesToday = await getSalesForDay(orgId, today);
+    const totalSalesYesterday = await getSalesForDay(orgId, yesterday);
+
+    let growthPercentage;
+    if (totalSalesYesterday === 0) {
+      growthPercentage = totalSalesToday === 0 ? 0 : 100;
+    } else {
+      growthPercentage = ((totalSalesToday - totalSalesYesterday) / totalSalesYesterday) * 100;
+    }
+
+    return res.status(200).json({
+      results: growthPercentage.toFixed(0),
     });
   },
 
-  salesMadePrevMonth: (req, res) => {
+  calculateGrowthPerMonth: async (req, res) => {
     const orgId = req.query.org;
-    salesMadePrevMonth(orgId, (err, results) => res.status(200).json({
-      results,
-    }));
+
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+
+    const lastMonth = month === 1 ? 12 : month - 1;
+    const lastYear = month === 1 ? year - 1 : year;
+
+    const totalSalesThisMonth = await getSalesForMonth(orgId, month, year);
+    const totalSalesLastMonth = await getSalesForMonth(orgId, lastMonth, lastYear);
+
+    let growthPercentage;
+    if (totalSalesLastMonth === 0) {
+      growthPercentage = totalSalesThisMonth === 0 ? 0 : 100;
+    } else {
+      growthPercentage = ((totalSalesThisMonth - totalSalesLastMonth) / totalSalesLastMonth) * 100;
+    }
+
+    return res.status(200).json({
+      results: growthPercentage.toFixed(0),
+    });
   },
 
-  salesMadePrevYear: (req, res) => {
+  calculateGrowthPerYear: async (req, res) => {
     const orgId = req.query.org;
-    salesMadePrevYear(orgId, (err, results) => res.status(200).json({
-      results,
-    }));
+
+    const now = new Date();
+    const year = now.getFullYear();
+
+    const lastYear = year - 1;
+
+    const totalSalesThisYear = await getSalesForYear(orgId, year);
+    const totalSalesLastYear = await getSalesForYear(orgId, lastYear);
+
+    let growthPercentage;
+    if (totalSalesLastYear === 0) {
+      growthPercentage = totalSalesThisYear === 0 ? 0 : 100;
+    } else {
+      growthPercentage = ((totalSalesThisYear - totalSalesLastYear) / totalSalesLastYear) * 100;
+    }
+
+    return res.status(200).json({
+      results: growthPercentage.toFixed(0),
+    });
   },
 
   getProfitinHome: (req, res) => {

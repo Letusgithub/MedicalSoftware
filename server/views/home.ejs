@@ -95,7 +95,7 @@
                               </h4>
                               <p class="mb-4">
                                 You have done <span class="fw-bold" id="salesgrowth"></span> more
-                                sales today.
+                                sales today over yesterday as of now.
                               </p>
 
                               <!-- <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a> -->
@@ -118,30 +118,6 @@
                             <div class="card-body">
                               <div class="card-title d-flex align-items-start justify-content-between">
                                 <div class="avatar flex-shrink-0">
-                                  <img src="/img/icons/unicons/chart-success.png" alt="chart success" class="rounded" />
-                                </div>
-                                <div class="dropdown">
-                                  <!-- <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                  </button> -->
-                                  <!-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                  </div> -->
-                                </div>
-                              </div>
-                              <span class="fw-semibold d-block mb-1">Total Sales</span>
-                              <h3 class="card-title mb-2" id="totalrevenue"></h3>
-                              <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> -->
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12 col-6 mb-4">
-                          <div class="card">
-                            <div class="card-body">
-                              <div class="card-title d-flex align-items-start justify-content-between">
-                                <div class="avatar flex-shrink-0">
                                   <img src="/img/icons/unicons/wallet-info.png" alt="Credit Card" class="rounded" />
                                 </div>
                                 <div class="dropdown">
@@ -158,6 +134,31 @@
                               <span>Sales Invoices</span>
                               <h3 class="card-title text-nowrap mb-1" id="totalorders"></h3>
                               <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> -->
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 col-6 mb-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0">
+                                  <img src="/img/icons/unicons/chart-success.png" alt="chart success" class="rounded" />
+                                </div>
+                                <div class="dropdown">
+                                  <!-- <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                  </button> -->
+                                  <!-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
+                                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                  </div> -->
+                                </div>
+                              </div>
+                              <span class="fw-semibold d-block mb-1">Total Sales</span>
+                              <h3 class="card-title mb-2" id="totalrevenue"></h3>
+                              <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> -->
                             </div>
                           </div>
                         </div>
@@ -228,31 +229,6 @@
                             <div class="card-body">
                               <div class="card-title d-flex align-items-start justify-content-between">
                                 <div class="avatar flex-shrink-0">
-                                  <img src="/img/icons/unicons/paypal.png" alt="Credit Card" class="rounded" />
-                                </div>
-                                <div class="dropdown">
-                                  <!-- <button class="btn p-0" type="button" id="cardOpt4" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
-                                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                  </div> -->
-                                </div>
-                              </div>
-                              <span class="fw-semibold d-block mb-1">Total Purchase</span>
-                              <h3 class="card-title text-nowrap mb-2" id="inventorycost"></h3>
-                              <!-- <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -->
-                              <!-- -14.82%</small> -->
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 mb-4">
-                          <div class="card">
-                            <div class="card-body">
-                              <div class="card-title d-flex align-items-start justify-content-between">
-                                <div class="avatar flex-shrink-0">
                                   <img src="/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
                                 </div>
                                 <div class="dropdown">
@@ -270,6 +246,30 @@
                               </span>
                               <h3 class="card-title mb-2" id="purchaseordersmade"></h3>
                               <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small> -->
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-6 mb-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0">
+                                  <img src="/img/icons/unicons/paypal.png" alt="Credit Card" class="rounded" />
+                                </div>
+                                <div class="dropdown">
+                                  <!-- <button class="btn p-0" type="button" id="cardOpt4" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
+                                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                  </div> -->
+                                </div>
+                              </div>
+                              <span class="fw-semibold d-block mb-1">Total Purchase</span>
+                              <h3 class="card-title text-nowrap mb-2" id="inventorycost"></h3>
                             </div>
                           </div>
                         </div>
@@ -599,40 +599,9 @@
           var chart;
           $.get(`/api/salesmadeprevday?org=<%=orgId%>`, function (data, status) {
             console.log("sales made prev day", data);
-            let dayGrowth;
-            if (data.results.length == 0) {
-              dayGrowth = 0;
-              console.log('empty');
-            }
-            else if (data.results.length == 1) {
-              let totalOrders = parseInt(data.results[0].row_count)
-              dayGrowth = totalOrders * 100;
-              dayGrowth = parseFloat(dayGrowth).toFixed(0);
-            }
-            else {
-              var todaydate = new Date();
-              var currDate = todaydate.toISOString().split('T')[0];
+            let dayGrowth = data.results;
 
-              var dategot = new Date(data.results[0].date);
-              var prevDate = dategot.toISOString().split('T')[0];
-              if (currDate != prevDate) {
-                console.log('not equal');
-                let totalOrders = parseInt(data.results[0].row_count)
-                dayGrowth = totalOrders * 100;
-                dayGrowth = parseFloat(dayGrowth).toFixed(0);
-                //dayGrowth = 0;
-              }
-              else {
-                console.log('equal');
-                let totalorderstoday = data.results[0].row_count;
-                let totalordersyes = data.results[1].row_count;
-                dayGrowth = parseFloat(Math.abs(totalorderstoday - totalordersyes) / totalordersyes);
-                dayGrowth = parseFloat(dayGrowth).toFixed(0);
-                //dayGrowth = dayGrowth<=0? 0:dayGrowth;
-              }
-            }
-
-            $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`);
+            $("#textgrowthstatus").text(`${dayGrowth}% More Sales Today`);
             $("#salesgrowth").text(`${dayGrowth}%`);
 
 
@@ -694,40 +663,9 @@
           // click function for day growth
           $("#perdaygrowth").click(function () {
             $.get(`/api/salesmadeprevday?org=<%=orgId%>`, function (data, status) {
-              let dayGrowth;
-              if (data.results.length == 0) {
-                dayGrowth = 0;
-                console.log('empty');
-              }
-              else if (data.results.length == 1) {
-                let totalOrders = parseInt(data.results[0].row_count)
-                dayGrowth = totalOrders * 100;
-                dayGrowth = parseFloat(dayGrowth).toFixed(2)
-              }
-              else {
-                var todaydate = new Date();
-                var currDate = todaydate.toISOString().split('T')[0];
+              let dayGrowth = data.results;
 
-                var dategot = new Date(data.results[0].date);
-                var prevDate = dategot.toISOString().split('T')[0];
-                if (currDate != prevDate) {
-                  console.log('not equal');
-                  let totalOrders = parseInt(data.results[0].row_count)
-                  dayGrowth = totalOrders * 100;
-                  dayGrowth = parseFloat(dayGrowth).toFixed(2)
-                  //dayGrowth = 0;
-                }
-                else {
-                  console.log('equal');
-                  let totalorderstoday = data.results[0].row_count;
-                  let totalordersyes = data.results[1].row_count;
-                  dayGrowth = parseFloat(Math.abs(totalorderstoday - totalordersyes) / totalordersyes);
-                  dayGrowth = parseFloat(dayGrowth).toFixed(2);
-                  //dayGrowth = dayGrowth<=0? 0:dayGrowth;
-                }
-              }
-
-              $("#textgrowthstatus").text(`${dayGrowth}% More Orders Today`);
+              $("#textgrowthstatus").text(`${dayGrowth}% More Sales Today`);
 
               var options = {
                 chart: {
@@ -791,24 +729,10 @@
           //click fucntion for month growth
           $("#permonthgrowth").click(function () {
             $.get(`/api/salesmadeprevmonth?org=<%=orgId%>`, function (data, status) {
-              console.log(data);
-              let monthGrowth;
-              if (data.results.length == 0) {
-                monthGrowth = 0;
-                console.log('empty');
-              }
-              else if (data.results.length == 1) {
-                let totalOrders = parseInt(data.results[0].row_count)
-                monthGrowth = totalOrders * 100;
-              }
-              else {
-                let totalorderstoday = data.results[0].row_count;
-                let totalordersyes = data.results[1].row_count;
-                monthGrowth = parseFloat(Math.abs(totalorderstoday - totalordersyes) / totalordersyes).toFixed(2);
-                //monthGrowth = monthGrowth<=0? 0:monthGrowth;
-              }
 
-              $("#textgrowthstatus").text(`${monthGrowth}% More Orders this Month`);
+              const monthGrowth = data.results;
+            
+              $("#textgrowthstatus").text(`${monthGrowth}% More Sales this Month`);
 
               var options = {
                 chart: {
@@ -872,25 +796,9 @@
           //click function for year growth
           $("#peryeargrowth").click(function () {
             $.get(`/api/salesmadeprevyear?org=<%=orgId%>`, function (data, status) {
-              console.log(data);
-              let yearGrowth;
-              if (data.results.length == 0) {
-                yearGrowth = 0;
-                console.log('empty');
-              }
-              else if (data.results.length == 1) {
-                let totalOrders = parseInt(data.results[0].row_count)
-                yearGrowth = totalOrders * 100;
-              }
-              else {
-                let totalorderstoday = data.results[0].row_count;
-                let totalordersyes = data.results[1].row_count;
-                yearGrowth = parseFloat(Math.abs(totalorderstoday - totalordersyes) / totalordersyes);
-                //yearGrowth = yearGrowth<=0? 0:yearGrowth;
-              }
+              const yearGrowth = data.results;
 
-
-              $("#textgrowthstatus").text(`${yearGrowth}% More Orders This Year`)
+              $("#textgrowthstatus").text(`${yearGrowth}% More Sales This Year`)
               var options = {
                 chart: {
                   height: 240,
