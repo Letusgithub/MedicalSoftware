@@ -464,7 +464,7 @@ module.exports = {
 
     let totalGross = 0;
     let totalGST = 0;
-    const totalAmount = 0;
+    let totalAmount = 0;
 
     const lessDiscountPercent = (debitNoteDetails[0].less_discount / debitNoteDetails[0].debit_amt) * 100;
 
@@ -531,6 +531,8 @@ module.exports = {
       totals.grandTotal.sgst += sgst;
       totals.grandTotal.totalGst += gstAmount;
     });
+
+    totalAmount = totalGross + totalGST - debitNoteDetails[0].less_discount;
 
     return {
       orgDetails: orgDetails[0],
