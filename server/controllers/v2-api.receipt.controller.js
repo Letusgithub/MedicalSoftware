@@ -6,6 +6,7 @@ const moment = require('moment');
 const {
   getSalesReceipt, getReturnReceipt, getGrnReceipt, getPoReceipt,
   getCreditNoteReceipt,
+  getDebitNoteReceipt,
 } = require('../services/v2-receipt.service');
 
 module.exports = {
@@ -230,6 +231,52 @@ module.exports = {
 
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', 'attachment; filename=credit-note-receipt.pdf');
+      res.send(pdf);
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getDebitNoteReceipt: async (req, res) => {
+    const debitNoteId = req.params.id;
+    try {
+      const debitNoteReceipt = await getDebitNoteReceipt(debitNoteId);
+      res.status(200).json({
+        success: true,
+        data: debitNoteReceipt,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getDebitNoteReceiptPDF: async (req, res) => {
+    const debitNoteId = req.params.id;
+    try {
+      const debitNoteReceipt = await getDebitNoteReceipt(debitNoteId);
+
+      // Generate HTML content from data using EJS template
+      const template = path.resolve(__dirname, '../views/template/debit_note_receipt.ejs');
+      const html = await ejs.renderFile(template, { data: debitNoteReceipt, moment });
+
+      // Launch puppeteer and generate PDF
+      const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
+      const page = await browser.newPage();
+      await page.setContent(html);
+
+      const pdf = await page.pdf({ format: 'A4' });
+      await browser.close();
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=debit-note-receipt.pdf');
       res.send(pdf);
     } catch (error) {
       res.status(500).json({

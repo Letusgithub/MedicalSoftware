@@ -426,4 +426,121 @@ module.exports = {
       totalAmount,
     };
   },
+
+  getDebitNoteReceipt: async (debitNoteId) => {
+    const pool = getPool().promise();
+    const transactions = [];
+
+    const [debitNoteDetails] = await pool.query(
+      `SELECT * FROM debit_note
+        WHERE debit_invoice_id = ?`,
+      [debitNoteId],
+    );
+
+    if (debitNoteDetails.length === 0) {
+      throw new Error('Debit note details not found');
+    }
+
+    const [items] = await pool.query(
+      `SELECT sample.med_name, bth.batch_name, bth.mrp, bth.purchase_rate, bth.conversion, bth.exp_date, inv.hsn, inv.gst, dncd.*  FROM debit_note_cart_details dncd
+      JOIN batch bth ON dncd.batch_id_debit = bth.batch_id
+      JOIN inventory inv ON bth.inventory_id = inv.inventory_id
+      JOIN sample ON dncd.product_id = sample.product_id
+      WHERE debit_invoice_id =  ?`,
+      [debitNoteId],
+    );
+
+    const [orgDetails] = await pool.query(
+      `SELECT * FROM organisation
+        WHERE org_id = ?`,
+      [debitNoteDetails[0].org_id],
+    );
+
+    const [vendorDetails] = await pool.query(
+      `SELECT * FROM vendor
+        WHERE vendor_id = ?`,
+      [debitNoteDetails[0].vendor_id],
+    );
+
+    let totalGross = 0;
+    let totalGST = 0;
+    const totalAmount = 0;
+
+    const lessDiscountPercent = (debitNoteDetails[0].less_discount / debitNoteDetails[0].debit_amt) * 100;
+
+    items.forEach((item) => {
+      const grossValue = (item.pri_unit_debit * item.purchase_rate) + ((item.purchase_rate / item.conversion) * item.sec_unit_debit);
+      const gstValue = grossValue * (item.gst / 100);
+
+      const transaction = {
+        grossAmount: grossValue * (1 - (lessDiscountPercent / 100)),
+        gstRate: item.gst,
+      };
+      transactions.push(transaction);
+
+      totalGross += grossValue;
+      totalGST += gstValue;
+    });
+
+    const totals = {
+      0: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      5: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      12: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      18: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      total: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+      grandTotal: {
+        taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+      },
+    };
+
+    // Calculate totals
+    transactions.forEach((transaction) => {
+      // If this GST rate hasn't been seen before, add it to totals
+      if (!(transaction.gstRate in totals)) {
+        totals[transaction.gstRate] = {
+          taxAmt: 0, cgst: 0, sgst: 0, totalGst: 0,
+        };
+      }
+
+      const gstAmount = transaction.grossAmount * (transaction.gstRate / 100);
+      const cgst = gstAmount / 2;
+      const sgst = gstAmount / 2;
+
+      totals[transaction.gstRate].taxAmt += transaction.grossAmount;
+      totals[transaction.gstRate].cgst += cgst;
+      totals[transaction.gstRate].sgst += sgst;
+      totals[transaction.gstRate].totalGst += gstAmount;
+
+      totals.total.taxAmt += transaction.grossAmount;
+      totals.total.cgst += cgst;
+      totals.total.sgst += sgst;
+      totals.total.totalGst += gstAmount;
+
+      totals.grandTotal.taxAmt += transaction.grossAmount;
+      totals.grandTotal.cgst += cgst;
+      totals.grandTotal.sgst += sgst;
+      totals.grandTotal.totalGst += gstAmount;
+    });
+
+    return {
+      orgDetails: orgDetails[0],
+      vendorDetails: vendorDetails[0],
+      debitNoteDetails: debitNoteDetails[0],
+      debitNoteItems: items,
+      gstBreakup: totals,
+      totalGross,
+      totalGST,
+      totalAmount,
+    };
+  },
 };
