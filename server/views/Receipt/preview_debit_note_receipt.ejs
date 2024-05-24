@@ -555,7 +555,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     <div class="customer-details">
                                                         <p style="font-weight: 600;" class="vendorname">
-                                                            Distributor Name:
+                                                            Distributor:
                                                         </p>
                                                         <p class="vendormobile">
                                                             Mobile:
@@ -831,7 +831,7 @@
                         $(".orderdate").html(`Date: ${moment(podata.created_at).format('DD-MM-YYYY')}`)
                         $(".drno").html(`Debit No:<br>${id}`)
 
-                        $(".vendorname").text(`Distributor Name: ${podata.vendor_name ? podata.vendor_name : 'N/A'}`)
+                        $(".vendorname").text(`Distributor: ${podata.vendor_name ? podata.vendor_name : 'N/A'}`)
                         $(".vendormobile").text(`Mobile: ${podata.vendor_contact ? podata.vendor_contact : 'N/A'}`)
                         $(".vendoremail").text(`Email: ${podata.vendor_email ? podata.vendor_email : 'N/A'}`)
                         $(".vendoradd").text(`Address: ${podata.vendor_address ? podata.vendor_address : 'N/A'}`)
