@@ -313,9 +313,9 @@ module.exports = {
     );
   },
 
-  getTotalPurchaseQty: (orgId, callback) => {
+  getTotalPurchaseAmt: (orgId, callback) => {
     getPool().query(
-      `select COUNT(*) as row_count, coalesce(sum(bth.batch_qty * bth.purchase_rate),0) as total from batch as bth 
+      `select coalesce(sum(bth.batch_qty * bth.purchase_rate),0) as total from batch as bth 
       where org_id =${orgId} and grn_id is not null`,
       [],
       (error, results) => {

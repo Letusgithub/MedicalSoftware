@@ -2,12 +2,13 @@
 /* eslint-disable radix */
 /* eslint-disable max-len */
 const {
-  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatch,
+  create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatch,
   retrieveBatchOnCancel,
   retrieveBatchOnGrnCancel,
   retrieveBatchOnReturnCancel,
   retrieveBatchOnCrnCancel,
   retrieveBatchOnDrnCancel,
+  getTotalPurchaseAmt,
 } = require('../services/batch.service');
 
 const { getOrdersById } = require('../services/cartitem.service');
@@ -347,9 +348,9 @@ module.exports = {
     });
   },
 
-  getTotalPurchaseQty: (req, res) => {
+  getTotalPurchaseAmt: (req, res) => {
     const orgId = req.query.org;
-    getTotalPurchaseQty(orgId, (err, results) => {
+    getTotalPurchaseAmt(orgId, (err, results) => {
       if (err) console.log(err);
       return res.status(200).json({
         status: 'success',
