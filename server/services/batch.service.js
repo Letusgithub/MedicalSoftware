@@ -101,6 +101,101 @@ module.exports = {
     );
   },
 
+  retrieveBatchOnCancel: (data, callBack) => {
+    getPool().query(
+      `UPDATE batch SET 
+        saled_pri_qty = saled_pri_qty - ?, 
+        saled_sec_qty = saled_sec_qty - ? 
+        WHERE batch_id = ?`,
+      [
+        data.saledPriQty,
+        data.saledSecQty,
+        data.batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  retrieveBatchOnGrnCancel: (data, callback) => {
+    getPool().query(
+      'DELETE FROM batch WHERE grn_id = ?',
+      [
+        data.grnId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
+  retrieveBatchOnReturnCancel: (data, callBack) => {
+    getPool().query(
+      `UPDATE batch SET 
+        saled_pri_qty = saled_pri_qty + ?, 
+        saled_sec_qty = saled_sec_qty + ? 
+        WHERE batch_id = ?`,
+      [
+        data.returnPriQty,
+        data.returnSecQty,
+        data.batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      },
+    );
+  },
+
+  retrieveBatchOnCrnCancel: (data, callback) => {
+    getPool().query(
+      `UPDATE batch SET
+       saled_pri_qty = saled_pri_qty - ?,
+       saled_sec_qty = saled_sec_qty - ?
+       WHERE batch_id = ?`,
+      [
+        data.creditPriQty,
+        data.creditSecQty,
+        data.batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
+  retrieveBatchOnDrnCancel: (data, callback) => {
+    getPool().query(
+      `UPDATE batch SET
+       saled_pri_qty = saled_pri_qty - ?,
+       saled_sec_qty = saled_sec_qty - ?
+       WHERE batch_id = ?`,
+      [
+        data.debitPriQty,
+        data.debitSecQty,
+        data.batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
+
   getRemQtyafterSales: (orgId, prodId, callBack) => {
     getPool().query(
       `
@@ -221,7 +316,7 @@ module.exports = {
   getTotalPurchaseQty: (orgId, callback) => {
     getPool().query(
       `select COUNT(*) as row_count, coalesce(sum(bth.batch_qty * bth.purchase_rate),0) as total from batch as bth 
-      where org_id =${orgId}`,
+      where org_id =${orgId} and grn_id is not null`,
       [],
       (error, results) => {
         if (error) return callback(error);

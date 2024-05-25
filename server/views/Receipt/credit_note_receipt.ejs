@@ -289,6 +289,30 @@
             color: #1E1E1E;
             margin: 0.15rem 0rem 0.2rem 0rem;
         }
+
+        .watermark,
+        .watermark-receipt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 0, 0, 0.3);
+            font-size: 5rem;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .watermark {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .watermark {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 
@@ -494,14 +518,10 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
 
         </div>
-
-
-
 
     </div>
 
@@ -515,6 +535,7 @@
 
             $.get(`/api/getcreditnoteininvoice?id=${id}`, function (data, status) {
                 var podata = data.data[0];
+
                 console.log('inside the credit note', data);
                 var options = { year: 'numeric', month: 'long', day: 'numeric' };
                 var invoiceDate = new Date(podata.credit_created_date);
@@ -658,6 +679,8 @@
 
 
             });
+
+
         })
     </script>
 

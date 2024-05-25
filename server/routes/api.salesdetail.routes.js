@@ -1,6 +1,10 @@
 /* eslint-disable max-len */
 const {
-  getAllOrders, getInvoiceOrder, getRevenue, searchDates, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales, salesMadePrevDay, salesMadePrevMonth, salesMadePrevYear, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  getAllOrders, getInvoiceOrder, getRevenue, searchDates, invoiceSales, mainId, createSalesOrder, getTotalSumfromSales, searchMonth, searchQuarter, searchYear, getSalesIdforReport, getProfitinHome,
+  cancelSalesInvoice,
+  calculateGrowthPerDay,
+  calculateGrowthPerMonth,
+  calculateGrowthPerYear,
 } = require('../controllers/api.salesdetail.controller');
 
 module.exports = (app) => {
@@ -12,8 +16,8 @@ module.exports = (app) => {
     next();
   });
 
-  // app.post('/api/salesdetail/', createOrder);
   app.post('/api/salesdetail/', createSalesOrder);
+  app.get('/api/cancelSalesInvoice', cancelSalesInvoice);
   app.get('/api/getmainid/:id', mainId);
   app.get('/api/salesdetail/:id', getAllOrders);
   app.get('/api/invoice', getInvoiceOrder);
@@ -28,9 +32,9 @@ module.exports = (app) => {
   app.get('/api/searchyear/', searchYear);
 
   app.get('/api/totalsumfromsales', getTotalSumfromSales);
-  app.get('/api/salesmadeprevday', salesMadePrevDay);
-  app.get('/api/salesmadeprevmonth', salesMadePrevMonth);
-  app.get('/api/salesmadeprevyear', salesMadePrevYear);
+  app.get('/api/salesmadeprevday', calculateGrowthPerDay);
+  app.get('/api/salesmadeprevmonth', calculateGrowthPerMonth);
+  app.get('/api/salesmadeprevyear', calculateGrowthPerYear);
 
   app.get('/api/getprofitinhome', getProfitinHome);
 };

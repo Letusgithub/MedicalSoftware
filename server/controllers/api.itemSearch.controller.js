@@ -19,7 +19,6 @@ exports.itemSearch = async (req, res) => {
 
     const data = filteredSuggestions.map((item) => item._source);
 
-    console.log(data);
     res.json(data);
   } catch (error) {
     console.error(error);

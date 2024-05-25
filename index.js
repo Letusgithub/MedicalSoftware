@@ -48,6 +48,9 @@ require('./server/routes/api.hsn_gst.routes')(app);
 require('./server/routes/api.transaction.routes')(app);
 require('./server/routes/api.subscription.routes')(app);
 
+// Version 2 API Routes
+require('./server/routes/v2-api.receipt.routes')(app);
+
 // FRONT Routes
 require('./server/routes/front.routes')(app);
 require('./server/routes/front.auth.routes')(app);

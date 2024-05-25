@@ -20,4 +20,6 @@ module.exports = (app) => {
   app.get('/api/searchyeargrn/', controller.searchYear);
 
   app.get('/api/getgrnreceipts/:id', controller.getGRNreceipt);
+
+  app.get('/api/cancelGrn', controller.cancelGRN);
 };

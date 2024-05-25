@@ -69,18 +69,16 @@ module.exports = {
     );
   },
 
-  searchMonth: (orgId, month, callback) => {
+  searchMonth: (orgId, month, year, callback) => {
     getPool().query(
       `SELECT * FROM return_details rd
       JOIN order_details od 
       ON od.invoice_id_main = rd.sales_invoice_id
       JOIN customer_data cd
       on cd.customer_id = od.customer_id
-      where MONTH(rd.return_created_date) =? and cd.org_id = ${orgId} 
+      where MONTH(rd.return_created_date) = ${month} AND YEAR(rd.return_created_date) = ${year} and cd.org_id = ${orgId} 
       `,
-      [
-        month,
-      ],
+      [],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -88,19 +86,16 @@ module.exports = {
     );
   },
 
-  searchQuarter: (orgId, start, end, callback) => {
+  searchQuarter: (orgId, start, end, year, callback) => {
     getPool().query(
       `SELECT * FROM return_details rd
       JOIN order_details od 
       ON od.invoice_id_main = rd.sales_invoice_id
       JOIN customer_data cd
       on cd.customer_id = od.customer_id
-      where MONTH(rd.return_created_date)>=? and MONTH(rd.return_created_date)<=? and cd.org_id = ${orgId} 
+      where MONTH(rd.return_created_date)>=${start} and MONTH(rd.return_created_date)<=${end} AND YEAR(rd.return_created_date) = ${year} and cd.org_id = ${orgId} 
       `,
-      [
-        start,
-        end,
-      ],
+      [],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -114,12 +109,10 @@ module.exports = {
       ON od.invoice_id_main = rd.sales_invoice_id
       JOIN customer_data cd
       on cd.customer_id = od.customer_id
-      where YEAR(rd.return_created_date)=? and cd.org_id = ${orgId} 
+      where YEAR(rd.return_created_date)=${year} and cd.org_id = ${orgId} 
       order by MONTH(rd.return_created_date) DESC
       `,
-      [
-        year,
-      ],
+      [],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);
@@ -147,4 +140,14 @@ module.exports = {
     );
   },
 
+  cancelReturnInvoice: (returnId, orgId, callback) => {
+    getPool().query(
+      'UPDATE return_details SET return_status = "cancelled" WHERE return_id = ? AND org_id = ?',
+      [returnId, orgId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
 };

@@ -1,11 +1,86 @@
 <%- include('../partials/headercode.ejs') %>
 
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
         <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <style>
+            /* ------------------------------------------------- */
+
+            /* Default width for larger screens */
+            #html-content {
+
+                margin: 0;
+                /* Center align */
+            }
+
+            /* Adjustments for mobile devices */
+            @media (max-width: 767px) {
+                #html-content {
+                    width: 92%;
+                    margin: 0 0;
+                    /* Center align */
+                }
+            }
+
+            .table-bordered th,
+            .table-bordered td {
+                padding: 3px;
+                /* Adjust padding as needed */
+                /*padding-left: 5px;*/
+                /*padding-right: 5px;*/
+                text-align: center;
+                /* Center align text */
+            }
+
+            .table-bordered th {
+                background-color: #f8f9fa;
+                /* Optional: Add background color for headers */
+                border-top: none;
+            }
+
+            .table-of-receipt th,
+            .table-of-receipt td {
+                padding: 0px;
+                /* Adjust padding as needed */
+                padding-left: 1px;
+                padding-right: 1px;
+                text-align: center;
+                /* Center align text */
+                margin: 0;
+                padding-top: -5px;
+                margin-top: -10px;
+
+            }
+
+            .cartitems tr,
+            td {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .btn-custom {
+                flex: 1;
+                /* Make the buttons take equal space */
+                margin: 0 4px;
+                /* Adjust the horizontal spacing */
+                height: 40px;
+                /* Set a fixed height for both buttons */
+                display: flex;
+                padding: 4px;
+                align-items: center;
+                /* Center the text vertically */
+                justify-content: center !important;
+                /* Center the text horizontally */
+                white-space: nowrap;
+                /* Prevent text from wrapping */
+            }
+
+            /* ------------------------------------------------- */
             .frame1 {
                 width: 55rem;
                 height: 39rem;
@@ -22,7 +97,7 @@
 
                 position: relative;
                 width: 50.2365rem;
-                height: 35.97663rem;
+                height: 31.97663rem;
                 flex-shrink: 0;
                 border: 0.2px solid #1E1E1E;
             }
@@ -136,14 +211,14 @@
                 height: 0.78725rem;
                 flex-direction: column;
                 flex-shrink: 0;
-                margin-top: 0.2rem;
+
                 margin-bottom: 0;
             }
 
             .cart-table {
                 position: relative;
                 width: 50.2365rem;
-                height: 14.56863rem;
+                height: 10.56863rem;
                 border: 0.05rem solid #1E1E1E;
                 left: -1rem;
                 margin-top: 0.75rem;
@@ -159,13 +234,14 @@
                 margin: auto;
 
                 border: 0.05rem solid #1E1E1E;
+
             }
 
             .cart-table tbody td {
                 border-left: 1px solid #000;
                 border-right: 1px solid #000;
                 border-top: none !important;
-
+                height: 0;
                 color: #000;
                 font-size: 0.625rem;
                 font-family: Poppins;
@@ -173,6 +249,10 @@
                 font-weight: 400;
                 line-height: 0.875rem;
                 text-transform: uppercase;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
             }
 
             .footer-gst-distribution {
@@ -242,7 +322,7 @@
             }
 
             .receipt-tnc {
-                font-weight: 600;
+                font-weight: 300;
                 line-height: normal;
                 margin-left: 0.34rem;
                 margin-top: 0.47rem;
@@ -285,12 +365,37 @@
                 font-size: 1rem;
                 font-weight: 600;
             }
+
+            .watermark,
+            .watermark-receipt {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: rgba(255, 0, 0, 0.3);
+                font-size: 5rem;
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            @media (max-width: 768px) {
+                .watermark {
+                    font-size: 3rem;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .watermark {
+                    font-size: 2rem;
+                }
+            }
         </style>
     </head>
 
     <body>
         <!-- Layout wrapper -->
-        <div class="layout-wrapper layout-content-navbar" style="background-image:url(/images/receipt-bg3.png);">
+        <div class="layout-wrapper layout-content-navbar"
+            style="background-image: linear-gradient(rgba(232, 231, 231, 0.5), rgba(232, 231, 231, 0.5)), url(/images/receipt-bg3.png);">
             <div class="layout-container">
                 <!-- sidebar imported -->
                 <%- include('../partials/sidebar.ejs') %>
@@ -303,59 +408,59 @@
                             <!-- Content wrapper -->
                             <div class="content-wrapper">
                                 <!-- Content -->
-
                                 <div class="container-xxl flex-grow-1 container-p-y">
-                                    <div class="row invoice-preview">
+                                    <div class="row invoice-preview justify-content-center">
 
                                         <!-- Invoice responsive template -->
 
-                                        <div class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4">
+                                        <div class="col-xl-10 col-md-10 col-12 mb-md-0 mb-4 ml-4">
                                             <div class="card invoice-preview-card">
+                                                <div class="watermark" style="display: none;"></div>
                                                 <div class="card-body pb-0 text-center">
                                                     <h3 class="text-body fw-bold">Sales Invoice</h3>
-                                                    <hr class="my-0">
+                                                    <hr class="my-0 pb-0">
                                                 </div>
                                                 <div class="card-body">
                                                     <div
                                                         class="row flex-xl-row flex-md-column flex-sm-row flex-column p-sm-3 p-0">
                                                         <div class="col-xl-6 col-md-12 col-sm-5 col-12 mb-xl-0 mb-4">
-                                                            <div class="d-flex mb-3 gap-2">
+                                                            <div class="d-flex mb-2 gap-2">
                                                                 <span
                                                                     class="pharmacyName fs-4 text-body fw-bold"></span>
                                                             </div>
-                                                            <p class="mb-1 shopaddress"></p>
+                                                            <p class="mb-0 shopaddress pb-0"></p>
                                                         </div>
-                                                        <div class="col-xl-6 col-md-12 col-sm-5 col-12">
-                                                            <div class="mb-2">
-                                                                <span class="fw-medium gstin"></span>
-                                                            </div>
-                                                            <div class="mb-2">
+                                                        <div class="col-xl-6 col-md-12 col-sm-5 col-12 mt-2">
+                                                            <div class="mb-0 ">
                                                                 <span class="fw-medium dlno1"></span>
                                                             </div>
-                                                            <div class="mb-2">
+                                                            <div class="mb-0 ">
                                                                 <span class="fw-medium dlno2"></span>
                                                             </div>
-                                                            <div class="mb-2">
+                                                            <div class="mb-0 ">
                                                                 <span class="fw-medium flno"></span>
+                                                            </div>
+                                                            <div class="mb-0 ">
+                                                                <span class="fw-medium gstin"></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <hr class="my-0">
+                                                <hr class="my-0 py-0">
                                                 <div class="card-body">
                                                     <div class="row p-sm-3 p-0">
                                                         <div
                                                             class="col-xl-6 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
-                                                            <h6 class="pb-2">Invoice To:</h6>
-                                                            <p class="mb-1 customername fw-bold"></p>
-                                                            <p class="mb-1 shippingadd"></p>
-                                                            <p class="mb-1 mobilenumber"></p>
+                                                            <h6 class="pb-1">Invoice To:</h6>
+                                                            <p class="mb-0 customername fw-bold"></p>
+                                                            <p class="mb-0 shippingadd"></p>
+                                                            <p class="mb-0 mobilenumber"></p>
                                                             <p class="mb-0 doctorname"></p>
                                                         </div>
-                                                        <div class="col-xl-6 col-md-12 col-sm-7 col-12">
-                                                            <h6 class="pb-2">Invoice Details:</h6>
-                                                            <p class="mb-1 fw-bold invoicenumber"></p>
-                                                            <p class="mb-1 orderdate"></p>
+                                                        <div class="col-xl-6 col-md-12 col-sm-7 col-12 ">
+                                                            <h6 class="pb-1">Invoice Details:</h6>
+                                                            <p class="mb-0 fw-bold invoicenumber"></p>
+                                                            <p class="mb-0 orderdate"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -364,10 +469,10 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Item</th>
-                                                                <th>QTY</th>
+                                                                <th>Quantity</th>
                                                                 <th>HSN</th>
                                                                 <th>Batch</th>
-                                                                <th>Exp.</th>
+                                                                <th>Expiry</th>
                                                                 <th>MRP(₹)</th>
                                                                 <th>GST%</th>
                                                                 <th>Discount%</th>
@@ -393,8 +498,9 @@
                                                     </table>
                                                 </div>
                                                 <div class="row card-body">
-                                                    <div class="col-xl-8 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
-                                                        <table class="table-bordered">
+                                                    <div
+                                                        class="col-xl-8 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
+                                                        <table class="table-bordered mb-0 pb-0">
                                                             <thead>
                                                                 <tr>
                                                                     <th>GST%</th>
@@ -417,7 +523,7 @@
                                                                     <td class="taxAmt5"></td>
                                                                     <td class="cgst-5"></td>
                                                                     <td class="sgst-5">
-                                                                        </td>
+                                                                    </td>
                                                                     <td class="totalGst5"></td>
                                                                 </tr>
                                                                 <tr>
@@ -425,7 +531,7 @@
                                                                     <td class="taxAmt12"></td>
                                                                     <td class="cgst-12"></td>
                                                                     <td class="sgst-12">
-                                                                        </tdid>
+                                                                        <!-- </tdid> -->
                                                                     <td class="totalGst12"></td>
                                                                 </tr>
                                                                 <tr>
@@ -433,7 +539,7 @@
                                                                     <td class="taxAmt18"></td>
                                                                     <td class="cgst-18"></td>
                                                                     <td class="sgst-18">
-                                                                        </tdid>
+                                                                        <!-- </tdid> -->
                                                                     <td class="totalGst18"></td>
                                                                 </tr>
                                                                 <tr>
@@ -446,7 +552,7 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <div class="col-xl-4 col-md-12 col-sm-7 col-12">
+                                                    <div class="col-xl-4 col-md-12 col-sm-7 col-12 mt-3">
                                                         <table>
                                                             <tbody>
 
@@ -473,9 +579,9 @@
                                                 </div>
 
 
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-12">
+                                                <div class="card-body ">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="justify-content-center">
                                                             <span>“GET WELL SOON BY DAWA.AI”</span>
                                                         </div>
                                                     </div>
@@ -491,21 +597,22 @@
 
                                         <div class="frame1" id="html-content" style="display: none;">
                                             <div class="receipt-container">
+                                                <div class="watermark-receipt" style="display: none;"></div>
                                                 <div class="d-flex justify-content-between">
                                                     <div>
                                                         <div class="shop-name pharmacyName"></div>
                                                         <div class="shop-info d-flex justify-content-between">
                                                             <div class="shop-info-child1 shopaddress"></div>
                                                             <div class="shop-info-child2">
-                                                                <p class="my-0 gstin" id="">GSTIN :</p>
                                                                 <p class="my-0 dlno1" id="">DL No 1:</p>
                                                                 <p class="my-0 dlno2" id="">DL No 2:</p>
                                                                 <p class="my-0 flno" id="">FSSAI :</p>
+                                                                <p class="my-0 gstin" id="">GSTIN :</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="logo-container">
-                                                        <img src="/images/logo.svg"></img>
+                                                        <img src="/images/logo.svg">
                                                     </div>
                                                 </div>
                                                 <hr class="px-0">
@@ -538,28 +645,28 @@
                                                     </div>
 
                                                 </div>
-                                                <table class="cart-table">
+                                                <table class="cart-table table-of-receipt">
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 11.29rem;">Item</th>
-                                                            <th style="width: 3.1rem;">QTY</th>
+                                                            <th style="width: 3.1rem;">Quantity</th>
                                                             <th style="width: 4.59rem;">HSN</th>
                                                             <th style="width: 4.4rem;">Batch</th>
-                                                            <th style="width: 3.25rem;">Exp.</th>
+                                                            <th style="width: 3.25rem;">Expiry</th>
                                                             <th style="width: 3.62rem;">MRP(₹)</th>
                                                             <th style="width: 3.61rem;">GST%</th>
                                                             <th style="width: 3.91rem;">Discount%</th>
                                                             <th style="width: 4.2rem;">Total(₹)</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="cartitems">
+                                                    <tbody class="cartitems py-0 my-0">
 
 
 
                                                     </tbody>
                                                 </table>
                                                 <div class="d-flex flex-row">
-                                                    <table class="footer-gst-distribution">
+                                                    <table class="footer-gst-distribution table-bordered">
                                                         <thead>
                                                             <tr>
                                                                 <th>GST%</th>
@@ -569,7 +676,7 @@
                                                                 <th>Total GST</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody class="p-0">
+                                                        <tbody class="p-0 px-1">
                                                             <tr>
                                                                 <td>0%</td>
                                                                 <td class="taxAmt0"></td>
@@ -608,28 +715,30 @@
                                                                 <td class="sgstTotal"></td>
                                                                 <td class="totalGst"></td>
                                                             </tr>
-                                                        </tbody>
+                                                        </tbody style="border-collapse: collapse;">
                                                     </table>
 
                                                     <div class="footer-1">
-                                                        <div class="receipt-msg">
-                                                            <p>
+                                                        <div class="receipt-msg mx-5">
+                                                            <p class="justify-content-center mx-auto">
                                                                 “GET WELL SOON BY DAWA.AI”
                                                             </p>
                                                         </div>
                                                         <div class="receipt-info">
                                                             <div class="receipt-tnc">
-                                                                <div class="header">Terms & Conditions
-                                                                    <div>
-                                                                        <p>Confirm Medicines from your Doctor before
-                                                                            use
-                                                                        </p>
-                                                                        <!-- <p>I/We declare that this invoice shows
+                                                                <div class="mx-5">
+                                                                    <div>Terms & Conditions</div>
+                                                                    <p>Confirm Medicines from your Doctor before
+                                                                        use
+                                                                    </p>
+
+                                                                    <!-- <p>I/We declare that this invoice shows
                                                                             actual
                                                                             price of goods and services and that all
                                                                             particulars are true and correct.</p> -->
-                                                                    </div>
+
                                                                 </div>
+
 
 
                                                             </div>
@@ -689,31 +798,35 @@
                                         <!-- /Invoice -->
 
                                         <!-- Invoice Actions -->
-                                        <div class="col-xl-3 col-md-4 col-12 invoice-actions">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <!-- <button class="btn btn-primary d-grid w-100 mb-3" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
-                                                    <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
-                                                  </button> -->
-                                                    <button
-                                                        class="btn btn-primary btn-label-secondary d-grid w-100 mb-3"
-                                                        type="button" onclick="CreatePDFfromHTML()">
-                                                        Download
-                                                    </button>
-                                                    <button class="btn btn-success d-grid w-100 mb-3" type="button"
-                                                        id="whatsappLink">
-                                                        WhatsApp
-                                                    </button>
-                                                    <!-- <button class="btn btn-label-secondary d-grid w-100" type="button"
-                                                        onclick="history.back()">
-                                                        Back
-                                                    </button> -->
+                                        <div class="col-xl-4 col-md-6 col-12 invoice-actions">
+                                            <div class="pt-3">
+                                                <div class="d-flex flex-md-row flex-column justify-content-center">
+                                                    <div class="p-1">
+                                                        <button id="printButton" class="btn btn-primary btn-label-secondary d-grid w-100 mb-3 mx-1" type="button">
+                                                            Print
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <button class="btn btn-primary btn-label-secondary btn-custom d-grid w-100 mb-3" id="downloadButton">
+                                                            Download
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <button class="btn btn-success btn-custom d-grid w-100 mb-3" type="button" id="whatsappLink">
+                                                            WhatsApp
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-1" id="cancelReceipt">
+                                                        <button class="btn btn-label-danger btn-custom d-grid w-100" type="button">
+                                                            Cancel Receipt
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /Invoice Actions -->
-                                    </div>
 
+                                    </div>
                                 </div>
                                 <!-- / Content -->
                             </div>
@@ -738,11 +851,59 @@
                     var addDisc;
                     var subTotal;
 
+                    $('#downloadButton').click(function () {
+                        $.ajax({
+                            url: `/api/v2/salesReceipt/${id}/pdf`,
+                            method: 'GET',
+                            xhrFields: {
+                                responseType: 'blob' // Important for binary data
+                            },
+                            success: function (data) {
+                                var blob = new Blob([data], { type: 'application/pdf' });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = 'sales-receipt.pdf';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            },
+                            error: function (err) {
+                                console.error('Error downloading the receipt:', err);
+                            }
+                        });
+                    });
+
+                    $('#printButton').click(function () {
+                        $.ajax({
+                            url: `/api/v2/salesReceipt/${id}/pdf`,
+                            method: 'GET',
+                            xhrFields: {
+                                responseType: 'blob' // Important for binary data
+                            },
+                            success: function (data) {
+                                var blob = new Blob([data], { type: 'application/pdf' });
+                                var url = window.URL.createObjectURL(blob);
+                                var printWindow = window.open(url, '_blank', 'width=800,height=600');
+                                printWindow.onload = function () {
+                                    printWindow.print();
+                                }
+                            },
+                            error: function (err) {
+                                console.error('Error downloading the receipt:', err);
+                            }
+                        });
+                    });
 
                     $.get(`/api/invoice?invoiceid=${id}&org=<%= orgId %>`, function (data, status) {
                         var customer = data.result[0];
                         console.log('inside the invoice template', customer);
-                        
+
+                        // Check if receipt is cancelled
+                        if (customer.status === "cancelled") {
+                            $(".watermark, .watermark-receipt").text("CANCELLED").show();
+                            $("#cancelReceipt").hide();
+                        }
+
                         var todayDate = new Date(customer.sales_created_date);
                         var options = { year: 'numeric', month: 'long', day: 'numeric' };
                         var formattedDate = todayDate.toLocaleDateString('en-US', options);
@@ -796,7 +957,7 @@
 
                         var totalGross = 0;
                         var totalGST = 0;
-                        var addDiscPercent = ( addDisc / subTotal ) * 100;
+                        var addDiscPercent = (addDisc / subTotal) * 100;
                         console.log(addDisc)
                         var transactions = [];
 
@@ -806,7 +967,7 @@
                             console.log(datetime);
                             var date = moment(datetime).format('MM/YYYY');
 
-                            var grossValue = ((items[i].saled_pri_qty_cart * items[i].unit_mrp + items[i].saled_sec_qty_cart * (items[i].unit_mrp / items[i].conversion)) * (1 - (items[i].unit_discount/100)))/ (1 + (items[i].gst / 100));
+                            var grossValue = ((items[i].saled_pri_qty_cart * items[i].unit_mrp + items[i].saled_sec_qty_cart * (items[i].unit_mrp / items[i].conversion)) * (1 - (items[i].unit_discount / 100))) / (1 + (items[i].gst / 100));
                             var gstValue = grossValue * items[i].gst / 100;
 
                             var transaction = {
@@ -818,16 +979,16 @@
                             transactions.push(transaction);
 
                             cartHtml =
-                                `<tr>
-                                    <td style="width: 11.29rem; height: 1rem;">${items[i].product_name}</td>
-                                    <td style="width: 3.1rem; height: 1rem;">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
-                                    <td style="width: 4.59rem; height: 1rem;">${items[i].hsn}</td>
-                                    <td style="width: 4.4rem; height: 1rem;">${items[i].batch_name}</td>
-                                    <td style="width: 3.25rem; height: 1rem;">${date}</td>
-                                    <td style="width: 3.62rem; height: 1rem;">${items[i].unit_mrp}</td>
-                                    <td style="width: 3.61rem; height: 1rem;">${items[i].gst}</td>
-                                    <td style="width: 3.91rem; height: 1rem;">${items[i].unit_discount}</td>
-                                    <td style="width: 4.2rem; height: 1rem;">${items[i].saled_mrp}</td>
+                                `<tr style="padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">
+                                    <td style="width: 11.29rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].product_name}</td>
+                                    <td style="width: 3.1rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].saled_pri_qty_cart}:${items[i].saled_sec_qty_cart}</td>
+                                    <td style="width: 4.59rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].hsn}</td>
+                                    <td style="width: 4.4rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].batch_name}</td>
+                                    <td style="width: 3.25rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${date}</td>
+                                    <td style="width: 3.62rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].unit_mrp}</td>
+                                    <td style="width: 3.61rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].gst}</td>
+                                    <td style="width: 3.91rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].unit_discount}</td>
+                                    <td style="width: 4.2rem; height: 0rem; padding-top: 0px; padding-bottom: 0px; margin-top:0px; margin-bottom:0px">${items[i].saled_mrp}</td>
                                 </tr>`
                             $(".cartitems").append(cartHtml);
 
@@ -890,6 +1051,51 @@
                         $('.totalGst').text((totals.grandTotal.totalGst).toFixed(2));
 
                     })
+
+                    //Order cancellation button
+                    $('#cancelReceipt').on('click', function (e) {
+                        e.preventDefault(); // Prevent the default action
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, cancel it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Perform the cancellation action here
+                                $.get(`/api/cancelSalesInvoice?orderId=${id}&orgId=<%=orgId%>`, function (data) {
+                                    if (data.success == 1) {
+                                        $.get(`/api/updatebatchoncancelsalesinvoice?orderId=${id}`, function (updateData) {
+                                            if (updateData.success == 1) {
+                                                Swal.fire(
+                                                    'Cancelled!',
+                                                    'The receipt has been cancelled.',
+                                                    'success'
+                                                ).then(() => {
+                                                    location.reload();
+                                                })
+                                            } else {
+                                                Swal.fire(
+                                                    'batch Error!',
+                                                    'There was an error cancelling the receipt.',
+                                                    'error'
+                                                )
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Error!',
+                                            'There was an error cancelling the receipt.',
+                                            'error'
+                                        )
+                                    }
+                                })
+                            }
+                        })
+                    });
 
                     // Whatsapp Chat with customer
                     $("#whatsappLink").click(function () {
@@ -1016,11 +1222,19 @@
             <script>
                 function CreatePDFfromHTML() {
                     $("#html-content").show();
+
+                    // Adjust the content width for PDF generation
+                    var originalWidth = $("#html-content").width();
+                    var isMobile = window.innerWidth <= 767;
+                    if (isMobile) {
+                        $("#html-content").css("width", "100%");
+                    }
+
                     var HTML_Width = $("#html-content").width();
                     var HTML_Height = $("#html-content").height();
                     var top_left_margin = 30;
                     var PDF_Width = HTML_Width + (top_left_margin * 2);
-                    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+                    var PDF_Height = (PDF_Width * 1.7) + (top_left_margin * 2);
                     var canvas_image_width = HTML_Width;
                     var canvas_image_height = HTML_Height;
 
@@ -1035,9 +1249,16 @@
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
                         }
                         pdf.save("Invoice.pdf");
+
+                        // Reset the width after PDF generation
+                        if (isMobile) {
+                            $("#html-content").css("width", originalWidth);
+                        }
+
                         $("#html-content").hide();
                     });
                 }
+
             </script>
 
     </body>

@@ -90,7 +90,7 @@ module.exports = {
 
   getCreditNoteinInvoice: (id, orgId, callBack) => {
     getPool().query(
-      `SELECT DISTINCT vendor.*, crdetails.*, cr.less_discount, cr.credit_amt, inv.*, batch.*,  sample.med_name FROM credit_note cr
+      `SELECT DISTINCT vendor.*, crdetails.*, cr.less_discount, cr.credit_amt, cr.credit_status, inv.*, batch.*,  sample.med_name FROM credit_note cr
       JOIN credit_note_cart_details crdetails ON cr.credit_invoice_id = crdetails.credit_invoice_id
       Join vendor on cr.vendor_id = vendor.vendor_id
       Join sample on crdetails.product_id = sample.product_id
@@ -110,11 +110,11 @@ module.exports = {
     );
   },
 
-  searchMonth: (orgId, month, callback) => {
+  searchMonth: (orgId, month, year, callback) => {
     getPool().query(
       `SELECT DISTINCT * FROM credit_note cn
       Join vendor on vendor.vendor_id = cn.vendor_id
-      where MONTH(cn.created_date_credit)=? AND YEAR(cn.created_date_credit) = YEAR(CURDATE()) and cn.org_id = ${orgId}
+      where MONTH(cn.created_date_credit)=? AND YEAR(cn.created_date_credit) = ${year} and cn.org_id = ${orgId}
       `,
       [
         month,
@@ -126,11 +126,11 @@ module.exports = {
     );
   },
 
-  searchQuarter: (orgId, start, end, callback) => {
+  searchQuarter: (orgId, start, end, year, callback) => {
     getPool().query(
       `SELECT DISTINCT * FROM credit_note cn
       Join vendor on vendor.vendor_id = cn.vendor_id
-      where MONTH(cn.created_date_credit)>=? and MONTH(cn.created_date_credit)<=? AND YEAR(cn.created_date_credit) = YEAR(CURDATE()) and cn.org_id = ${orgId} 
+      where MONTH(cn.created_date_credit)>=? and MONTH(cn.created_date_credit)<=? AND YEAR(cn.created_date_credit) = ${year} and cn.org_id = ${orgId} 
       `,
       [
         start,
@@ -214,6 +214,46 @@ module.exports = {
           return callBack(error);
         }
         return callBack(null, results);
+      },
+    );
+  },
+
+  getCreditNote: (creditInvoiceId, orgId, callback) => {
+    getPool().query(
+      'SELECT * FROM credit_note WHERE credit_invoice_id = ? and org_id = ?',
+      [
+        creditInvoiceId,
+        orgId,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  cancelCreditNote: (creditInvoiceId, orgId, callback) => {
+    getPool().query(
+      'UPDATE credit_note SET credit_status = "cancelled" WHERE credit_invoice_id = ? and org_id = ?',
+      [
+        creditInvoiceId,
+        orgId,
+      ],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  getCrnCartItemsById: (creditInvoiceId, callback) => {
+    getPool().query(
+      `SELECT * FROM credit_note_cart_details 
+       WHERE credit_invoice_id = ?`,
+      [creditInvoiceId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
       },
     );
   },

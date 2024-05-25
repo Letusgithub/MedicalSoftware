@@ -43,7 +43,7 @@
                                     <hr class="mb-4">
 
                                     <form class="myForm">
-                                        <div class="card mb-4 mx-auto col-md-8">
+                                        <div class="card mb-4 mx-auto col-md-10">
 
                                             <div class="card-body ">
 
@@ -210,7 +210,7 @@
 
                                     </form>
 
-                                    <div class="card mb-4 mx-auto col-md-8">
+                                    <div class="card mb-4 mx-auto col-md-10">
 
                                         <div class="card-body ">
                                             <h4 class="fs-5">Batch Details</h4>
@@ -602,7 +602,8 @@
                         "E/D": ['E/D', 'PCS'],
                         "EAR/D": ['EAR/D', 'PCS'],
                         INJ: ['INJ', 'PCS'],
-                        INH: ['INH', 'PCS']
+                        INH: ['INH', 'PCS'],
+                        PCS: ['PCS']
                     };
 
                     function populateSecondaryDropdown() {
@@ -741,7 +742,7 @@
                         } else {
                             $("#price").removeClass('is-invalid');
                         }
-                        
+
                         if (isValid) {
 
                             $('#loader').show();
@@ -837,8 +838,6 @@
                                     },
                                 })
                             } else {
-                                console.log(inventoryId);
-
                                 var productDetails = {
                                     product_id: productId,
                                     org_id: orgID,

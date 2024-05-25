@@ -21,4 +21,6 @@ module.exports = (app) => {
   app.get('/api/searchmonthcredit/', controller.searchMonth);
   app.get('/api/searchquartercredit/', controller.searchQuarter);
   app.get('/api/searchyearcredit/', controller.searchYear);
+
+  app.get('/api/cancelCreditNote', controller.cancelCreditNote);
 };

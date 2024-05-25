@@ -143,13 +143,12 @@ module.exports = {
     );
   },
 
-  searchMonth: (orgId, month, callback) => {
+  searchMonth: (orgId, month, year, callback) => {
     getPool().query(
       `SELECT * FROM purchase_order po
       JOIN vendor
       ON vendor.vendor_id = po.vendor_id
-      
-      where MONTH(po.po_created_date)=? and po.org_id = ${orgId}
+      where MONTH(po.po_created_date)=? AND YEAR(po.po_created_date) = ${year} and po.org_id = ${orgId}
       `,
       [
         month,
@@ -161,13 +160,12 @@ module.exports = {
     );
   },
 
-  searchQuarter: (orgId, start, end, callback) => {
+  searchQuarter: (orgId, start, end, year, callback) => {
     getPool().query(
       `SELECT * FROM purchase_order po
       JOIN vendor
       ON vendor.vendor_id = po.vendor_id
-      
-      where MONTH(po.po_created_date)>=? and MONTH(po.po_created_date)<=? and po.org_id = ${orgId}
+      where MONTH(po.po_created_date)>=? and MONTH(po.po_created_date)<=? AND YEAR(po.po_created_date) = ${year} and po.org_id = ${orgId}
       `,
       [
         start,
@@ -179,12 +177,12 @@ module.exports = {
       },
     );
   },
+
   searchYear: (orgId, year, callback) => {
     getPool().query(
       `SELECT * FROM purchase_order po
       JOIN vendor
       ON vendor.vendor_id = po.vendor_id
-
       where YEAR(po.po_created_date)=? and po.org_id = ${orgId}
       order by MONTH(po.po_created_date) DESC
       `,
@@ -225,6 +223,17 @@ module.exports = {
       ${querys} and po.org_id = ${orgId} 
       ORDER BY po_created_date DESC`,
       datas,
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
+  cancelPurchaseOrder: (poId, orgId, callback) => {
+    getPool().query(
+      'UPDATE purchase_order SET po_status = "cancelled" WHERE po_id = ? AND org_id = ?',
+      [poId, orgId],
       (error, results) => {
         if (error) return callback(error);
         return callback(null, results);

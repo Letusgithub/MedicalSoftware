@@ -11,6 +11,9 @@ module.exports = {
           completion: {
             field: 'med_name',
             size: 10,
+            fuzzy: {
+              fuzziness: 'auto',
+            },
           },
         },
       },
@@ -19,7 +22,7 @@ module.exports = {
     console.log(baseQuery.suggest.medicine_suggestion);
     try {
       const { body } = await es.search({
-        index: 'product_search_index',
+        index: 'product_search_index_v2',
         body: {
           suggest: baseQuery.suggest, // Use the suggest object directly
         },

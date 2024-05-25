@@ -108,4 +108,24 @@ module.exports = {
     );
   },
 
+  updateCartItemOnReturnCancel: (data, callback) => {
+    getPool().query(
+      `UPDATE cart_item SET
+        return_pri_qty = return_pri_qty - ?,
+        return_sec_qty = return_sec_qty - ? 
+        WHERE main_invoice_id = ? AND batch_id = ?`,
+      [
+        data.returnPriQty,
+        data.returnSecQty,
+        data.mainInvoiceId,
+        data.batchId,
+      ],
+      (error, results) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      },
+    );
+  },
 };

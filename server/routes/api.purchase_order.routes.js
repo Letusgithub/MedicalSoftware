@@ -15,8 +15,8 @@ module.exports = (app) => {
   // Owner routes
   app.post('/api/createpo/', controller.createPO);
   app.post('/api/createpocarts/', controller.createPOCarts);
-  app.patch('/api/owner/', controller.updateOwner);
-  app.delete('/api/owner/', controller.deleteOwner);
+  // app.patch('/api/owner/', controller.updateOwner);
+  // app.delete('/api/owner/', controller.deleteOwner);
 
   app.get('/api/getpoininvoice', controller.getPOReceipt);
 
@@ -24,4 +24,6 @@ module.exports = (app) => {
   app.get('/api/searchmonthpo/', controller.searchMonth);
   app.get('/api/searchquarterpo/', controller.searchQuarter);
   app.get('/api/searchyearpo/', controller.searchYear);
+
+  app.get('/api/cancelPurchaseOrder', controller.cancelPurchaseOrder);
 };

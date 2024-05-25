@@ -3,7 +3,18 @@
 /* eslint-disable max-len */
 const {
   create, getBatch, getAllBatchesById, updateBatchWhenSale, getTotalSumfromPurchase, getRemQtyafterSales, getPrevSaledQty, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatch,
+  retrieveBatchOnCancel,
+  retrieveBatchOnGrnCancel,
+  retrieveBatchOnReturnCancel,
+  retrieveBatchOnCrnCancel,
+  retrieveBatchOnDrnCancel,
 } = require('../services/batch.service');
+
+const { getOrdersById } = require('../services/cartitem.service');
+const { getCrnCartItemsById } = require('../services/credit.service');
+const { getDrnCartItemsById } = require('../services/debit.service');
+const { getGrnCartItemsById } = require('../services/grn.service');
+const { fetchReturnCartItems } = require('../services/returncartitem.service');
 
 module.exports = {
   create: (req, res) => {
@@ -54,6 +65,7 @@ module.exports = {
       });
     });
   },
+
   getBatchfromBatchId: (req, res) => {
     const id = req.query.id;
     getBatchfromBatchId(id, (err, results) => {
@@ -94,6 +106,167 @@ module.exports = {
       return res.status(200).json({
         success: 'Updated',
         data: updateResults,
+      });
+    });
+  },
+
+  updateOnCancelSalesInvoice: (req, res) => {
+    const orderId = req.query.orderId;
+    getOrdersById(orderId, (orderDetailsErr, orderDetailsResults) => {
+      if (orderDetailsErr) {
+        console.error(orderDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      orderDetailsResults.forEach((order) => {
+        const data = {
+          batchId: order.batch_id,
+          saledPriQty: order.saled_pri_qty_cart,
+          saledSecQty: order.saled_sec_qty_cart,
+        };
+        retrieveBatchOnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
+      });
+    });
+  },
+
+  updateBatchOnCancelGRN: (req, res) => {
+    const grnId = req.query.grnId;
+    getGrnCartItemsById(grnId, (grnDetailsErr, grnDetailsResults) => {
+      if (grnDetailsErr) {
+        console.error(grnDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      grnDetailsResults.forEach((item) => {
+        const data = {
+          grnId,
+          productId: item.product_id,
+          batchName: item.batch_name,
+          batchQty: item.qty,
+        };
+        retrieveBatchOnGrnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
+      });
+    });
+  },
+
+  updateBatchOnCancelReturnInvoice: (req, res) => {
+    const returnId = req.query.returnId;
+    fetchReturnCartItems(returnId, (returnDetailsErr, returnDetailsResults) => {
+      if (returnDetailsErr) {
+        console.error(returnDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      returnDetailsResults.forEach((item) => {
+        const data = {
+          batchId: item.batch_id,
+          returnPriQty: item.return_pri_qty,
+          returnSecQty: item.return_sec_qty,
+        };
+        retrieveBatchOnReturnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
+      });
+    });
+  },
+
+  updateBatchOnCancelCRN: (req, res) => {
+    const creditInvoiceId = req.query.creditInvoiceId;
+    getCrnCartItemsById(creditInvoiceId, (crnDetailsErr, crnDetailsResults) => {
+      if (crnDetailsErr) {
+        console.error(crnDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      crnDetailsResults.forEach((item) => {
+        const data = {
+          batchId: item.batch_id_credit,
+          creditPriQty: item.pri_unit_credit,
+          creditSecQty: item.sec_unit_credit,
+        };
+        retrieveBatchOnCrnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
+      });
+    });
+  },
+
+  updateBatchOnCancelDRN: (req, res) => {
+    const debitInvoiceId = req.query.debitInvoiceId;
+    getDrnCartItemsById(debitInvoiceId, (drnDetailsErr, drnDetailsResults) => {
+      if (drnDetailsErr) {
+        console.error(drnDetailsErr);
+        return res.status(500).json({
+          success: 0,
+          message: 'Error retrieving order details',
+        });
+      }
+      drnDetailsResults.forEach((item) => {
+        const data = {
+          batchId: item.batch_id_debit,
+          debitPriQty: item.pri_unit_debit,
+          debitSecQty: item.sec_unit_debit,
+        };
+        retrieveBatchOnDrnCancel(data, (updateError) => {
+          if (updateError) {
+            console.error(updateError);
+            return res.status(500).json({
+              success: 0,
+              message: 'Error updating batch on cancel',
+            });
+          }
+        });
+      });
+      return res.status(200).json({
+        success: 1,
       });
     });
   },

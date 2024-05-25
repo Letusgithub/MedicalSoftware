@@ -62,7 +62,8 @@ exports.getINVDetailsinDebitNote = (req, res) => {
 
 exports.getDebitNoteInInvoice = (req, res) => {
   const id = req.query.id;
-  service.getDebitNoteinInvoice(id, (allError, allResult) => {
+  const orgId = req.query.org;
+  service.getDebitNoteinInvoice(id, orgId, (allError, allResult) => {
     if (allError) {
       console.log(allError);
     }
@@ -94,7 +95,9 @@ exports.searchDates = (req, res) => {
 exports.searchMonth = (req, res) => {
   const orgId = req.query.org;
   const month = req.query.month;
-  service.searchMonth(orgId, month, (error, results) => {
+  const year = req.query.year;
+
+  service.searchMonth(orgId, month, year, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(500).json({
@@ -128,6 +131,8 @@ exports.searchYear = (req, res) => {
 exports.searchQuarter = (req, res) => {
   const orgId = req.query.org;
   const quarter = req.query.quarter;
+  const year = req.query.year;
+
   let start; let
     end;
   if (quarter == 1) {
@@ -143,7 +148,7 @@ exports.searchQuarter = (req, res) => {
     start = 1;
     end = 3;
   }
-  service.searchQuarter(orgId, start, end, (error, results) => {
+  service.searchQuarter(orgId, start, end, year, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(500).json({
@@ -153,6 +158,42 @@ exports.searchQuarter = (req, res) => {
     return res.status(200).json({
       status: 'success',
       data: results,
+    });
+  });
+};
+
+exports.cancelDebitNote = (req, res) => {
+  const debitInvoiceId = req.query.debitInvoiceId;
+  const orgId = req.query.orgId;
+
+  service.getDebitNote(debitInvoiceId, orgId, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: 'some error',
+      });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({
+        message: 'Debit note not found',
+      });
+    }
+    if (results[0].debit_status === 'cancelled') {
+      return res.status(400).json({
+        message: 'Debit note already cancelled',
+      });
+    }
+    service.cancelDebitNote(debitInvoiceId, orgId, (cancelError) => {
+      if (cancelError) {
+        console.log(cancelError);
+        return res.status(500).json({
+          message: 'some error',
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        message: 'Debit note cancelled successfully',
+      });
     });
   });
 };

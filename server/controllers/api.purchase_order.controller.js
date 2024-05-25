@@ -94,7 +94,9 @@ exports.deleteOwner = (req, res) => {
 exports.searchMonth = (req, res) => {
   const orgId = req.query.org;
   const month = req.query.month;
-  service.searchMonth(orgId, month, (error, results) => {
+  const year = req.query.year;
+
+  service.searchMonth(orgId, month, year, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(500).json({
@@ -128,6 +130,8 @@ exports.searchYear = (req, res) => {
 exports.searchQuarter = (req, res) => {
   const orgId = req.query.org;
   const quarter = req.query.quarter;
+  const year = req.query.year;
+
   let start; let end;
   if (quarter === '1') {
     start = 4;
@@ -142,7 +146,7 @@ exports.searchQuarter = (req, res) => {
     start = 1;
     end = 3;
   }
-  service.searchQuarter(orgId, start, end, (error, results) => {
+  service.searchQuarter(orgId, start, end, year, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(500).json({
@@ -183,6 +187,24 @@ exports.getPOReceipt = (req, res) => {
       return;
     }
     console.log('data in library', results);
+    return res.status(200).json({
+      success: 1,
+      data: results,
+    });
+  });
+};
+
+exports.cancelPurchaseOrder = (req, res) => {
+  const poId = req.query.poId;
+  const orgId = req.query.orgId;
+  service.cancelPurchaseOrder(poId, orgId, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        success: 0,
+        message: 'Db error',
+      });
+    }
     return res.status(200).json({
       success: 1,
       data: results,
