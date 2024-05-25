@@ -6,6 +6,38 @@
         <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <style>
+
+            .table-bordered th,
+            .table-bordered td {
+                padding: 3px;
+                /* Adjust padding as needed */
+                /*padding-left: 5px;*/
+                /*padding-right: 5px;*/
+                text-align: center;
+                /* Center align text */
+            }
+
+            .table-bordered th {
+                background-color: #f8f9fa;
+                /* Optional: Add background color for headers */
+                border-top: none;
+            }
+            .btn-custom {
+                flex: 1;
+                /* Make the buttons take equal space */
+                margin: 0 4px;
+                /* Adjust the horizontal spacing */
+                height: 40px;
+                /* Set a fixed height for both buttons */
+                display: flex;
+                padding: 4px;
+                align-items: center;
+                /* Center the text vertically */
+                justify-content: center !important;
+                /* Center the text horizontally */
+                white-space: nowrap;
+                /* Prevent text from wrapping */
+            }
             .frame1 {
                 width: 100%;
                 height: 39rem;
@@ -353,18 +385,19 @@
                                                             </div>
                                                             <p class="mb-1 orgaddress"></p>
                                                         </div>
-                                                        <div class="col-xl-6 col-md-6 col-sm-5 col-12">
-                                                            <div class="mb-2">
-                                                                <span class="fw-medium gstin"></span>
-                                                            </div>
-                                                            <div class="mb-2">
+                                                        <div class="col-xl-6 col-md-6 col-sm-5 col-12 py-4">
+                                            
+                                                            <div class="mb-0">
                                                                 <span class="fw-medium dlno1"></span>
                                                             </div>
-                                                            <div class="mb-2">
+                                                            <div class="mb-0">
                                                                 <span class="fw-medium dlno2"></span>
                                                             </div>
-                                                            <div class="mb-2">
+                                                            <div class="mb-0">
                                                                 <span class="fw-medium flno"></span>
+                                                            </div>
+                                                            <div class="mb-0">
+                                                                <span class="fw-medium gstin"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -749,7 +782,7 @@
                                                 <div class="d-flex flex-md-row flex-column justify-content-center">
                                                     <div class="p-1">
                                                         <button id="printButton"
-                                                            class="btn btn-primary btn-label-secondary d-grid w-100 mb-3 mx-1"
+                                                            class="btn btn-primary btn-label-secondary btn-custom d-grid w-100 mb-3 mx-1"
                                                             type="button">
                                                             Print
                                                         </button>
