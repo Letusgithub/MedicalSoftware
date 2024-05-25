@@ -3,7 +3,7 @@ const { getPool } = require('../config/database');
 module.exports = {
   getCurrentPlanDetails: (orgId, callback) => {
     getPool().query(
-      'SELECT plan_name, plan_start, plan_end, duration FROM organisation JOIN subscription_plan ON organisation.plan_id = subscription_plan.plan_id WHERE org_id = ?',
+      'SELECT plan_name, plan_start, plan_end, duration FROM organisation JOIN plans ON organisation.plan_id = plans.plan_id WHERE org_id = ?',
       [orgId],
       (error, results) => {
         if (error) {
@@ -16,7 +16,7 @@ module.exports = {
 
   fetchPlanById: (planId, callback) => {
     getPool().query(
-      'SELECT * FROM subscription_plan WHERE plan_id = ?',
+      'SELECT * FROM plans WHERE plan_id = ?',
       [planId],
       (error, results) => {
         if (error) {
@@ -29,7 +29,7 @@ module.exports = {
 
   fetchAllPlans: (callback) => {
     getPool().query(
-      'SELECT * FROM subscription_plan',
+      'SELECT * FROM plans',
       [],
       (error, results) => {
         if (error) {
