@@ -910,7 +910,7 @@
                             var expDate = moment(datetime).format('MM/YYYY');
 
                             var grossValue = (items[i].qty - items[i].free) * items[i].purchase * (1 - items[i].bulk_discount / 100);
-                            var gstValue = grossValue * items[i].gst / 100;
+                            var gstValue = grossValue * (1 - lessDiscountPercent / 100) * items[i].gst / 100;
                             var amount = grossValue + gstValue;
 
                             var transaction = {
