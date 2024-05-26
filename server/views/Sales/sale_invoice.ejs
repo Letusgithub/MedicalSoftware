@@ -492,12 +492,12 @@
                 type: 'GET',
                 success: function (ajaxResponse) {
 
-                  let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
+                  let results = ajaxResponse.filter(item => item.med_name.toLowerCase()).slice(0, 10);
+                  console.log(results)
 
                   if (results.length === 0) {
                     results.push({ med_name: null }); // Add a null item for the custom message
                   }
-                  console.log(results);
                   response(results);
                 },
                 error: function (error) {
