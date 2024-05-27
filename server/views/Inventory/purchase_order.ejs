@@ -429,7 +429,7 @@
                                     type: 'GET',
                                     success: function (ajaxResponse) {
 
-                                        let results = ajaxResponse.filter(item => item.med_name.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
+                                        let results = ajaxResponse.filter(item => item.med_name.toLowerCase()).slice(0, 10);
 
                                         if (results.length === 0) {
                                             results.push({ med_name: null }); // Add a null item for the custom message
@@ -452,7 +452,7 @@
                             }
                         }).data('ui-autocomplete')._renderItem = function (ul, item) {
                             return $('<li>')
-                                .append('<div>' + item.med_name + (item.salt_composition) + '</div>')
+                                .append('<div>' + item.med_name + ' (' + item.salt_composition + ')' + '</div>')
                                 .appendTo(ul);
                         };
                         //endof autocomplete
