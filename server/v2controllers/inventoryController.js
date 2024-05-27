@@ -1,14 +1,37 @@
 const inventoryService = require('../v2services/inventoryService');
 
 module.exports = {
-  createBatch: (req, res) => {
+  createBatch: async (req, res) => {
+    const batchData = req.body;
     try {
-      const batchData = req.body;
-      inventoryService.createBatch(batchData);
-      res.status(200).json({
+      await inventoryService.createBatch(batchData);
+      res.status(201).json({
         success: true,
         message: 'Batch created successfully',
       });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  deleteBatch: async (req, res) => {
+    const batchId = req.params.batchId;
+    try {
+      const affectedRows = await inventoryService.deleteBatch(batchId);
+      if (affectedRows === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'Batch not found',
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: 'Batch deleted successfully',
+        });
+      }
     } catch (error) {
       res.status(500).json({
         success: false,

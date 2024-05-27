@@ -10,4 +10,5 @@ module.exports = (app) => {
   });
 
   app.post('/api/v2/batches', inventoryController.createBatch);
+  app.delete('/api/v2/batches/:batchId', inventoryController.deleteBatch);
 };

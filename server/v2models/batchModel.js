@@ -1,32 +1,27 @@
 module.exports = {
   createBatch: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        `INSERT INTO batch(batch_name, product_id, vendor_id, org_id, inventory_id, exp_date, batch_qty, purchase_rate, mrp, free, bulk_discount, base_price, shelf_label, conversion, grn_id) 
+    const [results] = await connection.query(
+      `INSERT INTO batch(batch_name, product_id, vendor_id, org_id, inventory_id, exp_date, batch_qty, purchase_rate, mrp, free, bulk_discount, base_price, shelf_label, conversion, grn_id) 
                                       values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-        [
-          data.batch_name,
-          data.product_id,
-          data.vendor_id,
-          data.org_id,
-          data.inventory_id,
-          data.exp_date,
-          data.batch_qty,
-          data.purchase_rate,
-          data.mrp,
-          data.free,
-          data.bulk_discount,
-          data.base_price,
-          data.shelf_label,
-          data.conversion,
-          data.grn_id,
-        ],
-      );
-      return results.insertId;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      [
+        data.batch_name,
+        data.product_id,
+        data.vendor_id,
+        data.org_id,
+        data.inventory_id,
+        data.exp_date,
+        data.batch_qty,
+        data.purchase_rate,
+        data.mrp,
+        data.free,
+        data.bulk_discount,
+        data.base_price,
+        data.shelf_label,
+        data.conversion,
+        data.grn_id,
+      ],
+    );
+    return results.insertId;
   },
 
   updateBatchAfterSale: async (connection, data) => {
@@ -178,6 +173,19 @@ module.exports = {
       const [results] = await connection.query(
         'select * from batch where batch_id = ?',
         [batchId],
+      );
+      return results;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  getInventoryBatches: async (connection, orgId, productId) => {
+    try {
+      const [results] = await connection.query(
+        'SELECT * FROM batch WHERE org_id = ? and product_id = ? ORDER BY exp_date ASC;',
+        [orgId, productId],
       );
       return results;
     } catch (error) {

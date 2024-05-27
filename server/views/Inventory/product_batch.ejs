@@ -52,8 +52,7 @@
                                                     </div>
 
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="salt">Salt</label>
+                                                        <label class="col-form-label" for="salt">Salt</label>
                                                         <p class="fw-bold pb-0" id="salt">
                                                         </p>
                                                     </div>
@@ -61,20 +60,17 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="hsn">HSN Code</label>
+                                                        <label class="col-form-label" for="hsn">HSN Code</label>
                                                         <p class="fw-bold pb-0" id="hsncode"></p>
                                                     </div>
 
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="gst">GST</label>
+                                                        <label class="col-form-label" for="gst">GST</label>
                                                         <p class="fw-bold pb-0" id="gst"></p>
                                                     </div>
 
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="category">Category</label>
+                                                        <label class="col-form-label" for="category">Category</label>
                                                         <p class="fw-bold pb-0" id="category">
                                                         </p>
                                                     </div>
@@ -198,14 +194,10 @@
 
                                 var date = new Date(batch[i].exp_date);
                                 var expdate = moment(date).format('MM/YYYY');
-                                //var totalCost = batch[i].purchase_rate*batch[i].batch_qty;
-                                //<td>₹${batch[i].purchase_rate}</td>
-                                //<td>₹${totalCost}</td>
                                 var totalQty = parseInt(batch[i].batch_qty);
                                 var saledPri = parseInt(batch[i].saled_pri_qty);
                                 var saledSec = parseInt(batch[i].saled_sec_qty);
                                 var conversion = parseInt(batch[i].conversion);
-
                                 var remPriQty = totalQty - saledPri;
                                 var remSecQty = (conversion - saledSec) == conversion ? 0 : conversion - saledSec;
 
@@ -222,7 +214,7 @@
                                         <td>${remPriQty} : ${remSecQty}</td>
                                         <td>
                                             <div class="action-btns">
-                                                <a type="button" class="btn p-0 mx-2" href="/api/deletebatch/${batch[i].batch_id}"><i class="bx bx-trash me-1"></i></a>
+                                                <btn type="button" class="btn p-0 mx-2" id="delete-btn" data-batch-id="${batch[i].batch_id}"><i class="bx bx-trash me-1"></i></btn>                                            
                                             </div>
                                         </td>
                                         
@@ -234,6 +226,20 @@
 
                         })
                     })
+
+                    $(document).on('click', '#delete-btn', function () {
+                        var batchId = $(this).data('batch-id');
+                        console.log(batchId)
+                        $.ajax({
+                            url: `/api/v2/batches/${batchId}`,
+                            type: 'DELETE',
+                            success: function (result) {
+                                console.log('deleted', result);
+                                location.reload();
+                            }
+                        });
+                    });
+
                     $("#addbatchinview").click(function () {
                         window.location.href = `/add_batch/${productId}`;
                     })

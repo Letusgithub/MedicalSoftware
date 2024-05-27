@@ -6,11 +6,12 @@ const executeTransaction = async (Logic) => {
   try {
     await connection.beginTransaction();
     const result = await Logic(connection);
+    console.log('transation result', result);
     await connection.commit();
     return result;
   } catch (error) {
     await connection.rollback();
-    console.error(error);
+    console.error('transaction error', error);
     throw error;
   } finally {
     connection.release();
