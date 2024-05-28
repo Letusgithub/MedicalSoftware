@@ -266,8 +266,8 @@
                                                     for="basic-icon-default-companyname">Quantity</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group has-validation">
-                                                        <input type="text" class="form-control" name="addqty" id="addqty"
-                                                            placeholder="Enter quantity"
+                                                        <input type="text" class="form-control" name="addqty"
+                                                            id="addqty" placeholder="Enter quantity"
                                                             onkeypress="javascript: if (!/[0-9]/.test(String.fromCharCode(event.charCode))) return false;"
                                                             required />
                                                         <span class="input-group-text" id="getprimaryunit"></span>
@@ -386,7 +386,7 @@
             <script>
                 var productId;
                 var orgID = '<%= orgId %>';
-                var inventoryId; 
+                var inventoryId;
 
                 $(document).ready(function () {
 
@@ -746,171 +746,60 @@
                         if (isValid) {
 
                             $('#loader').show();
-                            if (productId == undefined) {
-                                var customProductDetails = {
-                                    org_id: orgID,
-                                    med_name: $("input[name='productname']").val(),
-                                    mfd_mkt: $("input[name='brand']").val(),
-                                    salt: $("input[name='salt']").val(),
-                                    conversion: $("#conversion").val(),
-                                }
-                                console.log('custom product details', customProductDetails);
-                                $.ajax({
-                                    url: '/api/createproduct',
-                                    type: 'POST',
-                                    data: JSON.stringify(customProductDetails),
-                                    contentType: 'application/json',
-                                    success: function (response) {
-                                        console.log(response);
-                                        productId = response.product_id;
 
-                                        var productDetails = {
-                                            product_id: productId,
-                                            org_id: orgID,
-                                            category_id: $("select[name='category']").val(),
-                                            gst: $("select[name='gst']").val(),
-                                            hsn: $("input[name='hsn']").val(),
-                                            primary_unit: $("select[name='primary']").val(),
-                                            secondary_unit: $("select[name='secondary']").val(),
-                                            threshold: $("input[name='threshold']").val()
-                                        }
-                                        console.log('product details', productDetails);
+                            /////////////////// version 2 ///////////////////////
 
-                                        // Convert expdate to yyyy-mm-dd format
-                                        var exp = $("[name='addexp']").val();
-                                        var year = parseInt(exp.split('/')[1], 10);
-                                        year = year < 70 ? 2000 + year : 1900 + year;
-                                        var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
-                                        firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
-                                        var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
+                            // Convert expdate to yyyy-mm-dd format
+                            var expDate = $("[name='addexp']").val();
+                            var year = parseInt(expDate.split('/')[1], 10);
+                            year = year < 70 ? 2000 + year : 1900 + year;
+                            var firstDayOfNextMonth = new Date(year, expDate.split('/')[0]);
+                            firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
+                            var expDate = firstDayOfNextMonth.toISOString().slice(0, 10);
 
-                                        $.ajax({
-                                            url: `/api/createinventory/`,
-                                            type: 'POST',
-                                            data: JSON.stringify(productDetails),
-                                            contentType: 'application/json',
-                                            success: function (response) {
-                                                inventoryId = response.data.insertId;
 
-                                                //add the batch to the respective product
-                                                var batchDetails = {
-                                                    product_id: productId,
-                                                    org_id: orgID,
-                                                    inventory_id: inventoryId,
-                                                    batch_name: $("#batchname").val(),
-                                                    exp_date: exp,
-                                                    conversion: $("#conversion").val(),
-                                                    batch_qty: parseFloat($("input[name='addqty']").val()),
-                                                    purchase_rate: $("input[name='addpur']").val(),
-                                                    mrp: $("input[name='addmrp']").val(),
-                                                    free: 0,
-                                                    bulk_discount: 0,
-                                                    base_price: $("input[name='addpur']").val(),
-                                                    shelf_label: $("input[name='addshelf']").val()
-                                                }
-                                                console.log(batchDetails);
-
-                                                $.ajax({
-                                                    url: `/api/addbatch/`,
-                                                    type: 'POST',
-                                                    data: JSON.stringify(batchDetails),
-                                                    contentType: 'application/json',
-                                                    success: function (response) {
-                                                        $('#loader').hide();
-                                                        window.location.href = '/product_stock'
-                                                        localStorage.setItem('addbatchid', productId);
-                                                        console.log(response);
-                                                    },
-                                                    error: function (error) {
-                                                        $('#loader').hide();
-                                                        console.log(error);
-                                                        alert('Error in adding batch');
-                                                    }
-                                                })
-                                            },
-                                            error: function (error) {
-                                                $('#loader').hide();
-                                                console.log(error);
-                                                alert('Error in adding product to inventory');
-                                            }
-                                        })
-
-                                    },
-                                })
-                            } else {
-                                var productDetails = {
-                                    product_id: productId,
-                                    org_id: orgID,
-                                    category_id: $("select[name='category']").val(),
-                                    gst: $("select[name='gst']").val(),
-                                    hsn: $("input[name='hsn']").val(),
-                                    primary_unit: $("select[name='primary']").val(),
-                                    secondary_unit: $("select[name='secondary']").val(),
-                                    threshold: $("input[name='threshold']").val()
-                                }
-                                console.log('product details', productDetails);
-
-                                // Convert expdate to yyyy-mm-dd format
-                                var exp = $("[name='addexp']").val();
-                                var year = parseInt(exp.split('/')[1], 10);
-                                year = year < 70 ? 2000 + year : 1900 + year;
-                                var firstDayOfNextMonth = new Date(year, exp.split('/')[0]);
-                                firstDayOfNextMonth.setDate(firstDayOfNextMonth.getDate() - 1);
-                                var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
-
-                                $.ajax({
-                                    url: `/api/createinventory/`,
-                                    type: 'POST',
-                                    data: JSON.stringify(productDetails),
-                                    contentType: 'application/json',
-                                    success: function (response) {
-
-                                        inventoryId =  inventoryId ? inventoryId : response.data.insertId;
-
-                                        //add the batch to the respective product
-                                        var batchDetails = {
-                                            product_id: productId,
-                                            org_id: orgID,
-                                            inventory_id: inventoryId,
-                                            batch_name: $("#batchname").val(),
-                                            exp_date: exp,
-                                            conversion: $("#conversion").val(),
-                                            batch_qty: $("input[name='addqty']").val(),
-                                            purchase_rate: $("input[name='addpur']").val(),
-                                            mrp: $("input[name='addmrp']").val(),
-                                            free: 0,
-                                            bulk_discount: 0,
-                                            base_price: $("input[name='addpur']").val(),
-                                            shelf_label: $("input[name='addshelf']").val()
-                                        }
-                                        console.log(batchDetails);
-
-                                        $.ajax({
-                                            url: `/api/addbatch/`,
-                                            type: 'POST',
-                                            data: JSON.stringify(batchDetails),
-                                            contentType: 'application/json',
-                                            success: function (response) {
-                                                $('#loader').hide();
-                                                window.location.href = '/product_stock'
-                                                localStorage.setItem('addbatchid', productId);
-                                                console.log(response);
-                                            },
-                                            error: function (error) {
-                                                $('#loader').hide();
-                                                console.log(error);
-                                                alert('Error in adding batch');
-                                            }
-                                        })
-                                    },
-                                    error: function (error) {
-                                        $('#loader').hide();
-                                        console.log(error);
-                                        alert('Error in adding product to inventory');
-                                    }
-                                })
-
+                            var productData = {
+                                product_id: productId,
+                                med_name: $("input[name='productname']").val(),
+                                mfd_mkt: $("input[name='brand']").val(),
+                                salt: $("input[name='salt']").val(),
                             }
+                            var inventoryData = {
+                                inventory_id: inventoryId,
+                                category_id: $("select[name='category']").val(),
+                                gst: $("select[name='gst']").val(),
+                                hsn: $("input[name='hsn']").val(),
+                                primary_unit: $("select[name='primary']").val(),
+                                secondary_unit: $("select[name='secondary']").val(),
+                                threshold: $("input[name='threshold']").val()
+                            }
+                            var batchData = {
+                                batch_name: $("#batchname").val(),
+                                exp_date: expDate,
+                                conversion: $("#conversion").val(),
+                                batch_qty: parseFloat($("input[name='addqty']").val()),
+                                purchase_rate: $("input[name='addpur']").val(),
+                                mrp: $("input[name='addmrp']").val(),
+                                free: 0,
+                                bulk_discount: 0,
+                                base_price: $("input[name='addpur']").val(),
+                            }
+                        
+                            $.ajax({
+                                url: `/api/v2/onboard-product-inventory?orgId=${orgID}`,
+                                type: 'POST',
+                                data: JSON.stringify({ productData, inventoryData, batchData }),
+                                contentType: 'application/json',
+                                success: function (response) {
+                                    $('#loader').hide();
+                                    window.location.href = '/product_stock'
+                                },
+                                error: function (error) {
+                                    $('#loader').hide();
+                                    console.log(error);
+                                    alert('Error in adding batch');
+                                }
+                            })
 
                         }
 
@@ -919,7 +808,7 @@
 
                 })
             </script>
-            
+
     </body>
 
     </html>

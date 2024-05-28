@@ -2,6 +2,7 @@
 const { executeTransaction } = require('../utils/transaction.util');
 const batchModel = require('../v2models/batchModel');
 const inventoryModel = require('../v2models/inventoryModel');
+const productMasterModel = require('../v2models/productMasterModel');
 const expiryInventoryRepository = require('../v2repositories/expiryInventoryRepository');
 
 module.exports = {
@@ -88,6 +89,34 @@ module.exports = {
       // eslint-disable-next-line max-len
       const results = await expiryInventoryRepository.getNearExpiryProducts(connection, orgId, fromDate, toDate);
       return results;
+    });
+  },
+
+  onboardProductInventory: async (data, orgId) => {
+    return executeTransaction(async (connection) => {
+      const productData = data.productData;
+      const inventoryData = data.inventoryData;
+      const batchData = data.batchData;
+
+      if (!productData || !inventoryData || !batchData) {
+        throw new Error('Invalid data');
+      }
+
+      if (!productData.product_id) {
+        // eslint-disable-next-line max-len
+        const productId = await productMasterModel.createProductMYSQL(connection, productData, orgId);
+        await productMasterModel.createProductES(productData, productId, orgId);
+        productData.product_id = productId;
+      }
+
+      if (!inventoryData.inventory_id) {
+        // eslint-disable-next-line max-len
+        const inventoryId = await inventoryModel.createInventory(connection, inventoryData, productData.product_id, orgId);
+        inventoryData.inventory_id = inventoryId;
+      }
+
+      // eslint-disable-next-line max-len
+      await batchModel.createBatch(connection, batchData, productData.product_id, inventoryData.inventory_id, orgId);
     });
   },
 };

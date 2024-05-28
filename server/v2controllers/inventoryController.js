@@ -139,4 +139,21 @@ module.exports = {
       });
     }
   },
+
+  onboardProductInventory: async (req, res) => {
+    const orgId = req.query.orgId;
+    const data = req.body;
+    try {
+      await inventoryService.onboardProductInventory(data, orgId);
+      res.status(201).json({
+        success: true,
+        message: 'Product inventory onboarded successfully',
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
 };

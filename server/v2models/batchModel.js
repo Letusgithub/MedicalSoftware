@@ -1,14 +1,14 @@
 module.exports = {
-  createBatch: async (connection, data) => {
+  createBatch: async (connection, data, productId, inventoryId, orgId) => {
     const [results] = await connection.query(
       `INSERT INTO batch(batch_name, product_id, vendor_id, org_id, inventory_id, exp_date, batch_qty, purchase_rate, mrp, free, bulk_discount, base_price, shelf_label, conversion, grn_id) 
                                       values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.batch_name,
-        data.product_id,
+        productId,
         data.vendor_id,
-        data.org_id,
-        data.inventory_id,
+        orgId,
+        inventoryId,
         data.exp_date,
         data.batch_qty,
         data.purchase_rate,

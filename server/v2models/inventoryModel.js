@@ -1,6 +1,6 @@
 module.exports = {
 
-  createInventory: async (connection, data) => {
+  createInventory: async (connection, data, productId, orgId) => {
     const [results] = await connection.query(
       `insert into inventory(
                 product_id,
@@ -13,8 +13,8 @@ module.exports = {
                 threshold)
                 values(?,?,?,?,?,?,?,?)`,
       [
-        data.product_id,
-        data.org_id,
+        productId,
+        orgId,
         data.category_id,
         data.primary_unit,
         data.secondary_unit,
