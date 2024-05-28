@@ -66,6 +66,29 @@ module.exports = {
     }
   },
 
+  deleteInventory: async (req, res) => {
+    const inventoryId = req.params.inventoryId;
+    try {
+      const affectedRows = await inventoryService.deleteInventory(inventoryId);
+      if (affectedRows === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'Inventory not found',
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: 'Inventory deleted successfully',
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
   getProductInventory: async (req, res) => {
     const orgId = req.query.orgId;
     const productId = req.query.productId;

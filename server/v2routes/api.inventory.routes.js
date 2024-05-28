@@ -15,4 +15,5 @@ module.exports = (app) => {
   app.get('/api/v2/inventory/all', inventoryController.getInventory);
   app.get('/api/v2/near-expiry/:id/:filter', inventoryController.getNearExpiryProducts);
   app.post('/api/v2/update-inventory', inventoryController.updateInventory);
+  app.delete('/api/v2/inventory/:inventoryId', inventoryController.deleteInventory);
 };

@@ -46,6 +46,14 @@ module.exports = {
     return results.affectedRows;
   },
 
+  deleteInventory: async (connection, inventoryId) => {
+    const [results] = await connection.query(
+      'delete from inventory where inventory_id = ?',
+      [inventoryId],
+    );
+    return results.affectedRows;
+  },
+
   getProductInventoryByOrgId: async (connection, productId, orgId) => {
     const [results] = await connection.query(
       `select * from inventory inv

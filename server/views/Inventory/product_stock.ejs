@@ -162,8 +162,8 @@
             if (confirmation) {
                 // If user clicks OK in the confirmation box
                 $.ajax({
-                    url: '/api/deleteinventory/' + inventoryId,
-                    type: 'GET',
+                    url: '/api/v2/inventory/' + inventoryId,
+                    type: 'DELETE',
                     success: function (result) {
                         location.reload();
                     },

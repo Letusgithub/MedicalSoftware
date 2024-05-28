@@ -23,6 +23,12 @@ module.exports = {
     });
   },
 
+  deleteInventory: async (inventoryId) => {
+    return executeTransaction(async (connection) => {
+      return inventoryModel.deleteInventory(connection, inventoryId);
+    });
+  },
+
   getProductInventory: async (orgId, productId) => {
     return executeTransaction(async (connection) => {
       const results = await inventoryModel.getProductInventoryByOrgId(connection, productId, orgId);
