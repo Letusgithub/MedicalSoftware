@@ -2,6 +2,7 @@
 const { executeTransaction } = require('../utils/transaction.util');
 const batchModel = require('../v2models/batchModel');
 const inventoryModel = require('../v2models/inventoryModel');
+const expiryInventoryRepository = require('../v2repositories/expiryInventoryRepository');
 
 module.exports = {
   createBatch: async (batchData) => {
@@ -35,6 +36,45 @@ module.exports = {
   getInventory: async (orgId) => {
     return executeTransaction(async (connection) => {
       const results = await inventoryModel.getInventoryByOrgId(connection, orgId);
+      return results;
+    });
+  },
+
+  getNearExpiryProducts: async (orgId, filter) => {
+    return executeTransaction(async (connection) => {
+      let fromDate;
+      let toDate;
+
+      if (filter === 'next3Month') {
+        fromDate = new Date();
+        fromDate.setMonth(fromDate.getMonth() + 1);
+        fromDate.setDate(1);
+
+        toDate = new Date();
+        toDate.setMonth(fromDate.getMonth() + 3);
+        toDate.setDate(1);
+        toDate.setDate(toDate.getDate() - 1);
+      } else if (filter === 'last3Month') {
+        fromDate = new Date();
+        fromDate.setMonth(fromDate.getMonth() - 3);
+        fromDate.setDate(1);
+
+        toDate = new Date();
+        toDate.setMonth(toDate.getMonth() - 1);
+        toDate.setDate(1);
+        toDate.setDate(toDate.getDate() - 1);
+      } else if (filter === 'thisMonth') {
+        fromDate = new Date();
+        fromDate.setDate(1);
+
+        toDate = new Date();
+        toDate.setMonth(fromDate.getMonth() + 1);
+        toDate.setDate(1);
+        toDate.setDate(toDate.getDate() - 1);
+      }
+
+      // eslint-disable-next-line max-len
+      const results = await expiryInventoryRepository.getNearExpiryProducts(connection, orgId, fromDate, toDate);
       return results;
     });
   },

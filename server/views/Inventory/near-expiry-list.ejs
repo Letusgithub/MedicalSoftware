@@ -146,122 +146,43 @@
 
                     function displayTable(filter) {
 
-                        if (filter === 'next3Month') {
-                            $.get(`/api/nextThreeMonthExp/${orgId}`, function (data, status) {
-                                var items = data.data;
-                                console.log('in product stock', items);
+                        $.get(`/api/v2/near-expiry/${orgId}/${filter}`, function (data, status) {
+                            var items = data.data;
+                            console.log('in product stock', items);
 
-                                var totalCost = 0;
-                                for (let i = 0; i < items.length; i++) {
-                                    var date = new Date(items[i].exp_date);
-                                    var options = { year: 'numeric', month: 'long' };
-                                    var expdate = date.toLocaleDateString('en-US', options);
+                            var totalCost = 0;
+                            for (let i = 0; i < items.length; i++) {
+                                var date = new Date(items[i].exp_date);
+                                var options = { year: 'numeric', month: 'long' };
+                                var expdate = date.toLocaleDateString('en-US', options);
 
-                                    var totalQty = parseInt(items[i].batch_qty);
-                                    var saledPri = parseInt(items[i].saled_pri_qty);
-                                    var saledSec = parseInt(items[i].saled_sec_qty);
-                                    var conversion = parseInt(items[i].conversion);
+                                var totalQty = parseInt(items[i].batch_qty);
+                                var saledPri = parseInt(items[i].saled_pri_qty);
+                                var saledSec = parseInt(items[i].saled_sec_qty);
+                                var conversion = parseInt(items[i].conversion);
 
-                                    var remPriQty = totalQty - saledPri;
-                                    var remSecQty = (conversion - saledSec) == conversion ? 0 : conversion - saledSec;
+                                var remPriQty = totalQty - saledPri;
+                                var remSecQty = (conversion - saledSec) == conversion ? 0 : conversion - saledSec;
 
-                                    var cost = items[i].purchase_rate * remPriQty + (items[i].purchase_rate / conversion) * remSecQty;
+                                var cost = items[i].purchase_rate * remPriQty + (items[i].purchase_rate / conversion) * remSecQty;
 
-                                    totalCost += cost;
-                                    var html = `
-                                            <tr>
-                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>${items[i].med_name}</strong></td>
-                                                <td>${items[i].batch_name}</td>
-                                                <td>${expdate}</td>
-                                                <td>${items[i].primary_unit} of ${items[i].secondary_unit}</td>
-                                                <td>${remPriQty} : ${remSecQty}</td>
-                                                <td>₹${items[i].purchase_rate}</td>
-                                                <td>₹${cost.toFixed(2)}</td>
-                                            </tr>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               `
+                                totalCost += cost;
+                                var html = `
+                                        <tr>
+                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>${items[i].med_name}</strong></td>
+                                            <td>${items[i].batch_name}</td>
+                                            <td>${expdate}</td>
+                                            <td>${items[i].primary_unit} of ${items[i].secondary_unit}</td>
+                                            <td>${remPriQty} : ${remSecQty}</td>
+                                            <td>₹${items[i].purchase_rate}</td>
+                                            <td>₹${cost.toFixed(2)}</td>
+                                        </tr>`
 
-                                    $("#additems").append(html);
-                                }
+                                $("#additems").append(html);
+                            }
 
-                                $("#totalCost").text(`₹${totalCost.toFixed(2)}`);
-                            })
-                        }
-                        else if (filter === 'last3Month') {
-                            $.get(`/api/lastThreeMonthExp/${orgId}`, function (data, status) {
-                                var items = data.data;
-                                console.log('in product stock', items);
-
-                                var totalCost = 0;
-                                for (let i = 0; i < items.length; i++) {
-                                    var date = new Date(items[i].exp_date);
-                                    var options = { year: 'numeric', month: 'long' };
-                                    var expdate = date.toLocaleDateString('en-US', options);
-
-                                    var totalQty = parseInt(items[i].batch_qty);
-                                    var saledPri = parseInt(items[i].saled_pri_qty);
-                                    var saledSec = parseInt(items[i].saled_sec_qty);
-                                    var conversion = parseInt(items[i].conversion);
-
-                                    var remPriQty = totalQty - saledPri;
-                                    var remSecQty = (conversion - saledSec) == conversion ? 0 : conversion - saledSec;
-
-                                    var cost = items[i].purchase_rate * remPriQty + (items[i].purchase_rate / conversion) * remSecQty;
-
-                                    totalCost += cost;
-                                    var html = `
-                                            <tr>
-                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>${items[i].med_name}</strong></td>
-                                                <td>${items[i].batch_name}</td>
-                                                <td>${expdate}</td>
-                                                <td>${items[i].primary_unit} of ${items[i].secondary_unit}</td>
-                                                <td>${remPriQty} : ${remSecQty}</td>
-                                                <td>₹${items[i].purchase_rate}</td>
-                                                <td>₹${cost.toFixed(2)}</td>
-                                            </tr>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               `
-
-                                    $("#additems").append(html);
-                                }
-
-                                $("#totalCost").text(`₹${totalCost.toFixed(2)}`);
-                            })
-                        }
-                        else if (filter === 'thisMonth') {
-                            $.get(`/api/thisMonthExp/${orgId}`, function (data, status) {
-                                var items = data.data;
-                                console.log('in product stock', items);
-
-                                var totalCost = 0;
-                                for (let i = 0; i < items.length; i++) {
-                                    var date = new Date(items[i].exp_date);
-                                    var options = { year: 'numeric', month: 'long' };
-                                    var expdate = date.toLocaleDateString('en-US', options);
-
-                                    var totalQty = parseInt(items[i].batch_qty);
-                                    var saledPri = parseInt(items[i].saled_pri_qty);
-                                    var saledSec = parseInt(items[i].saled_sec_qty);
-                                    var conversion = parseInt(items[i].conversion);
-
-                                    var remPriQty = totalQty - saledPri;
-                                    var remSecQty = (conversion - saledSec) == conversion ? 0 : conversion - saledSec;
-
-                                    var cost = items[i].purchase_rate * remPriQty + (items[i].purchase_rate / conversion) * remSecQty;
-
-                                    totalCost += cost;
-                                    var html = `
-                                            <tr>
-                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>${items[i].med_name}</strong></td>
-                                                <td>${items[i].batch_name}</td>
-                                                <td>${expdate}</td>
-                                                <td>${items[i].primary_unit} of ${items[i].secondary_unit}</td>
-                                                <td>${remPriQty} : ${remSecQty}</td>
-                                                <td>₹${items[i].purchase_rate}</td>
-                                                <td>₹${cost.toFixed(2)}</td>
-                                            </tr>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               `
-
-                                    $("#additems").append(html);
-                                }
-                                $("#totalCost").text(`₹${totalCost.toFixed(2)}`);
-                            })
-                        }
+                            $("#totalCost").text(`₹${totalCost.toFixed(2)}`);
+                        })
 
                     }
                     displayTable(selectedFilter);

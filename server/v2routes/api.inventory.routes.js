@@ -13,4 +13,5 @@ module.exports = (app) => {
   app.delete('/api/v2/batches/:batchId', inventoryController.deleteBatch);
   app.get('/api/v2/inventory', inventoryController.getProductInventory);
   app.get('/api/v2/inventory/all', inventoryController.getInventory);
+  app.get('/api/v2/near-expiry/:id/:filter', inventoryController.getNearExpiryProducts);
 };

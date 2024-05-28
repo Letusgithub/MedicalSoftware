@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const inventoryService = require('../v2services/inventoryService');
 
 module.exports = {
@@ -65,6 +66,23 @@ module.exports = {
       res.status(200).json({
         success: true,
         data: inventoryData,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getNearExpiryProducts: async (req, res) => {
+    const orgId = req.params.id;
+    const filter = req.params.filter;
+    try {
+      const nearExpiryProducts = await inventoryService.getNearExpiryProducts(orgId, filter);
+      res.status(200).json({
+        success: true,
+        data: nearExpiryProducts,
       });
     } catch (error) {
       res.status(500).json({
