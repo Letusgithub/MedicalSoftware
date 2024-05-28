@@ -17,7 +17,7 @@ module.exports = {
 
     try {
       const result = await es.index({
-        index: 'product_search_index_v4',
+        index: 'product_search_index_v2',
         body,
       });
       console.log(result);
