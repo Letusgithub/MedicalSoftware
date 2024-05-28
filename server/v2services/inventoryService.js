@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 const { executeTransaction } = require('../utils/transaction.util');
 const batchModel = require('../v2models/batchModel');
+const inventoryModel = require('../v2models/inventoryModel');
 
 module.exports = {
   createBatch: async (batchData) => {
@@ -15,9 +16,19 @@ module.exports = {
     });
   },
 
-  getInventoryBatches: async (orgId, productId) => {
-    await executeTransaction(async (connection) => {
-      await batchModel.getInventoryBatches(connection, orgId, productId);
+  getProductInventory: async (orgId, productId) => {
+    return executeTransaction(async (connection) => {
+      const results = await inventoryModel.getProductInventoryByOrgId(connection, productId, orgId);
+
+      if (results.length === 0) {
+        throw new Error('Product inventory not found');
+      }
+      // eslint-disable-next-line max-len
+      const batches = await batchModel.getBatchesByInventoryId(connection, results[0].inventory_id);
+      return {
+        ...results[0],
+        batches,
+      };
     });
   },
 };

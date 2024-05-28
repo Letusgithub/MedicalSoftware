@@ -39,4 +39,22 @@ module.exports = {
       });
     }
   },
+
+  getProductInventory: async (req, res) => {
+    const orgId = req.query.orgId;
+    const productId = req.query.productId;
+    try {
+      const productInventory = await inventoryService.getProductInventory(orgId, productId);
+      res.status(200).json({
+        success: true,
+        message: 'Product inventory retrieved successfully',
+        data: productInventory,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
 };

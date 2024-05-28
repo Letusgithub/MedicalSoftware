@@ -25,219 +25,153 @@ module.exports = {
   },
 
   updateBatchAfterSale: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        `UPDATE batch SET 
+    const [results] = await connection.query(
+      `UPDATE batch SET 
             saled_pri_qty = saled_pri_qty - ?,
             saled_sec_qty = saled_sec_qty - ?
             WHERE batch_id = ?`,
-        [
-          data.saledPriQty,
-          data.saledSecQty,
-          data.batchId,
-        ],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      [
+        data.saledPriQty,
+        data.saledSecQty,
+        data.batchId,
+      ],
+    );
+    return results.affectedRows;
   },
 
   updateBatchAfterReturn: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        `UPDATE batch SET 
+    const [results] = await connection.query(
+      `UPDATE batch SET 
             saled_pri_qty = saled_pri_qty + ?,
             saled_sec_qty = saled_sec_qty + ?
             WHERE batch_id = ?`,
-        [data.returnPriQty,
-          data.returnSecQty,
-          data.batch_id],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      [data.returnPriQty,
+        data.returnSecQty,
+        data.batch_id],
+    );
+    return results.affectedRows;
   },
 
   retrieveBatchOnSaleCancel: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        `UPDATE batch SET 
+    const [results] = await connection.query(
+      `UPDATE batch SET 
         saled_pri_qty = saled_pri_qty - ?, 
         saled_sec_qty = saled_sec_qty - ? 
         WHERE batch_id = ?`,
-        [
-          data.saledPriQty,
-          data.saledSecQty,
-          data.batchId,
-        ],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      [
+        data.saledPriQty,
+        data.saledSecQty,
+        data.batchId,
+      ],
+    );
+    return results.affectedRows;
   },
 
   returnBatchOnReturnCancel: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        `UPDATE batch SET
+    const [results] = await connection.query(
+      `UPDATE batch SET
             saled_pri_qty = saled_pri_qty + ?,
             saled_sec_qty = saled_sec_qty + ?
             WHERE batch_id = ?`,
-        [
-          data.returnPriQty,
-          data.returnSecQty,
-          data.batchId,
-        ],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      [
+        data.returnPriQty,
+        data.returnSecQty,
+        data.batchId,
+      ],
+    );
+    return results.affectedRows;
   },
 
   retrieveBatchOnPurchaseCancel: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        'DELETE FROM batch WHERE grn_id = ?',
-        [data.grnId],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    const [results] = await connection.query(
+      'DELETE FROM batch WHERE grn_id = ?',
+      [data.grnId],
+    );
+    return results.affectedRows;
   },
 
   retrieveBatchOnCreditCancel: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        `UPDATE batch SET
+    const [results] = await connection.query(
+      `UPDATE batch SET
        saled_pri_qty = saled_pri_qty - ?,
        saled_sec_qty = saled_sec_qty - ?
        WHERE batch_id = ?`,
-        [
-          data.creditPriQty,
-          data.creditSecQty,
-          data.batchId,
-        ],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      [
+        data.creditPriQty,
+        data.creditSecQty,
+        data.batchId,
+      ],
+    );
+    return results.affectedRows;
   },
 
   retrieveBatchOnDebitCancel: async (connection, data) => {
-    try {
-      const [results] = await connection.query(
-        `UPDATE batch SET
-       saled_pri_qty = saled_pri_qty - ?,
-       saled_sec_qty = saled_sec_qty - ?
-       WHERE batch_id = ?`,
-        [
-          data.debitPriQty,
-          data.debitSecQty,
-          data.batchId,
-        ],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    const [results] = await connection.query(
+      `UPDATE batch SET
+     saled_pri_qty = saled_pri_qty - ?,
+     saled_sec_qty = saled_sec_qty - ?
+     WHERE batch_id = ?`,
+      [
+        data.debitPriQty,
+        data.debitSecQty,
+        data.batchId,
+      ],
+    );
+    return results.affectedRows;
   },
 
   deleteBatch: async (connection, batchId) => {
-    try {
-      const [results] = await connection.query(
-        'delete from batch where batch_id =?',
-        [batchId],
-      );
-      return results.affectedRows;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    const [results] = await connection.query(
+      'delete from batch where batch_id =?',
+      [batchId],
+    );
+    return results.affectedRows;
   },
 
   getBatchByBatchId: async (connection, batchId) => {
-    try {
-      const [results] = await connection.query(
-        'select * from batch where batch_id = ?',
-        [batchId],
-      );
-      return results;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    const [results] = await connection.query(
+      'select * from batch where batch_id = ?',
+      [batchId],
+    );
+    return results;
   },
 
-  getInventoryBatches: async (connection, orgId, productId) => {
-    try {
-      const [results] = await connection.query(
-        'SELECT * FROM batch WHERE org_id = ? and product_id = ? ORDER BY exp_date ASC;',
-        [orgId, productId],
-      );
-      return results;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+  getBatchesByInventoryId: async (connection, inventoryId) => {
+    const [results] = await connection.query(
+      'SELECT * FROM batch WHERE inventory_id = ? ORDER BY exp_date ASC;',
+      [inventoryId],
+    );
+    return results;
   },
 
   getSaledQty: async (connection, batchId) => {
-    try {
-      const [results] = await connection.query(
-        'select saled_pri_qty, saled_sec_qty, conversion from batch where batch_id = ?',
-        [batchId],
-      );
-      return results;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    const [results] = await connection.query(
+      'select saled_pri_qty, saled_sec_qty, conversion from batch where batch_id = ?',
+      [batchId],
+    );
+    return results;
   },
 
   getTotalPurchaseAmt: async (connection, orgId) => {
-    try {
-      const [results] = await connection.query(
-        `select coalesce(sum(bth.batch_qty * bth.purchase_rate),0) as total from batch as bth 
-        where org_id = ? and grn_id is not null`,
-        [orgId],
-      );
-      return results;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    const [results] = await connection.query(
+      `select coalesce(sum(bth.batch_qty * bth.purchase_rate),0) as total from batch as bth 
+      where org_id = ? and grn_id is not null`,
+      [orgId],
+    );
+    return results;
   },
 
   getBatchesByProductId: async (connection, orgId, productId) => {
-    try {
-      const [results] = await connection.query(
-        'select * from batch where org_id = ? and product_id = ?',
-        [orgId, productId],
-      );
-      return results;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    const [results] = await connection.query(
+      'select * from batch where org_id = ? and product_id = ?',
+      [orgId, productId],
+    );
+    return results;
   },
 
   getTotalSumfromPurchase: async (connection, orgId) => {
-    try {
-      const [results] = await connection.query(
-        `SELECT
+    const [results] = await connection.query(
+      `SELECT
          CASE months.month
             WHEN 1 THEN 'Jan'
             WHEN 2 THEN 'Feb'
@@ -263,12 +197,8 @@ module.exports = {
                 bth.org_id = ?
             GROUP BY
                 months.month;`,
-        [orgId],
-      );
-      return results;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+      [orgId],
+    );
+    return results;
   },
 };
