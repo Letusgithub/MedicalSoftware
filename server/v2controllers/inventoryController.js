@@ -57,4 +57,20 @@ module.exports = {
       });
     }
   },
+
+  getInventory: async (req, res) => {
+    const orgId = req.query.orgID;
+    try {
+      const inventoryData = await inventoryService.getInventory(orgId);
+      res.status(200).json({
+        success: true,
+        data: inventoryData,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
 };

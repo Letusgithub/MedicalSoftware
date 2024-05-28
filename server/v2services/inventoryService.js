@@ -31,4 +31,11 @@ module.exports = {
       };
     });
   },
+
+  getInventory: async (orgId) => {
+    return executeTransaction(async (connection) => {
+      const results = await inventoryModel.getInventoryByOrgId(connection, orgId);
+      return results;
+    });
+  },
 };
