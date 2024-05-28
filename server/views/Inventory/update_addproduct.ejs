@@ -327,8 +327,6 @@
 
                         if (isValid) {
                             var productDetails = {
-                                product_id: productId,
-                                org_id: orgID,
                                 category_id: $("select[name='category']").val(),
                                 gst: $("select[name='gst']").val(),
                                 hsn: $("input[name='hsn']").val(),
@@ -336,7 +334,7 @@
                             }
                             console.log(productDetails);
                             $.ajax({
-                                url: `/api/updateinventory/${productId}`,
+                                url: `/api/v2/update-inventory?productId=${productId}&orgId=${orgID}`,
                                 type: 'POST',
                                 data: JSON.stringify(productDetails),
                                 contentType: 'application/json',

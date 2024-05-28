@@ -17,6 +17,12 @@ module.exports = {
     });
   },
 
+  updateInventory: async (data, productId, orgId) => {
+    return executeTransaction(async (connection) => {
+      return inventoryModel.updateInventory(connection, data, productId, orgId);
+    });
+  },
+
   getProductInventory: async (orgId, productId) => {
     return executeTransaction(async (connection) => {
       const results = await inventoryModel.getProductInventoryByOrgId(connection, productId, orgId);

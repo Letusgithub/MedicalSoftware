@@ -1,4 +1,51 @@
 module.exports = {
+
+  createInventory: async (connection, data) => {
+    const [results] = await connection.query(
+      `insert into inventory(
+                product_id,
+                org_id,
+                category_id,
+                primary_unit,
+                secondary_unit,
+                hsn,
+                gst, 
+                threshold)
+                values(?,?,?,?,?,?,?,?)`,
+      [
+        data.product_id,
+        data.org_id,
+        data.category_id,
+        data.primary_unit,
+        data.secondary_unit,
+        data.hsn,
+        data.gst,
+        data.threshold,
+      ],
+    );
+    return results.insertId;
+  },
+
+  updateInventory: async (connection, data, productId, orgId) => {
+    const [results] = await connection.query(
+      `update inventory set
+            category_id = ?,
+            hsn =?,
+            gst=?, 
+            threshold=? 
+            where product_id = ? and org_id =?`,
+      [
+        data.category_id,
+        data.hsn,
+        data.gst,
+        data.threshold,
+        productId,
+        orgId,
+      ],
+    );
+    return results.affectedRows;
+  },
+
   getProductInventoryByOrgId: async (connection, productId, orgId) => {
     const [results] = await connection.query(
       `select * from inventory inv

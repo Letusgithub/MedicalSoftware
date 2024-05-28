@@ -41,6 +41,31 @@ module.exports = {
     }
   },
 
+  updateInventory: async (req, res) => {
+    const orgId = req.query.orgId;
+    const productId = req.query.productId;
+    const data = req.body;
+    try {
+      const affectedRows = await inventoryService.updateInventory(data, productId, orgId);
+      if (affectedRows === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'Inventory not found',
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: 'Inventory updated successfully',
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
   getProductInventory: async (req, res) => {
     const orgId = req.query.orgId;
     const productId = req.query.productId;
