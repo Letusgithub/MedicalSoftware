@@ -52,8 +52,7 @@
                                                     </div>
 
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="salt">Salt</label>
+                                                        <label class="col-form-label" for="salt">Salt</label>
                                                         <p class="fw-bold pb-0" id="salt">
                                                         </p>
                                                     </div>
@@ -61,20 +60,17 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="hsn">HSN Code</label>
+                                                        <label class="col-form-label" for="hsn">HSN Code</label>
                                                         <p class="fw-bold pb-0" id="hsncode"></p>
                                                     </div>
 
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="gst">GST</label>
+                                                        <label class="col-form-label" for="gst">GST</label>
                                                         <p class="fw-bold pb-0" id="gst"></p>
                                                     </div>
 
                                                     <div>
-                                                        <label class="col-form-label"
-                                                            for="category">Category</label>
+                                                        <label class="col-form-label" for="category">Category</label>
                                                         <p class="fw-bold pb-0" id="category">
                                                         </p>
                                                     </div>
@@ -173,67 +169,61 @@
         <%- include('../partials/footercode.ejs') %>
             <script>
                 $(document).ready(function () {
-                    // var productId = JSON.parse(localStorage.getItem('addbatchid'));
-
                     var productId = '<%= id %>'
-                    console.log(productId)
 
-                    $.get(`/api/getinventory?productId=${productId}&orgId=<%=orgId%>`, function (data, status) {
-                        var items = data.data[0];
-                        console.log('in view batches', items);
-                        $("#productname").text(items.med_name);
-                        $("#hsncode").text(items.hsn);
-                        $("#brand").text(items.mfd_mkt);
-                        $("#salt").text(items.salt_composition);
-                        $("#gst").text(items.gst + '%');
-                        $("#category").text(items.category_name);
-                        // $("#product_img").attr('src', items.img_url);
+                    $.get(`/api/v2/inventory?orgId=<%=orgId%>&productId=${productId}`, function (result, status) {
+                        console.log(result.data);
+                        const inventoryData = result.data;
+                        $("#productname").text(inventoryData.med_name);
+                        $("#hsncode").text(inventoryData.hsn);
+                        $("#brand").text(inventoryData.mfd_mkt);
+                        $("#salt").text(inventoryData.salt_composition);
+                        $("#gst").text(inventoryData.gst + '%');
+                        $("#category").text(inventoryData.category_name);
 
-
-
-                        $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (batch, status) {
-                            var batch = batch.data;
-                            console.log('batch details', batch);
-                            for (let i = 0; i < batch.length; i++) {
-
-                                var date = new Date(batch[i].exp_date);
-                                var expdate = moment(date).format('MM/YYYY');
-                                //var totalCost = batch[i].purchase_rate*batch[i].batch_qty;
-                                //<td>₹${batch[i].purchase_rate}</td>
-                                //<td>₹${totalCost}</td>
-                                var totalQty = parseInt(batch[i].batch_qty);
-                                var saledPri = parseInt(batch[i].saled_pri_qty);
-                                var saledSec = parseInt(batch[i].saled_sec_qty);
-                                var conversion = parseInt(batch[i].conversion);
-
-                                var remPriQty = totalQty - saledPri;
-                                var remSecQty = (conversion - saledSec) == conversion ? 0 : conversion - saledSec;
-
-
-                                var htmlData = `
+                        inventoryData.batches.forEach((batch) => {
+                            var date = new Date(batch.exp_date);
+                            var expdate = moment(date).format('MM/YYYY');
+                            var totalQty = parseInt(batch.batch_qty);
+                            var saledPri = parseInt(batch.saled_pri_qty);
+                            var saledSec = parseInt(batch.saled_sec_qty);
+                            var conversion = parseInt(batch.conversion);
+                            var remPriQty = totalQty - saledPri;
+                            var remSecQty = (conversion - saledSec) == conversion ? 0 : conversion - saledSec;
+                            var htmlData = `
                                     <tr>
                                         <td><i
-                                                class="fab fa-angular fa-lg text-danger me-3"></i><strong>${batch[i].batch_name}</strong>
+                                                class="fab fa-angular fa-lg text-danger me-3"></i><strong>${batch.batch_name}</strong>
                                         </td>
                                         <td>${expdate}</td>
-                                        <td>1 ${items.primary_unit} of ${batch[i].conversion} ${items.secondary_unit}</td>
-                                        <td>₹${batch[i].mrp}</td>
-                                        <td>${batch[i].batch_qty}</td>
+                                        <td>1 ${inventoryData.primary_unit} of ${batch.conversion} ${inventoryData.secondary_unit}</td>
+                                        <td>₹${batch.mrp}</td>
+                                        <td>${batch.batch_qty}</td>
                                         <td>${remPriQty} : ${remSecQty}</td>
                                         <td>
                                             <div class="action-btns">
-                                                <a type="button" class="btn p-0 mx-2" href="/api/deletebatch/${batch[i].batch_id}"><i class="bx bx-trash me-1"></i></a>
+                                                <btn type="button" class="btn p-0 mx-2" id="delete-btn" data-batch-id="${batch.batch_id}"><i class="bx bx-trash me-1"></i></btn>                                            
                                             </div>
                                         </td>
                                         
                                     </tr>`
-
-                                $("#batchcart").append(htmlData);
-
-                            }
-
+                            $("#batchcart").append(htmlData);
                         })
                     })
+
+                    $(document).on('click', '#delete-btn', function () {
+                        var batchId = $(this).data('batch-id');
+                        console.log(batchId)
+                        $.ajax({
+                            url: `/api/v2/batches/${batchId}`,
+                            type: 'DELETE',
+                            success: function (result) {
+                                console.log('deleted', result);
+                                location.reload();
+                            }
+                        });
+                    });
+
                     $("#addbatchinview").click(function () {
                         window.location.href = `/add_batch/${productId}`;
                     })

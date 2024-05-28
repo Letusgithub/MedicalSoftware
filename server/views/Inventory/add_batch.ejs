@@ -516,7 +516,7 @@
 
                             $('#loader').show();
                             $.ajax({
-                                url: `/api/addbatch/`,
+                                url: `/api/v2/batches`,
                                 type: 'POST',
                                 data: JSON.stringify(batchDetails),
                                 contentType: 'application/json',
