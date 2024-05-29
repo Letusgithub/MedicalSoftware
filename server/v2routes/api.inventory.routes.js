@@ -17,4 +17,8 @@ module.exports = (app) => {
   app.post('/api/v2/update-inventory', inventoryController.updateInventory);
   app.delete('/api/v2/inventory/:inventoryId', inventoryController.deleteInventory);
   app.post('/api/v2/onboard-product-inventory', inventoryController.onboardProductInventory);
+  app.get('/api/v2/check-inventory', inventoryController.checkInventoryById);
+  app.get('/api/v2/search-hsn-gst', inventoryController.getHsnSuggestion);
+  app.get('/api/v2/all-category', inventoryController.getAllCategory);
+  app.get('/api/v2/category/:categoryId', inventoryController.getCategoryById);
 };

@@ -54,6 +54,14 @@ module.exports = {
     return results.affectedRows;
   },
 
+  checkInventoryById: async (connection, productId, orgId) => {
+    const [results] = await connection.query(
+      'select * from inventory where product_id = ? and org_id = ?',
+      [productId, orgId],
+    );
+    return results;
+  },
+
   getProductInventoryByOrgId: async (connection, productId, orgId) => {
     const [results] = await connection.query(
       `select * from inventory inv

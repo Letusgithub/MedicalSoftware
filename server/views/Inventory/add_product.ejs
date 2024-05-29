@@ -446,7 +446,7 @@
                         },
                         select: function (event, ui) {
                             productId = ui.item.id;
-                            $.get(`/api/checkbyid?product=${productId}&org=${orgID}`, function (data, status) {
+                            $.get(`/api/v2/check-inventory?productId=${productId}&orgId=${orgID}`, function (data, status) {
                                 console.log('got this data from inventory', data);
                                 if (data.data.length == 1) {
                                     var items = data.data[0];
@@ -537,7 +537,7 @@
                             let query = request.term;
 
                             $.ajax({
-                                url: `/api/search-hsn-gst?query=${query}`,
+                                url: `/api/v2/search-hsn-gst?query=${query}`,
                                 type: 'GET',
                                 success: function (ajaxResponse) {
                                     let results = ajaxResponse['data'].filter(item => item.hsn_code);
@@ -576,7 +576,7 @@
 
 
                     // Fetch categories from the API using jQuery
-                    $.get("/api/all-category", function (response) {
+                    $.get("/api/v2/all-category", function (response) {
                         // Get the select element
                         var categorySelect = $("#categorySelect");
 

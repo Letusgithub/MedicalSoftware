@@ -1,6 +1,8 @@
 /* eslint-disable arrow-body-style */
 const { executeTransaction } = require('../utils/transaction.util');
 const batchModel = require('../v2models/batchModel');
+const categoryModel = require('../v2models/categoryModel');
+const hsnGstModel = require('../v2models/hsnGstModel');
 const inventoryModel = require('../v2models/inventoryModel');
 const productMasterModel = require('../v2models/productMasterModel');
 const expiryInventoryRepository = require('../v2repositories/expiryInventoryRepository');
@@ -27,6 +29,30 @@ module.exports = {
   deleteInventory: async (inventoryId) => {
     return executeTransaction(async (connection) => {
       return inventoryModel.deleteInventory(connection, inventoryId);
+    });
+  },
+
+  checkInventoryById: async (productId, orgId) => {
+    return executeTransaction(async (connection) => {
+      return inventoryModel.checkInventoryById(connection, productId, orgId);
+    });
+  },
+
+  getHsnSuggestion: async (query) => {
+    return executeTransaction(async (connection) => {
+      return hsnGstModel.searchHSN(connection, query);
+    });
+  },
+
+  getAllCategory: async () => {
+    return executeTransaction(async (connection) => {
+      return categoryModel.getAllCategory(connection);
+    });
+  },
+
+  getCategoryById: async (categoryId) => {
+    return executeTransaction(async (connection) => {
+      return categoryModel.getCategoryById(connection, categoryId);
     });
   },
 
