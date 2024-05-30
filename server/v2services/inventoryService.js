@@ -38,6 +38,12 @@ module.exports = {
     });
   },
 
+  searchInventoryProduct: async (orgId, search) => {
+    return executeTransaction(async (connection) => {
+      return inventoryModel.searchInventoryProduct(connection, orgId, search);
+    });
+  },
+
   getHsnSuggestion: async (query) => {
     return executeTransaction(async (connection) => {
       return hsnGstModel.searchHSN(connection, query);

@@ -62,6 +62,16 @@ module.exports = {
     return results;
   },
 
+  searchInventoryProduct: async (connection, orgId, search) => {
+    const [results] = await connection.query(
+      `select * from inventory inv
+            JOIN sample spl ON spl.product_id = inv.product_id
+            where inv.org_id = ? and spl.med_name like ? `,
+      [orgId, `%${search}%`],
+    );
+    return results;
+  },
+
   getProductInventoryByOrgId: async (connection, productId, orgId) => {
     const [results] = await connection.query(
       `select * from inventory inv

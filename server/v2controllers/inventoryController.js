@@ -113,6 +113,23 @@ module.exports = {
     }
   },
 
+  searchInventoryProduct: async (req, res) => {
+    const orgId = req.query.orgId;
+    const search = req.query.search;
+    try {
+      const inventoryData = await inventoryService.searchInventoryProduct(orgId, search);
+      res.status(200).json({
+        success: true,
+        data: inventoryData,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
   getHsnSuggestion: async (req, res) => {
     const query = req.query.query;
     try {

@@ -21,4 +21,5 @@ module.exports = (app) => {
   app.get('/api/v2/search-hsn-gst', inventoryController.getHsnSuggestion);
   app.get('/api/v2/all-category', inventoryController.getAllCategory);
   app.get('/api/v2/category/:categoryId', inventoryController.getCategoryById);
+  app.get('/api/v2/search-inventory-product', inventoryController.searchInventoryProduct);
 };
