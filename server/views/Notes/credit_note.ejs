@@ -76,14 +76,14 @@
                             <div class="invalid-feedback">
                               Please select a product.
                             </div>
-                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" readonly />
+                            <input type="text" class="form-control" id="brand" placeholder="Brand Name" disabled />
                           </div>
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Batch</p>
                             <div class="mb-2" id="batchdroporinput">
                               <input type="text" class="form-control" id="batch" placeholder="" readonly/>
                             </div>
-                            <input class="form-control" type="date" id="expdate" readonly />
+                            <input class="form-control" type="date" id="expdate" disabled />
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
                             <div class="has-validation">
@@ -106,7 +106,7 @@
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Rate / P.Unit</p>
                             <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0"
-                              readonly />
+                            disabled />
                           </div>
 
                           <!-- <div class="col-md-1 col-12 mb-md-0 mb-3">
@@ -117,7 +117,7 @@
 
                           <div class="col-md-2 col-6 pe-0">
                             <p class="mb-2 repeater-title">Total</p>
-                            <input type="text" class="form-control px-0" id="total" placeholder="" min="0" readonly />
+                            <input type="text" class="form-control px-0" id="total" placeholder="" min="0" disabled />
                             <div style="font-size: smaller;"><span id="profit"></span></div>
                           </div>
                         </div>
@@ -174,7 +174,7 @@
                         <h5 class="card-header"> Total Amount (₹)</h5>
                         <div class="card-body">
                           <div class="has-validation">
-                            <input type="number" class="form-control" id="totalCreditAmt" readonly />
+                            <input type="number" class="form-control" id="totalCreditAmt" disabled />
                             <div class="invalid-feedback">
                               Item cart empty cannot submit
                             </div>
@@ -232,7 +232,6 @@
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <script>
           localStorage.removeItem('creditnoteitems');
-
 
 
           var cartarray = [];
@@ -766,7 +765,7 @@
                     })
                   }
 
-                  localStorage.removeItem("creditnotecartitems");
+                  localStorage.removeItem("creditnoteitems");
                   window.location.href = `/credit_note_receipt/${creditInvoice}`
 
                 },
