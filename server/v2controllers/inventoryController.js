@@ -251,4 +251,20 @@ module.exports = {
       });
     }
   },
+
+  getBatchesByInventoryId: async (req, res) => {
+    const inventoryId = req.params.inventoryId;
+    try {
+      const batches = await inventoryService.getBatchesByInventoryId(inventoryId);
+      res.status(200).json({
+        success: true,
+        data: batches,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
 };

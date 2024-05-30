@@ -85,6 +85,12 @@ module.exports = {
     });
   },
 
+  getBatchesByInventoryId: async (inventoryId) => {
+    return executeTransaction(async (connection) => {
+      return batchModel.getBatchesByInventoryId(connection, inventoryId);
+    });
+  },
+
   getNearExpiryProducts: async (orgId, filter) => {
     return executeTransaction(async (connection) => {
       let fromDate;

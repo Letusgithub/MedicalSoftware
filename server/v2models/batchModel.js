@@ -27,8 +27,8 @@ module.exports = {
   updateBatchAfterSale: async (connection, data) => {
     const [results] = await connection.query(
       `UPDATE batch SET 
-            saled_pri_qty = saled_pri_qty - ?,
-            saled_sec_qty = saled_sec_qty - ?
+            saled_pri_qty = saled_pri_qty + ?,
+            saled_sec_qty = saled_sec_qty + ?
             WHERE batch_id = ?`,
       [
         data.saledPriQty,
@@ -42,12 +42,44 @@ module.exports = {
   updateBatchAfterReturn: async (connection, data) => {
     const [results] = await connection.query(
       `UPDATE batch SET 
+            saled_pri_qty = saled_pri_qty - ?,
+            saled_sec_qty = saled_sec_qty - ?
+            WHERE batch_id = ?`,
+      [
+        data.returnPriQty,
+        data.returnSecQty,
+        data.batchId,
+      ],
+    );
+    return results.affectedRows;
+  },
+
+  updateBatchAfterDebitEntry: async (connection, data) => {
+    const [results] = await connection.query(
+      `UPDATE batch SET 
             saled_pri_qty = saled_pri_qty + ?,
             saled_sec_qty = saled_sec_qty + ?
             WHERE batch_id = ?`,
-      [data.returnPriQty,
-        data.returnSecQty,
-        data.batch_id],
+      [
+        data.debitPriQty,
+        data.debitSecQty,
+        data.batchId,
+      ],
+    );
+    return results.affectedRows;
+  },
+
+  updateBatchAfterCreditEntry: async (connection, data) => {
+    const [results] = await connection.query(
+      `UPDATE batch SET 
+            saled_pri_qty = saled_pri_qty + ?,
+            saled_sec_qty = saled_sec_qty + ?
+            WHERE batch_id = ?`,
+      [
+        data.creditPriQty,
+        data.creditSecQty,
+        data.batchId,
+      ],
     );
     return results.affectedRows;
   },
@@ -138,7 +170,9 @@ module.exports = {
 
   getBatchesByInventoryId: async (connection, inventoryId) => {
     const [results] = await connection.query(
-      'SELECT * FROM batch WHERE inventory_id = ? ORDER BY exp_date ASC;',
+      `SELECT * FROM batch 
+      JOIN inventory inv ON batch.inventory_id =  inv.inventory_id
+      WHERE batch.inventory_id = ? ORDER BY exp_date ASC;`,
       [inventoryId],
     );
     return results;
