@@ -759,30 +759,30 @@
 
 
                             var productData = {
-                                product_id: productId,
-                                med_name: $("input[name='productname']").val(),
-                                mfd_mkt: $("input[name='brand']").val(),
+                                productId: productId,
+                                medName: $("input[name='productname']").val(),
+                                mfdMkt: $("input[name='brand']").val(),
                                 salt: $("input[name='salt']").val(),
                             }
                             var inventoryData = {
-                                inventory_id: inventoryId,
-                                category_id: $("select[name='category']").val(),
+                                inventoryId: inventoryId,
+                                categoryId: $("select[name='category']").val(),
                                 gst: $("select[name='gst']").val(),
                                 hsn: $("input[name='hsn']").val(),
-                                primary_unit: $("select[name='primary']").val(),
-                                secondary_unit: $("select[name='secondary']").val(),
+                                primaryUnit: $("select[name='primary']").val(),
+                                secondaryUnit: $("select[name='secondary']").val(),
                                 threshold: $("input[name='threshold']").val()
                             }
                             var batchData = {
-                                batch_name: $("#batchname").val(),
-                                exp_date: expDate,
+                                batchName: $("#batchname").val(),
+                                expDate: expDate,
                                 conversion: $("#conversion").val(),
-                                batch_qty: parseFloat($("input[name='addqty']").val()),
-                                purchase_rate: $("input[name='addpur']").val(),
+                                quantity: parseFloat($("input[name='addqty']").val()),
+                                ptr: $("input[name='addpur']").val(),
                                 mrp: $("input[name='addmrp']").val(),
                                 free: 0,
-                                bulk_discount: 0,
-                                base_price: $("input[name='addpur']").val(),
+                                bulkDiscount: 0,
+                                basePrice: $("input[name='addpur']").val(),
                             }
                         
                             $.ajax({
