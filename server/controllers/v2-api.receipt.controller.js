@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
 const puppeteer = require('puppeteer');
+const fs = require('fs');
 const path = require('path');
 const ejs = require('ejs');
 const moment = require('moment');
@@ -33,7 +35,9 @@ module.exports = {
 
       // Generate HTML content from data using EJS template
       const template = path.resolve(__dirname, '../views/template/sale_receipt.ejs');
-      const html = await ejs.renderFile(template, { data: salesReceipt, moment });
+      const imagePath = path.join(__dirname, '../../public/images/logo.svg');
+      const imageAsBase64 = fs.readFileSync(imagePath, 'base64');
+      const html = await ejs.renderFile(template, { data: salesReceipt, moment, image: imageAsBase64 });
 
       // Launch puppeteer and generate PDF
       const browser = await puppeteer.launch({
@@ -79,7 +83,9 @@ module.exports = {
 
       // Generate HTML content from data using EJS template
       const template = path.resolve(__dirname, '../views/template/return_receipt.ejs');
-      const html = await ejs.renderFile(template, { data: returnReceipt, moment });
+      const imagePath = path.join(__dirname, '../../public/images/logo.svg');
+      const imageAsBase64 = fs.readFileSync(imagePath, 'base64');
+      const html = await ejs.renderFile(template, { data: returnReceipt, moment, image: imageAsBase64 });
 
       // Launch puppeteer and generate PDF
       const browser = await puppeteer.launch({
@@ -125,7 +131,10 @@ module.exports = {
 
       // Generate HTML content from data using EJS template
       const template = path.resolve(__dirname, '../views/template/grn_receipt.ejs');
-      const html = await ejs.renderFile(template, { data: grnReceipt, moment });
+      const imagePath = path.join(__dirname, '../../public/images/logo.svg');
+      const imageAsBase64 = fs.readFileSync(imagePath, 'base64');
+
+      const html = await ejs.renderFile(template, { data: grnReceipt, moment, image: imageAsBase64 });
 
       // Launch puppeteer and generate PDF
       const browser = await puppeteer.launch({
@@ -171,7 +180,9 @@ module.exports = {
 
       // Generate HTML content from data using EJS template
       const template = path.resolve(__dirname, '../views/template/po_receipt.ejs');
-      const html = await ejs.renderFile(template, { data: poReceipt, moment });
+      const imagePath = path.join(__dirname, '../../public/images/logo.svg');
+      const imageAsBase64 = fs.readFileSync(imagePath, 'base64');
+      const html = await ejs.renderFile(template, { data: poReceipt, moment, image: imageAsBase64 });
 
       // Launch puppeteer and generate PDF
       const browser = await puppeteer.launch({
@@ -217,7 +228,9 @@ module.exports = {
 
       // Generate HTML content from data using EJS template
       const template = path.resolve(__dirname, '../views/template/credit_note_receipt.ejs');
-      const html = await ejs.renderFile(template, { data: creditNoteReceipt, moment });
+      const imagePath = path.join(__dirname, '../../public/images/logo.svg');
+      const imageAsBase64 = fs.readFileSync(imagePath, 'base64');
+      const html = await ejs.renderFile(template, { data: creditNoteReceipt, moment, image: imageAsBase64 });
 
       // Launch puppeteer and generate PDF
       const browser = await puppeteer.launch({
@@ -263,7 +276,9 @@ module.exports = {
 
       // Generate HTML content from data using EJS template
       const template = path.resolve(__dirname, '../views/template/debit_note_receipt.ejs');
-      const html = await ejs.renderFile(template, { data: debitNoteReceipt, moment });
+      const imagePath = path.join(__dirname, '../../public/images/logo.svg');
+      const imageAsBase64 = fs.readFileSync(imagePath, 'base64');
+      const html = await ejs.renderFile(template, { data: debitNoteReceipt, moment, image: imageAsBase64 });
 
       // Launch puppeteer and generate PDF
       const browser = await puppeteer.launch({
