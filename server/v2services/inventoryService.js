@@ -10,7 +10,8 @@ const expiryInventoryRepository = require('../v2repositories/expiryInventoryRepo
 module.exports = {
   createBatch: async (batchData) => {
     return executeTransaction(async (connection) => {
-      return batchModel.createBatch(connection, batchData);
+      // eslint-disable-next-line max-len
+      return batchModel.createBatch(connection, batchData, batchData.productId, batchData.inventoryId, batchData.orgId);
     });
   },
 
