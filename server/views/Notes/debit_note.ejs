@@ -306,14 +306,13 @@
                                     `
                       )
 
-                      data.data.map(function (value, key) {
-
+                      let options = '';
+                      $.each(data.data, function (key, value) {
                         var remPriQty = value.batch_qty - value.saled_pri_qty;
                         var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion ? 0 : value.conversion - value.saled_sec_qty;
-                        $("#batchdroporinput #batchnumber").append(
-                          `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
-                        )
-                      })
+                        options += `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`;
+                      });
+                      $("#batchdroporinput #batchnumber").append(options);
 
                     }
                     //populate the first qty to the product cart
