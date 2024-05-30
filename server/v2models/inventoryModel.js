@@ -1,6 +1,6 @@
 module.exports = {
 
-  createInventory: async (connection, data) => {
+  createInventory: async (connection, data, productId, orgId) => {
     const [results] = await connection.query(
       `insert into inventory(
                 product_id,
@@ -13,8 +13,8 @@ module.exports = {
                 threshold)
                 values(?,?,?,?,?,?,?,?)`,
       [
-        data.product_id,
-        data.org_id,
+        productId,
+        orgId,
         data.category_id,
         data.primary_unit,
         data.secondary_unit,
@@ -52,6 +52,24 @@ module.exports = {
       [inventoryId],
     );
     return results.affectedRows;
+  },
+
+  checkInventoryById: async (connection, productId, orgId) => {
+    const [results] = await connection.query(
+      'select * from inventory where product_id = ? and org_id = ?',
+      [productId, orgId],
+    );
+    return results;
+  },
+
+  searchInventoryProduct: async (connection, orgId, search) => {
+    const [results] = await connection.query(
+      `select * from inventory inv
+            JOIN sample spl ON spl.product_id = inv.product_id
+            where inv.org_id = ? and spl.med_name like ? `,
+      [orgId, `%${search}%`],
+    );
+    return results;
   },
 
   getProductInventoryByOrgId: async (connection, productId, orgId) => {

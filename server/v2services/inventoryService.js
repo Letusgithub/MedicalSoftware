@@ -1,7 +1,10 @@
 /* eslint-disable arrow-body-style */
 const { executeTransaction } = require('../utils/transaction.util');
 const batchModel = require('../v2models/batchModel');
+const categoryModel = require('../v2models/categoryModel');
+const hsnGstModel = require('../v2models/hsnGstModel');
 const inventoryModel = require('../v2models/inventoryModel');
+const productMasterModel = require('../v2models/productMasterModel');
 const expiryInventoryRepository = require('../v2repositories/expiryInventoryRepository');
 
 module.exports = {
@@ -29,6 +32,36 @@ module.exports = {
     });
   },
 
+  checkInventoryById: async (productId, orgId) => {
+    return executeTransaction(async (connection) => {
+      return inventoryModel.checkInventoryById(connection, productId, orgId);
+    });
+  },
+
+  searchInventoryProduct: async (orgId, search) => {
+    return executeTransaction(async (connection) => {
+      return inventoryModel.searchInventoryProduct(connection, orgId, search);
+    });
+  },
+
+  getHsnSuggestion: async (query) => {
+    return executeTransaction(async (connection) => {
+      return hsnGstModel.searchHSN(connection, query);
+    });
+  },
+
+  getAllCategory: async () => {
+    return executeTransaction(async (connection) => {
+      return categoryModel.getAllCategory(connection);
+    });
+  },
+
+  getCategoryById: async (categoryId) => {
+    return executeTransaction(async (connection) => {
+      return categoryModel.getCategoryById(connection, categoryId);
+    });
+  },
+
   getProductInventory: async (orgId, productId) => {
     return executeTransaction(async (connection) => {
       const results = await inventoryModel.getProductInventoryByOrgId(connection, productId, orgId);
@@ -49,6 +82,12 @@ module.exports = {
     return executeTransaction(async (connection) => {
       const results = await inventoryModel.getInventoryByOrgId(connection, orgId);
       return results;
+    });
+  },
+
+  getBatchesByInventoryId: async (inventoryId) => {
+    return executeTransaction(async (connection) => {
+      return batchModel.getBatchesByInventoryId(connection, inventoryId);
     });
   },
 
@@ -88,6 +127,34 @@ module.exports = {
       // eslint-disable-next-line max-len
       const results = await expiryInventoryRepository.getNearExpiryProducts(connection, orgId, fromDate, toDate);
       return results;
+    });
+  },
+
+  onboardProductInventory: async (data, orgId) => {
+    return executeTransaction(async (connection) => {
+      const productData = data.productData;
+      const inventoryData = data.inventoryData;
+      const batchData = data.batchData;
+
+      if (!productData || !inventoryData || !batchData) {
+        throw new Error('Invalid data');
+      }
+
+      if (!productData.product_id) {
+        // eslint-disable-next-line max-len
+        const productId = await productMasterModel.createProductMYSQL(connection, productData, orgId);
+        await productMasterModel.createProductES(productData, productId, orgId);
+        productData.product_id = productId;
+      }
+
+      if (!inventoryData.inventory_id) {
+        // eslint-disable-next-line max-len
+        const inventoryId = await inventoryModel.createInventory(connection, inventoryData, productData.product_id, orgId);
+        inventoryData.inventory_id = inventoryId;
+      }
+
+      // eslint-disable-next-line max-len
+      await batchModel.createBatch(connection, batchData, productData.product_id, inventoryData.inventory_id, orgId);
     });
   },
 };

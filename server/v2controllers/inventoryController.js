@@ -89,6 +89,63 @@ module.exports = {
     }
   },
 
+  checkInventoryById: async (req, res) => {
+    const productId = req.query.productId;
+    const orgId = req.query.orgId;
+    try {
+      const inventoryData = await inventoryService.checkInventoryById(productId, orgId);
+      if (inventoryData.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'Inventory not found',
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          data: inventoryData,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  searchInventoryProduct: async (req, res) => {
+    const orgId = req.query.orgId;
+    const search = req.query.search;
+    try {
+      const inventoryData = await inventoryService.searchInventoryProduct(orgId, search);
+      res.status(200).json({
+        success: true,
+        data: inventoryData,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getHsnSuggestion: async (req, res) => {
+    const query = req.query.query;
+    try {
+      const hsnSuggestion = await inventoryService.getHsnSuggestion(query);
+      res.status(200).json({
+        success: true,
+        data: hsnSuggestion,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
   getProductInventory: async (req, res) => {
     const orgId = req.query.orgId;
     const productId = req.query.productId;
@@ -131,6 +188,77 @@ module.exports = {
       res.status(200).json({
         success: true,
         data: nearExpiryProducts,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  onboardProductInventory: async (req, res) => {
+    const orgId = req.query.orgId;
+    const data = req.body;
+    try {
+      await inventoryService.onboardProductInventory(data, orgId);
+      res.status(201).json({
+        success: true,
+        message: 'Product inventory onboarded successfully',
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getAllCategory: async (req, res) => {
+    try {
+      const allCategories = await inventoryService.getAllCategory();
+      res.status(200).json({
+        success: true,
+        data: allCategories,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getCategoryById: async (req, res) => {
+    const categoryId = req.params.categoryId;
+    try {
+      const category = await inventoryService.getCategoryById(categoryId);
+      if (category.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: 'Category not found',
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          data: category,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  },
+
+  getBatchesByInventoryId: async (req, res) => {
+    const inventoryId = req.params.inventoryId;
+    try {
+      const batches = await inventoryService.getBatchesByInventoryId(inventoryId);
+      res.status(200).json({
+        success: true,
+        data: batches,
       });
     } catch (error) {
       res.status(500).json({
