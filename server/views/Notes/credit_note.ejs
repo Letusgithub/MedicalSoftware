@@ -81,14 +81,14 @@
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Batch</p>
                             <div class="mb-2" id="batchdroporinput">
-                              <input type="text" class="form-control" id="batch" placeholder="" readonly/>
+                              <input type="text" class="form-control" id="batch" placeholder="" readonly />
                             </div>
                             <input class="form-control" type="date" id="expdate" disabled />
                           </div>
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
                             <div class="has-validation">
                               <p class="mb-2 repeater-title" id="primaryunitname">P.Unit<span></span></p>
-                              <input type="number" class="form-control px-1" id="pUnit" min="0" readonly/>
+                              <input type="number" class="form-control px-1" id="pUnit" min="0" readonly />
                               <div class="invalid-feedback">
                                 Please enter quantity.
                               </div>
@@ -97,7 +97,7 @@
                           <div class="col-md-1 col-6 mb-md-0 mb-3">
                             <div class="has-validation">
                               <p class="mb-2 repeater-title" id="secondaryunitname">S.Unit<span></span></p>
-                              <input type="number" class="form-control px-1" id="sUnit" min="0" readonly/>
+                              <input type="number" class="form-control px-1" id="sUnit" min="0" readonly />
                               <div class="invalid-feedback">
                                 Please enter quantity.
                               </div>
@@ -106,7 +106,7 @@
                           <div class="col-md-2 col-12 mb-md-0 mb-3">
                             <p class="mb-2 repeater-title">Rate / P.Unit</p>
                             <input type="number" class="form-control" id="purchase_rate" placeholder="" min="0"
-                            disabled />
+                              disabled />
                           </div>
 
                           <!-- <div class="col-md-1 col-12 mb-md-0 mb-3">
@@ -246,7 +246,7 @@
             $('#vendorselect').change(function () {
               var selectedVendorId = $(this).val();
 
-              $.get(`/api/getvendor/${selectedVendorId}`, function (data, status) {
+              $.get(`/api/v2/distributor/${selectedVendorId}`, function (data, status) {
                 var vendorDetails = data.data;
                 console.log(vendorDetails);
                 vendorId = vendorDetails.vendor_id;
@@ -277,9 +277,9 @@
             $('#medicinename').autocomplete({
               minLength: 3,
               source: function (request, response) {
+                let query = request.term;
 
-                $.get('/api/getinvdetailsincreditnote?org=<%=orgId%>', function (data, status) {
-                  console.log('asd', data);
+                $.get(`/api/v2/search-inventory-product?orgId=<%=orgId%>&search=${query}`, function (data, status) {
                   let searchTerm = request.term;
                   let results = data.data.filter(item => item.med_name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
                   response(results);
@@ -290,9 +290,10 @@
                 setTimeout(function () {
                   console.log('the selected med', ui.item);
                   productId = ui.item.product_id;
+                  inventoryId = ui.item.inventory_id;
 
                   //getting all the batches associated with the product
-                  $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
+                  $.get(`/api/v2/inventory/${inventoryId}/batches`, function (data, status) {
 
                     console.log('all batches', data.data);
                     if (data.data.length == 0) {
@@ -307,14 +308,13 @@
                                     `
                       )
 
-                      data.data.map(function (value, key) {
-
+                      let options = '';
+                      $.each(data.data, function (key, value) {
                         var remPriQty = value.batch_qty - value.saled_pri_qty;
                         var remSecQty = (value.conversion - value.saled_sec_qty) == value.conversion ? 0 : value.conversion - value.saled_sec_qty;
-                        $("#batchdroporinput #batchnumber").append(
-                          `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`
-                        )
-                      })
+                        options += `<option value=${key}> ${value.batch_name} ( ${remPriQty}:${remSecQty} ) </option>`;
+                      });
+                      $("#batchdroporinput #batchnumber").append(options);
 
                     }
                     //populate the first qty to the product cart
@@ -347,6 +347,7 @@
                     $("#batchdroporinput").on("change", "#batchnumber", function () {
                       var batchId = $("#batchdroporinput #batchnumber").val();
                       batchIdwhenSelected = data.data[batchId].batch_id;
+                      console.log(data.data[batchId].batch_id);
 
                       $("#shelflabel").val(data.data[batchId].shelf_label);
                       var date = new Date(data.data[batchId].exp_date);
@@ -563,6 +564,7 @@
               var UpdatecartItemsinStorage = JSON.parse(localStorage.getItem('creditnoteitems')) || [];
               var selectedItem = UpdatecartItemsinStorage[item_id - 1];
               productId = selectedItem.productId;
+              inventoryId = selectedItem.inventoryId;
               $("#medicinename").val(selectedItem.productname);
               $("#brand").val(selectedItem.brand);
               $("#pUnit").val(selectedItem.priQty).prop('readonly', false);
@@ -571,7 +573,7 @@
               $("#total").val(selectedItem.total);
 
               //getting all data for batches
-              $.get(`/api/getbatch?id=${productId}&org=<%=orgId%>`, function (data, status) {
+              $.get(`/api/v2/inventory/${inventoryId}/batches`, function (data, status) {
                 console.log('on edit of the product', data.data);
                 if (data.data.length == 0) {
                   $("#message").text(`ITEM NOT IN INVENTORY PLEASE ADD!!`);
@@ -689,118 +691,128 @@
             // post the data to the credit note
             var creditInvoice;
             $("#submitcredit").click(function () {
-              var credit_amt = 0;
-              var lessDiscount = $("#lessDiscount").val() || 0;
-              var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
 
-              for (let i in creditCarts) {
-                credit_amt += parseFloat(creditCarts[i].total);
-              }
+              var creditCarts = JSON.parse(localStorage.getItem('creditnoteitems'));
+              var creditAmt = 0;
+              var lessDiscount = parseFloat($("#lessDiscount").val() || 0);
 
               if (creditCarts == null || creditCarts.length == 0) {
                 return alert("Item Cart Empty");
               }
 
-              var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
+              var creditNoteItems = [];
+              for (let i in creditCarts) {
+                creditNoteItems.push({
+                  productId: creditCarts[i].productId,
+                  batchId: creditCarts[i].batchId,
+                  creditPriQty: creditCarts[i].priQty,
+                  creditSecQty: creditCarts[i].secQty,
+                  totalCredit: creditCarts[i].total
+                });
+                creditAmt += parseFloat(creditCarts[i].total);
+              }
 
+              var creditNoteData = {
+                vendorId: vendorId,
+                orgId: '<%=orgId%>',
+                creditAmt: creditAmt.toFixed(2),
+                lessDiscount: lessDiscount.toFixed(2),
+                creditNoteItems: creditNoteItems
+              }
+
+              /////////////////// version 2 ///////////////////////
               $.ajax({
-                url: `/api/createcreditnote/`,
+                url: `/api/v2/creditNoteEntry`,
                 type: 'POST',
-                data: JSON.stringify({
-                  vendor_id: vendorId,
-                  pharmacyId: pharmacyDetails.pharmaId,
-                  org_id: '<%=orgId%>',
-                  credit_amt: credit_amt.toFixed(2),
-                  less_discount: lessDiscount
-                }),
-
+                data: JSON.stringify(creditNoteData),
                 contentType: 'application/json',
                 success: function (response) {
-
-                  console.log('credit note made');
-                  creditInvoice = response.credit_invoice_no;
-
-                  for (let i in creditCarts) {
-
-                    $.ajax({
-                      url: `/api/updatebatchwhensale/`,
-                      type: 'POST',
-                      data: JSON.stringify({
-                        batch_id: creditCarts[i].batchId,
-                        org_id: '<%=orgId%>',
-                        saled_pri_qty: creditCarts[i].priQty,
-                        saled_sec_qty: creditCarts[i].secQty
-                      }),
-                      contentType: 'application/json',
-                      success: function (response) {
-                        console.log(response);
-                      },
-                      error: function (error) {
-                        console.log('error in updateing batch', error);
-                      }
-                    })
-
-                    var cartDetails = ({
-                      product_id: creditCarts[i].productId,
-                      pri_unit_credit: creditCarts[i].priQty,
-                      sec_unit_credit: creditCarts[i].secQty,
-                      credit_invoice_no: creditInvoice,
-                      batch_id_credit: creditCarts[i].batchId,
-                      total_credit: creditCarts[i].total,
-                    })
-
-                    console.log('cartDetail for the saled product', cartDetails);
-
-                    $.ajax({
-                      url: `/api/creditnotecartdetails/`,
-                      type: 'POST',
-                      data: JSON.stringify(cartDetails),
-                      contentType: 'application/json',
-                      success: function (response) {
-                        console.log(response);
-                      },
-                      error: function (error) {
-                        console.log(error);
-                      }
-                    })
-                  }
-
-                  localStorage.removeItem("creditnoteitems");
-                  window.location.href = `/credit_note_receipt/${creditInvoice}`
-
+                  creditInvoiceNo = response.creditInvoiceNo;
+                  localStorage.removeItem('creditnoteitems');
+                  window.location.href = `/credit_note_receipt/${creditInvoiceNo}`
                 },
                 error: function (error) {
-                  alert("not Created", error)
+                  alert("Not Created", error)
                 }
               })
+
+
+
+
+              /////////////////// version 1 ///////////////////////
+              // $.ajax({
+              //   url: `/api/createcreditnote/`,
+              //   type: 'POST',
+              //   data: JSON.stringify({
+              //     vendor_id: vendorId,
+              //     pharmacyId: pharmacyDetails.pharmaId,
+              //     org_id: '<%=orgId%>',
+              //     credit_amt: credit_amt.toFixed(2),
+              //     less_discount: lessDiscount
+              //   }),
+
+              //   contentType: 'application/json',
+              //   success: function (response) {
+
+              //     console.log('credit note made');
+              //     creditInvoice = response.credit_invoice_no;
+
+              //     for (let i in creditCarts) {
+
+              //       $.ajax({
+              //         url: `/api/updatebatchwhensale/`,
+              //         type: 'POST',
+              //         data: JSON.stringify({
+              //           batch_id: creditCarts[i].batchId,
+              //           org_id: '<%=orgId%>',
+              //           saled_pri_qty: creditCarts[i].priQty,
+              //           saled_sec_qty: creditCarts[i].secQty
+              //         }),
+              //         contentType: 'application/json',
+              //         success: function (response) {
+              //           console.log(response);
+              //         },
+              //         error: function (error) {
+              //           console.log('error in updateing batch', error);
+              //         }
+              //       })
+
+              //       var cartDetails = ({
+              //         product_id: creditCarts[i].productId,
+              //         pri_unit_credit: creditCarts[i].priQty,
+              //         sec_unit_credit: creditCarts[i].secQty,
+              //         credit_invoice_no: creditInvoice,
+              //         batch_id_credit: creditCarts[i].batchId,
+              //         total_credit: creditCarts[i].total,
+              //       })
+
+              //       console.log('cartDetail for the saled product', cartDetails);
+
+              //       $.ajax({
+              //         url: `/api/creditnotecartdetails/`,
+              //         type: 'POST',
+              //         data: JSON.stringify(cartDetails),
+              //         contentType: 'application/json',
+              //         success: function (response) {
+              //           console.log(response);
+              //         },
+              //         error: function (error) {
+              //           console.log(error);
+              //         }
+              //       })
+              //     }
+
+              //     localStorage.removeItem("creditnoteitems");
+              //     window.location.href = `/credit_note_receipt/${creditInvoice}`
+
+              //   },
+              //   error: function (error) {
+              //     alert("not Created", error)
+              //   }
+              // })
+
             })
 
-
-
-            /*
-            var vendorName = [];
-            
-            $.ajax({
-                url: '/allvendors/',
-                method: 'GET',
-                success: function(response) {
-                    // Parse the response data as JSON
-                    //var vendors = JSON.parse(response);
-                    console.log(response.data);
-                    for(let i in response.data){
-                        vendorName.push({id: response.data[i].vendor_id,  name: response.data[i].vendor_name});
-                    }
-                    console.log(vendorName);
-                    // Render the vendors data using the EJS template
-                
-                    
-                    $('#vendorname').append(renderedHtml);
-                },
-                error: function(error) {
-                    console.log('Error:', error);
-                }
-            });
-        */
           })
         </script>
   </body>
