@@ -643,7 +643,7 @@
 
                     // Get the distributor details when the page loads
                     function getDistributorDetails(vendorId) {
-                        $.get(`/api/getvendor/${vendorId}`, function (data, status) {
+                        $.get(`/api/v2/distributor/${vendorId}`, function (data, status) {
                             var vendorDetails = data.data;
                             console.log(vendorDetails);
                             vendorId = vendorDetails.vendor_id;
@@ -710,7 +710,7 @@
                         },
                         select: function (event, ui) {
                             productId = ui.item.id;
-                            $.get(`/api/checkbyid?product=${productId}&org=${orgID}`, function (data, status) {
+                            $.get(`/api/v2/check-inventory?productId=${productId}&orgId=${orgID}`, function (data, status) {
                                 console.log('got this data from inventory', data);
                                 if (data.data.length == 1) {
 
@@ -790,7 +790,7 @@
                             let query = request.term;
 
                             $.ajax({
-                                url: `/api/search-hsn-gst?query=${query}`,
+                                url: `/api/v2/search-hsn-gst?query=${query}`,
                                 type: 'GET',
                                 success: function (ajaxResponse) {
                                     let results = ajaxResponse['data'].filter(item => item.hsn_code);
@@ -828,7 +828,7 @@
                     }
 
                     // Fetch categories from the API using jQuery
-                    $.get("/api/all-category", function (response) {
+                    $.get("/api/v2/all-category", function (response) {
                         // Get the select element
                         var categorySelect = $("#categorySelect");
 
@@ -1465,355 +1465,410 @@
                             // Show loader
                             $('#loader').show();
 
-                            var pharmacyDetails = JSON.parse(localStorage.getItem('name'));
                             var cartDetails = JSON.parse(localStorage.getItem("grncartdetails"));
-                            var lessDiscount = $("#lessDiscount").val() || 0;
+                            var lessDiscount = parseFloat($("#lessDiscount").val() || 0);
                             var creditDebit = parseFloat($("#creditAmt").val()) || 0;
                             var totalPurchase = 0;
 
+                            /////////////////// version 2 ///////////////////////
+
+                            purchaseItems = [];
                             for (let i in cartDetails) {
+                                purchaseItems.push({
+                                    inventoryId: cartDetails[i].inventoryId,
+                                    productId: cartDetails[i].productId,
+                                    categoryId: cartDetails[i].category_id,
+                                    medName: cartDetails[i].productname,
+                                    mfdMkt: cartDetails[i].brandname,
+                                    salt: cartDetails[i].salt,
+                                    gst: cartDetails[i].gst,
+                                    hsn: cartDetails[i].hsn,
+                                    primaryUnit: cartDetails[i].punit,
+                                    secondaryUnit: cartDetails[i].sunit,
+                                    threshold: cartDetails[i].moq,
+                                    batchName: cartDetails[i].batch,
+                                    expDate: cartDetails[i].expdate,
+                                    conversion: cartDetails[i].conversion,
+                                    shelfLabel: cartDetails[i].shelflabel,
+                                    mrp: cartDetails[i].mrp,
+                                    ptr: cartDetails[i].purchase,
+                                    free: cartDetails[i].free,
+                                    bulkDiscount: cartDetails[i].bulk_discount,
+                                    basePrice: cartDetails[i].base_price,
+                                    quantity: cartDetails[i].qty,
+                                })
                                 totalPurchase += parseFloat((cartDetails[i].qty - cartDetails[i].free) * cartDetails[i].purchase * (1 - cartDetails[i].bulk_discount / 100));
                             }
 
-                            totalPurchase = totalPurchase.toFixed(2);
+                            var purchaseData = {
+                                vendorId: vendorId,
+                                orgId: org,
+                                vendorInvoice: $("#vendorinvoicenumber").val(),
+                                invoiceDate: $("input[name='invoiceDate']").val(),
+                                paymentMethod: $('input[name="paymentMethod"]:checked').val(),
+                                creditPeriod: $("#creditPeriodInput").val() || 0,
+                                totalGross: totalPurchase.toFixed(2),
+                                lessDiscount: lessDiscount.toFixed(2),
+                                creditDebit: creditDebit.toFixed(2),
+                                purchaseItems,
+                            }
 
                             $.ajax({
-                                url: `/api/creategrn/`,
+                                url: `/api/v2/purchaseEntry`,
                                 type: 'POST',
-                                data: JSON.stringify({
-                                    pharmacyId: pharmacyDetails.pharmaId,
-                                    vendor_id: vendorId,
-                                    vendor_invoice: $("#vendorinvoicenumber").val(),
-                                    total: totalPurchase,
-                                    org_id: org,
-                                    invoice_date: $("input[name='invoiceDate']").val(),
-                                    credit_period: $("#creditPeriodInput").val() || 0,
-                                    less_discount: lessDiscount,
-                                    credit_debit: creditDebit,
-                                    payment_method: $('input[name="paymentMethod"]:checked').val(),
-                                }),
+                                data: JSON.stringify(purchaseData),
                                 contentType: 'application/json',
                                 success: function (response) {
-
-                                    var GRNid = response.grn_invoice_no;
-
-                                    console.log('Balance Updated', response);
-                                    console.log('orderdetails of grn', cartDetails);
-
-                                    for (let i in cartDetails) {
-
-                                        if (cartDetails[i].productId == undefined) {
-                                            var customProductDetails = {
-                                                org_id: org,
-                                                med_name: cartDetails[i].productname,
-                                                mfd_mkt: cartDetails[i].brandname,
-                                                salt: cartDetails[i].salt,
-                                                conversion: cartDetails[i].conversion,
-                                            }
-
-                                            $.ajax({
-                                                url: '/api/createproduct',
-                                                type: 'POST',
-                                                data: JSON.stringify(customProductDetails),
-                                                contentType: 'application/json',
-                                                success: function (response) {
-                                                    console.log(response);
-                                                    cartDetails[i].productId = response.product_id;
-
-                                                    var productDetails = {
-                                                        product_id: cartDetails[i].productId,
-                                                        org_id: org,
-                                                        category_id: cartDetails[i].category_id,
-                                                        gst: cartDetails[i].gst,
-                                                        hsn: cartDetails[i].hsn,
-                                                        primary_unit: cartDetails[i].punit,
-                                                        secondary_unit: cartDetails[i].sunit,
-                                                        threshold: cartDetails[i].moq
-                                                    }
-
-                                                    console.log('product details', productDetails);
-                                                    $.ajax({
-                                                        url: `/api/createinventory/`,
-                                                        type: 'POST',
-                                                        data: JSON.stringify(productDetails),
-                                                        contentType: 'application/json',
-                                                        success: function (response) {
-                                                            cartDetails[i].inventoryId = response.data.insertId;
-
-                                                            var batchDetails = {
-                                                                product_id: cartDetails[i].productId,
-                                                                org_id: org,
-                                                                inventory_id: cartDetails[i].inventoryId,
-                                                                batch_name: cartDetails[i].batch,
-                                                                exp_date: cartDetails[i].expdate,
-                                                                conversion: cartDetails[i].conversion,
-                                                                batch_qty: cartDetails[i].qty,
-                                                                purchase_rate: cartDetails[i].purchase,
-                                                                mrp: cartDetails[i].mrp,
-                                                                free: cartDetails[i].free,
-                                                                bulk_discount: cartDetails[i].bulk_discount,
-                                                                base_price: cartDetails[i].base_price,
-                                                                shelf_label: cartDetails[i].shelflabel,
-                                                                grn_id: GRNid
-                                                            }
-
-                                                            $.ajax({
-                                                                url: `/api/addbatch/`,
-                                                                type: 'POST',
-                                                                data: JSON.stringify(batchDetails),
-                                                                contentType: 'application/json',
-                                                                success: function (response) {
-                                                                    $.ajax({
-                                                                        url: `/api/creategrncarts`,
-                                                                        type: 'POST',
-                                                                        data: JSON.stringify({
-                                                                            grn_id: GRNid,
-                                                                            product_id: cartDetails[i].productId,
-                                                                            gst: cartDetails[i].gst,
-                                                                            category_id: cartDetails[i].category_id,
-                                                                            hsn: cartDetails[i].hsn,
-                                                                            punit: cartDetails[i].punit,
-                                                                            sunit: cartDetails[i].sunit,
-                                                                            moq: cartDetails[i].moq,
-                                                                            batch_name: cartDetails[i].batch,
-                                                                            exp: cartDetails[i].expdate,
-                                                                            conversion: cartDetails[i].conversion,
-                                                                            shelf_label: cartDetails[i].shelflabel,
-                                                                            purchase: cartDetails[i].purchase,
-                                                                            mrp: cartDetails[i].mrp,
-                                                                            free: cartDetails[i].free,
-                                                                            bulk_discount: cartDetails[i].bulk_discount,
-                                                                            base_price: cartDetails[i].base_price,
-                                                                            qty: cartDetails[i].qty,
-
-                                                                        }),
-                                                                        contentType: 'application/json',
-                                                                        success: function (response) {
-                                                                            console.log('grn done', response);
-                                                                        },
-                                                                        error: function (error) {
-                                                                            $('#loader').hide();
-                                                                            console.log('error in grn', error);
-                                                                            return alert("not Created", error)
-                                                                        }
-                                                                    })
-                                                                    console.log(response);
-
-                                                                },
-                                                                error: function (error) {
-                                                                    $('#loader').hide();
-                                                                    console.log(error);
-                                                                    return alert("not Created", error)
-                                                                }
-                                                            })
-                                                        },
-                                                        error: function (error) {
-                                                            $('#loader').hide();
-                                                            console.log(error);
-                                                            return alert("not Created", error)
-                                                        }
-                                                    })
-
-                                                },
-                                            })
-                                        }
-
-                                        else {
-                                            // If productId fetched (Product is in Master Database)
-                                            $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
-                                                console.log(data.data);
-                                                if (data.data.length === 0) {
-
-                                                    var productDetails = {
-                                                        product_id: cartDetails[i].productId,
-                                                        org_id: org,
-                                                        category_id: cartDetails[i].category_id,
-                                                        gst: cartDetails[i].gst,
-                                                        hsn: cartDetails[i].hsn,
-                                                        primary_unit: cartDetails[i].punit,
-                                                        secondary_unit: cartDetails[i].sunit,
-                                                        threshold: cartDetails[i].moq
-                                                    }
-
-
-                                                    $.ajax({
-                                                        url: `/api/createinventory/`,
-                                                        type: 'POST',
-                                                        data: JSON.stringify(productDetails),
-                                                        contentType: 'application/json',
-                                                        success: function (response) {
-
-                                                            cartDetails[i].inventoryId = response.data.insertId;
-
-                                                            var batchDetails = {
-                                                                product_id: cartDetails[i].productId,
-                                                                org_id: org,
-                                                                inventory_id: cartDetails[i].inventoryId,
-                                                                batch_name: cartDetails[i].batch,
-                                                                exp_date: cartDetails[i].expdate,
-                                                                conversion: cartDetails[i].conversion,
-                                                                batch_qty: cartDetails[i].qty,
-                                                                purchase_rate: cartDetails[i].purchase,
-                                                                mrp: cartDetails[i].mrp,
-                                                                free: cartDetails[i].free,
-                                                                bulk_discount: cartDetails[i].bulk_discount,
-                                                                base_price: cartDetails[i].base_price,
-                                                                shelf_label: cartDetails[i].shelflabel,
-                                                                grn_id: GRNid
-                                                            }
-                                                            //console.log(batchDetails);
-
-                                                            $.ajax({
-                                                                url: `/api/addbatch/`,
-                                                                type: 'POST',
-                                                                data: JSON.stringify(batchDetails),
-                                                                contentType: 'application/json',
-                                                                success: function (response) {
-
-
-                                                                    $.ajax({
-                                                                        url: `/api/creategrncarts`,
-                                                                        type: 'POST',
-                                                                        data: JSON.stringify({
-                                                                            grn_id: GRNid,
-                                                                            product_id: cartDetails[i].productId,
-                                                                            gst: cartDetails[i].gst,
-                                                                            category_id: cartDetails[i].category_id,
-                                                                            hsn: cartDetails[i].hsn,
-                                                                            punit: cartDetails[i].punit,
-                                                                            sunit: cartDetails[i].sunit,
-                                                                            moq: cartDetails[i].moq,
-                                                                            batch_name: cartDetails[i].batch,
-                                                                            exp: cartDetails[i].expdate,
-                                                                            conversion: cartDetails[i].conversion,
-                                                                            shelf_label: cartDetails[i].shelflabel,
-                                                                            purchase: cartDetails[i].purchase,
-                                                                            mrp: cartDetails[i].mrp,
-                                                                            free: cartDetails[i].free,
-                                                                            bulk_discount: cartDetails[i].bulk_discount,
-                                                                            base_price: cartDetails[i].base_price,
-                                                                            qty: cartDetails[i].qty,
-
-                                                                        }),
-                                                                        contentType: 'application/json',
-                                                                        success: function (response) {
-                                                                            console.log('grn done', response);
-                                                                        },
-                                                                        error: function (error) {
-                                                                            $('#loader').hide();
-                                                                            console.log('error in grn', error);
-                                                                            return alert("not Created", error)
-                                                                        }
-                                                                    })
-                                                                    console.log(response);
-                                                                },
-                                                                error: function (error) {
-                                                                    $('#loader').hide();
-                                                                    console.log(error);
-                                                                    return alert("not Created", error)
-                                                                }
-                                                            })
-                                                            console.log(response);
-                                                        },
-                                                        error: function (error) {
-                                                            $('#loader').hide();
-                                                            console.log(error);
-                                                            return alert("not Created", error)
-                                                        }
-                                                    })
-                                                } else {
-                                                    var batchDetails = {
-                                                        product_id: cartDetails[i].productId,
-                                                        org_id: org,
-                                                        inventory_id: cartDetails[i].inventoryId,
-                                                        batch_name: cartDetails[i].batch,
-                                                        exp_date: cartDetails[i].expdate,
-                                                        conversion: cartDetails[i].conversion,
-                                                        batch_qty: cartDetails[i].qty,
-                                                        purchase_rate: cartDetails[i].purchase,
-                                                        mrp: cartDetails[i].mrp,
-                                                        free: cartDetails[i].free,
-                                                        bulk_discount: cartDetails[i].bulk_discount,
-                                                        base_price: cartDetails[i].base_price,
-                                                        shelf_label: cartDetails[i].shelflabel,
-                                                        grn_id: GRNid
-                                                    }
-                                                    //console.log(batchDetails);
-
-                                                    $.ajax({
-                                                        url: `/api/addbatch/`,
-                                                        type: 'POST',
-                                                        data: JSON.stringify(batchDetails),
-                                                        contentType: 'application/json',
-                                                        success: function (response) {
-
-                                                            $.ajax({
-                                                                url: `/api/creategrncarts`,
-                                                                type: 'POST',
-                                                                data: JSON.stringify({
-                                                                    grn_id: GRNid,
-                                                                    product_id: cartDetails[i].productId,
-                                                                    gst: cartDetails[i].gst,
-                                                                    hsn: cartDetails[i].hsn,
-                                                                    punit: cartDetails[i].punit,
-                                                                    sunit: cartDetails[i].sunit,
-                                                                    moq: cartDetails[i].moq,
-                                                                    batch_name: cartDetails[i].batch,
-                                                                    exp: cartDetails[i].expdate,
-                                                                    conversion: cartDetails[i].conversion,
-                                                                    shelf_label: cartDetails[i].shelflabel,
-                                                                    purchase: cartDetails[i].purchase,
-                                                                    mrp: cartDetails[i].mrp,
-                                                                    free: cartDetails[i].free,
-                                                                    bulk_discount: cartDetails[i].bulk_discount,
-                                                                    base_price: cartDetails[i].base_price,
-                                                                    qty: cartDetails[i].qty,
-
-                                                                }),
-                                                                contentType: 'application/json',
-                                                                success: function (response) {
-                                                                    console.log('grn done', response);
-                                                                },
-                                                                error: function (error) {
-                                                                    console.log('error in grn', error);
-                                                                    return alert("Not Created", error)
-                                                                }
-                                                            })
-                                                            console.log(response);
-                                                        },
-                                                        error: function (error) {
-                                                            $('#loader').hide();
-                                                            console.log(error);
-                                                            return alert("Not Created", error)
-                                                        }
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    }
-
-                                    //Clear inputs
-                                    $('#vendorselect').val('default');
-                                    $('#vendorinvoicenumber').val('');
-                                    $("input[name='invoiceDate']").val('');
-                                    $("#creditPeriodInput").val('');
-                                    $("#lessDiscount").val('');
-                                    $("#creditAmt").val('');
-                                    $("#totalGross").val('');
-                                    $("#totalAmt").val('')
-
-                                    setTimeout(() => {
-                                        $('#loader').hide();
-                                        localStorage.removeItem("grncartdetails");
-                                        localStorage.removeItem("vendordata");
-                                        window.location.href = `/grn_receipt/${GRNid}`
-                                    }, 3000);
+                                    grnInvoiceNo = response.grnInvoiceNo;
+                                    $('#loader').hide();
+                                    localStorage.removeItem("grncartdetails");
+                                    localStorage.removeItem("vendordata");
+                                    // window.location.href = `/grn_receipt/${grnInvoiceNo}`
                                 },
                                 error: function (error) {
-                                    $('#loader').hide();
-                                    alert("Not Created! Please refresh page", error)
+                                    alert("Not Created", error)
                                 }
                             })
+
+
+                            /////////////////// version 1 ///////////////////////
+                            // $.ajax({
+                            //     url: `/api/creategrn/`,
+                            //     type: 'POST',
+                            //     data: JSON.stringify({
+                            //         pharmacyId: pharmacyDetails.pharmaId,
+                            //         vendor_id: vendorId,
+                            //         vendor_invoice: $("#vendorinvoicenumber").val(),
+                            //         total: totalPurchase,
+                            //         org_id: org,
+                            //         invoice_date: $("input[name='invoiceDate']").val(),
+                            //         credit_period: $("#creditPeriodInput").val() || 0,
+                            //         less_discount: lessDiscount,
+                            //         credit_debit: creditDebit,
+                            //         payment_method: $('input[name="paymentMethod"]:checked').val(),
+                            //     }),
+                            //     contentType: 'application/json',
+                            //     success: function (response) {
+
+                            //         var GRNid = response.grn_invoice_no;
+
+                            //         console.log('Balance Updated', response);
+                            //         console.log('orderdetails of grn', cartDetails);
+
+                            //         for (let i in cartDetails) {
+
+                            //             if (cartDetails[i].productId == undefined) {
+                            //                 var customProductDetails = {
+                            //                     org_id: org,
+                            //                     med_name: cartDetails[i].productname,
+                            //                     mfd_mkt: cartDetails[i].brandname,
+                            //                     salt: cartDetails[i].salt,
+                            //                     conversion: cartDetails[i].conversion,
+                            //                 }
+
+                            //                 $.ajax({
+                            //                     url: '/api/createproduct',
+                            //                     type: 'POST',
+                            //                     data: JSON.stringify(customProductDetails),
+                            //                     contentType: 'application/json',
+                            //                     success: function (response) {
+                            //                         console.log(response);
+                            //                         cartDetails[i].productId = response.product_id;
+
+                            //                         var productDetails = {
+                            //                             product_id: cartDetails[i].productId,
+                            //                             org_id: org,
+                            //                             category_id: cartDetails[i].category_id,
+                            //                             gst: cartDetails[i].gst,
+                            //                             hsn: cartDetails[i].hsn,
+                            //                             primary_unit: cartDetails[i].punit,
+                            //                             secondary_unit: cartDetails[i].sunit,
+                            //                             threshold: cartDetails[i].moq
+                            //                         }
+
+                            //                         console.log('product details', productDetails);
+                            //                         $.ajax({
+                            //                             url: `/api/createinventory/`,
+                            //                             type: 'POST',
+                            //                             data: JSON.stringify(productDetails),
+                            //                             contentType: 'application/json',
+                            //                             success: function (response) {
+                            //                                 cartDetails[i].inventoryId = response.data.insertId;
+
+                            //                                 var batchDetails = {
+                            //                                     product_id: cartDetails[i].productId,
+                            //                                     org_id: org,
+                            //                                     inventory_id: cartDetails[i].inventoryId,
+                            //                                     batch_name: cartDetails[i].batch,
+                            //                                     exp_date: cartDetails[i].expdate,
+                            //                                     conversion: cartDetails[i].conversion,
+                            //                                     batch_qty: cartDetails[i].qty,
+                            //                                     purchase_rate: cartDetails[i].purchase,
+                            //                                     mrp: cartDetails[i].mrp,
+                            //                                     free: cartDetails[i].free,
+                            //                                     bulk_discount: cartDetails[i].bulk_discount,
+                            //                                     base_price: cartDetails[i].base_price,
+                            //                                     shelf_label: cartDetails[i].shelflabel,
+                            //                                     grn_id: GRNid
+                            //                                 }
+
+                            //                                 $.ajax({
+                            //                                     url: `/api/addbatch/`,
+                            //                                     type: 'POST',
+                            //                                     data: JSON.stringify(batchDetails),
+                            //                                     contentType: 'application/json',
+                            //                                     success: function (response) {
+                            //                                         $.ajax({
+                            //                                             url: `/api/creategrncarts`,
+                            //                                             type: 'POST',
+                            //                                             data: JSON.stringify({
+                            //                                                 grn_id: GRNid,
+                            //                                                 product_id: cartDetails[i].productId,
+                            //                                                 gst: cartDetails[i].gst,
+                            //                                                 category_id: cartDetails[i].category_id,
+                            //                                                 hsn: cartDetails[i].hsn,
+                            //                                                 punit: cartDetails[i].punit,
+                            //                                                 sunit: cartDetails[i].sunit,
+                            //                                                 moq: cartDetails[i].moq,
+                            //                                                 batch_name: cartDetails[i].batch,
+                            //                                                 exp: cartDetails[i].expdate,
+                            //                                                 conversion: cartDetails[i].conversion,
+                            //                                                 shelf_label: cartDetails[i].shelflabel,
+                            //                                                 purchase: cartDetails[i].purchase,
+                            //                                                 mrp: cartDetails[i].mrp,
+                            //                                                 free: cartDetails[i].free,
+                            //                                                 bulk_discount: cartDetails[i].bulk_discount,
+                            //                                                 base_price: cartDetails[i].base_price,
+                            //                                                 qty: cartDetails[i].qty,
+
+                            //                                             }),
+                            //                                             contentType: 'application/json',
+                            //                                             success: function (response) {
+                            //                                                 console.log('grn done', response);
+                            //                                             },
+                            //                                             error: function (error) {
+                            //                                                 $('#loader').hide();
+                            //                                                 console.log('error in grn', error);
+                            //                                                 return alert("not Created", error)
+                            //                                             }
+                            //                                         })
+                            //                                         console.log(response);
+
+                            //                                     },
+                            //                                     error: function (error) {
+                            //                                         $('#loader').hide();
+                            //                                         console.log(error);
+                            //                                         return alert("not Created", error)
+                            //                                     }
+                            //                                 })
+                            //                             },
+                            //                             error: function (error) {
+                            //                                 $('#loader').hide();
+                            //                                 console.log(error);
+                            //                                 return alert("not Created", error)
+                            //                             }
+                            //                         })
+
+                            //                     },
+                            //                 })
+                            //             }
+
+                            //             else {
+                            //                 // If productId fetched (Product is in Master Database)
+                            //                 $.get(`/api/checkbyid?product=${cartDetails[i].productId}&org=${orgID}`, function (data, status) {
+                            //                     console.log(data.data);
+                            //                     if (data.data.length === 0) {
+
+                            //                         var productDetails = {
+                            //                             product_id: cartDetails[i].productId,
+                            //                             org_id: org,
+                            //                             category_id: cartDetails[i].category_id,
+                            //                             gst: cartDetails[i].gst,
+                            //                             hsn: cartDetails[i].hsn,
+                            //                             primary_unit: cartDetails[i].punit,
+                            //                             secondary_unit: cartDetails[i].sunit,
+                            //                             threshold: cartDetails[i].moq
+                            //                         }
+
+
+                            //                         $.ajax({
+                            //                             url: `/api/createinventory/`,
+                            //                             type: 'POST',
+                            //                             data: JSON.stringify(productDetails),
+                            //                             contentType: 'application/json',
+                            //                             success: function (response) {
+
+                            //                                 cartDetails[i].inventoryId = response.data.insertId;
+
+                            //                                 var batchDetails = {
+                            //                                     product_id: cartDetails[i].productId,
+                            //                                     org_id: org,
+                            //                                     inventory_id: cartDetails[i].inventoryId,
+                            //                                     batch_name: cartDetails[i].batch,
+                            //                                     exp_date: cartDetails[i].expdate,
+                            //                                     conversion: cartDetails[i].conversion,
+                            //                                     batch_qty: cartDetails[i].qty,
+                            //                                     purchase_rate: cartDetails[i].purchase,
+                            //                                     mrp: cartDetails[i].mrp,
+                            //                                     free: cartDetails[i].free,
+                            //                                     bulk_discount: cartDetails[i].bulk_discount,
+                            //                                     base_price: cartDetails[i].base_price,
+                            //                                     shelf_label: cartDetails[i].shelflabel,
+                            //                                     grn_id: GRNid
+                            //                                 }
+                            //                                 //console.log(batchDetails);
+
+                            //                                 $.ajax({
+                            //                                     url: `/api/addbatch/`,
+                            //                                     type: 'POST',
+                            //                                     data: JSON.stringify(batchDetails),
+                            //                                     contentType: 'application/json',
+                            //                                     success: function (response) {
+
+
+                            //                                         $.ajax({
+                            //                                             url: `/api/creategrncarts`,
+                            //                                             type: 'POST',
+                            //                                             data: JSON.stringify({
+                            //                                                 grn_id: GRNid,
+                            //                                                 product_id: cartDetails[i].productId,
+                            //                                                 gst: cartDetails[i].gst,
+                            //                                                 category_id: cartDetails[i].category_id,
+                            //                                                 hsn: cartDetails[i].hsn,
+                            //                                                 punit: cartDetails[i].punit,
+                            //                                                 sunit: cartDetails[i].sunit,
+                            //                                                 moq: cartDetails[i].moq,
+                            //                                                 batch_name: cartDetails[i].batch,
+                            //                                                 exp: cartDetails[i].expdate,
+                            //                                                 conversion: cartDetails[i].conversion,
+                            //                                                 shelf_label: cartDetails[i].shelflabel,
+                            //                                                 purchase: cartDetails[i].purchase,
+                            //                                                 mrp: cartDetails[i].mrp,
+                            //                                                 free: cartDetails[i].free,
+                            //                                                 bulk_discount: cartDetails[i].bulk_discount,
+                            //                                                 base_price: cartDetails[i].base_price,
+                            //                                                 qty: cartDetails[i].qty,
+
+                            //                                             }),
+                            //                                             contentType: 'application/json',
+                            //                                             success: function (response) {
+                            //                                                 console.log('grn done', response);
+                            //                                             },
+                            //                                             error: function (error) {
+                            //                                                 $('#loader').hide();
+                            //                                                 console.log('error in grn', error);
+                            //                                                 return alert("not Created", error)
+                            //                                             }
+                            //                                         })
+                            //                                         console.log(response);
+                            //                                     },
+                            //                                     error: function (error) {
+                            //                                         $('#loader').hide();
+                            //                                         console.log(error);
+                            //                                         return alert("not Created", error)
+                            //                                     }
+                            //                                 })
+                            //                                 console.log(response);
+                            //                             },
+                            //                             error: function (error) {
+                            //                                 $('#loader').hide();
+                            //                                 console.log(error);
+                            //                                 return alert("not Created", error)
+                            //                             }
+                            //                         })
+                            //                     } else {
+                            //                         var batchDetails = {
+                            //                             product_id: cartDetails[i].productId,
+                            //                             org_id: org,
+                            //                             inventory_id: cartDetails[i].inventoryId,
+                            //                             batch_name: cartDetails[i].batch,
+                            //                             exp_date: cartDetails[i].expdate,
+                            //                             conversion: cartDetails[i].conversion,
+                            //                             batch_qty: cartDetails[i].qty,
+                            //                             purchase_rate: cartDetails[i].purchase,
+                            //                             mrp: cartDetails[i].mrp,
+                            //                             free: cartDetails[i].free,
+                            //                             bulk_discount: cartDetails[i].bulk_discount,
+                            //                             base_price: cartDetails[i].base_price,
+                            //                             shelf_label: cartDetails[i].shelflabel,
+                            //                             grn_id: GRNid
+                            //                         }
+                            //                         //console.log(batchDetails);
+
+                            //                         $.ajax({
+                            //                             url: `/api/addbatch/`,
+                            //                             type: 'POST',
+                            //                             data: JSON.stringify(batchDetails),
+                            //                             contentType: 'application/json',
+                            //                             success: function (response) {
+
+                            //                                 $.ajax({
+                            //                                     url: `/api/creategrncarts`,
+                            //                                     type: 'POST',
+                            //                                     data: JSON.stringify({
+                            //                                         grn_id: GRNid,
+                            //                                         product_id: cartDetails[i].productId,
+                            //                                         gst: cartDetails[i].gst,
+                            //                                         hsn: cartDetails[i].hsn,
+                            //                                         punit: cartDetails[i].punit,
+                            //                                         sunit: cartDetails[i].sunit,
+                            //                                         moq: cartDetails[i].moq,
+                            //                                         batch_name: cartDetails[i].batch,
+                            //                                         exp: cartDetails[i].expdate,
+                            //                                         conversion: cartDetails[i].conversion,
+                            //                                         shelf_label: cartDetails[i].shelflabel,
+                            //                                         purchase: cartDetails[i].purchase,
+                            //                                         mrp: cartDetails[i].mrp,
+                            //                                         free: cartDetails[i].free,
+                            //                                         bulk_discount: cartDetails[i].bulk_discount,
+                            //                                         base_price: cartDetails[i].base_price,
+                            //                                         qty: cartDetails[i].qty,
+
+                            //                                     }),
+                            //                                     contentType: 'application/json',
+                            //                                     success: function (response) {
+                            //                                         console.log('grn done', response);
+                            //                                     },
+                            //                                     error: function (error) {
+                            //                                         console.log('error in grn', error);
+                            //                                         return alert("Not Created", error)
+                            //                                     }
+                            //                                 })
+                            //                                 console.log(response);
+                            //                             },
+                            //                             error: function (error) {
+                            //                                 $('#loader').hide();
+                            //                                 console.log(error);
+                            //                                 return alert("Not Created", error)
+                            //                             }
+                            //                         })
+                            //                     }
+                            //                 })
+                            //             }
+                            //         }
+
+                            //         //Clear inputs
+                            //         $('#vendorselect').val('default');
+                            //         $('#vendorinvoicenumber').val('');
+                            //         $("input[name='invoiceDate']").val('');
+                            //         $("#creditPeriodInput").val('');
+                            //         $("#lessDiscount").val('');
+                            //         $("#creditAmt").val('');
+                            //         $("#totalGross").val('');
+                            //         $("#totalAmt").val('')
+
+                            //         setTimeout(() => {
+                            //             $('#loader').hide();
+                            //             localStorage.removeItem("grncartdetails");
+                            //             localStorage.removeItem("vendordata");
+                            //             window.location.href = `/grn_receipt/${GRNid}`
+                            //         }, 3000);
+                            //     },
+                            //     error: function (error) {
+                            //         $('#loader').hide();
+                            //         alert("Not Created! Please refresh page", error)
+                            //     }
+                            // })
 
                         }
                     })

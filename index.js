@@ -54,6 +54,7 @@ require('./server/v2routes/api.inventory.routes')(app);
 require('./server/v2routes/api.distributor.routes')(app);
 require('./server/v2routes/api.debitNote.routes')(app);
 require('./server/v2routes/api.creditNote.routes')(app);
+require('./server/v2routes/api.purchaseEntry.routes')(app);
 
 // FRONT Routes
 require('./server/routes/front.routes')(app);
