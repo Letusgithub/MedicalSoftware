@@ -283,7 +283,7 @@
                     $("#categorySelect").append(`<option selected value="${categoryId}">${categoryName}</option>`);
 
                     // Fetch categories from the API using jQuery
-                    $.get("/api/all-category", function (response) {
+                    $.get("/api/v2/all-category", function (response) {
                         // Get the select element
                         var categorySelect = $("#categorySelect");
 
