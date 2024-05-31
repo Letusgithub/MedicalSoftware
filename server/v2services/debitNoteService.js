@@ -25,10 +25,12 @@ module.exports = {
       // Create debit note items and update batch
       const debitNoteItems = data.debitNoteItems;
 
-      debitNoteItems.forEach(async (item) => {
-        await debitNoteItemModel.createDebitNoteItem(connection, item, debitInvoiceNo);
-        await batchModel.updateBatchAfterDebitEntry(connection, item);
-      });
+      await Promise.all(
+        debitNoteItems.forEach(async (item) => {
+          debitNoteItemModel.createDebitNoteItem(connection, item, debitInvoiceNo);
+          batchModel.updateBatchAfterDebitEntry(connection, item);
+        }),
+      );
 
       return debitInvoiceNo;
     });

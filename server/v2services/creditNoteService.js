@@ -25,10 +25,12 @@ module.exports = {
       // Create credit note items and update batch
       const creditNoteItems = data.creditNoteItems;
 
-      creditNoteItems.forEach(async (item) => {
-        await creditNoteItemModel.createCreditNoteItem(connection, item, creditInvoiceNo);
-        await batchModel.updateBatchAfterCreditEntry(connection, item);
-      });
+      await Promise.all(
+        creditNoteItems.map(async (item) => {
+          creditNoteItemModel.createCreditNoteItem(connection, item, creditInvoiceNo);
+          batchModel.updateBatchAfterCreditEntry(connection, item);
+        }),
+      );
 
       return creditInvoiceNo;
     });
