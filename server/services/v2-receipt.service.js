@@ -286,7 +286,7 @@ module.exports = {
 
       const [poDetails] = await pool.query(
         `SELECT * FROM purchase_order
-          WHERE po_id = ?`,
+          WHERE po_id_main = ?`,
         [poId],
       );
 
