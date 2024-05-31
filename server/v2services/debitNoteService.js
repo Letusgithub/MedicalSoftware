@@ -26,7 +26,7 @@ module.exports = {
       const debitNoteItems = data.debitNoteItems;
 
       await Promise.all(
-        debitNoteItems.forEach(async (item) => {
+        debitNoteItems.map(async (item) => {
           debitNoteItemModel.createDebitNoteItem(connection, item, debitInvoiceNo);
           batchModel.updateBatchAfterDebitEntry(connection, item);
         }),
