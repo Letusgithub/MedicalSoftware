@@ -27,7 +27,7 @@ module.exports = {
       // Create purchase entry items
       const purchaseItems = data.purchaseItems;
 
-      Promise.all(
+      await Promise.all(
         purchaseItems.map(async (item) => {
           const productData = {
             productId: item.productId,
