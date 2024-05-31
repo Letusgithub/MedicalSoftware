@@ -15,9 +15,9 @@ module.exports = {
       [
         productId,
         orgId,
-        data.category_id,
-        data.primary_unit,
-        data.secondary_unit,
+        data.categoryId,
+        data.primaryUnit,
+        data.secondaryUnit,
         data.hsn,
         data.gst,
         data.threshold,
@@ -35,7 +35,7 @@ module.exports = {
             threshold=? 
             where product_id = ? and org_id =?`,
       [
-        data.category_id,
+        data.categoryId,
         data.hsn,
         data.gst,
         data.threshold,

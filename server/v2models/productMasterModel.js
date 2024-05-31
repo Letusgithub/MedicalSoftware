@@ -11,8 +11,8 @@ module.exports = {
                     is_verified)
                     values(?,?,?,?,?)`,
       [
-        data.med_name,
-        data.mfd_mkt,
+        data.medName,
+        data.mfdMkt,
         data.salt,
         orgId,
         false,
@@ -24,8 +24,8 @@ module.exports = {
   createProductES: async (data, productId, orgId) => {
     const body = {
       id: productId,
-      med_name: data.med_name,
-      mfd_mkt: data.mfd_mkt,
+      med_name: data.medName,
+      mfd_mkt: data.mfdMkt,
       salt_composition: data.salt,
       added_by: orgId,
       is_verified: false,
