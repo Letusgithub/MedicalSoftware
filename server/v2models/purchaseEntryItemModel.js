@@ -12,7 +12,7 @@ module.exports = {
         data.secondaryUnit,
         data.threshold,
         data.batchName,
-        data.expiryDate,
+        data.expDate,
         data.conversion,
         data.shelfLabel,
         data.mrp,
