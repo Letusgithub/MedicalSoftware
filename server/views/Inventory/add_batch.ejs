@@ -42,7 +42,7 @@
                                     </div>
                                     <hr class="mb-4">
 
-                                    <div class="card mb-4 mx-auto col-md-8">
+                                    <div class="card mb-4 mx-auto col-md-10">
 
                                         <div class="card-body ">
 
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="card mb-4 mx-auto col-md-8">
+                                    <div class="card mb-4 mx-auto col-md-10">
 
                                         <div class="card-body ">
                                             <h4 class="fs-5">Batch Details</h4>
@@ -498,25 +498,25 @@
                             var exp = firstDayOfNextMonth.toISOString().slice(0, 10);
 
                             var batchDetails = {
-                                product_id: "<%=data[0].product_id%>",
-                                org_id: orgID,
-                                inventory_id: inventoryId,
-                                batch_name: $("#batchname").val(),
-                                exp_date: exp,
+                                productId: "<%=data[0].product_id%>",
+                                orgId: orgID,
+                                inventoryId: inventoryId,
+                                batchName: $("#batchname").val(),
+                                expDate: exp,
                                 conversion: $("#conversion").val(),
-                                batch_qty: parseFloat($("input[name='addqty']").val()),
-                                purchase_rate: $("input[name='addpur']").val(),
+                                quantity: parseFloat($("input[name='addqty']").val()),
+                                ptr: $("input[name='addpur']").val(),
                                 mrp: $("input[name='addmrp']").val(),
                                 free: 0,
-                                bulk_discount: 0,
-                                base_price: $("input[name='addpur']").val(),
-                                shelf_label: $("input[name='addshelf']").val()
+                                bulkDiscount: 0,
+                                basePrice: $("input[name='addpur']").val(),
+                                shelfLabel: $("input[name='addshelf']").val()
                             }
                             console.log(batchDetails);
 
                             $('#loader').show();
                             $.ajax({
-                                url: `/api/addbatch/`,
+                                url: `/api/v2/batches`,
                                 type: 'POST',
                                 data: JSON.stringify(batchDetails),
                                 contentType: 'application/json',

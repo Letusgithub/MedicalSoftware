@@ -8,13 +8,14 @@ exports.itemSearch = async (req, res) => {
 
   try {
     const suggestions = await ESitemSearchService(query);
-    const rawSuggestions = suggestions.suggest.medicine_suggestion[0].options;
+    const rawSuggestions = suggestions.suggest.medicine_suggestion[0].options; // **for index v2
+    // const rawSuggestions = suggestions.hits.hits;
 
     // Filter suggestions based on the added_by field
     const filteredSuggestions = rawSuggestions.filter((option) => {
       const addedBy = option._source.added_by;
       // eslint-disable-next-line eqeqeq
-      return addedBy == 'admin' || addedBy == orgId;
+      return addedBy === 'admin' || addedBy == orgId;
     });
 
     const data = filteredSuggestions.map((item) => item._source);

@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
 const {
-  create, getBatch, getAllBatchesById, getTotalSumfromPurchase, getRemQtyafterSales, updateBatchQtyAfterSales, getTotalPurchaseQty, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatchById,
+  create, getBatch, getAllBatchesById, getTotalSumfromPurchase, getRemQtyafterSales, updateBatchQtyAfterSales, getBatchfromBatchId, updateBatchQtyAfterReturn, getOrderStatistics, deleteBatchById,
   updateOnCancelSalesInvoice,
   updateBatchOnCancelGRN,
   updateBatchOnCancelReturnInvoice,
   updateBatchOnCancelCRN,
   updateBatchOnCancelDRN,
+  getTotalPurchaseAmt,
 } = require('../controllers/api.batch.controller');
 
 module.exports = (app) => {
@@ -26,7 +27,7 @@ module.exports = (app) => {
   app.post('/api/updatebatchwhenreturn', updateBatchQtyAfterReturn);
   app.get('/api/totalsumfrompurchase', getTotalSumfromPurchase);
   app.get('/api/getremqtyaftersales', getRemQtyafterSales);
-  app.get('/api/gettotalpurchaseqty', getTotalPurchaseQty);
+  app.get('/api/gettotalpurchaseamt', getTotalPurchaseAmt);
 
   app.get('/api/getorderstatistics', getOrderStatistics);
 

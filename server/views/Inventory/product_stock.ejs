@@ -111,26 +111,25 @@
             console.log(orgId);
 
             $("#nearExpiry").click(function () {
-                // $.get(`/api/getNearExpiryProducts/${orgId}`);
                 window.location.href = `/near_expiry_list`;
             });
 
-            $.get(`/api/getallinventory?orgID=${orgId}`, function (data, status) {
+            $.get(`/api/v2/inventory/all?orgID=${orgId}`, function (result, status) {
+                var inventoryItems = result.data;
+
                 var lowHtml = `<td><span class="badge bg-label-danger me-1">LOW</span></td>`;
                 var okHtml = `<td><span class="badge bg-label-success me-1">OK</span></td>`;
-                var items = data.data;
-                console.log('in product stock', items);
 
-                for (let i = 0; i < items.length; i++) {
-                    var inStock = items[i].batch_qty != 0 ? items[i].batch_qty : "ADD BATCH";
+                inventoryItems.forEach((item) => {
+                    var inStock = item.batch_qty != 0 ? item.batch_qty : "ADD BATCH";
 
-                    var status = items[i].batch_qty >= items[i].threshold ? okHtml : lowHtml;
+                    var status = item.batch_qty >= item.threshold ? okHtml : lowHtml;
 
                     var html = `
                         <tr>
-                            <td><i class="fab fa-angular fa-lg text-danger "></i><strong>${items[i].med_name}</strong></td>
-                            <td>${items[i].primary_unit} of ${items[i].secondary_unit}</td>
-                            <td>${items[i].hsn}</td>
+                            <td><i class="fab fa-angular fa-lg text-danger "></i><strong>${item.med_name}</strong></td>
+                            <td>${item.primary_unit} of ${item.secondary_unit}</td>
+                            <td>${item.hsn}</td>
                             <td>${inStock}</td>
                             ${status}
                             <td>
@@ -140,10 +139,10 @@
                                         data-bs-toggle="dropdown"><i
                                             class="bx bx-dots-vertical-rounded"></i></button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" id="addbatch" href="/add_batch/${items[i].product_id}"><i class='bx bx-customize me-1'></i>Add Batch</a>
-                                        <a class="dropdown-item" id="viewbatches" href="/product_batch/${items[i].product_id}"><i class="bx bx-show me-1"></i>View Batches</a>
-                                        <a class="dropdown-item" id="editproduct" href="/update_addproduct/${items[i].product_id}"><i class="bx bx-edit-alt me-1"></i>Edit Product</a>
-                                        <a class="dropdown-item" id="deleteproduct" onclick="confirmDelete(${items[i].inventory_id})"><i class="bx bx-trash me-1"></i>Delete Product</a>
+                                        <a class="dropdown-item" id="addbatch" href="/add_batch/${item.product_id}"><i class='bx bx-customize me-1'></i>Add Batch</a>
+                                        <a class="dropdown-item" id="viewbatches" href="/product_batch/${item.product_id}"><i class="bx bx-show me-1"></i>View Batches</a>
+                                        <a class="dropdown-item" id="editproduct" href="/update_addproduct/${item.product_id}"><i class="bx bx-edit-alt me-1"></i>Edit Product</a>
+                                        <a class="dropdown-item" id="deleteproduct" onclick="confirmDelete(${item.inventory_id})"><i class="bx bx-trash me-1"></i>Delete Product</a>
                                     </div>
                                 </div>
                             </td>
@@ -151,8 +150,10 @@
                     `
 
                     $("#additems").append(html);
-                }
-            });
+                })
+
+
+            })
         });
 
         function confirmDelete(inventoryId) {
@@ -161,8 +162,8 @@
             if (confirmation) {
                 // If user clicks OK in the confirmation box
                 $.ajax({
-                    url: '/api/deleteinventory/' + inventoryId,
-                    type: 'GET',
+                    url: '/api/v2/inventory/' + inventoryId,
+                    type: 'DELETE',
                     success: function (result) {
                         location.reload();
                     },

@@ -181,3 +181,20 @@ exports.searchQuarter = (req, res) => {
     });
   });
 };
+
+exports.getTotalPurchaseBills = (req, res) => {
+  const orgId = req.query.org;
+
+  service.getTotalPurchaseBills(orgId, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: 'some error',
+      });
+    }
+    return res.status(200).json({
+      status: 'success',
+      results,
+    });
+  });
+};

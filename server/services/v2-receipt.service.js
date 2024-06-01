@@ -199,7 +199,7 @@ module.exports = {
       items.forEach((item) => {
         // eslint-disable-next-line max-len
         const grossValue = (item.qty - item.free) * item.purchase * (1 - item.bulk_discount / 100);
-        const gstValue = grossValue * (item.gst / 100);
+        const gstValue = grossValue * (1 - (lessDiscountPercent / 100)) * (item.gst / 100);
 
         const transaction = {
           grossAmount: grossValue * (1 - (lessDiscountPercent / 100)),
@@ -262,6 +262,7 @@ module.exports = {
       });
 
       totalAmount = totalGross + totalGST - grnDetails[0].less_discount + grnDetails[0].credit_debit;
+
       return {
         orgDetails: orgDetails[0],
         grnDetails: grnDetails[0],
@@ -285,7 +286,7 @@ module.exports = {
 
       const [poDetails] = await pool.query(
         `SELECT * FROM purchase_order
-          WHERE po_id = ?`,
+          WHERE po_id_main = ?`,
         [poId],
       );
 

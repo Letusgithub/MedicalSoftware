@@ -19,6 +19,8 @@ module.exports = (app) => {
   app.get('/api/searchquartergrn/', controller.searchQuarter);
   app.get('/api/searchyeargrn/', controller.searchYear);
 
+  app.get('/api/gettotalpurchasebills', controller.getTotalPurchaseBills);
+
   app.get('/api/getgrnreceipts/:id', controller.getGRNreceipt);
 
   app.get('/api/cancelGrn', controller.cancelGRN);

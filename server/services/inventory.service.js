@@ -115,10 +115,10 @@ module.exports = {
       FROM inventory AS inv
       JOIN sample AS spl ON inv.product_id = spl.product_id
       LEFT JOIN batch AS bth ON inv.product_id = bth.product_id
-      where inv.org_id=${orgID}
+      where inv.org_id = ?
       GROUP BY inv.product_id, inv.inventory_id, inv.hsn, inv.primary_unit, inv.secondary_unit, inv.threshold
       `,
-      [],
+      [orgID],
       (error, results) => {
         if (error) return callBack(error);
         return callBack(null, results);

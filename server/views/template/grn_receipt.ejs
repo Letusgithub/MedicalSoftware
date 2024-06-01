@@ -329,7 +329,7 @@
 
                 </div>
                 <div class="logo-container">
-                    <img src="/images/logo.svg" alt="Dawa.ai Logo"></img>
+                    <img src="data:image/svg+xml;base64,<%= image %>" alt="Logo">
                 </div>
             </div>
             <hr class="line-1">
@@ -558,7 +558,7 @@
                                 Total Amount(₹):
                             </div>
                             <div class="totalamount">
-                                <%= data.totalAmount.toFixed(2) %>
+                                <%= data.totalAmount.toFixed(0) %>
                             </div>
                         </div>
                     </div>

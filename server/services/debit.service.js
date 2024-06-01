@@ -94,27 +94,25 @@ module.exports = {
     let datas = [];
     if (from && to) {
       const date = new Date(to);
-      querys = 'WHERE debit_created_date >= ? AND debit_created_date < ?';
+      querys = 'WHERE dn.created_date >= ? AND dn.created_date < ?';
       datas = [
         from,
         new Date(date.getTime() + 86400000),
       ];
     } else if (from) {
-      querys = 'WHERE debit_created_date >= ?';
+      querys = 'WHERE dn.created_date >= ?';
       datas = [from];
     } else if (to) {
       const date = new Date(to);
-      querys = 'WHERE debit_created_date < ?';
+      querys = 'WHERE dn.created_date < ?';
       datas = [new Date(date.getTime() + 86400000)];
     }
 
     getPool().query(
-      `SELECT debitcart.*,vendor.vendor_name
-      FROM debit_note_cart_details debitcart
-      JOIN debit_note dn ON debitcart.debit_invoice_id = dn.debit_invoice_id
+      `SELECT * FROM debit_note dn
       JOIN vendor ON vendor.vendor_id = dn.vendor_id
       ${querys} and dn.org_id = ${orgId} 
-      ORDER BY debit_created_date DESC`,
+      ORDER BY dn.created_date DESC`,
       datas,
       (error, results) => {
         if (error) return callback(error);
@@ -124,11 +122,9 @@ module.exports = {
   },
   searchMonth: (orgId, month, year, callback) => {
     getPool().query(
-      `SELECT debitcart.*,vendor.vendor_name
-      FROM debit_note_cart_details debitcart
-      JOIN debit_note dn ON debitcart.debit_invoice_id = dn.debit_invoice_id
-      JOIN vendor on vendor.vendor_id = dn.vendor_id
-      where MONTH(debitcart.debit_created_date)=? AND YEAR(debitcart.debit_created_date) = ${year} and dn.org_id = ${orgId} 
+      `SELECT * FROM debit_note dn
+      JOIN vendor ON vendor.vendor_id = dn.vendor_id
+      where MONTH(dn.created_date)=? AND YEAR(dn.created_date) = ${year} and dn.org_id = ${orgId} 
       `,
       [
         month,
@@ -142,11 +138,9 @@ module.exports = {
 
   searchQuarter: (orgId, start, end, year, callback) => {
     getPool().query(
-      `SELECT debitcart.*,vendor.vendor_name
-      FROM debit_note_cart_details debitcart
-      JOIN debit_note dn ON debitcart.debit_invoice_id = dn.debit_invoice_id
+      `SELECT * FROM debit_note dn
       JOIN vendor ON vendor.vendor_id = dn.vendor_id
-      where MONTH(debitcart.debit_created_date)>=? and MONTH(debitcart.debit_created_date)<=? AND YEAR(debitcart.debit_created_date) = ${year} and dn.org_id = ${orgId} 
+      where MONTH(dn.created_date)>=? and MONTH(dn.created_date)<=? AND YEAR(dn.created_date) = ${year} and dn.org_id = ${orgId} 
       `,
       [
         start,
@@ -161,12 +155,10 @@ module.exports = {
 
   searchYear: (orgId, year, callback) => {
     getPool().query(
-      `SELECT debitcart.*,vendor.vendor_name
-      FROM debit_note_cart_details debitcart
-      JOIN debit_note dn ON debitcart.debit_invoice_id = dn.debit_invoice_id
+      `SELECT * FROM debit_note dn
       JOIN vendor ON vendor.vendor_id = dn.vendor_id
-      where YEAR(debitcart.debit_created_date)=? and dn.org_id = ${orgId} 
-      order by MONTH(debitcart.debit_created_date) DESC
+      where YEAR(dn.created_date)=? and dn.org_id = ${orgId} 
+      order by MONTH(dn.created_date) DESC
       `,
       [
         year,

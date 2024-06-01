@@ -221,4 +221,16 @@ module.exports = {
     );
   },
 
+  getTotalPurchaseBills: (orgId, callback) => {
+    getPool().query(
+      `SELECT COUNT(*) AS row_count FROM grn
+      WHERE org_id = ?`,
+      [orgId],
+      (error, results) => {
+        if (error) return callback(error);
+        return callback(null, results);
+      },
+    );
+  },
+
 };
